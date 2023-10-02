@@ -10,20 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Vinland
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Logique d'interaction pour NouveauCompte.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class NouveauCompte : Window
     {
-        public MainWindow()
+        public NouveauCompte()
         {
             InitializeComponent();
-            String s;
         }
     }
 }
