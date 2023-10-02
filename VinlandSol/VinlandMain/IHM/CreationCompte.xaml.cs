@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace VinlandMain.IHM
+namespace VinlandSol.IHM
 {
     /// <summary>
     /// Logique d'interaction pour CreationCompte.xaml

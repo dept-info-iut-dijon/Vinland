@@ -1,9 +1,9 @@
-﻿<Window x:Class="VinlandMain.MainWindow"
+﻿<Window x:Class="VinlandSol.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:VinlandMain"
+        xmlns:local="clr-namespace:VinlandSol"
         mc:Ignorable="d"
         Title="Vinland" Height="750" Width="1400">
     <Grid>
