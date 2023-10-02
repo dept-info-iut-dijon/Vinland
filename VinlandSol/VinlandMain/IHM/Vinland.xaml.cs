@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VinlandSol.IHM;
 
 namespace VinlandSol
 {
@@ -24,5 +25,13 @@ namespace VinlandSol
         {
             InitializeComponent();
         }
+
+        private void OuvrirCreationCompte_Click(object sender, RoutedEventArgs e)
+        {
+            CreationCompte pagecreation = new CreationCompte();
+            pagecreation.Show();
+        }
+
+
     }
 }
