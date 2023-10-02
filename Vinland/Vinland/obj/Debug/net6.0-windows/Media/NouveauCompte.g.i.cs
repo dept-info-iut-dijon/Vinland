@@ -53,7 +53,7 @@ namespace Vinland {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Vinland;V1.0.0.0;component/media/nouveaucompte.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Vinland;component/media/nouveaucompte.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Media\NouveauCompte.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
