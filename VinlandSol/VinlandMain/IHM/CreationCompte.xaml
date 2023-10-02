@@ -4,11 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Création Compte" Height="750" Width="1400" FontSize="45">
+        x:Name="Creation_Compte"
+        Title="Création d'un Compte" Height="750" Width="1400" FontSize="45">
     <Grid>
 
         <!--Partie Titre-->
-        <TextBlock Text="Vinland" Margin="545,35,545,590" FontSize="90" FontFamily="Arial" />
+        <TextBlock Text="Vinland" Margin="493,10,491,598" FontSize="90" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
         <TextBlock Text="Création de compte" Margin="491,140,491,523" FontFamily="Arial" Height="70" TextAlignment="Center"/>
 
 
@@ -26,7 +27,8 @@
             <ComboBoxItem Content="Joueur"/>
         </ComboBox>
 
-        <!--Bouton creer-->
-        <Button x:Name="Creer" Content="Créer" Margin="548,620,548,35" />
+        <!--Bouton creer/annuler-->
+        <Button x:Name="Creer" Content="Créer" Margin="450,643,750,12" />
+        <Button x:Name="Annuler" Content="Annuler" Margin="750,643,450,12" Click="AnnuleCreaCompte_Click"/>
     </Grid>
 </Window>

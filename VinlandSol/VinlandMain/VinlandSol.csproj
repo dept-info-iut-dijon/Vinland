@@ -7,4 +7,14 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="IHM\Fonts\Mjolnir.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="IHM\Fonts\Mjolnir.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
 </Project>

@@ -8,7 +8,7 @@
         Title="VisionCampagne" Height="750" Width="1400" FontSize="40">
     <Grid>
         <!--Titres-->
-        <TextBlock Text="Vinland" Margin="500,0,500,570" FontSize="100" TextAlignment="Center"/>
+        <TextBlock Text="Vinland" Margin="450,10,440,601" FontSize="100" TextAlignment="Center" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
         <TextBlock Text="Campagne Selector" Margin="400,133,400,525" TextAlignment="Center"/>
 
         <!--Partie Gauche-->

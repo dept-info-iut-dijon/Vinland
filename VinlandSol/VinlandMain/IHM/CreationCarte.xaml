@@ -9,7 +9,7 @@
         <Grid.ColumnDefinitions>
 
         </Grid.ColumnDefinitions>
-        <Label Content="Vinland" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontSize="64"/>
+        <Label Content="Vinland" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontSize="64" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
         <Label Content="Map Creator" HorizontalAlignment="Center" Margin="0,92,0,0" VerticalAlignment="Top" FontSize="24"/>
         <Button Content="Créer la carte" HorizontalAlignment="Center" Margin="0,355,0,0" VerticalAlignment="Top" Height="45" Width="124" FontSize="18"/>
 
