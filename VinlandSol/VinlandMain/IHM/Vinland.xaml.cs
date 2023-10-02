@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VinlandMain.IHM;
 using VinlandSol.IHM;
 
 namespace VinlandSol
@@ -30,8 +31,14 @@ namespace VinlandSol
         {
             CreationCompte pagecreation = new CreationCompte();
             pagecreation.Show();
+            Vinland.Close();
         }
 
-
+        private void OuvrirVisionCampagne_Click(object sender, RoutedEventArgs e)
+        {
+            VisionCampagne pagecreation = new VisionCampagne();
+            pagecreation.Show();
+            Vinland.Close();
+        }
     }
 }
