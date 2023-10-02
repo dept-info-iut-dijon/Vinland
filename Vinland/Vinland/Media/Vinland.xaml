@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="Vinland" Height="750" Width="1400">
     <Grid>
-
+        <Button></Button>
     </Grid>
 </Window>
