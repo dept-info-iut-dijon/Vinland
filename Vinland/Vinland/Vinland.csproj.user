@@ -7,7 +7,15 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="MainWindow.xaml">
+    <Compile Update="Media\NouveauCompte.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Media\Vinland.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Media\NouveauCompte.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
