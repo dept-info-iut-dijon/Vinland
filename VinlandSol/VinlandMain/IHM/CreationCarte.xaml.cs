@@ -13,12 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace VinlandMain.IHM
+namespace VinlandSol.IHM
 {
     /// <summary>
     /// Logique d'interaction pour CreationCarte.xaml
     /// </summary>
-    public partial class CreationCarte : Page
+    public partial class CreationCarte : Window
     {
         public CreationCarte()
         {
