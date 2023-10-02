@@ -4,32 +4,29 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Création Compte" Height="750" Width="1400">
+        Title="Création Compte" Height="750" Width="1400" FontSize="45">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="Vinland" FontSize="90" FontFamily="Arial" Grid.ColumnSpan="3" Margin="548,41,548,213"/>
-        <TextBlock Text="création de compte" FontSize="45" FontFamily="Arial" Grid.ColumnSpan="3" Margin="509,142,511,168"/>
-        <TextBlock Text="nom d'utilisateur :" FontSize="45" Margin="313,255,10,52"/>
-        <TextBlock Text="mot de passe :" FontSize="45" Margin="365,337,0,338" HorizontalAlignment="Left" Grid.RowSpan="3"/>
 
-        <Border BorderThickness="2" BorderBrush="Black" Grid.Column="2" Margin="10,255,192,51">
-            <TextBox Margin="26,310,350,0" Grid.Column="2" />
-        </Border>
-        <Border BorderThickness="2" BorderBrush="Black" Grid.Column="2" Margin="10,337,192,337" Grid.RowSpan="3">
-            <TextBox Margin="26,310,350,0" Grid.Column="2" />
-        </Border>
-        <TextBlock Text="rôle souhaité :" FontSize="45" Margin="373,89,0,218" HorizontalAlignment="Left" Grid.Row="2"/>
-        <ComboBox Name="ChoixRole" Grid.Column="2" Margin="10,92,339,217" Grid.Row="2">
+        <!--Partie Titre-->
+        <TextBlock Text="Vinland" Margin="545,35,545,590" FontSize="90" FontFamily="Arial" />
+        <TextBlock Text="Création de compte" Margin="491,140,491,523" FontFamily="Arial" Height="70" TextAlignment="Center"/>
+
+
+        <!--Partie Login-->
+        <TextBlock Text="Nom d'utilisateur :" Margin="293,285,0,375" HorizontalAlignment="Left" TextAlignment="Left" Width="391"/>
+        <TextBlock Text="Mot de passe :" Margin="293,385,0,265" HorizontalAlignment="Left" TextAlignment="Left" Width="391" />
+
+        <TextBox Margin="760,285,0,375" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Width="390"/>
+        <TextBox Margin="760,385,0,275" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Width="390"/>
+
+        <!--Partie Role-->
+        <TextBlock Text="Rôle souhaité :" Margin="394,502,0,142" HorizontalAlignment="Left" Width="306" />
+        <ComboBox Name="ChoixRole" Margin="760,500,250,145">
             <ComboBoxItem Content="Maitre du jeu"/>
             <ComboBoxItem Content="Joueur"/>
         </ComboBox>
-        <Button x:Name="Creer" Content="Créer" Grid.ColumnSpan="4" Margin="584,212,584,73" Grid.Row="2" FontSize="45" />
+
+        <!--Bouton creer-->
+        <Button x:Name="Creer" Content="Créer" Margin="548,620,548,35" />
     </Grid>
 </Window>
