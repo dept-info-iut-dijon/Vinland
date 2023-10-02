@@ -16,6 +16,7 @@ namespace VinlandMain.IHM
         public VisionCampagne()
         {
             InitializeComponent();
+            Campagnes.Items.Add("fziokzjef");
         }
 
     }
