@@ -10,18 +10,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace VinlandSol.IHM
+namespace VinlandMain.IHM
 {
     /// <summary>
-    /// Logique d'interaction pour CreationCompte.xaml
+    /// Logique d'interaction pour CreationCarte.xaml
     /// </summary>
-    public partial class CreationCompte : Window
+    public partial class CreationCarte : Page
     {
-        public CreationCompte()
+        public CreationCarte()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
