@@ -23,6 +23,7 @@ namespace Vinland
         public MainWindow()
         {
             InitializeComponent();
+            String s;
         }
     }
 }
