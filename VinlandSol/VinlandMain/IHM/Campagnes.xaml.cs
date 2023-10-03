@@ -11,12 +11,12 @@ namespace VinlandMain.IHM
     /// <summary>
     /// Logique d'interaction pour VisionCampagne.xaml
     /// </summary>
-    public partial class VisionCampagne : Window
+    public partial class Campagnes : Window
     {
-        public VisionCampagne()
+        public Campagnes()
         {
             InitializeComponent();
-            Campagnes.Items.Add("fziokzjef");
+            CampagnesListe.Items.Add("fziokzjef");
         }
 
     }

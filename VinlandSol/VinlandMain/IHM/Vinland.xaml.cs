@@ -34,9 +34,9 @@ namespace VinlandSol
             Vinland.Close();
         }
 
-        private void OuvrirVisionCampagne_Click(object sender, RoutedEventArgs e)
+        private void OuvrirCampagnes_Click(object sender, RoutedEventArgs e)
         {
-            VisionCampagne pagecreation = new VisionCampagne();
+            Campagnes pagecreation = new Campagnes();
             pagecreation.Show();
             Vinland.Close();
         }
