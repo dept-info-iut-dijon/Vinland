@@ -24,6 +24,5 @@ namespace VinlandSol.IHM
         {
             InitializeComponent();
         }
-
     }
 }
