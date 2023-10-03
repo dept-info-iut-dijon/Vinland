@@ -26,6 +26,7 @@ namespace VinlandSol.IHM
         {
             InitializeComponent();
             pagecreationcarte = new CreationCarte();
+            pagecreationcarte.Close();
         }
         private void OuvrirPersonnages_Click(object sender, RoutedEventArgs e)
         {
@@ -39,10 +40,10 @@ namespace VinlandSol.IHM
            Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeilbarre.png", UriKind.RelativeOrAbsolute));
         }
 
-        private void CreationCarte(object sender, RoutedEventArgs e)
+        private void OuvrirCreationCarte_Click(object sender, RoutedEventArgs e)
         {
-            if (pagecreationcarte.IsVisible == false ) 
-            {
+            if (pagecreationcarte.IsVisible == false) 
+            {                 
                 pagecreationcarte = new CreationCarte();
                 pagecreationcarte.Show();
             }

@@ -14,7 +14,7 @@
                
         <!--Partie Gauche-->
         <ListBox x:Name="CartesListe" FontSize="40" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="100,250,800,160"/>
-        <Button Content="Nouvelle Carte" FontSize="30" Margin="0,0,800,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="500" Click="CreationCarte"/>
+        <Button Content="Nouvelle Carte" FontSize="30" Margin="0,0,800,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="500" Click="OuvrirCreationCarte_Click"/>
         <Button Content="Retour" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="56" Width="121" Click="OuvrirPersonnages_Click"/>
 
         <!--Partie Droite-->

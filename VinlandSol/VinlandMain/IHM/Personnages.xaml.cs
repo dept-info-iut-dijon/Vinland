@@ -20,9 +20,12 @@ namespace VinlandSol.IHM
     /// </summary>
     public partial class Personnages : Window
     {
+        private AjouterPersonnage pagecreationperso;
+
         public Personnages()
         {
             InitializeComponent();
+            pagecreationperso = new AjouterPersonnage();
         }
 
         private void OuvrirCampagnes_Click(object sender, RoutedEventArgs e)
@@ -37,6 +40,15 @@ namespace VinlandSol.IHM
             Cartes pagecreation = new Cartes();
             pagecreation.Show();
             PersonnagesWindow.Close();
+        }
+
+        private void OuvrirAjouterPersonnage_Click(object sender, RoutedEventArgs e)
+        {
+            if (pagecreationperso.IsVisible == false)
+            {
+                pagecreationperso = new AjouterPersonnage();
+                pagecreationperso.Show();
+            }
         }
 
         private void EditionNom(object sender, RoutedEventArgs e)

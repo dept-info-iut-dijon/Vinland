@@ -14,7 +14,7 @@
 
         <!--Partie Gauche-->
         <ListBox x:Name="PersonnagesListe" FontSize="40" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="100,250,800,160"/>
-        <Button Content="Ajouter un personnage" FontSize="30" Margin="0,0,800,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="500"/>
+        <Button Content="Ajouter un personnage" FontSize="30" Margin="0,0,800,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="500" Click="OuvrirAjouterPersonnage_Click"/>
         <Button Content="Retour" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="56" Width="121" Click="OuvrirCampagnes_Click"/>
 
         <!--Partie Droite-->
@@ -25,7 +25,6 @@
         <Label Content="Nom du personnage : " Margin="710,400,300,0" VerticalAlignment="Top" FontSize="35"/>
         <Button x:Name="boutonCrayon" FontSize="40" Margin="0,0,40,265" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" Click="EditionNom">
             <Image x:Name="crayon" Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
-
         </Button>
         
         <Label Content="Date de création : " Margin="710,500,380,0" VerticalAlignment="Top" FontSize="35"/>
