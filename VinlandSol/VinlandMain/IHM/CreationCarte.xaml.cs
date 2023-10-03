@@ -25,9 +25,5 @@ namespace VinlandSol.IHM
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

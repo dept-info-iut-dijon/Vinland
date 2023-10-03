@@ -26,14 +26,20 @@ namespace VinlandSol.IHM
         }
         private void OuvrirPersonnages_Click(object sender, RoutedEventArgs e)
         {
-            Personnages pagecreation = new Personnages();
-            pagecreation.Show();
+            Personnages pagecreationperso = new Personnages();
+            pagecreationperso.Show();
             CartesWindow.Close();
         }
 
         private void OeilChange(object sender, RoutedEventArgs e)
         {
            Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeilbarre.png", UriKind.RelativeOrAbsolute));
+        }
+
+        private void CreationCarte(object sender, RoutedEventArgs e)
+        {
+            CreationCarte pagecreationcarte = new CreationCarte();
+            pagecreationcarte.Show();
         }
     }
 }
