@@ -28,12 +28,15 @@
         </Button>
         
         <Label Content="Date de création : " Margin="710,500,380,0" VerticalAlignment="Top" FontSize="35"/>
-        
+        <TextBlock x:Name="NomUtilisateurTextBlock" Margin="1065,304,120,377"/>
+
         <Button FontSize="40" Background="Red" Margin="0,0,40,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
             <Image Source="Media/Icones/Poubelle.png" Height="70" Width="70" />
         </Button>
           
         <Button Content="Selection de carte" FontSize="20" HorizontalAlignment="Left" Margin="1180,10,0,0" VerticalAlignment="Top" Height="56" Width="200" Click="OuvrirCartes_Click"/>
+        <TextBlock Margin="1065,412,120,269" x:Name="NomPersonnageTextBlock"/>
+        <TextBlock Margin="1020,500,165,181" x:Name="DateCreationTextBlock"/>
 
     </Grid>
 </Window>
