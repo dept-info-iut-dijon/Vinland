@@ -17,8 +17,8 @@
         <Button x:Name="Entrer" Content="Entrer" FontSize="50" Padding="60,20,60,20" HorizontalAlignment="Center" Margin="0,500,0,0" VerticalAlignment="Top"  Click="OuvrirCampagnes_Click"/>
         <Button Content="Créer un compte" FontSize="20" HorizontalAlignment="Center" Margin="0,650,0,0" VerticalAlignment="Top" Click="OuvrirCreationCompte_Click"/>
         
-        <TextBox HorizontalAlignment="Left" Margin="762,238,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300" Height="50"/>
-        <TextBox HorizontalAlignment="Left" Margin="762,345,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300" Height="50"/>
+        <TextBox HorizontalAlignment="Left" Margin="762,238,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300" Height="50" BorderThickness="3"/>
+        <TextBox HorizontalAlignment="Left" Margin="762,345,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300" Height="50" BorderThickness="3"/>
 
     </Grid>
 </Window>
