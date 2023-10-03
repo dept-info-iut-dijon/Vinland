@@ -51,10 +51,5 @@
         </Button>
 
         <Button Content="Sauvegarder" x:Name="Sauv" Margin="0,0,160,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Visibility="Collapsed"/>
-
-        <!--Boutton retour accueil?????????-->
-        <Button Content="Retour" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="56" Width="121" />
-        
-
     </Grid>
 </Window>

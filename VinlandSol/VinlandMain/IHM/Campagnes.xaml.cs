@@ -160,6 +160,12 @@ namespace VinlandMain.IHM
                 NombrePersonnagesTextBlock.Text = selectedCampagne.NombrePersonnages.ToString();
             }
         }
+
+        /// <summary>
+        /// Ouvre le fenêtre Personnages et ferme la fenêtre actuelle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OuvrirPersonnages_Click(object sender, RoutedEventArgs e)
         {
             Personnages pagecreation = new Personnages();
