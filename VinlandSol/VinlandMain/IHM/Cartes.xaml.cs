@@ -26,7 +26,6 @@ namespace VinlandSol.IHM
         {
             InitializeComponent();
             pagecreationcarte = new CreationCarte();
-            pagecreationcarte.Close();
         }
         private void OuvrirPersonnages_Click(object sender, RoutedEventArgs e)
         {
