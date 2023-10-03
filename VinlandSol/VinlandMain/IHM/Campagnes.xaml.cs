@@ -87,6 +87,8 @@ namespace VinlandMain.IHM
             }
 
         }
+      
+
 
         private void OuvrirPersonnages_Click(object sender, RoutedEventArgs e)
         {

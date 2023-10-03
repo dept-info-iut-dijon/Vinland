@@ -39,6 +39,7 @@
         <Button Content="Rejoindre la Campagne" Margin="0,0,270,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="430" />
         <Button Content="🖉" FontSize="40" Margin="0,0,100,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="70" Background="{x:Null}" BorderThickness="0,0,0,0"/>
 
-        <Button Content="Retour" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="56" Width="121" Click="Retour_Click"/>
+        <Button Content="Retour" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="56" Width="121" />
+
     </Grid>
 </Window>
