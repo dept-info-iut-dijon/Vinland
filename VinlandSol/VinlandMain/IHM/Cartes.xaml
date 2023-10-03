@@ -14,14 +14,14 @@
                
         <!--Partie Gauche-->
         <ListBox x:Name="CartesListe" FontSize="40" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="100,250,800,160"/>
-        <Button Content="Nouvelle Carte" FontSize="30" Margin="0,0,800,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="500"/>
+        <Button Content="Nouvelle Carte" FontSize="30" Margin="0,0,800,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="500" Click="CreationCarte"/>
         <Button Content="Retour" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="56" Width="121" Click="OuvrirPersonnages_Click"/>
 
         <!--Partie Droite-->
         <Label HorizontalAlignment="Left" Margin="910,180,0,0" Content="Informations :" FontSize="40" VerticalAlignment="Top"/>
         
         <Label Content="Nom :" Margin="710,250,550,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
-        <Button Margin="0,0,40,410" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" Click="Edit">
+        <Button Margin="0,0,40,410" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" >
             <Image Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
         </Button>
 
@@ -33,7 +33,7 @@
         <Label Content="Date de création : " Margin="710,400,400,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
         <Label Content="Date de modification : " Margin="710,475,340,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
 
-        <Button Content="Rejoindre la Carte" FontSize="30" Margin="0,0,260,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="430" />
+        <Button Content="Rejoindre la Carte" FontSize="30" Margin="0,0,260,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="430"/>
         <Button Content="Sauvegarder" FontSize="25" x:Name="Sauv" Margin="0,0,40,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="184"/>
 
     </Grid>
