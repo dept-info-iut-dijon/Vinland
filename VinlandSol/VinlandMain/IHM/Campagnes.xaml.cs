@@ -90,7 +90,7 @@ namespace VinlandMain.IHM
                 NombreCartesTextBox.Text = selectedCampagne.NombreCartes.ToString();
                 NombrePersonnagesTextBox.Text = selectedCampagne.NombrePersonnages.ToString();
 
-                NomCampTextBox.Visibility = Visibility.Visible;
+                NomCampTextBox.Visibility = Visibility.Collapsed;
                 NombreCartesTextBox.Visibility = Visibility.Collapsed;
                 NombrePersonnagesTextBox.Visibility = Visibility.Collapsed;
             }
