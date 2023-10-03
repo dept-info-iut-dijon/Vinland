@@ -12,7 +12,6 @@
         <TextBlock Text="Vinland" Margin="493,10,491,598" FontSize="90" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
         <TextBlock Text="Création de compte" Margin="491,140,491,523" FontFamily="Arial" Height="70" TextAlignment="Center"/>
 
-
         <!--Partie Login-->
         <TextBlock Text="Nom d'utilisateur :" Margin="293,285,0,375" HorizontalAlignment="Left" TextAlignment="Left" Width="391"/>
         <TextBlock Text="Mot de passe :" Margin="293,385,0,265" HorizontalAlignment="Left" TextAlignment="Left" Width="391" />

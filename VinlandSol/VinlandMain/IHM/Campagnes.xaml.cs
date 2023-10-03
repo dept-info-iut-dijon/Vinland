@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VinlandSol.IHM;
 using VinlandSol;
+using System.Windows.Controls;
 
 namespace VinlandMain.IHM
 {
@@ -30,71 +31,124 @@ namespace VinlandMain.IHM
         public Campagnes()
         {
             InitializeComponent();
-            NomCampTextBox.Visibility = Visibility.Hidden;
 
-            // Exemple d'initialisation de la liste de campagnes
             campagnes.Add(new Campagne
             {
-                Nom = "Campagne 1",
+                Nom = "Campagne medieval",
                 DateCreation = DateTime.Now,
                 DateModification = DateTime.Now,
                 NombreCartes = 10,
                 NombrePersonnages = 5
             });
+            campagnes.Add(new Campagne
+            {
+                Nom = "Campagne Future",
+                DateCreation = DateTime.Now,
+                DateModification = DateTime.Now,
+                NombreCartes = 5,
+                NombrePersonnages = 15
+            });
 
             // Mettez à jour la ListBox avec les noms des campagnes
             CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
-
+            // Attachez le gestionnaire d'événement SelectionChanged à la ListBox
+            CampagnesListe.SelectionChanged += CampagnesListe_SelectionChanged;
+            // Affichez les informations de la première campagne initialement
+            AfficherInformationsCampagne(0);
         }
         private void NouvelleCampagne_Click(object sender, RoutedEventArgs e)
         {
-            // Affiche la TextBox pour entrer le nom de la nouvelle campagne
+            // Affiche la TextBox pour entrer le nom de la nouvelle campagne et cache le TextBlock
             NomNouvCamp.Visibility = Visibility.Visible;
 
             NomCampTextBox.Visibility = Visibility.Visible;
-            DateCreationTextBlock.Visibility = Visibility.Visible;
-            DateModificationTextBlock.Visibility = Visibility.Visible;
-            NombreCartesTextBlock.Visibility = Visibility.Visible;
-            NombrePersonnagesTextBlock.Visibility = Visibility.Visible;
+            NomCampTextBlock.Visibility = Visibility.Collapsed;
+            
+            DateCreationTextBox.Visibility = Visibility.Visible;
+            DateCreationTextBlock.Visibility = Visibility.Collapsed;
 
-            NomCampTextBox.Text = "... ";
-            DateCreationTextBlock.Text = "... ";
-            DateModificationTextBlock.Text = "... ";
-            NombreCartesTextBlock.Text = "... ";
-            NombrePersonnagesTextBlock.Text = "... ";
+            DateModificationTextBox.Visibility = Visibility.Visible;
+            DateModificationTextBlock.Visibility = Visibility.Collapsed;
+
+            NombreCartesTextBox.Visibility = Visibility.Visible;
+            NombreCartesTextBlock.Visibility = Visibility.Collapsed;
+
+            NombrePersonnagesTextBox.Visibility = Visibility.Visible;
+            NombrePersonnagesTextBlock.Visibility = Visibility.Collapsed;
+            
         }
-        private void EditButton_Click(object sender, RoutedEventArgs e)
+        private void Edit_Click(object sender, RoutedEventArgs e)
         {
             // Récupérez la campagne sélectionnée dans la ListBox
             int selectedIndex = CampagnesListe.SelectedIndex;
+
+            RejoidComp.Visibility = Visibility.Collapsed;
+            RejoidCompS.Visibility = Visibility.Visible;
+
+            Edit.Visibility = Visibility.Collapsed;
+            EditS.Visibility = Visibility.Visible;
+
+            Sauv.Visibility = Visibility.Visible;
 
             // Vérifiez si une campagne est sélectionnée
             if (selectedIndex >= 0 && selectedIndex < campagnes.Count)
             {
                 // Affichez la campagne sélectionnée dans les TextBox et permettez la modification
                 Campagne selectedCampagne = campagnes[selectedIndex];
+
                 NomCampTextBox.Text = selectedCampagne.Nom;
-                DateCreationTextBlock.Text = selectedCampagne.DateCreation.ToString("dd/MM/yyyy"); ;
-                DateModificationTextBlock.Text = selectedCampagne.DateModification.ToString("dd/MM/yyyy"); ;
+                DateCreationTextBlock.Text = selectedCampagne.DateCreation.ToString("dd/MM/yyyy");                
                 NombreCartesTextBlock.Text = selectedCampagne.NombreCartes.ToString();
                 NombrePersonnagesTextBlock.Text = selectedCampagne.NombrePersonnages.ToString();
 
-                NomCampTextBox.IsEnabled = true;
-                DateCreationTextBlock.IsEnabled = true;
-                DateModificationTextBlock.IsEnabled = true;
-                NombreCartesTextBlock.IsEnabled = true;
-                NombrePersonnagesTextBlock.IsEnabled = true;
+                NomCampTextBox.Visibility = Visibility.Visible;
+                DateCreationTextBox.Visibility = Visibility.Visible;
+                NombreCartesTextBox.Visibility = Visibility.Visible;
+                NombrePersonnagesTextBox.Visibility = Visibility.Visible;
             }
+        }
+        private void EditS_Click(object sender, RoutedEventArgs e)
+        {
+
+            RejoidComp.Visibility = Visibility.Visible;
+            RejoidCompS.Visibility = Visibility.Collapsed;
+
+            Edit.Visibility = Visibility.Visible;
+            EditS.Visibility = Visibility.Collapsed;
+
+            Sauv.Visibility = Visibility.Collapsed;
+
 
         }
-      
+        private void CampagnesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Obtenez l'index de l'élément sélectionné dans la ListBox
+            int selectedIndex = CampagnesListe.SelectedIndex;
 
+            // Appelez la fonction pour mettre à jour les TextBlock avec les informations de la campagne sélectionnée
+            AfficherInformationsCampagne(selectedIndex);
+        }
+        private void AfficherInformationsCampagne(int selectedIndex)
+        {
+            if (selectedIndex >= 0 && selectedIndex < campagnes.Count)
+            {
+                Campagne selectedCampagne = campagnes[selectedIndex];
 
+                // Mettez à jour les TextBlock avec les informations de la campagne
+                NomCampTextBlock.Text = selectedCampagne.Nom;
+                DateCreationTextBlock.Text = selectedCampagne.DateCreation.ToString("dd/MM/yyyy");
+                DateModificationTextBlock.Text = selectedCampagne.DateModification.ToString("dd/MM/yyyy");
+                NombreCartesTextBlock.Text = selectedCampagne.NombreCartes.ToString();
+                NombrePersonnagesTextBlock.Text = selectedCampagne.NombrePersonnages.ToString();
+            }
+        }
         private void OuvrirPersonnages_Click(object sender, RoutedEventArgs e)
         {
             Personnages pagecreation = new Personnages();
             pagecreation.Show();
             CampagnesWindow.Close();
-        }
+        }        
     }
 }
+
+
