@@ -13,9 +13,10 @@
         <TextBlock Text="Campagne Selector" Margin="400,133,400,525" TextAlignment="Center" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
 
         <!--Partie Gauche-->
-        <ListBox x:Name="CampagnesListe" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="100,250,745,246"/>
-        <Button Content="Nouvelle Campagne" Click="NouvelleCampagne_Click" Margin="100,520,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="440" Height="70"/>
-        <TextBox x:Name="NomNouvCamp" Text="Entrer le nom..." Margin="100,610,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="440" Height="70" Visibility="Collapsed"></TextBox>
+        <ListBox x:Name="CampagnesListe" Margin="100,250,745,246" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+        <Button Content="Nouvelle Campagne" Margin="100,0,0,160" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="440" Height="70" Click="NouvelleCampagne_Click"/>
+        <TextBox x:Name="NomNouvCamp" Margin="100,0,0,80" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="440" Height="70" Visibility="Collapsed"></TextBox>
+        <Button x:Name="Valider" Content="Valider" Margin="255,0,0,15" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="130" Click="Valider_Click" Visibility="Collapsed"/>
 
         <!--Partie Droite Information des campagnes-->
         <TextBlock HorizontalAlignment="Left" Margin="950,180,0,0" Text="Informations :" VerticalAlignment="Top"/>
@@ -53,6 +54,7 @@
 
         <!--Boutton retour accueil?????????-->
         <Button Content="Retour" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="56" Width="121" />
+        
 
     </Grid>
 </Window>

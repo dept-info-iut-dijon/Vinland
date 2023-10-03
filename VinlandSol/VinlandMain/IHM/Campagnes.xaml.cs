@@ -20,6 +20,15 @@ namespace VinlandMain.IHM
     /// </summary>
     public partial class Campagnes : Window
     {
+        // Créez une nouvelle campagne avec des valeurs par défaut
+        Campagne nouvelleCampagne = new Campagne
+        {
+            Nom = "Nouvelle Campagne par défaut",
+            DateCreation = DateTime.Now,
+            DateModification = DateTime.Now,
+            NombreCartes = 0, // Valeur par défaut, vous pouvez la modifier
+            NombrePersonnages = 0 // Valeur par défaut, vous pouvez la modifier
+        };
         public struct Campagne
         {
             public string Nom { get; set; }
@@ -56,16 +65,36 @@ namespace VinlandMain.IHM
         }
         private void NouvelleCampagne_Click(object sender, RoutedEventArgs e)
         {
-            // Affiche la TextBox pour entrer le nom de la nouvelle campagne et cache le TextBlock
+            // Affiche les TextBox et cache les TextBlock
             NomNouvCamp.Visibility = Visibility.Visible;
-
             RejoidComp.Visibility = Visibility.Collapsed;
             RejoidCompS.Visibility = Visibility.Visible;
-
             Edit.Visibility = Visibility.Collapsed;
             EditS.Visibility = Visibility.Visible;
-
             Sauv.Visibility = Visibility.Visible;
+
+            NomNouvCamp.Visibility = Visibility.Visible;
+            Valider.Visibility = Visibility.Visible;
+        }
+        private void Valider_Click(object sender, RoutedEventArgs e)
+        {
+            // Récupérez le nom de la nouvelle campagne depuis le TextBox
+            string newCampaignName = NomNouvCamp.Text;
+
+            // Mettez à jour le nom de la campagne par défaut avec le nouveau nom
+            nouvelleCampagne.Nom = newCampaignName;
+
+            // Affichez le nom de la campagne mise à jour dans le TextBlock NomCampTextBlock
+            NomCampTextBlock.Text = newCampaignName;
+
+            // Ajoutez la nouvelle campagne à votre liste de campagnes
+            campagnes.Add(nouvelleCampagne);
+
+            // Mettez à jour la ListBox en réaffectant sa source de données
+            CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
+
+            // Sélectionnez la nouvelle campagne dans la ListBox (facultatif)
+            CampagnesListe.SelectedItem = newCampaignName;
         }
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
@@ -125,8 +154,8 @@ namespace VinlandMain.IHM
 
                 // Mettez à jour les TextBlock avec les informations de la campagne
                 NomCampTextBlock.Text = selectedCampagne.Nom;
-                DateCreationTextBlock.Text = selectedCampagne.DateCreation.ToString("dd/MM/yyyy");
-                DateModificationTextBlock.Text = selectedCampagne.DateModification.ToString("dd/MM/yyyy");
+                DateCreationTextBlock.Text = selectedCampagne.DateCreation.ToString("dd/MM/yyyy HH:mm:ss");
+                DateModificationTextBlock.Text = selectedCampagne.DateModification.ToString("dd/MM/yyyy HH:mm:ss");
                 NombreCartesTextBlock.Text = selectedCampagne.NombreCartes.ToString();
                 NombrePersonnagesTextBlock.Text = selectedCampagne.NombrePersonnages.ToString();
             }
