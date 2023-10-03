@@ -30,5 +30,10 @@ namespace VinlandSol.IHM
             pagecreation.Show();
             CartesWindow.Close();
         }
+
+        private void OeilChange(object sender, RoutedEventArgs e)
+        {
+           Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeilbarre.png", UriKind.RelativeOrAbsolute));
+        }
     }
 }

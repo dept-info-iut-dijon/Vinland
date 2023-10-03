@@ -9,10 +9,26 @@
 
   <ItemGroup>
     <None Remove="IHM\Fonts\Mjolnir.ttf" />
+    <None Remove="IHM\Media\Icones\crayon.png" />
+    <None Remove="IHM\Media\Icones\oeil.png" />
+    <None Remove="IHM\Media\Icones\oeilbarre.png" />
+    <None Remove="IHM\Media\Icones\poubelle.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="IHM\Fonts\Mjolnir.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="IHM\Media\Icones\crayon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="IHM\Media\Icones\oeil.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="IHM\Media\Icones\oeilbarre.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="IHM\Media\Icones\poubelle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
