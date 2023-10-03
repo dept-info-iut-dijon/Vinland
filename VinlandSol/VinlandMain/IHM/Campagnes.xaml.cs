@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using VinlandSol.IHM;
 using VinlandSol;
 using System.Windows.Controls;
+using System.Globalization;
 
 namespace VinlandMain.IHM
 {
@@ -48,34 +49,23 @@ namespace VinlandMain.IHM
                 NombreCartes = 5,
                 NombrePersonnages = 15
             });
-
             // Mettez à jour la ListBox avec les noms des campagnes
             CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
             // Attachez le gestionnaire d'événement SelectionChanged à la ListBox
             CampagnesListe.SelectionChanged += CampagnesListe_SelectionChanged;
-            // Affichez les informations de la première campagne initialement
-            AfficherInformationsCampagne(0);
         }
         private void NouvelleCampagne_Click(object sender, RoutedEventArgs e)
         {
             // Affiche la TextBox pour entrer le nom de la nouvelle campagne et cache le TextBlock
             NomNouvCamp.Visibility = Visibility.Visible;
 
-            NomCampTextBox.Visibility = Visibility.Visible;
-            NomCampTextBlock.Visibility = Visibility.Collapsed;
-            
-            DateCreationTextBox.Visibility = Visibility.Visible;
-            DateCreationTextBlock.Visibility = Visibility.Collapsed;
+            RejoidComp.Visibility = Visibility.Collapsed;
+            RejoidCompS.Visibility = Visibility.Visible;
 
-            DateModificationTextBox.Visibility = Visibility.Visible;
-            DateModificationTextBlock.Visibility = Visibility.Collapsed;
+            Edit.Visibility = Visibility.Collapsed;
+            EditS.Visibility = Visibility.Visible;
 
-            NombreCartesTextBox.Visibility = Visibility.Visible;
-            NombreCartesTextBlock.Visibility = Visibility.Collapsed;
-
-            NombrePersonnagesTextBox.Visibility = Visibility.Visible;
-            NombrePersonnagesTextBlock.Visibility = Visibility.Collapsed;
-            
+            Sauv.Visibility = Visibility.Visible;
         }
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
@@ -96,20 +86,17 @@ namespace VinlandMain.IHM
                 // Affichez la campagne sélectionnée dans les TextBox et permettez la modification
                 Campagne selectedCampagne = campagnes[selectedIndex];
 
-                NomCampTextBox.Text = selectedCampagne.Nom;
-                DateCreationTextBlock.Text = selectedCampagne.DateCreation.ToString("dd/MM/yyyy");                
-                NombreCartesTextBlock.Text = selectedCampagne.NombreCartes.ToString();
-                NombrePersonnagesTextBlock.Text = selectedCampagne.NombrePersonnages.ToString();
+                NomCampTextBox.Text = selectedCampagne.Nom;              
+                NombreCartesTextBox.Text = selectedCampagne.NombreCartes.ToString();
+                NombrePersonnagesTextBox.Text = selectedCampagne.NombrePersonnages.ToString();
 
-                NomCampTextBox.Visibility = Visibility.Visible;
-                DateCreationTextBox.Visibility = Visibility.Visible;
-                NombreCartesTextBox.Visibility = Visibility.Visible;
-                NombrePersonnagesTextBox.Visibility = Visibility.Visible;
+                NomCampTextBox.Visibility = Visibility.Collapsed;
+                NombreCartesTextBox.Visibility = Visibility.Collapsed;
+                NombrePersonnagesTextBox.Visibility = Visibility.Collapsed;
             }
         }
         private void EditS_Click(object sender, RoutedEventArgs e)
         {
-
             RejoidComp.Visibility = Visibility.Visible;
             RejoidCompS.Visibility = Visibility.Collapsed;
 
@@ -118,7 +105,9 @@ namespace VinlandMain.IHM
 
             Sauv.Visibility = Visibility.Collapsed;
 
-
+            NomCampTextBox.Visibility = Visibility.Collapsed;
+            NombreCartesTextBox.Visibility = Visibility.Collapsed;
+            NombrePersonnagesTextBox.Visibility = Visibility.Collapsed;
         }
         private void CampagnesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
