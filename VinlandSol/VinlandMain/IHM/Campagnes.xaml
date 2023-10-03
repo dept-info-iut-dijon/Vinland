@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VinlandMain.IHM"
         mc:Ignorable="d"
+        x:Name="CampagnesWindow"
         Title="Campagnes" Height="750" Width="1400" FontSize="40">
     <Grid>
         <!--Titres-->
@@ -26,7 +27,7 @@
         <Label Content="Nombre de cartes : " Margin="710,460,370,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
         <Label Content="Nombre de personnage : " Margin="710,530,290,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
 
-        <Button Content="Rejoindre la Campagne" Margin="0,0,270,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="430" />
+        <Button Content="Rejoindre la Campagne" Margin="0,0,270,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="430" Click="OuvrirPersonnages_Click"/>
         <Button Content="Edit" Margin="0,0,100,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="70">
             <!--<Image Source="image crayon.png"></Image>-->
         </Button>

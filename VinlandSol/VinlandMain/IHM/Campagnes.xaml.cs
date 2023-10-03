@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using VinlandSol.IHM;
 
 namespace VinlandMain.IHM
 {
@@ -19,5 +20,11 @@ namespace VinlandMain.IHM
             CampagnesListe.Items.Add("fziokzjef");
         }
 
+        private void OuvrirPersonnages_Click(object sender, RoutedEventArgs e)
+        {
+            Personnages pagecreation = new Personnages();
+            pagecreation.Show();
+            CampagnesWindow.Close();
+        }
     }
 }
