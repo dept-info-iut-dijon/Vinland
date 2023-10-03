@@ -88,11 +88,11 @@ namespace VinlandMain.IHM
 
         }
 
-        private void Retour_Click(object sender, RoutedEventArgs e)
+        private void OuvrirPersonnages_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow pagecreation = new MainWindow();
+            Personnages pagecreation = new Personnages();
             pagecreation.Show();
-            Campagne_Selector.Close();
+            CampagnesWindow.Close();
         }
     }
 }

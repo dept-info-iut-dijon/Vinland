@@ -16,19 +16,27 @@ using VinlandMain.IHM;
 namespace VinlandSol.IHM
 {
     /// <summary>
-    /// Logique d'interaction pour Cartes.xaml
+    /// Logique d'interaction pour Personnages.xaml
     /// </summary>
-    public partial class Cartes : Window
+    public partial class Personnages : Window
     {
-        public Cartes()
+        public Personnages()
         {
             InitializeComponent();
         }
-        private void OuvrirPersonnages_Click(object sender, RoutedEventArgs e)
+
+        private void OuvrirCampagnes_Click(object sender, RoutedEventArgs e)
         {
-            Personnages pagecreation = new Personnages();
+            Campagnes pagecreation = new Campagnes();
             pagecreation.Show();
-            CartesWindow.Close();
+            PersonnagesWindow.Close();
+        }
+
+        private void OuvrirCartes_Click(object sender, RoutedEventArgs e)
+        {
+            Cartes pagecreation = new Cartes();
+            pagecreation.Show();
+            PersonnagesWindow.Close();
         }
     }
 }

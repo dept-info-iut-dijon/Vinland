@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VinlandMain.IHM"
         mc:Ignorable="d"
-        x:Name="Campagne_Selector"
+        x:Name="CampagnesWindow"
         Title="Campagnes" Height="750" Width="1400" FontSize="40">
     <Grid>
         <!--Titres-->
