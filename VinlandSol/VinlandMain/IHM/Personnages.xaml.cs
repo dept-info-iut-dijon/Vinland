@@ -38,5 +38,15 @@ namespace VinlandSol.IHM
             pagecreation.Show();
             PersonnagesWindow.Close();
         }
+
+        private void EditionNom(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void ValiderNom(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

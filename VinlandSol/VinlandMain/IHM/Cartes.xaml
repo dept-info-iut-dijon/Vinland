@@ -8,25 +8,33 @@
         x:Name="CartesWindow"
         Title="Cartes" Height="750" Width="1400">
     <Grid>
+        <!--Titres-->
         <Label Content="Vinland" FontSize="100" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
         <Label Content="Campagne - Cartes" FontSize="25" HorizontalAlignment="Center" Margin="0,125,0,0" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
+               
+        <!--Partie Gauche-->
         <ListBox x:Name="CartesListe" FontSize="40" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="100,250,800,160"/>
         <Button Content="Nouvelle Carte" FontSize="30" Margin="0,0,800,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="500"/>
-        <Label HorizontalAlignment="Left" Margin="910,180,0,0" Content="Informations :" FontSize="40" VerticalAlignment="Top"/>
-        <Label Content="Nom :" Margin="710,250,550,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
-        <Label Content="Visibilité de la carte : " Margin="710,325,340,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
-        <Label Content="Date de création : " Margin="710,400,400,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
-        <Label Content="Date de modification : " Margin="710,475,340,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
-        <Button Content="Rejoindre la Carte" FontSize="30" Margin="0,0,260,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="430" />
         <Button Content="Retour" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="56" Width="121" Click="OuvrirPersonnages_Click"/>
 
-        <Button FontSize="40" Margin="0,0,40,430" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0">
-            <Image Source="/IHM/Media/Icones/crayon.png" Height="50" Width="50" />
-        </Button>
-        <Button Margin="0,0,290,330" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" Click="OeilChange">
-            <Image x:Name="Loeil" Source="Media/Icones/Oeil.png" Height="50" Width="50"/>
-        </Button>
+        <!--Partie Droite-->
+        <Label HorizontalAlignment="Left" Margin="910,180,0,0" Content="Informations :" FontSize="40" VerticalAlignment="Top"/>
         
-        
+        <Label Content="Nom :" Margin="710,250,550,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
+        <Button Margin="0,0,40,410" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" Click="Edit">
+            <Image Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
+        </Button>
+
+        <Label Content="Visibilité de la carte : " Margin="710,325,340,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
+        <Button Margin="0,0,270,325" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" Click="OeilChange">
+            <Image x:Name="Loeil" Source="Media/Icones/Oeil.png" Height="70" Width="70"/>
+        </Button>
+
+        <Label Content="Date de création : " Margin="710,400,400,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
+        <Label Content="Date de modification : " Margin="710,475,340,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
+
+        <Button Content="Rejoindre la Carte" FontSize="30" Margin="0,0,260,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="430" />
+        <Button Content="Sauvegarder" FontSize="25" x:Name="Sauv" Margin="0,0,40,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="184"/>
+
     </Grid>
 </Window>
