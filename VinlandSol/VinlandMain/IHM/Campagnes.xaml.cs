@@ -52,7 +52,7 @@ namespace VinlandMain.IHM
             });
             campagnes.Add(new Campagne
             {
-                Nom = "Campagne Future",
+                Nom = "Campagne Futuriste",
                 DateCreation = DateTime.Now,
                 DateModification = DateTime.Now,
                 NombreCartes = 5,
@@ -72,7 +72,6 @@ namespace VinlandMain.IHM
             Edit.Visibility = Visibility.Collapsed;
             EditS.Visibility = Visibility.Visible;
             Sauv.Visibility = Visibility.Visible;
-
             NomNouvCamp.Visibility = Visibility.Visible;
             Valider.Visibility = Visibility.Visible;
         }
@@ -95,7 +94,27 @@ namespace VinlandMain.IHM
 
             // Sélectionnez la nouvelle campagne dans la ListBox (facultatif)
             CampagnesListe.SelectedItem = newCampaignName;
+
+            // Enregistrez la liste mise à jour dans un fichier texte
+            EnregistrerCampagnesDansFichierTexte("campagnes.txt");
         }
+        private void EnregistrerCampagnesDansFichierTexte(string filePath)
+        {
+            try
+            {
+                // Créez ou écrasez le fichier texte avec la liste des noms de campagnes
+                System.IO.File.WriteAllLines(filePath, campagnes.Select(c => c.Nom));
+
+                // Affichez un message de succès ou effectuez d'autres actions si nécessaires
+                MessageBox.Show("Les noms de campagne ont été enregistrés dans le fichier texte avec succès.", "Enregistrement Réussi", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                // En cas d'erreur, affichez un message d'erreur ou gérez l'exception de manière appropriée
+                MessageBox.Show("Une erreur s'est produite lors de l'enregistrement dans le fichier texte : " + ex.Message, "Erreur d'Enregistrement", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
             // Récupérez la campagne sélectionnée dans la ListBox
@@ -103,10 +122,8 @@ namespace VinlandMain.IHM
 
             RejoidComp.Visibility = Visibility.Collapsed;
             RejoidCompS.Visibility = Visibility.Visible;
-
             Edit.Visibility = Visibility.Collapsed;
             EditS.Visibility = Visibility.Visible;
-
             Sauv.Visibility = Visibility.Visible;
 
             // Vérifiez si une campagne est sélectionnée
@@ -115,28 +132,21 @@ namespace VinlandMain.IHM
                 // Affichez la campagne sélectionnée dans les TextBox et permettez la modification
                 Campagne selectedCampagne = campagnes[selectedIndex];
 
-                NomCampTextBox.Text = selectedCampagne.Nom;              
-                NombreCartesTextBox.Text = selectedCampagne.NombreCartes.ToString();
-                NombrePersonnagesTextBox.Text = selectedCampagne.NombrePersonnages.ToString();
+                NomCampTextBox.Text = selectedCampagne.Nom;
 
-                NomCampTextBox.Visibility = Visibility.Collapsed;
-                NombreCartesTextBox.Visibility = Visibility.Collapsed;
-                NombrePersonnagesTextBox.Visibility = Visibility.Collapsed;
+                NomCampTextBox.Visibility = Visibility.Visible;
+                NomCampTextBlock.Visibility = Visibility.Collapsed;
             }
         }
         private void EditS_Click(object sender, RoutedEventArgs e)
         {
             RejoidComp.Visibility = Visibility.Visible;
             RejoidCompS.Visibility = Visibility.Collapsed;
-
             Edit.Visibility = Visibility.Visible;
             EditS.Visibility = Visibility.Collapsed;
-
             Sauv.Visibility = Visibility.Collapsed;
-
             NomCampTextBox.Visibility = Visibility.Collapsed;
-            NombreCartesTextBox.Visibility = Visibility.Collapsed;
-            NombrePersonnagesTextBox.Visibility = Visibility.Collapsed;
+            NomCampTextBlock.Visibility = Visibility.Visible;
         }
         private void CampagnesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -160,18 +170,12 @@ namespace VinlandMain.IHM
                 NombrePersonnagesTextBlock.Text = selectedCampagne.NombrePersonnages.ToString();
             }
         }
-
-        /// <summary>
-        /// Ouvre le fenêtre Personnages et ferme la fenêtre actuelle
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void OuvrirPersonnages_Click(object sender, RoutedEventArgs e)
         {
             Personnages pagecreation = new Personnages();
             pagecreation.Show();
             CampagnesWindow.Close();
-        }        
+        }
     }
 }
 
