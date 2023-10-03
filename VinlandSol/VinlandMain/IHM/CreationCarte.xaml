@@ -7,6 +7,7 @@
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="750"
+      x:Name="CreaCarteWindow"
       Title="Création d'une Carte">
 
     <Grid>

@@ -20,9 +20,12 @@ namespace VinlandSol.IHM
     /// </summary>
     public partial class Cartes : Window
     {
+        private CreationCarte pagecreationcarte;
+
         public Cartes()
         {
             InitializeComponent();
+            pagecreationcarte = new CreationCarte();
         }
         private void OuvrirPersonnages_Click(object sender, RoutedEventArgs e)
         {
@@ -38,8 +41,11 @@ namespace VinlandSol.IHM
 
         private void CreationCarte(object sender, RoutedEventArgs e)
         {
-            CreationCarte pagecreationcarte = new CreationCarte();
-            pagecreationcarte.Show();
+            if (pagecreationcarte.IsVisible == false ) 
+            {
+                pagecreationcarte = new CreationCarte();
+                pagecreationcarte.Show();
+            }
         }
     }
 }
