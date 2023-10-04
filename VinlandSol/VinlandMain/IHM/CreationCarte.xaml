@@ -6,15 +6,15 @@
         xmlns:local="clr-namespace:VinlandSol.IHM"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        x:Name="CreationCarte"
-        Title="Création d'une carte" Height="750" Width="1000">
+        x:Name="Creation_Carte"
+        Title="Création d'une carte" Height="1000" Width="1000">
 
     <Grid>
         <Label Content="Vinland" FontSize="100" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
         <Label Content="Carte - Création" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir" Margin="0,125,0,0"/>
-        <xctk:IntegerUpDown Name="NColonne" Increment="1" Minimum="0" Maximum="100" Height="50" Width="200" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" Margin="275,379,275,305"/>
-        <xctk:IntegerUpDown Name="NLigne" Increment="1" Minimum="0" Maximum="100" Height="50" Width="200" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" Margin="275,501,275,183"/>
-        <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" Text="New carte" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="200" Height="52" FontSize="18" Margin="0,259,0,423"/>
+        <xctk:IntegerUpDown Name="NColonne" Increment="1" Minimum="0" Maximum="100" HorizontalAlignment="Center" VerticalAlignment="Top" Height="60" Width="80" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" Margin="0,373,0,0"/>
+        <xctk:IntegerUpDown Name="NLigne" Increment="1" Minimum="0" Maximum="100" HorizontalAlignment="Center" VerticalAlignment="Top" Height="60" Width="80" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" Margin="0,493,0,0"/>
+        <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" Text="New carte" HorizontalContentAlignment="Center" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="258" Height="52" FontSize="18" Margin="0,251,0,0"/>
         <Button Content="Créer carte" HorizontalAlignment="Center" Margin="0,620,0,0" VerticalAlignment="Top" Height="50" Width="170" FontSize="18"/>
         <Label Content="Nom de la carte :" HorizontalAlignment="Center" Margin="0,212,0,0" VerticalAlignment="Top" Width="146" FontSize="18"/>
         <Label Content="Nombre de cases d'une ligne :" HorizontalAlignment="Center" Margin="0,334,0,0" VerticalAlignment="Top" Width="258" FontSize="18"/>
