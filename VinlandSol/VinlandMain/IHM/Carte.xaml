@@ -6,8 +6,16 @@
         xmlns:local="clr-namespace:VinlandSol.IHM"
         mc:Ignorable="d"
         x:Name="CarteWindow"
-        Title="Carte" Height="750" Width="1400">
+        Title="Carte" Height="750" Width="1400" Background="LightGray">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="5*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
         <Button Content="Retour" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="56" Width="121" Click="OuvrirCartes_Click"/>
+        <Canvas Name="HexagonCanvas" Background="White" MouseWheel="Canvas_MouseWheel" Grid.Column="1">
+            <!-- Les images des hexagones seront générées ici -->
+        </Canvas>
     </Grid>
 </Window>
