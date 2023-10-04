@@ -60,7 +60,17 @@ namespace VinlandSol.IHM
         {
             Cartes pagecreation = new Cartes();
             pagecreation.Show();
-            PersonnagesWindow.Close();
+
+            var timer = new System.Timers.Timer(100); // Délai de 100 millisecondes 
+            timer.Elapsed += (s, args) =>
+            {
+                timer.Stop();
+                Dispatcher.Invoke(() =>
+                {
+                    PersonnagesWindow.Close(); // On ferme cette fenêtre en retard pour éviter que le if de ShutdownEnForce ne passe.
+                });
+            };
+            timer.Start();
         }
 
         /// <summary>
