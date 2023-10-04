@@ -42,24 +42,12 @@ namespace VinlandMain.IHM
         {
             InitializeComponent();
 
-            campagnes.Add(new Campagne
-            {
-                Nom = "Campagne medieval",
-                DateCreation = DateTime.Now,
-                DateModification = DateTime.Now,
-                NombreCartes = 10,
-                NombrePersonnages = 5
-            });
-            campagnes.Add(new Campagne
-            {
-                Nom = "Campagne Futuriste",
-                DateCreation = DateTime.Now,
-                DateModification = DateTime.Now,
-                NombreCartes = 5,
-                NombrePersonnages = 15
-            });
-            // Mettez à jour la ListBox avec les noms des campagnes
-            CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
+            // Charger les noms des campagnes depuis le fichier texte existant (s'il y en a un)
+            LoadCampagnesDepuisFichier("campagnes.txt");
+
+            // Attachez le gestionnaire d'événement SelectionChanged à la ListBox
+            CampagnesListe.SelectionChanged += CampagnesListe_SelectionChanged;
+
             // Attachez le gestionnaire d'événement SelectionChanged à la ListBox
             CampagnesListe.SelectionChanged += CampagnesListe_SelectionChanged;
         }
@@ -73,28 +61,38 @@ namespace VinlandMain.IHM
         {
             // Récupérez le nom de la nouvelle campagne depuis le TextBox
             string newCampaignName = NomNouvCamp.Text;
+            // Vérifiez si la nouvelle campagne existe déjà dans la liste
+            if (!campagnes.Any(c => c.Nom == newCampaignName))
+            {
 
-            // Mettez à jour le nom de la campagne par défaut avec le nouveau nom
-            nouvelleCampagne.Nom = newCampaignName;
+                // Mettez à jour le nom de la campagne par défaut avec le nouveau nom
+                nouvelleCampagne.Nom = newCampaignName;
 
-            // Affichez le nom de la campagne mise à jour dans le TextBlock NomCampTextBlock
-            NomCampTextBlock.Text = newCampaignName;
+                // Affichez le nom de la campagne mise à jour dans le TextBlock NomCampTextBlock
+                NomCampTextBlock.Text = newCampaignName;
 
-            // Ajoutez la nouvelle campagne à votre liste de campagnes
-            campagnes.Add(nouvelleCampagne);
+                // Ajoutez la nouvelle campagne à votre liste de campagnes
+                campagnes.Add(nouvelleCampagne);
 
-            // Mettez à jour la ListBox en réaffectant sa source de données
-            CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
+                // Mettez à jour la ListBox en réaffectant sa source de données
+                CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
 
-            // Sélectionnez la nouvelle campagne dans la ListBox (facultatif)
-            CampagnesListe.SelectedItem = newCampaignName;
+                // Sélectionnez la nouvelle campagne dans la ListBox (facultatif)
+                CampagnesListe.SelectedItem = newCampaignName;
 
-            // Générez un nom de fichier unique basé sur un timestamp
-            string fileName = "campagnes_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
+                // Générez un nom de fichier unique basé sur un timestamp
+                string fileName = "campagnes_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
 
-            // Enregistrez la liste mise à jour dans un fichier texte
-            SaveCampagnesTxt("campagnes.txt");
+                // Enregistrez la liste mise à jour dans un fichier texte
+                SaveCampagnesTxt("campagnes.txt");
+            }
+            else
+            {
+                // Affichez un message d'erreur si le nom de la campagne existe déjà
+                MessageBox.Show("Le nom de la campagne existe déjà.", "Erreur de Nom de Campagne", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+        //Le fichier se save dans -> VinlandSol\VinlandMain\bin\Debug\net6.0-windows
         private void SaveCampagnesTxt(string filePath)
         {
             try
@@ -111,7 +109,43 @@ namespace VinlandMain.IHM
                 MessageBox.Show("Une erreur s'est produite lors de l'enregistrement dans le fichier texte : " + ex.Message, "Erreur d'Enregistrement", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private List<string> LoadCampagnesTxt(string filePath)
+        {
+            try
+            {
+                // Lisez toutes les lignes du fichier texte et retournez-les en tant que liste de noms de campagnes
+                List<string> campagneNoms = System.IO.File.ReadAllLines(filePath).ToList();
+                return campagneNoms;
+            }
+            catch (Exception ex)
+            {
+                // En cas d'erreur, affichez un message d'erreur ou gérez l'exception de manière appropriée
+                MessageBox.Show("Une erreur s'est produite lors de la lecture du fichier texte : " + ex.Message, "Erreur de Lecture", MessageBoxButton.OK, MessageBoxImage.Error);
+                return new List<string>(); // Retournez une liste vide en cas d'erreur
+            }
+        }
 
+        // Utilisation pour charger les noms de campagnes depuis un fichier texte
+        private void LoadCampagnesDepuisFichier(string filePath)
+        {
+            List<string> nomsDeCampagnes = LoadCampagnesTxt(filePath);
+
+            // Mettez à jour la liste des campagnes avec les noms chargés
+            campagnes.Clear();
+            foreach (string nom in nomsDeCampagnes)
+            {
+                campagnes.Add(new Campagne
+                {
+                    Nom = nom,
+                    DateCreation = DateTime.Now,
+                    DateModification = DateTime.Now,
+                    NombreCartes = 0, // Valeur par défaut, vous pouvez la modifier
+                    NombrePersonnages = 0 // Valeur par défaut, vous pouvez la modifier
+                });
+            }
+            // Mettez à jour la ListBox avec les noms des campagnes
+            CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
+        }
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
             // Récupérez la campagne sélectionnée dans la ListBox
