@@ -31,6 +31,8 @@ namespace VinlandSol.IHM
             // Récupérez le contenu des TextBox
             string idJoueur = IdJoueur.Text;
             string idPersonnage = IdPersonnage.Text;
+            DateTime dateCreation = DateTime.Now;
+
 
             // Vérifiez que les données ne sont pas vides
             if (!string.IsNullOrEmpty(idJoueur) && !string.IsNullOrEmpty(idPersonnage))
@@ -41,7 +43,7 @@ namespace VinlandSol.IHM
                 using (StreamWriter sw = File.AppendText(filePath))
                 {
                     // Écrivez les données dans le fichier
-                    sw.WriteLine($"{idJoueur}, {idPersonnage}");
+                    sw.WriteLine($"{idJoueur}, {idPersonnage}, {dateCreation}");
                 }
                 // Effacez les TextBox après sauvegarde
                 IdJoueur.Clear();
