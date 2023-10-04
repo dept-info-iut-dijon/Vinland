@@ -38,7 +38,17 @@ namespace VinlandSol.IHM
         {
             Personnages pagecreationperso = new Personnages();
             pagecreationperso.Show();
-            CartesWindow.Close();
+
+            var timer = new System.Timers.Timer(100); // Délai de 100 millisecondes 
+            timer.Elapsed += (s, args) =>
+            {
+                timer.Stop();
+                Dispatcher.Invoke(() =>
+                {
+                    CartesWindow.Close(); // On ferme cette fenêtre en retard pour éviter que le if de ShutdownEnForce ne passe.
+                });
+            };
+            timer.Start();
         }
 
         private void OeilChange(object sender, RoutedEventArgs e)
