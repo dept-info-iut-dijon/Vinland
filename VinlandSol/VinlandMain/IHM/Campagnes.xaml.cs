@@ -20,7 +20,6 @@ namespace VinlandMain.IHM
     /// </summary>
     public partial class Campagnes : Window
     {
-        // Créez une nouvelle campagne avec des valeurs par défaut
         Campagne nouvelleCampagne = new Campagne
         {
             Nom = "Nouvelle Campagne par défaut",
@@ -42,7 +41,7 @@ namespace VinlandMain.IHM
         public Campagnes()
         {
             InitializeComponent();
-            LoadCampagnesDepuisFichier("campagnes.txt");
+            LoadCampagnes("campagnes.txt");
             CampagnesListe.SelectionChanged += CampagnesListe_SelectionChanged;
         }
         //Le fichier se save dans -> VinlandSol\VinlandMain\bin\Debug\net6.0-windows
@@ -51,7 +50,8 @@ namespace VinlandMain.IHM
             try
             {
                 System.IO.File.WriteAllLines(filePath, campagnes.Select(c => c.Nom));
-                MessageBox.Show("Les noms de campagne ont été enregistrés dans le fichier texte avec succès.", "Enregistrement Réussi", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                MessageBox.Show("La sauvegarde c'est réalisé avec succès.", "Enregistrement Réussi", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
@@ -71,7 +71,7 @@ namespace VinlandMain.IHM
                 return new List<string>();
             }
         }
-        private void LoadCampagnesDepuisFichier(string filePath)
+        private void LoadCampagnes(string filePath)
         {
             List<string> nomsDeCampagnes = LoadCampagnesTxt(filePath);
             campagnes.Clear();
@@ -115,6 +115,7 @@ namespace VinlandMain.IHM
             string newCampaignName = NomNouvCamp.Text;
             if (!campagnes.Any(c => c.Nom == newCampaignName))            {
                 nouvelleCampagne.Nom = newCampaignName;
+
                 NomCampTextBlock.Text = newCampaignName;
                 campagnes.Add(nouvelleCampagne);
                 CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
