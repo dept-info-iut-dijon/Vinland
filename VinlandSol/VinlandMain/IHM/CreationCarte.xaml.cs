@@ -27,6 +27,9 @@ namespace VinlandSol.IHM
 
         private void CreationCarte_Click(object sender, RoutedEventArgs e)
         {
+            Carte carte = new Carte();
+            carte.Show();
+            
             this.Close();
         }
     }
