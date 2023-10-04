@@ -20,6 +20,7 @@ namespace VinlandSol.IHM
     /// </summary>
     public partial class CreationCarte : Window
     {
+        Cartes cartes = new Cartes();
         public CreationCarte()
         {
             InitializeComponent();
@@ -29,7 +30,7 @@ namespace VinlandSol.IHM
         {
             Carte carte = new Carte();
             carte.Show();
-            
+            cartes.Close();
             this.Close();
         }
     }
