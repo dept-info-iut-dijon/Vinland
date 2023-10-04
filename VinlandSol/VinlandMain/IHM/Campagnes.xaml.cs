@@ -167,8 +167,12 @@ namespace VinlandMain.IHM
 
                 NomCampTextBox.Visibility = Visibility.Visible;
                 NomCampTextBlock.Visibility = Visibility.Collapsed;
+
+                // Assurez-vous de mémoriser l'indice de la campagne en cours d'édition
+                indiceCampagneEnEdition = selectedIndex;
             }
         }
+        private int indiceCampagneEnEdition = -1; // Variable pour mémoriser l'indice de la campagne en cours d'édition
         private void EditS_Click(object sender, RoutedEventArgs e)
         {
             RejoidComp.Visibility = Visibility.Visible;
@@ -208,6 +212,48 @@ namespace VinlandMain.IHM
             pagecreation.Left = this.Left;
             pagecreation.Top = this.Top;
             CampagnesWindow.Close();
+        }
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            if (indiceCampagneEnEdition >= 0 && indiceCampagneEnEdition < campagnes.Count)
+            {
+                // Récupérez le nouveau nom de la campagne depuis le TextBox
+                string newCampaignName = NomCampTextBox.Text;
+
+                // Mettez à jour le nom de la campagne dans la liste
+                campagnes[indiceCampagneEnEdition] = new Campagne
+                {
+                    Nom = newCampaignName,
+                    DateCreation = campagnes[indiceCampagneEnEdition].DateCreation,
+                    DateModification = DateTime.Now, // Vous pouvez mettre à jour la date de modification ici
+                    NombreCartes = campagnes[indiceCampagneEnEdition].NombreCartes,
+                    NombrePersonnages = campagnes[indiceCampagneEnEdition].NombrePersonnages
+                };
+
+                // Mettez à jour la ListBox avec les noms des campagnes
+                CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
+
+                // Générez un nom de fichier unique basé sur un timestamp
+                string fileName = "campagnes_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
+
+                // Enregistrez la liste mise à jour dans un fichier texte
+                SaveCampagnesTxt("campagnes.txt");
+            }
+
+            // Réinitialisez la variable d'indice de campagne en édition
+            indiceCampagneEnEdition = -1;
+
+            // Cachez le TextBox et affichez le TextBlock
+            NomCampTextBox.Visibility = Visibility.Collapsed;
+            NomCampTextBlock.Visibility = Visibility.Visible;
+
+            // Cachez le bouton "Valider"
+            Valider.Visibility = Visibility.Collapsed;
+
+            // Affichez les boutons "Éditer" et "Sauvegarder"
+            Edit.Visibility = Visibility.Visible;
+            EditS.Visibility = Visibility.Collapsed;
+            Sauv.Visibility = Visibility.Collapsed;
         }
     }
 }
