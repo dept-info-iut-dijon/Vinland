@@ -78,6 +78,31 @@ namespace VinlandSol.IHM
         }
 
         /// <summary>
+        /// Ouvre le fenêtre Carte et ferme la fenêtre actuelle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OuvrirCarte_Click(object sender, RoutedEventArgs e)
+        {
+            Carte pagecreation = new Carte();
+            pagecreation.Left = this.Left;
+            pagecreation.Top = this.Top;
+            pagecreation.Show();
+
+            CartesWindow.Hide(); // Evite de voir la fenêtre se fermer en retard
+            var timer = new System.Timers.Timer(100); // Délai de 100 millisecondes 
+            timer.Elapsed += (s, args) =>
+            {
+                timer.Stop();
+                Dispatcher.Invoke(() =>
+                {
+                    CartesWindow.Close(); // On ferme cette fenêtre en retard pour éviter que le if de ShutdownEnForce ne passe.
+                });
+            };
+            timer.Start();
+        }
+
+        /// <summary>
         /// Force le shutdown de l'application quand CreationCarte est la dernière fenêtre à être fermée
         /// </summary>
         /// <param name="sender"></param>
