@@ -25,6 +25,12 @@ namespace VinlandSol.IHM
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// Ouvre la fenêtre CreationCompte et ferme la fenêtre actuelle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AnnuleCreaCompte_Click(object sender, RoutedEventArgs e)
         {
             MainWindow pagecreation = new MainWindow();

@@ -25,8 +25,14 @@ namespace VinlandSol
         public MainWindow()
         {
             InitializeComponent();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen; // La fenêtre de départ est ouverte au centre de l'écran
         }
 
+        /// <summary>
+        /// Ouvre la fenêtre CreationCompte et ferme la fenêtre actuelle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OuvrirCreationCompte_Click(object sender, RoutedEventArgs e)
         {
             CreationCompte pagecreation = new CreationCompte();
@@ -36,6 +42,11 @@ namespace VinlandSol
             Vinland.Close();
         }
 
+        /// <summary>
+        /// Ouvre la fenêtre Campagnes et ferme la fenêtre actuelle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OuvrirCampagnes_Click(object sender, RoutedEventArgs e)
         {
             Campagnes pagecreation = new Campagnes();
