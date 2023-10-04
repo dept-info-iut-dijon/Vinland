@@ -39,6 +39,7 @@ namespace VinlandSol.IHM
             Personnages pagecreationperso = new Personnages();
             pagecreationperso.Show();
 
+            CartesWindow.Hide(); // Evite de voir la fenêtre se fermer en retard
             var timer = new System.Timers.Timer(100); // Délai de 100 millisecondes 
             timer.Elapsed += (s, args) =>
             {
@@ -83,8 +84,7 @@ namespace VinlandSol.IHM
             if (Application.Current.Windows.Count == 1) 
             {
                 Application.Current.Shutdown();
-            }
-            
+            }        
         }
 
         /// <summary>

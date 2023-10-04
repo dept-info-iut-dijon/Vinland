@@ -39,6 +39,7 @@ namespace VinlandSol.IHM
             Campagnes pagecreation = new Campagnes();
             pagecreation.Show();
 
+            PersonnagesWindow.Hide(); // Evite de voir la fenêtre se fermer en retard
             var timer = new System.Timers.Timer(100); // Délai de 100 millisecondes 
             timer.Elapsed += (s, args) =>
             {
@@ -61,6 +62,7 @@ namespace VinlandSol.IHM
             Cartes pagecreation = new Cartes();
             pagecreation.Show();
 
+            PersonnagesWindow.Hide(); // Evite de voir la fenêtre se fermer en retard
             var timer = new System.Timers.Timer(100); // Délai de 100 millisecondes 
             timer.Elapsed += (s, args) =>
             {
