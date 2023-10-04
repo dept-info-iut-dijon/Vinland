@@ -23,7 +23,6 @@ namespace VinlandSol.IHM
         public AjouterPersonnage()
         {
             InitializeComponent();
-
             btnAjouter.Click += BtnAjouter_Click;
         }
 
@@ -42,17 +41,14 @@ namespace VinlandSol.IHM
                 using (StreamWriter sw = File.AppendText(filePath))
                 {
                     // Écrivez les données dans le fichier
-                    sw.WriteLine($"ID du joueur: {idJoueur}, Nom du personnage: {idPersonnage}");
+                    sw.WriteLine($"{idJoueur}, {idPersonnage}");
                 }
-
                 // Effacez les TextBox après sauvegarde
                 IdJoueur.Clear();
                 IdPersonnage.Clear();
 
                 // Affichez un message de confirmation
-                MessageBox.Show("Personnage ajouté avec succès !");
-
-                
+                MessageBox.Show("Personnage ajouté avec succès !");                
             }
             else
             {
