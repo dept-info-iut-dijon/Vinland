@@ -51,7 +51,7 @@ namespace VinlandMain.IHM
             {
                 System.IO.File.WriteAllLines(filePath, campagnes.Select(c => c.Nom));
 
-                MessageBox.Show("Les noms de campagne ont été enregistrés dans le fichier texte avec succès.", "Enregistrement Réussi", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("La sauvegarde c'est réalisé avec succès.", "Enregistrement Réussi", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {

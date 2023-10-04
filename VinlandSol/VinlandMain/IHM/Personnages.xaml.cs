@@ -72,7 +72,7 @@ namespace VinlandSol.IHM
                         string idPersonnage = elements[1].Trim();
 
                         // Ajoutez les donnÃ©es Ã  la ListBox
-                        PersonnagesListe.Items.Add($"ID du joueur: {idJoueur}, Nom du personnage: {idPersonnage}");
+                        PersonnagesListe.Items.Add($"{idPersonnage}");
                         personnages.Add(new Personnage
                         {
                             NomUtilisateur = idJoueur,
@@ -93,20 +93,16 @@ namespace VinlandSol.IHM
             if (selectedIndex >= 0 && selectedIndex < personnages.Count)
             {
                 string filePath = "personnages.txt";
-                // Assurez-vous que le fichier existe
                 if (File.Exists(filePath))
                 {
-                    // Lire toutes les lignes du fichier
                     string[] lignes = File.ReadAllLines(filePath);
-
-                    // Divisez la ligne sélectionnée en ID du joueur et Nom du personnage
                     string[] elements = lignes[selectedIndex].Split(',');
 
                     if (elements.Length == 2)
                     {
                         string idJoueur = elements[0].Trim();
                         string idPersonnage = elements[1].Trim();
-                        // Mettez à jour les TextBlocks
+
                         NomUtilisateurTextBlock.Text = idJoueur;
                         NomPersonnageTextBlock.Text = idPersonnage;
                         DateCreationTextBlock.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
