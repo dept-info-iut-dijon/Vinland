@@ -32,24 +32,20 @@
         <TextBlock x:Name="DateModificationTextBlock" Margin="1034,390,100,0" VerticalAlignment="Top" FontSize="20" Height="55"/>
 
         <Label Content="Nombre de cartes : " Margin="700,460,420,0" VerticalAlignment="Top" FontSize="30" Height="55"/>
-        <TextBox x:Name="NombreCartesTextBox" Margin="1035,460,100,0" VerticalAlignment="Top" FontSize="20" Height="55" Visibility="Collapsed"/>
         <TextBlock x:Name="NombreCartesTextBlock" Margin="1035,471,100,0" VerticalAlignment="Top" FontSize="20" Height="46"/>
 
         <Label Content="Nombre de personnage : " Margin="700,530,328,0" VerticalAlignment="Top" FontSize="30" Height="55"/>
-        <TextBox x:Name="NombrePersonnagesTextBox" Margin="1035,530,100,0" VerticalAlignment="Top" FontSize="20" Height="55" Visibility="Collapsed"/>
         <TextBlock x:Name="NombrePersonnagesTextBlock" Margin="1048,544,100,0" VerticalAlignment="Top" FontSize="20" Height="46"/>
 
         <!--Partie Droite bas-->
         <Button Content="Rejoindre la Campagne" x:Name="RejoidComp" Margin="0,0,270,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="430" Click="OuvrirPersonnages_Click" />
         <Button Content="Rejoindre la Camp" x:Name="RejoidCompS" Margin="0,0,420,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="340" Click="OuvrirPersonnages_Click" Visibility="Collapsed"/>
-
         <Button x:Name="Edit" FontSize="40" Margin="0,0,100,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="70" Background="{x:Null}" BorderThickness="0,0,0,0" Click="Edit_Click">
             <Image Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
         </Button>
         <Button x:Name="EditS" FontSize="40" Margin="0,0,20,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="70" Background="{x:Null}" BorderThickness="0,0,0,0" Click="EditS_Click" Visibility="Collapsed">
             <Image Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
         </Button>
-
         <Button Content="Sauvegarder" x:Name="Sauv" Margin="0,0,160,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Click="Save_Click" Visibility="Collapsed"/>
     </Grid>
 </Window>
