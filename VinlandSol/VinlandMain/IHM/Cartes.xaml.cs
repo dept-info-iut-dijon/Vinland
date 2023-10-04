@@ -37,8 +37,8 @@ namespace VinlandSol.IHM
         private void OuvrirPersonnages_Click(object sender, RoutedEventArgs e)
         {
             Personnages pagecreationperso = new Personnages();
-            pagecreation.Left = this.Left;
-            pagecreation.Top = this.Top;
+            pagecreationperso.Left = this.Left;
+            pagecreationperso.Top = this.Top;
             pagecreationperso.Show();
 
             CartesWindow.Hide(); // Evite de voir la fenêtre se fermer en retard
