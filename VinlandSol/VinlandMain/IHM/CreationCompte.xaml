@@ -13,15 +13,15 @@
         <TextBlock Text="Création de compte" Margin="491,0,491,425" FontFamily="Arial" Height="70" TextAlignment="Center"/>
 
         <!--Partie Login-->
-        <TextBlock Text="Nom d'utilisateur :" Margin="300,220,0,450" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Left" Width="391"/>
-        <TextBlock Text="Mot de passe :" Margin="300,320,0,350" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Left" Width="391" />
+        <TextBlock Text="Nom d'utilisateur :" Margin="300,220,0,450" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Left" Width="391" Height="70"/>
+        <TextBlock Text="Mot de passe :" Margin="300,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Left" Width="391" Height="70" />
 
-        <TextBox Margin="750,220,0,450" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Width="390"/>
-        <TextBox Margin="750,320,0,350" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Width="390"/>
+        <TextBox Margin="750,220,0,0" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="390" FontSize="40" Height="70"/>
+        <TextBox Margin="750,330,0,0" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="390" FontSize="40" Height="70"/>
 
         <!--Partie Role-->
         <TextBlock Text="Rôle souhaité :" Margin="300,430,0,230" HorizontalAlignment="Left" VerticalAlignment="Center" Width="306" />
-        <ComboBox Name="ChoixRole" Margin="750,430,250,230">
+        <ComboBox Name="ChoixRole" Margin="750,431,250,204" FontSize="40">
             <ComboBoxItem Content="Maitre du jeu"/>
             <ComboBoxItem Content="Joueur"/>
         </ComboBox>

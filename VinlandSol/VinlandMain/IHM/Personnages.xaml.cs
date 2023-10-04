@@ -35,10 +35,6 @@ namespace VinlandSol.IHM
             public string NomUtilisateur { get; set; }
             public DateTime DateCreation { get; set; }
         }
-
-
-
-
         private AjouterPersonnage? pageajouterPerso;
         private bool ajouterPersoOpen = false;
 
