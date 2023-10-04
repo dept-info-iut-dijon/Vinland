@@ -26,8 +26,8 @@ namespace VinlandMain.IHM
             Nom = "Nouvelle Campagne par défaut",
             DateCreation = DateTime.Now,
             DateModification = DateTime.Now,
-            NombreCartes = 0, // Valeur par défaut, vous pouvez la modifier
-            NombrePersonnages = 0 // Valeur par défaut, vous pouvez la modifier
+            NombreCartes = 0,
+            NombrePersonnages = 0
         };
         public struct Campagne
         {
@@ -67,12 +67,6 @@ namespace VinlandMain.IHM
         {
             // Affiche les TextBox et cache les TextBlock
             NomNouvCamp.Visibility = Visibility.Visible;
-            RejoidComp.Visibility = Visibility.Collapsed;
-            RejoidCompS.Visibility = Visibility.Visible;
-            Edit.Visibility = Visibility.Collapsed;
-            EditS.Visibility = Visibility.Visible;
-            Sauv.Visibility = Visibility.Visible;
-            NomNouvCamp.Visibility = Visibility.Visible;
             Valider.Visibility = Visibility.Visible;
         }
         private void Valider_Click(object sender, RoutedEventArgs e)
@@ -95,10 +89,13 @@ namespace VinlandMain.IHM
             // Sélectionnez la nouvelle campagne dans la ListBox (facultatif)
             CampagnesListe.SelectedItem = newCampaignName;
 
+            // Générez un nom de fichier unique basé sur un timestamp
+            string fileName = "campagnes_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
+
             // Enregistrez la liste mise à jour dans un fichier texte
-            EnregistrerCampagnesDansFichierTexte("campagnes.txt");
+            SaveCampagnesTxt("campagnes.txt");
         }
-        private void EnregistrerCampagnesDansFichierTexte(string filePath)
+        private void SaveCampagnesTxt(string filePath)
         {
             try
             {
