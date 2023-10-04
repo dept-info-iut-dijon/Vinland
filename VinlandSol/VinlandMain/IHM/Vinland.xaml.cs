@@ -30,6 +30,8 @@ namespace VinlandSol
         private void OuvrirCreationCompte_Click(object sender, RoutedEventArgs e)
         {
             CreationCompte pagecreation = new CreationCompte();
+            pagecreation.Left = this.Left; 
+            pagecreation.Top = this.Top; 
             pagecreation.Show();
             Vinland.Close();
         }
@@ -37,6 +39,8 @@ namespace VinlandSol
         private void OuvrirCampagnes_Click(object sender, RoutedEventArgs e)
         {
             Campagnes pagecreation = new Campagnes();
+            pagecreation.Left = this.Left; 
+            pagecreation.Top = this.Top;
             pagecreation.Show();
             Vinland.Close();
         }

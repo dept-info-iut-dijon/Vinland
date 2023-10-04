@@ -37,6 +37,8 @@ namespace VinlandSol.IHM
         private void OuvrirPersonnages_Click(object sender, RoutedEventArgs e)
         {
             Personnages pagecreationperso = new Personnages();
+            pagecreation.Left = this.Left;
+            pagecreation.Top = this.Top;
             pagecreationperso.Show();
 
             CartesWindow.Hide(); // Evite de voir la fenêtre se fermer en retard
@@ -68,6 +70,8 @@ namespace VinlandSol.IHM
             {
                 pagecreationcarte = new CreationCarte();
                 pagecreationcarte.Closed += CreationCarte_Closed;
+                pagecreationcarte.Left = this.Left;
+                pagecreationcarte.Top = this.Top;
                 pagecreationcarte.Show();
                 creaCarteOpen = true;
             }     

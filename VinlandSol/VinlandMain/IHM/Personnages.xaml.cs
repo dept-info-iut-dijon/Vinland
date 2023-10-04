@@ -37,6 +37,8 @@ namespace VinlandSol.IHM
         private void OuvrirCampagnes_Click(object sender, RoutedEventArgs e)
         {
             Campagnes pagecreation = new Campagnes();
+            pagecreation.Left = this.Left;
+            pagecreation.Top = this.Top;
             pagecreation.Show();
 
             PersonnagesWindow.Hide(); // Evite de voir la fenêtre se fermer en retard
@@ -60,6 +62,8 @@ namespace VinlandSol.IHM
         private void OuvrirCartes_Click(object sender, RoutedEventArgs e)
         {
             Cartes pagecreation = new Cartes();
+            pagecreation.Left = this.Left;
+            pagecreation.Top = this.Top;
             pagecreation.Show();
 
             PersonnagesWindow.Hide(); // Evite de voir la fenêtre se fermer en retard
@@ -86,6 +90,8 @@ namespace VinlandSol.IHM
             {
                 pageajouterPerso = new AjouterPersonnage();
                 pageajouterPerso.Closed += AjouterPerso_Closed;
+                pageajouterPerso.Left = this.Left;
+                pageajouterPerso.Top = this.Top;
                 pageajouterPerso.Show();
                 ajouterPersoOpen = true;
             }
@@ -103,7 +109,6 @@ namespace VinlandSol.IHM
             {
                 Application.Current.Shutdown();
             }
-
         }
 
         /// <summary>

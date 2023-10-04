@@ -28,6 +28,8 @@ namespace VinlandSol.IHM
         private void AnnuleCreaCompte_Click(object sender, RoutedEventArgs e)
         {
             MainWindow pagecreation = new MainWindow();
+            pagecreation.Left = this.Left;
+            pagecreation.Top = this.Top; 
             pagecreation.Show();
             Creation_Compte.Close();
         }

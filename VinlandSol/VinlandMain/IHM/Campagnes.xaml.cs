@@ -171,6 +171,8 @@ namespace VinlandMain.IHM
         {
             Personnages pagecreation = new Personnages();
             pagecreation.Show();
+            pagecreation.Left = this.Left;
+            pagecreation.Top = this.Top;
             CampagnesWindow.Close();
         }
     }
