@@ -24,5 +24,10 @@ namespace VinlandSol.IHM
         {
             InitializeComponent();
         }
+
+        private void CreationCarte_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
