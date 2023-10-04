@@ -137,6 +137,7 @@ namespace VinlandMain.IHM
             Edit.Visibility = Visibility.Collapsed;
             EditS.Visibility = Visibility.Visible;
             Sauv.Visibility = Visibility.Visible;
+            SupprimerCamp.Visibility = Visibility.Visible;
 
             if (selectedIndex >= 0 && selectedIndex < campagnes.Count)
             {
@@ -156,6 +157,7 @@ namespace VinlandMain.IHM
             Sauv.Visibility = Visibility.Collapsed;
             NomCampTextBox.Visibility = Visibility.Collapsed;
             NomCampTextBlock.Visibility = Visibility.Visible;
+            SupprimerCamp.Visibility = Visibility.Collapsed;
         }
         private void Save_Click(object sender, RoutedEventArgs e)
         {
@@ -193,5 +195,28 @@ namespace VinlandMain.IHM
             pagecreation.Top = this.Top;
             CampagnesWindow.Close();
         }
+
+        private void SupprimerCamp_Click(object sender, RoutedEventArgs e)
+        {
+            int selection = CampagnesListe.SelectedIndex;
+
+            if (selection >= 0 && selection < campagnes.Count)
+            {
+                campagnes.RemoveAt(selection);
+
+                CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
+
+                // Sauvegarde de la campagne
+                SaveCampagnesTxt("campagnes.txt");
+
+                // Champs qui se rénitialisent 
+                NomCampTextBlock.Text = "";
+                DateCreationTextBlock.Text = "";
+                DateModificationTextBlock.Text = "";
+                NombreCartesTextBlock.Text = "";
+                NombrePersonnagesTextBlock.Text = "";
+            }
+        }
+
     }
 }
