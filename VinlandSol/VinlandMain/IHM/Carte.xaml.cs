@@ -27,6 +27,8 @@ namespace VinlandSol.IHM
         private string nom;
         private int largeur;
         private int hauteur;
+        private bool isRightMouseDown = false;
+        private Point lastMousePosition;
 
         public Carte()
         {
@@ -36,8 +38,12 @@ namespace VinlandSol.IHM
             this.nom = "Carte par default";
             this.largeur = 10;
             this.hauteur = 10;
+
             GenerateHexagonalMap(largeur, hauteur); // Géneration de la map
 
+            HexagonCanvas.MouseRightButtonDown += Canvas_MouseRightButtonDown; // Déplacement de la map avec le clic droit
+            HexagonCanvas.MouseRightButtonUp += Canvas_MouseRightButtonUp;
+            HexagonCanvas.MouseMove += Canvas_MouseMove;
         }
 
         public Carte(string nom, int largeur, int hauteur)
@@ -47,10 +53,14 @@ namespace VinlandSol.IHM
             hexagonManager = new HexagonManager(HexagonCanvas); // Add les hexagones
             this.nom = nom;
             this.largeur = largeur;
-            this.hauteur = hauteur;
-             
+            this.hauteur = hauteur;  
+            
             GenerateHexagonalMap(largeur, hauteur); // Géneration de la map
-     
+
+            HexagonCanvas.MouseRightButtonDown += Canvas_MouseRightButtonDown; // Déplacement de la map avec le clic droit
+            HexagonCanvas.MouseRightButtonUp += Canvas_MouseRightButtonUp;
+            HexagonCanvas.MouseMove += Canvas_MouseMove;
+
         }
 
         /// <summary>
@@ -128,5 +138,56 @@ namespace VinlandSol.IHM
             pagecreation.Show();
             CarteWindow.Close();
         }
+
+        /// <summary>
+        /// Pression du clic droit détecté (change l'état du booléen en True)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Canvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                isRightMouseDown = true;
+                lastMousePosition = e.GetPosition(HexagonCanvas);
+                HexagonCanvas.CaptureMouse();
+            }
+        }
+
+        /// <summary>
+        /// Relachement du clic droit détecté (change l'état du booléen en False)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Canvas_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (isRightMouseDown)
+            {
+                isRightMouseDown = false;
+                HexagonCanvas.ReleaseMouseCapture();
+            }
+        }
+
+        /// <summary>
+        /// Déplacement de la map suivant la position de la souris
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Canvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isRightMouseDown)
+            {
+                Point currentPosition = e.GetPosition(HexagonCanvas);
+                double deltaX = (currentPosition.X - lastMousePosition.X) * 0.5;
+                double deltaY = (currentPosition.Y - lastMousePosition.Y) * 0.5;
+
+                Matrix matrix = zoomTransform.Matrix;
+                matrix.Translate(deltaX, deltaY);
+                zoomTransform.Matrix = matrix;
+
+                lastMousePosition = currentPosition;
+            }
+        }
+
     }
 }
