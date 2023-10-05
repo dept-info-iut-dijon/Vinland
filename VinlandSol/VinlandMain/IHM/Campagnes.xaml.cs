@@ -153,14 +153,7 @@ namespace VinlandMain.IHM
         }
         private void EditS_Click(object sender, RoutedEventArgs e)
         {
-            RejoidComp.Visibility = Visibility.Visible;
-            RejoidCompS.Visibility = Visibility.Collapsed;
-            Edit.Visibility = Visibility.Visible;
-            EditS.Visibility = Visibility.Collapsed;
-            Sauv.Visibility = Visibility.Collapsed;
-            NomCampTextBox.Visibility = Visibility.Collapsed;
-            NomCampTextBlock.Visibility = Visibility.Visible;
-            SupprimerCamp.Visibility = Visibility.Collapsed;
+            MasquerElements();
         }
         private void Save_Click(object sender, RoutedEventArgs e)
         {
@@ -179,14 +172,7 @@ namespace VinlandMain.IHM
                 SaveCampagnesTxt("campagnes.txt");
             }
             indiceCampagneEnEdition = -1;
-            NomCampTextBox.Visibility = Visibility.Collapsed;
-            NomCampTextBlock.Visibility = Visibility.Visible;            
-            Valider.Visibility = Visibility.Collapsed;
-            RejoidComp.Visibility = Visibility.Visible;
-            RejoidCompS.Visibility = Visibility.Collapsed;
-            Edit.Visibility = Visibility.Visible;
-            EditS.Visibility = Visibility.Collapsed;
-            Sauv.Visibility = Visibility.Collapsed;
+            MasquerElements();
         }
         private void OuvrirPersonnages_Click(object sender, RoutedEventArgs e)
         {
@@ -214,6 +200,10 @@ namespace VinlandMain.IHM
                 DateCreationTextBlock.Text = "";
                 DateModificationTextBlock.Text = "";
             }
+            MasquerElements();
+        }
+        private void MasquerElements()
+        {
             NomCampTextBox.Visibility = Visibility.Collapsed;
             NomCampTextBlock.Visibility = Visibility.Visible;
             Valider.Visibility = Visibility.Collapsed;
