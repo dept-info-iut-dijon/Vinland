@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         x:Name="CarteWindow"
         Title="Carte" Height="750" Width="1400">
+    
     <Grid x:Name="LaGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -18,38 +19,44 @@
             <RowDefinition Height="5*"></RowDefinition>
         </Grid.RowDefinitions>
 
-
+        
         <Canvas Name="HexagonCanvas" Background="White" MouseWheel="Canvas_MouseWheel" Grid.Column="1" Grid.Row="1">
             <!-- Les images des hexagones seront générées ici -->
         </Canvas>
+        
 
-        <!-- Stackpanel Haut Gauche -->
-        <StackPanel Grid.Row="0" Grid.Column="0"  Background="LightBlue">
-            <Button FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" Height="100" Width="180" Click="OuvrirCartes_Click" Background="{x:Null}" BorderThickness="0">
-                <Image Source="/IHM/Media/Icones/fleche_retour.png" Height="70" Width="70" />
-            </Button>
-        </StackPanel>
+        <!-- Stackpanel Haut -->
+        <StackPanel Grid.Row="0" Grid.Column="1"  Background="LightGray"/>
 
-        <!-- Stackpanel Haut Milieu-->
-        <StackPanel Grid.Row="0" Grid.Column="1"  Background="LightBlue">
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Row="0" Grid.Column="1">
+            <StackPanel Background="Transparent">
+   
+                <Button FontSize="20" Height="40" Width="40" Margin="800,10,0,0" Click="OuvrirCartes_Click" Background="{x:Null}" BorderThickness="0">
+                    <Image Source="/IHM/Media/Icones/actualiser.png" Height="30" Width="30" />
+                </Button>
 
-        </StackPanel>
-
-        <!-- Stackpanel Haut Droite-->
-        <StackPanel Grid.Row="0" Grid.Column="2"  Background="LightBlue">
-            <Button FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" Height="100" Width="180" Click="OuvrirCartes_Click" Background="{x:Null}" BorderThickness="0">
-                <Image Source="/IHM/Media/Icones/actualiser.png" Height="70" Width="70" />
-            </Button>
-        </StackPanel>
+                <Button FontSize="20" Content="Enregistrer" Height="40" Width="150" Margin="800,15,0,0" Background="lightgreen" Click="OuvrirCartes_Click"/>
+            </StackPanel>
+        </Border>
 
         <!-- Stackpanel Gauche -->
-        <StackPanel Grid.Column="0" Background="LightBlue" Grid.Row="1">
+        <StackPanel Grid.Column="0" Grid.RowSpan="2" Background="LightGray" Grid.Row="0"/>
 
-        </StackPanel>
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
+            <StackPanel Background="Transparent">
+                <Button FontSize="20" Content="Enregistrer" Height="40" Width="150" Margin="0,600,0,0" Background="lightgreen" Click="OuvrirCartes_Click"/>
+                <Button FontSize="20" Content="Retour carte" Height="40" Width="150" Margin="0,20,0,0" Background="LightSalmon" Click="OuvrirCartes_Click"/>
+            </StackPanel>
+        </Border>
 
         <!-- Stackpanel Droite -->
-        <StackPanel Grid.Column="2" Background="LightBlue" Grid.Row="1">
+        <StackPanel Grid.Column="2" Grid.RowSpan="2" Background="LightGray" Grid.Row="0"/>
 
-        </StackPanel>
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Column="2" Grid.Row="0" Grid.RowSpan="2">
+            <StackPanel Background="Transparent">
+                <Button FontSize="20" Content="Enregistrer" Height="40" Width="150" Margin="0,660,0,0" Background="lightgreen" Click="OuvrirCartes_Click"/>
+            </StackPanel>
+        </Border>
+        
     </Grid>
 </Window>
