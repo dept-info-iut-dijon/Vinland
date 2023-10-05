@@ -9,7 +9,9 @@
 
   <ItemGroup>
     <None Remove="IHM\Fonts\Mjolnir.ttf" />
+    <None Remove="IHM\Media\Icones\actualiser.png" />
     <None Remove="IHM\Media\Icones\crayon.png" />
+    <None Remove="IHM\Media\Icones\fleche_retour.png" />
     <None Remove="IHM\Media\Icones\oeil.png" />
     <None Remove="IHM\Media\Icones\oeilbarre.png" />
     <None Remove="IHM\Media\Icones\poubelle.png" />
@@ -27,7 +29,13 @@
     <Resource Include="IHM\Fonts\Mjolnir.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="IHM\Media\Icones\actualiser.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="IHM\Media\Icones\crayon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="IHM\Media\Icones\fleche_retour.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="IHM\Media\Icones\oeil.png">

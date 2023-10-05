@@ -6,16 +6,50 @@
         xmlns:local="clr-namespace:VinlandSol.IHM"
         mc:Ignorable="d"
         x:Name="CarteWindow"
-        Title="Carte" Height="750" Width="1400" Background="LightGray">
-    <Grid>
+        Title="Carte" Height="750" Width="1400">
+    <Grid x:Name="LaGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="5*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Content="Retour" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="56" Width="121" Click="OuvrirCartes_Click"/>
-        <Canvas Name="HexagonCanvas" Background="White" MouseWheel="Canvas_MouseWheel" Grid.Column="1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="5*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+
+        <Canvas Name="HexagonCanvas" Background="White" MouseWheel="Canvas_MouseWheel" Grid.Column="1" Grid.Row="1">
             <!-- Les images des hexagones seront générées ici -->
         </Canvas>
+
+        <!-- Stackpanel Haut Gauche -->
+        <StackPanel Grid.Row="0" Grid.Column="0"  Background="LightBlue">
+            <Button FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" Height="100" Width="180" Click="OuvrirCartes_Click" Background="{x:Null}" BorderThickness="0">
+                <Image Source="/IHM/Media/Icones/fleche_retour.png" Height="70" Width="70" />
+            </Button>
+        </StackPanel>
+
+        <!-- Stackpanel Haut Milieu-->
+        <StackPanel Grid.Row="0" Grid.Column="1"  Background="LightBlue">
+
+        </StackPanel>
+
+        <!-- Stackpanel Haut Droite-->
+        <StackPanel Grid.Row="0" Grid.Column="2"  Background="LightBlue">
+            <Button FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" Height="100" Width="180" Click="OuvrirCartes_Click" Background="{x:Null}" BorderThickness="0">
+                <Image Source="/IHM/Media/Icones/actualiser.png" Height="70" Width="70" />
+            </Button>
+        </StackPanel>
+
+        <!-- Stackpanel Gauche -->
+        <StackPanel Grid.Column="0" Background="LightBlue" Grid.Row="1">
+
+        </StackPanel>
+
+        <!-- Stackpanel Droite -->
+        <StackPanel Grid.Column="2" Background="LightBlue" Grid.Row="1">
+
+        </StackPanel>
     </Grid>
 </Window>

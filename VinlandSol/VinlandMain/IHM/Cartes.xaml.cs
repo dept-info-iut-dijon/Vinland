@@ -84,7 +84,7 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void OuvrirCarte_Click(object sender, RoutedEventArgs e)
         {
-            Carte pagecreation = new Carte();
+            Carte pagecreation = new Carte("test",15,15);
             pagecreation.Left = this.Left;
             pagecreation.Top = this.Top;
             pagecreation.Show();

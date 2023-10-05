@@ -24,12 +24,33 @@ namespace VinlandSol.IHM
         private HexagonManager hexagonManager;
         private MatrixTransform zoomTransform = new MatrixTransform();
         private List<Image> selectedHexagons = new List<Image>();
+        private string nom;
+        private int largeur;
+        private int hauteur;
+
         public Carte()
         {
             InitializeComponent();
             HexagonCanvas.RenderTransform = zoomTransform; // zoom map
             hexagonManager = new HexagonManager(HexagonCanvas); // Add les hexagones
-            GenerateHexagonalMap(10, 10); // Géneration de la map
+            this.nom = "Carte par default";
+            this.largeur = 10;
+            this.hauteur = 10;
+            GenerateHexagonalMap(largeur, hauteur); // Géneration de la map
+
+        }
+
+        public Carte(string nom, int largeur, int hauteur)
+        {
+            InitializeComponent();
+            HexagonCanvas.RenderTransform = zoomTransform; // zoom map
+            hexagonManager = new HexagonManager(HexagonCanvas); // Add les hexagones
+            this.nom = nom;
+            this.largeur = largeur;
+            this.hauteur = hauteur;
+             
+            GenerateHexagonalMap(largeur, hauteur); // Géneration de la map
+     
         }
 
         /// <summary>
@@ -47,6 +68,8 @@ namespace VinlandSol.IHM
             double hexHeight = 70;
             double verticalSpacing = 0;
 
+
+
             for (int row = 0; row < height; row++)
             {
                 for (int col = 0; col < width; col++)
@@ -59,13 +82,15 @@ namespace VinlandSol.IHM
                         x += hexWidth * 0.48;
                     }
 
-                    Hexagon hexagon = new Hexagon(x, y);
+                    Hexagon hexagon = new Hexagon(x + ((Width/7*5 - hexWidth * largeur) / 2) , y + ((Height - hexHeight * hauteur / 1.923076923 - 260) / 2)); // Le calcul permet de centrer les hexagones dans la fenêtre. 1.923076923 correspond a 500 (la hauteur d'un hexagone) divisé par 260 (la somme de la hauteur de la partie supérieure et de la partie inférieure de ce dernier) )
                     hexagonManager.AddHexagon(hexagon);
 
                     Image hexagonImage = hexagon.CreateImage();
                     HexagonCanvas.Children.Add(hexagonImage);
                 }
             }
+
+            
         }
 
         /// <summary>
@@ -79,7 +104,6 @@ namespace VinlandSol.IHM
             Point position = e.GetPosition(HexagonCanvas);
             double zoomFactor = 1.1;
             Matrix matrix = zoomTransform.Matrix;
-
             if (e.Delta > 0)
             {
                 matrix.ScaleAtPrepend(zoomFactor, zoomFactor, position.X, position.Y);
@@ -88,7 +112,6 @@ namespace VinlandSol.IHM
             {
                 matrix.ScaleAtPrepend(1.0 / zoomFactor, 1.0 / zoomFactor, position.X, position.Y);
             }
-
             zoomTransform.Matrix = matrix;
         }
 
