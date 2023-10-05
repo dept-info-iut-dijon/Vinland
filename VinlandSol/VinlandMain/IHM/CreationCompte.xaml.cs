@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VinlandMain.IHM;
 using VinlandSol.IHM;
+using VinlandSol.Métier;
 
 namespace VinlandSol.IHM
 {
@@ -38,6 +39,22 @@ namespace VinlandSol.IHM
             pagecreation.Top = this.Top; 
             pagecreation.Show();
             Creation_Compte.Close();
+        }
+        private void Creer_Click(object sender, RoutedEventArgs e)
+        {
+            string username = TBNomUtilisateur.Text;
+            string password = TBMdp.Text;
+
+            if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
+            {
+                UserAccountManager accountManager = new UserAccountManager();
+                accountManager.CreateUserAccount(username, password);
+                MainWindow pagecreation = new MainWindow();
+                pagecreation.Left = this.Left;
+                pagecreation.Top = this.Top;
+                pagecreation.Show();
+                Creation_Compte.Close();
+            }
         }
     }
 }

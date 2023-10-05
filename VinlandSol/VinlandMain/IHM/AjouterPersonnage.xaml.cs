@@ -43,7 +43,7 @@ namespace VinlandSol.IHM
                 using (StreamWriter sw = File.AppendText(filePath))
                 {
                     // Écrivez les données dans le fichier
-                    sw.WriteLine($"{idJoueur}, {idPersonnage}, {dateCreation}");
+                    sw.WriteLine($"{idJoueur}, {idPersonnage}");
                 }
                 // Effacez les TextBox après sauvegarde
                 IdJoueur.Clear();

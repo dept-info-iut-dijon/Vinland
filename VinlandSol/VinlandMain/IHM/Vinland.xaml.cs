@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VinlandMain.IHM;
 using VinlandSol.IHM;
+using VinlandSol.Métier;
 
 namespace VinlandSol
 {
@@ -49,8 +50,24 @@ namespace VinlandSol
         /// <param name="e"></param>
         private void OuvrirCampagnes_Click(object sender, RoutedEventArgs e)
         {
+            string username = TBNomUtilisateur.Text;
+            string password = TBMdp.Text;
+
+            UserAccountManager accountManager = new UserAccountManager();
+            if (accountManager.VerifyUserAccount(username, password))
+            {
+                Campagnes pagecreation = new Campagnes();
+                pagecreation.Left = this.Left;
+                pagecreation.Top = this.Top;
+                pagecreation.Show();
+                Vinland.Close();
+            }
+        }
+
+        private void Skip_Click(object sender, RoutedEventArgs e)
+        {
             Campagnes pagecreation = new Campagnes();
-            pagecreation.Left = this.Left; 
+            pagecreation.Left = this.Left;
             pagecreation.Top = this.Top;
             pagecreation.Show();
             Vinland.Close();
