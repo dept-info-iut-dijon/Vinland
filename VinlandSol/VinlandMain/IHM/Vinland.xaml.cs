@@ -51,7 +51,7 @@ namespace VinlandSol
         private void OuvrirCampagnes_Click(object sender, RoutedEventArgs e)
         {
             string username = TBNomUtilisateur.Text;
-            string password = TBMdp.Text;
+            string password = TBMdp.Password;
 
             UserAccountManager accountManager = new UserAccountManager();
             if (accountManager.VerifyUserAccount(username, password))

@@ -26,12 +26,16 @@ namespace VinlandMain.IHM
             Nom = "test",
             DateCreation = DateTime.Now,
             DateModification = DateTime.Now,
+            NombreCartes = 0,
+            NombrePersonnages = 0
         };
         public struct Campagne
         {
             public string Nom { get; set; }
             public DateTime DateCreation { get; set; }
             public DateTime DateModification { get; set; }
+            public int NombreCartes { get; set; }
+            public int NombrePersonnages { get; set; }
         }
         List<Campagne> campagnes = new List<Campagne>(); 
 
