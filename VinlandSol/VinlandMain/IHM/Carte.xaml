@@ -30,7 +30,7 @@
 
         <Border BorderBrush="Black" BorderThickness="3" Grid.Row="0" Grid.Column="1">
             <StackPanel Background="Transparent">
-   
+
                 <Button FontSize="20" Height="40" Width="40" Margin="800,10,0,0" Click="OuvrirCartes_Click" Background="{x:Null}" BorderThickness="0">
                     <Image Source="/IHM/Media/Icones/actualiser.png" Height="30" Width="30" />
                 </Button>

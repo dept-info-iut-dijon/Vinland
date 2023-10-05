@@ -27,6 +27,8 @@ namespace VinlandSol.IHM
         private string nom;
         private int largeur;
         private int hauteur;
+        private int zoomLevel = 100;
+        private int zoomLimit = 95;
 
         public Carte()
         {
@@ -106,11 +108,16 @@ namespace VinlandSol.IHM
             Matrix matrix = zoomTransform.Matrix;
             if (e.Delta > 0)
             {
+                zoomLevel += 1;
                 matrix.ScaleAtPrepend(zoomFactor, zoomFactor, position.X, position.Y);
             }
             else
-            {
-                matrix.ScaleAtPrepend(1.0 / zoomFactor, 1.0 / zoomFactor, position.X, position.Y);
+            {   if(zoomLevel > zoomLimit)
+                {
+                    zoomLevel -= 1;
+                    matrix.ScaleAtPrepend(1.0 / zoomFactor, 1.0 / zoomFactor, position.X, position.Y);
+                }
+               
             }
             zoomTransform.Matrix = matrix;
         }
