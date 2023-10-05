@@ -12,6 +12,7 @@ using VinlandSol.IHM;
 using VinlandSol;
 using System.Windows.Controls;
 using System.Globalization;
+using System.IO;
 
 namespace VinlandMain.IHM
 {
@@ -22,29 +23,27 @@ namespace VinlandMain.IHM
     {
         Campagne nouvelleCampagne = new Campagne
         {
-            Nom = "Nouvelle Campagne par défaut",
+            Nom = "test",
             DateCreation = DateTime.Now,
             DateModification = DateTime.Now,
-            NombreCartes = 0,
-            NombrePersonnages = 0
         };
         public struct Campagne
         {
             public string Nom { get; set; }
             public DateTime DateCreation { get; set; }
             public DateTime DateModification { get; set; }
-            public int NombreCartes { get; set; }
-            public int NombrePersonnages { get; set; }
         }
         List<Campagne> campagnes = new List<Campagne>(); 
+
         private int indiceCampagneEnEdition = -1;
         public Campagnes()
         {
-            InitializeComponent();
-            LoadCampagnes("campagnes.txt");
+            InitializeComponent();            
+            LoadCampagnes("campagnes.txt");            
             CampagnesListe.SelectionChanged += CampagnesListe_SelectionChanged;
         }
         //Le fichier se save dans -> VinlandSol\VinlandMain\bin\Debug\net6.0-windows
+        
         private void SaveCampagnesTxt(string filePath)
         {
             try
@@ -82,36 +81,37 @@ namespace VinlandMain.IHM
                     Nom = nom,
                     DateCreation = DateTime.Now,
                     DateModification = DateTime.Now,
-                    NombreCartes = 0,
-                    NombrePersonnages = 0
                 });
             }
             CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
         }
+        
         private void CampagnesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int selectedIndex = CampagnesListe.SelectedIndex;
-            AfficherInformationsCampagne(selectedIndex);
-        }
-        private void AfficherInformationsCampagne(int selectedIndex)
-        {
             if (selectedIndex >= 0 && selectedIndex < campagnes.Count)
             {
                 Campagne selectedCampagne = campagnes[selectedIndex];
                 NomCampTextBlock.Text = selectedCampagne.Nom;
                 DateCreationTextBlock.Text = selectedCampagne.DateCreation.ToString("dd/MM/yyyy HH:mm:ss");
                 DateModificationTextBlock.Text = selectedCampagne.DateModification.ToString("dd/MM/yyyy HH:mm:ss");
-                NombreCartesTextBlock.Text = selectedCampagne.NombreCartes.ToString();
-                NombrePersonnagesTextBlock.Text = selectedCampagne.NombrePersonnages.ToString();
             }
-        }
+        }     
         private void NouvelleCampagne_Click(object sender, RoutedEventArgs e)
         {
             NomNouvCamp.Visibility = Visibility.Visible;
             Valider.Visibility = Visibility.Visible;
         }
+        
         private void Valider_Click(object sender, RoutedEventArgs e)
         {
+            string contenu = NomNouvCamp.Text;
+            using (StreamWriter writer = File.AppendText("campagnes.txt"))
+            {
+                writer.Write(contenu + ",");
+            }
+            NomCampTextBlock.Text += contenu + Environment.NewLine;
+            
             string newCampaignName = NomNouvCamp.Text;
             if (!campagnes.Any(c => c.Nom == newCampaignName))            {
                 nouvelleCampagne.Nom = newCampaignName;
@@ -128,7 +128,10 @@ namespace VinlandMain.IHM
             {
                 MessageBox.Show("Le nom de la campagne existe déjà.", "Erreur de Nom de Campagne", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }        
+            NomNouvCamp.Visibility = Visibility.Collapsed;
+            Valider.Visibility = Visibility.Collapsed;
+        }   
+        
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
             int selectedIndex = CampagnesListe.SelectedIndex;
@@ -169,9 +172,7 @@ namespace VinlandMain.IHM
                 {
                     Nom = newCampaignName,
                     DateCreation = campagnes[indiceCampagneEnEdition].DateCreation,
-                    DateModification = DateTime.Now,
-                    NombreCartes = campagnes[indiceCampagneEnEdition].NombreCartes,
-                    NombrePersonnages = campagnes[indiceCampagneEnEdition].NombrePersonnages
+                    DateModification = DateTime.Now                    
                 };
                 CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
                 string fileName = "campagnes_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
@@ -205,18 +206,23 @@ namespace VinlandMain.IHM
                 campagnes.RemoveAt(selection);
 
                 CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
-
-                // Sauvegarde de la campagne
+                
                 SaveCampagnesTxt("campagnes.txt");
 
                 // Champs qui se rénitialisent 
                 NomCampTextBlock.Text = "";
                 DateCreationTextBlock.Text = "";
                 DateModificationTextBlock.Text = "";
-                NombreCartesTextBlock.Text = "";
-                NombrePersonnagesTextBlock.Text = "";
             }
+            NomCampTextBox.Visibility = Visibility.Collapsed;
+            NomCampTextBlock.Visibility = Visibility.Visible;
+            Valider.Visibility = Visibility.Collapsed;
+            RejoidComp.Visibility = Visibility.Visible;
+            RejoidCompS.Visibility = Visibility.Collapsed;
+            Edit.Visibility = Visibility.Visible;
+            EditS.Visibility = Visibility.Collapsed;
+            Sauv.Visibility = Visibility.Collapsed;
+            SupprimerCamp.Visibility = Visibility.Collapsed;
         }
-
     }
 }
