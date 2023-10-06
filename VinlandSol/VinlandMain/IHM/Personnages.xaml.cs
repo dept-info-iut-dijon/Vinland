@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -41,9 +42,10 @@ namespace VinlandSol.IHM
         public Personnages()
         {
             InitializeComponent();
-            Closed += ShutdownEnForce; // ShutdownEnForce est appelé à la fermeture de cette fenêtre
-            // Appelez la méthode pour charger les personnages depuis le fichier
+            Closed += ShutdownEnForce; 
+            
             LoadPersonnages();
+
         }
         private void LoadPersonnages()
         {
@@ -175,6 +177,66 @@ namespace VinlandSol.IHM
             }
         }
 
+        private void SupprimerPersonnage(object sender, RoutedEventArgs e)
+        {
+            int selectedIndex = PersonnagesListe.SelectedIndex;
+            string filePath = "personnages.txt";
+
+            if (selectedIndex >= 0 && selectedIndex < personnages.Count)
+            {
+
+                string nomPersonnageASupprimer = personnages[selectedIndex].NomPersonnage;
+
+                PersonnagesListe.Items.RemoveAt(selectedIndex);
+
+                personnages.RemoveAt(selectedIndex);
+
+                File.WriteAllLines(filePath, personnages.Select(p => $"{p.NomUtilisateur}, {p.NomPersonnage}"));
+
+                NomUtilisateurTextBlock.Text = "";
+                NomPersonnageTextBlock.Text = "";
+                DateCreationTextBlock.Text = "";
+            }
+        }
+
+        private void CrayonEdit_Click(object sender, RoutedEventArgs e)
+        {
+            NomPersonnageTextBox.Visibility = Visibility.Visible;
+            ValiderButton.Visibility = Visibility.Visible;
+
+
+        }
+
+        public void ValiderButton_Click(object sender, RoutedEventArgs e)
+        {
+            string nouveauNomPersonnage = NomPersonnageTextBox.Text;
+
+            int selectedIndex = PersonnagesListe.SelectedIndex;
+            if (selectedIndex >= 0 && selectedIndex < personnages.Count)
+            {
+                List<Personnage> personnagesClone = personnages.ToList();
+
+                personnagesClone[selectedIndex] = new Personnage
+                {
+                    NomPersonnage = nouveauNomPersonnage,
+                    NomUtilisateur = personnages[selectedIndex].NomUtilisateur,
+                    DateCreation = personnages[selectedIndex].DateCreation
+                };
+
+                PersonnagesListe.Items[selectedIndex] = nouveauNomPersonnage;
+
+                personnages = personnagesClone;
+
+                NomPersonnageTextBlock.Text = nouveauNomPersonnage;
+
+                string filePath = "personnages.txt";
+                File.WriteAllLines(filePath, personnages.Select(p => $"{p.NomUtilisateur}, {p.NomPersonnage}"));
+            }
+
+            NomPersonnageTextBox.Visibility = Visibility.Collapsed;
+            ValiderButton.Visibility = Visibility.Collapsed;
+        }
+
         /// <summary>
         /// Force le shutdown de l'application quand AjouterPersonnage est la dernière fenêtre a être fermée
         /// </summary>
@@ -200,28 +262,6 @@ namespace VinlandSol.IHM
             {
 
                 Application.Current.Shutdown();
-            }
-        }
-
-        private void SupprimerPersonnage(object sender, RoutedEventArgs e)
-        {
-            int selectedIndex = PersonnagesListe.SelectedIndex;
-            string filePath = "personnages.txt";
-
-            if (selectedIndex >= 0 && selectedIndex < personnages.Count)
-            {
-                
-                string nomPersonnageASupprimer = personnages[selectedIndex].NomPersonnage;
-
-                PersonnagesListe.Items.RemoveAt(selectedIndex);
-
-                personnages.RemoveAt(selectedIndex);
-
-                File.WriteAllLines(filePath, personnages.Select(p => $"{p.NomUtilisateur}, {p.NomPersonnage}"));
-
-                NomUtilisateurTextBlock.Text = "";
-                NomPersonnageTextBlock.Text = "";
-                DateCreationTextBlock.Text = "";
             }
         }
 

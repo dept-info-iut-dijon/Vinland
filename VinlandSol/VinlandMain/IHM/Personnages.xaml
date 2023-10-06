@@ -28,14 +28,14 @@
         <TextBlock x:Name="NomPersonnageTextBlock" Margin="1065,406,120,0" VerticalAlignment="Top" FontSize="30" Height="70"/>
         <TextBlock x:Name="DateCreationTextBlock" Margin="982,510,120,0" VerticalAlignment="Top" FontSize="30" Height="70"/>
 
-        <Button x:Name="boutonCrayon" FontSize="40" Margin="0,0,40,265" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0">
+        <Button x:Name="boutonCrayon" FontSize="40" Margin="0,0,40,265" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" Click="CrayonEdit_Click">
             <Image x:Name="crayon" Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
         </Button>
         <Button FontSize="40" Background="Red" Margin="0,0,40,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="SupprimerPersonnage" >
             <Image Source="Media/Icones/Poubelle.png" Height="70" Width="70" />
         </Button>
-        <TextBox x:Name="NomPersonnageTextBox" FontSize="30" Visibility="Collapsed" Margin="795,580,305,0" VerticalAlignment="Top" Height="50" Width="300"/>
-        <Button x:Name="ValiderButton" Content="Valider" FontSize="30" Visibility="Collapsed" Margin="870,647,380,0" VerticalAlignment="Top" Height="50" Width="150"/>
+        <TextBox x:Name="NomPersonnageTextBox" FontSize="30" Visibility="Collapsed" Margin="760,599,340,0" VerticalAlignment="Top" Height="50" Width="300"/>
+        <Button x:Name="ValiderButton" Content="Valider" FontSize="30" Visibility="Collapsed" Margin="835,654,415,0" VerticalAlignment="Top" Height="50" Width="150" Click="ValiderButton_Click"/>
         <Button Content="Selection de carte" FontSize="20" HorizontalAlignment="Left" Margin="1180,10,0,0" VerticalAlignment="Top" Height="56" Width="200" Click="OuvrirCartes_Click"/>
     </Grid>
 </Window>
