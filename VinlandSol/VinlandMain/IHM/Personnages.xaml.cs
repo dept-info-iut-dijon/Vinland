@@ -205,23 +205,25 @@ namespace VinlandSol.IHM
         private void SupprimerPersonnage(object sender, RoutedEventArgs e)
         {
             int selectedIndex = PersonnagesListe.SelectedIndex;
+            string filePath = "personnages.txt";
 
             if (selectedIndex >= 0 && selectedIndex < personnages.Count)
             {
-                // Supprimez l'élément de la liste personnages
-                personnages.RemoveAt(selectedIndex);
+                
+                string nomPersonnageASupprimer = personnages[selectedIndex].NomPersonnage;
 
-                // Supprimez l'élément de la ListBox
                 PersonnagesListe.Items.RemoveAt(selectedIndex);
 
-                // Vous pouvez également mettre à jour le fichier "personnages.txt" ici si nécessaire
+                personnages.RemoveAt(selectedIndex);
 
-                // Effacez les informations affichées
+                File.WriteAllLines(filePath, personnages.Select(p => $"{p.NomUtilisateur}, {p.NomPersonnage}"));
+
                 NomUtilisateurTextBlock.Text = "";
                 NomPersonnageTextBlock.Text = "";
                 DateCreationTextBlock.Text = "";
             }
         }
+
 
     }
 }
