@@ -30,7 +30,8 @@ namespace VinlandSol.IHM
         private bool isRightMouseDown = false;
         private Point lastMousePosition;
         private int zoomLevel = 0; // + = Dézoom // - = Zoom
-        private int zoomLimit = 5; // zoomLimit doit être plus grand que zoomLevel
+        private int zoomLimitDezoom = 5; // zoomLimit doit être plus grand que zoomLevelDezoom
+        private int zoomLimitZoom = -5; // zoomLimit doit être plus petit que zoomLevelZoom
 
         /// <summary>
         /// Carte de base - Dédiée au tests
@@ -125,11 +126,14 @@ namespace VinlandSol.IHM
             Matrix matrix = zoomTransform.Matrix;
             if (e.Delta > 0) // Zoom
             {
-                zoomLevel -= 1;
-                matrix.ScaleAtPrepend(zoomFactor, zoomFactor, position.X, position.Y);
+                if (zoomLevel > zoomLimitZoom) // On ne peut pas trop zoomer
+                {
+                    zoomLevel -= 1;
+                    matrix.ScaleAtPrepend(zoomFactor, zoomFactor, position.X, position.Y);
+                }
             }
             else // Dézoom
-            {   if(zoomLevel < zoomLimit) // On ne peut pas trop dézoomer
+            {   if(zoomLevel < zoomLimitDezoom) // On ne peut pas trop dézoomer
                 {
                     zoomLevel += 1;
                     matrix.ScaleAtPrepend(1.0 / zoomFactor, 1.0 / zoomFactor, position.X, position.Y);
