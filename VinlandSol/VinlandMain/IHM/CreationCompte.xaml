@@ -17,7 +17,7 @@
         <TextBlock Text="Mot de passe :" Margin="300,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Left" Width="391" Height="70" />
 
         <TextBox x:Name="TBNomUtilisateur" Margin="750,220,0,0" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="390" FontSize="40" Height="70"/>
-        <TextBox x:Name="TBMdp" Margin="750,330,0,0" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="390" FontSize="40" Height="70"/>
+        <PasswordBox x:Name="TBMdp" Margin="750,330,0,0" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="390" FontSize="40" Height="70"/>
 
         <!--Partie Role-->
         <TextBlock Text="Rôle souhaité :" Margin="300,430,0,230" HorizontalAlignment="Left" VerticalAlignment="Center" Width="306" />
