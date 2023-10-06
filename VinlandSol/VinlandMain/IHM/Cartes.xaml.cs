@@ -67,8 +67,7 @@ namespace VinlandSol.IHM
                     if (elements.Length == 5)
                     {
                         string NomCarte = elements[0].Trim();
-                        string nLinge = elements[1].Trim();
-                        string nColonne = elements[2].Trim();
+                       
 
                         // Ajoutez les données à la ListBox
                         CartesListe.Items.Add($"{NomCarte}");
@@ -97,8 +96,7 @@ namespace VinlandSol.IHM
                     if (elements.Length == 5)
                     {
                         string NomCarte = elements[0].Trim();
-                        string nLinge = elements[1].Trim();
-                        string nColonne = elements[2].Trim();
+                       
                         string dateCreationStr = elements[3].Trim();
                         string dateModificationStr = elements[4].Trim();
 
@@ -108,6 +106,51 @@ namespace VinlandSol.IHM
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Ouvre les options d'édition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            NomCarteTextBox.Visibility = Visibility.Visible;
+            Sauv.Visibility = Visibility.Visible;
+        }
+
+        private void Sauv_Click(object sender, RoutedEventArgs e)
+        {
+            string nouveauNomCarte = NomCarteTextBox.Text;
+
+            int selectedIndex = CartesListe.SelectedIndex;
+            if (selectedIndex >= 0 && selectedIndex < cartes.Count)
+            {
+                List<Cartee> cartesClone = cartes.ToList();
+
+                cartesClone[selectedIndex] = new Cartee
+                {
+                    NomCartes = nouveauNomCarte,
+                    DateCreation = cartes[selectedIndex].DateCreation
+                };
+
+                CartesListe.Items[selectedIndex] = nouveauNomCarte;
+
+                cartes = cartesClone;
+
+                NomCarteTextBlock.Text = nouveauNomCarte;
+
+                string filePath = "cartes.txt";
+                File.WriteAllLines(filePath, cartes.Select(p => $"{p.NomCartes}"));
+            }
+            NomCarteTextBox.Text = "";
+            NomCarteTextBox.Visibility = Visibility.Collapsed;
+            Sauv.Visibility = Visibility.Collapsed;
+        }
+
+        private void OeilChange(object sender, RoutedEventArgs e)
+        {
+            Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeilbarre.png", UriKind.RelativeOrAbsolute));
         }
 
         /// <summary>
@@ -133,11 +176,6 @@ namespace VinlandSol.IHM
                 });
             };
             timer.Start();
-        }
-
-        private void OeilChange(object sender, RoutedEventArgs e)
-        {
-           Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeilbarre.png", UriKind.RelativeOrAbsolute));
         }
 
         /// <summary>
@@ -214,20 +252,6 @@ namespace VinlandSol.IHM
             }
         }
 
-        /// <summary>
-        /// Ouvre les options d'édition
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Edit_Click(object sender, RoutedEventArgs e)
-        {
-            NomPersonnageTextBox.Visibility = Visibility.Visible;
-            Sauv.Visibility = Visibility.Visible;
-        }
-
-        private void Sauv_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
     }
 }

@@ -13,32 +13,32 @@
         <Label Content="Campagne - Cartes" FontSize="25" HorizontalAlignment="Center" Margin="0,125,0,0" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
 
         <!--Partie Gauche-->
-        <ListBox x:Name="CartesListe" FontSize="40" d:ItemsSource="{Binding CarteeCollection}" Margin="100,250,800,160" SelectionChanged="CartesListe_SelectionChanged"/>
-        <Button Content="Nouvelle Carte" FontSize="30" Margin="0,0,800,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="500" Click="OuvrirCreationCarte_Click"/>
+        <ListBox x:Name="CartesListe" FontSize="40" d:ItemsSource="{Binding CarteeCollection}" Margin="49,247,851,163" SelectionChanged="CartesListe_SelectionChanged"/>
+        <Button Content="Nouvelle Carte" FontSize="30" Margin="0,0,851,35" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="500" Click="OuvrirCreationCarte_Click"/>
         <Button Content="Retour" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="56" Width="121" Click="OuvrirPersonnages_Click"/>
 
         <!--Partie Droite-->
-        <Label HorizontalAlignment="Left" Margin="910,180,0,0" Content="Informations :" FontSize="40" VerticalAlignment="Top"/>
+        <Label HorizontalAlignment="Left" Margin="859,177,0,0" Content="Informations :" FontSize="40" VerticalAlignment="Top"/>
 
-        <Label Content="Nom :" Margin="675,249,585,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
+        <Label Content="Nom :" Margin="624,246,636,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
         <Button Margin="0,0,40,410" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" Click="Edit_Click">
             <Image Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
         </Button>
 
-        <Label Content="Visibilité de la carte : " Margin="675,324,375,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
-        <Button Margin="0,0,305,326" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" Click="OeilChange">
+        <Label Content="Visibilité de la carte : " Margin="624,321,426,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
+        <Button Margin="0,0,356,329" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" Click="OeilChange">
             <Image x:Name="Loeil" Source="Media/Icones/Oeil.png" Height="70" Width="70"/>
         </Button>
 
-        <Label Content="Date de création : " Margin="675,399,435,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
-        <Label Content="Date de modification : " Margin="675,474,375,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
+        <Label Content="Date de création : " Margin="624,396,486,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
+        <Label Content="Date de modification : " Margin="624,471,426,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
 
-        <Button Content="Rejoindre la Carte" FontSize="30" Margin="0,0,295,51" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="430" Click="OuvrirCarte_Click"/>
-        <TextBlock x:Name="NomCarteTextBlock" FontSize="30" HorizontalAlignment="Left" Margin="789,259,0,0" VerticalAlignment="Top" Height="42" Width="236"/>
-        <TextBlock x:Name="DateCreationTextBlock" FontSize="30" HorizontalAlignment="Left" Margin="970,409,0,0" VerticalAlignment="Top" Height="42" Width="236"/>
-        <TextBlock x:Name="DateModificationTextBlock" FontSize="30" HorizontalAlignment="Left" Margin="1037,487,0,0" VerticalAlignment="Top" Height="42" Width="236"/>
+        <Button Content="Rejoindre la Carte" FontSize="30" Margin="0,0,346,36" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="430" Click="OuvrirCarte_Click"/>
+        <TextBlock x:Name="NomCarteTextBlock" FontSize="30" HorizontalAlignment="Left" Margin="738,256,0,0" VerticalAlignment="Top" Height="42" Width="500"/>
+        <TextBlock x:Name="DateCreationTextBlock" FontSize="30" HorizontalAlignment="Left" Margin="919,406,0,0" VerticalAlignment="Top" Height="42" Width="441"/>
+        <TextBlock x:Name="DateModificationTextBlock" FontSize="30" HorizontalAlignment="Left" Margin="986,484,0,0" VerticalAlignment="Top" Height="42" Width="374"/>
 
-        <TextBox x:Name="NomPersonnageTextBox" FontSize="30" Margin="1148,559,12,0" VerticalAlignment="Top" Height="50" Visibility="Collapsed"/>
-        <Button Content="Sauvegarder" FontSize="25" x:Name="Sauv" Margin="0,0,40,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="184" Click="Sauv_Click" Visibility="Collapsed"/>
+        <TextBox x:Name="NomCarteTextBox" FontSize="30" Margin="1110,550,40,0"  VerticalAlignment="Top" Height="50" Visibility="Collapsed"/>
+        <Button Content="Sauvegarder" FontSize="25" x:Name="Sauv" Margin="1125,0,55,35"  VerticalAlignment="Bottom" Height="70" Click="Sauv_Click" Visibility="Collapsed"/>
     </Grid>
 </Window>
