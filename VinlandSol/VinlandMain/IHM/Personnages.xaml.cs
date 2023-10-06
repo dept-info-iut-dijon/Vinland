@@ -79,7 +79,7 @@ namespace VinlandSol.IHM
                 }
             }
         }
-        private void CampagnesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PersonnagesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int selectedIndex = PersonnagesListe.SelectedIndex;
             AfficherInformationsPersonnage(selectedIndex);

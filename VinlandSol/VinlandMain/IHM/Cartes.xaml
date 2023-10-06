@@ -11,7 +11,7 @@
         <!--Titres-->
         <Label Content="Vinland" FontSize="100" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
         <Label Content="Campagne - Cartes" FontSize="25" HorizontalAlignment="Center" Margin="0,125,0,0" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
-               
+
         <!--Partie Gauche-->
         <ListBox x:Name="CartesListe" FontSize="40" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="100,250,800,160"/>
         <Button Content="Nouvelle Carte" FontSize="30" Margin="0,0,800,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="500" Click="OuvrirCreationCarte_Click"/>
@@ -19,7 +19,7 @@
 
         <!--Partie Droite-->
         <Label HorizontalAlignment="Left" Margin="910,180,0,0" Content="Informations :" FontSize="40" VerticalAlignment="Top"/>
-        
+
         <Label Content="Nom :" Margin="710,250,550,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
         <Button Margin="0,0,40,410" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" >
             <Image Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
@@ -35,6 +35,9 @@
 
         <Button Content="Rejoindre la Carte" FontSize="30" Margin="0,0,260,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="430" Click="OuvrirCarte_Click"/>
         <Button Content="Sauvegarder" FontSize="25" x:Name="Sauv" Margin="0,0,40,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="184"/>
+        <TextBlock x:Name="NomCarteTextBlock" HorizontalAlignment="Left" Margin="824,263,0,0" VerticalAlignment="Top" Height="42" Width="236"/>
+        <TextBlock x:Name="DateCreationTextBlock" HorizontalAlignment="Left" Margin="1005,413,0,0" VerticalAlignment="Top" Height="42" Width="236"/>
+        <TextBlock x:Name="DateModificationTextBlock" HorizontalAlignment="Left" Margin="1088,488,0,0" VerticalAlignment="Top" Height="42" Width="236"/>
 
     </Grid>
 </Window>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +29,44 @@ namespace VinlandSol.IHM
 
         private void CreationCarte_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            // Récupérez le contenu des TextBox
+            string NomCarte = NameTextBox.Text;
+            string nLinge = NLigne.Text;
+            string nColonne = NColonne.Text;
+            DateTime dateCreation = DateTime.Now;
+            DateTime dateModification = DateTime.Now;
+
+
+            // Vérifiez que les données ne sont pas vides
+            if (!string.IsNullOrEmpty(NomCarte) && !string.IsNullOrEmpty(nLinge) && !string.IsNullOrEmpty(nColonne))
+            {
+                // Créez ou ouvrez un fichier .txt pour sauvegarder les données
+                string filePath = "cartes.txt";
+
+                using (StreamWriter sw = File.AppendText(filePath))
+                {
+                    // Écrivez les données dans le fichier
+                    sw.WriteLine($"{NomCarte}, {nLinge}, {nColonne}, {dateCreation}, {dateModification}");
+                }
+                // Effacez les TextBox après sauvegarde
+                NameTextBox.Clear();
+                //NLigne.ClearValue();
+                //NColonne.ClearValue();
+
+                // Affichez un message de confirmation
+                MessageBox.Show("Carte ajouté avec succès !");
+            }
+            else
+            {
+                // Affichez un message d'erreur si les données sont vides
+                MessageBox.Show("Veuillez remplir toutes les informations avant de créer une carte");
+            }
+            NameTextBox.Clear();
+            if (Owner is Cartes parentWindow)
+            {
+                parentWindow.LoadCartes();
+            }
+
         }
     }
 }
