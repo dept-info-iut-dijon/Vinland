@@ -35,7 +35,7 @@
         <TextBlock x:Name="NombreCartesTextBlock" Margin="1035,471,100,0" VerticalAlignment="Top" FontSize="20" Height="46"/>
 
         <Label Content="Nombre de personnage : " Margin="700,530,328,0" VerticalAlignment="Top" FontSize="30" Height="55"/>
-        <TextBlock x:Name="NombrePersonnagesTextBlock" Margin="1048,544,100,0" VerticalAlignment="Top" FontSize="20" Height="46"/>
+        <TextBlock x:Name="NombrePersonnagesTextBlock" Margin="1038,544,110,0" VerticalAlignment="Top" FontSize="20" Height="46"/>
 
         <!--Partie Droite bas-->
         <Button Content="Rejoindre la Campagne" x:Name="RejoidComp" Margin="0,0,270,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="430" Click="OuvrirPersonnages_Click" />

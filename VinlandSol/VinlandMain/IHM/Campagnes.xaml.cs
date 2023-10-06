@@ -85,6 +85,8 @@ namespace VinlandMain.IHM
                     Nom = nom,
                     DateCreation = DateTime.Now,
                     DateModification = DateTime.Now,
+                    NombreCartes = 0,
+                    NombrePersonnages = 0,
                 });
             }
             CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
@@ -99,6 +101,8 @@ namespace VinlandMain.IHM
                 NomCampTextBlock.Text = selectedCampagne.Nom;
                 DateCreationTextBlock.Text = selectedCampagne.DateCreation.ToString("dd/MM/yyyy HH:mm:ss");
                 DateModificationTextBlock.Text = selectedCampagne.DateModification.ToString("dd/MM/yyyy HH:mm:ss");
+                NombreCartesTextBlock.Text = selectedCampagne.NombreCartes.ToString();
+                NombrePersonnagesTextBlock.Text = selectedCampagne.NombrePersonnages.ToString();
             }
         }     
         private void NouvelleCampagne_Click(object sender, RoutedEventArgs e)
@@ -206,6 +210,9 @@ namespace VinlandMain.IHM
             }
             MasquerElements();
         }
+        /// <summary>
+        /// Méthode pour masquer les éléments du menu d'édition
+        /// </summary>
         private void MasquerElements()
         {
             NomCampTextBox.Visibility = Visibility.Collapsed;
