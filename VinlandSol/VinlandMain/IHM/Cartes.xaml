@@ -25,6 +25,10 @@
             <Image Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
         </Button>
 
+        <Button FontSize="40" Background="Red" Margin="0,0,40,35" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="SupprimerCarte" >
+            <Image Source="Media/Icones/Poubelle.png" Height="70" Width="70" />
+        </Button>
+
         <Label Content="Visibilité de la carte : " Margin="624,321,426,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
         <Button Margin="0,0,356,329" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" Click="OeilChange">
             <Image x:Name="Loeil" Source="Media/Icones/Oeil.png" Height="70" Width="70"/>
@@ -33,12 +37,12 @@
         <Label Content="Date de création : " Margin="624,396,486,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
         <Label Content="Date de modification : " Margin="624,471,426,0" VerticalAlignment="Top" FontSize="35" Height="55"/>
 
-        <Button Content="Rejoindre la Carte" FontSize="30" Margin="0,0,346,36" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="430" Click="OuvrirCarte_Click"/>
+        <Button Content="Rejoindre la Carte" FontSize="30" Margin="0,0,386,35" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="430" Click="OuvrirCarte_Click"/>
         <TextBlock x:Name="NomCarteTextBlock" FontSize="30" HorizontalAlignment="Left" Margin="738,256,0,0" VerticalAlignment="Top" Height="42" Width="500"/>
         <TextBlock x:Name="DateCreationTextBlock" FontSize="30" HorizontalAlignment="Left" Margin="919,406,0,0" VerticalAlignment="Top" Height="42" Width="441"/>
         <TextBlock x:Name="DateModificationTextBlock" FontSize="30" HorizontalAlignment="Left" Margin="986,484,0,0" VerticalAlignment="Top" Height="42" Width="374"/>
 
-        <TextBox x:Name="NomCarteTextBox" FontSize="30" Margin="1110,550,40,0"  VerticalAlignment="Top" Height="50" Visibility="Collapsed"/>
-        <Button Content="Sauvegarder" FontSize="25" x:Name="Sauv" Margin="1125,0,55,35"  VerticalAlignment="Bottom" Height="70" Click="Sauv_Click" Visibility="Collapsed"/>
+        <TextBox x:Name="NomCarteTextBox" FontSize="30" Margin="738,256,200,0"  VerticalAlignment="Top" Height="50" Visibility="Collapsed"/>
+        <Button Content="Sauvegarder" FontSize="25" x:Name="Sauv" Margin="1030,0,150,35"  VerticalAlignment="Bottom" Height="70" Click="Sauv_Click" Visibility="Collapsed"/>
     </Grid>
 </Window>
