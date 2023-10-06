@@ -30,6 +30,12 @@ namespace VinlandSol.IHM
             NomUtilisateur = ""
         };
         List<Personnage> personnages = new List<Personnage>();
+        public List<Personnage> PersonnagesL 
+        {
+            get { return personnages; }
+            set { personnages.Add(value[0]) ; }
+        }
+
         public struct Personnage
         {
             public string NomPersonnage { get; set; }
@@ -42,8 +48,7 @@ namespace VinlandSol.IHM
         public Personnages()
         {
             InitializeComponent();
-            Closed += ShutdownEnForce; 
-            
+            Closed += ShutdownEnForce;          
             LoadPersonnages();
 
         }
@@ -51,7 +56,8 @@ namespace VinlandSol.IHM
         {
            
             string filePath = "personnages.txt";
-
+            personnages.Clear();
+            PersonnagesListe.Items.Clear(); 
             
             if (File.Exists(filePath))
             {
@@ -71,7 +77,7 @@ namespace VinlandSol.IHM
 
                         
                         PersonnagesListe.Items.Add($"{idPersonnage}");
-                        personnages.Add(new Personnage
+                        PersonnagesL.Add(new Personnage
                         {
                             NomUtilisateur = idJoueur,
                             NomPersonnage = idPersonnage,
