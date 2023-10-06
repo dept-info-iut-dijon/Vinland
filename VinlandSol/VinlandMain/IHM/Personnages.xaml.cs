@@ -49,19 +49,19 @@ namespace VinlandSol.IHM
         }
         private void LoadPersonnages()
         {
-            // Chemin du fichier
+           
             string filePath = "personnages.txt";
 
-            // Assurez-vous que le fichier existe
+            
             if (File.Exists(filePath))
             {
-                // Lire toutes les lignes du fichier
+               
                 string[] lignes = File.ReadAllLines(filePath);
 
-                // Parcourir chaque ligne pour extraire les donnÃ©es
+                
                 foreach (string ligne in lignes)
                 {
-                    // Diviser la ligne en ID du joueur et Nom du personnage
+                    
                     string[] elements = ligne.Split(',');
 
                     if (elements.Length == 2)
@@ -69,13 +69,13 @@ namespace VinlandSol.IHM
                         string idJoueur = elements[0].Trim();
                         string idPersonnage = elements[1].Trim();
 
-                        // Ajouter les données à la ListBox
+                        
                         PersonnagesListe.Items.Add($"{idPersonnage}");
                         personnages.Add(new Personnage
                         {
                             NomUtilisateur = idJoueur,
                             NomPersonnage = idPersonnage,
-                            DateCreation = DateTime.Now // Vous pouvez mettre à jour la date de création ici si nécessaire
+                            DateCreation = DateTime.Now 
                         });
                     }
                 }
