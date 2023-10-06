@@ -31,7 +31,7 @@
         <Button x:Name="boutonCrayon" FontSize="40" Margin="0,0,40,265" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0">
             <Image x:Name="crayon" Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
         </Button>
-        <Button FontSize="40" Background="Red" Margin="0,0,40,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
+        <Button FontSize="40" Background="Red" Margin="0,0,40,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="SupprimerPersonnage" >
             <Image Source="Media/Icones/Poubelle.png" Height="70" Width="70" />
         </Button>          
         <Button Content="Selection de carte" FontSize="20" HorizontalAlignment="Left" Margin="1180,10,0,0" VerticalAlignment="Top" Height="56" Width="200" Click="OuvrirCartes_Click"/>

@@ -201,5 +201,27 @@ namespace VinlandSol.IHM
                 Application.Current.Shutdown();
             }
         }
+
+        private void SupprimerPersonnage(object sender, RoutedEventArgs e)
+        {
+            int selectedIndex = PersonnagesListe.SelectedIndex;
+
+            if (selectedIndex >= 0 && selectedIndex < personnages.Count)
+            {
+                // Supprimez l'élément de la liste personnages
+                personnages.RemoveAt(selectedIndex);
+
+                // Supprimez l'élément de la ListBox
+                PersonnagesListe.Items.RemoveAt(selectedIndex);
+
+                // Vous pouvez également mettre à jour le fichier "personnages.txt" ici si nécessaire
+
+                // Effacez les informations affichées
+                NomUtilisateurTextBlock.Text = "";
+                NomPersonnageTextBlock.Text = "";
+                DateCreationTextBlock.Text = "";
+            }
+        }
+
     }
 }
