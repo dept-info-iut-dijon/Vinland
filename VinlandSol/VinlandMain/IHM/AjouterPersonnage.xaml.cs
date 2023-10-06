@@ -26,6 +26,11 @@ namespace VinlandSol.IHM
             btnAjouter.Click += BtnAjouter_Click;
         }
 
+        /// <summary>
+        /// Ajoute un personnage à la liste des personnages
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnAjouter_Click(object sender, RoutedEventArgs e)
         {
             // Récupérez le contenu des TextBox

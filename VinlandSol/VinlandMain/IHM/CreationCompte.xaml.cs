@@ -40,6 +40,12 @@ namespace VinlandSol.IHM
             pagecreation.Show();
             Creation_Compte.Close();
         }
+
+        /// <summary>
+        /// Ajoute le nouveau compte à la liste des comptes et ouvre la fenêtre CreationCompte et ferme la fenêtre actuelle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Creer_Click(object sender, RoutedEventArgs e)
         {
             string username = TBNomUtilisateur.Text;

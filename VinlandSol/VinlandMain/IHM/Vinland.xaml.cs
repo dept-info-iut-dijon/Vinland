@@ -44,7 +44,7 @@ namespace VinlandSol
         }
 
         /// <summary>
-        /// Ouvre la fenêtre Campagnes et ferme la fenêtre actuelle
+        /// Ouvre la fenêtre Campagnes et ferme la fenêtre actuelle si le compte est présent dans la liste des comptes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -64,6 +64,11 @@ namespace VinlandSol
             }
         }
 
+        /// <summary>
+        /// Ouvre la fenêtre Campagnes et ferme la fenêtre actuelle en passant l'authentification comme un véritable hacker
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Skip_Click(object sender, RoutedEventArgs e)
         {
             Campagnes pagecreation = new Campagnes();
