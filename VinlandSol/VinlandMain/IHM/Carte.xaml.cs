@@ -118,7 +118,7 @@ namespace VinlandSol.IHM
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /// <author>Camille</author>
+        /// <author>Camille + Aaron (limite)</author>
         private void Canvas_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             Point position = e.GetPosition(HexagonCanvas);
@@ -193,20 +193,27 @@ namespace VinlandSol.IHM
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /// <author>Evan</author>
+        /// <author>Evan + Aaron (limite)</author>
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
             if (isRightMouseDown)
             {
-                Point currentPosition = e.GetPosition(HexagonCanvas);
-                double deltaX = (currentPosition.X - lastMousePosition.X) * 0.5;
-                double deltaY = (currentPosition.Y - lastMousePosition.Y) * 0.5;
+                Point positionSourisFenetre = Mouse.GetPosition(this); // Position par rapport a la fenêtre 
 
-                Matrix matrix = zoomTransform.Matrix;
-                matrix.Translate(deltaX, deltaY);
-                zoomTransform.Matrix = matrix;
 
-                lastMousePosition = currentPosition;
+                if (positionSourisFenetre.X >= this.Width / 7 && positionSourisFenetre.X <= this.Width / 7 * 6 && positionSourisFenetre.Y >= this.Height / 7 && positionSourisFenetre.Y <= this.Height) // Limiter le drag sur "la zone de la carte" 
+                {
+                    Point currentPosition = e.GetPosition(HexagonCanvas); // Position par rapport au canvas
+
+                    double deltaX = (currentPosition.X - lastMousePosition.X) * 0.5;
+                    double deltaY = (currentPosition.Y - lastMousePosition.Y) * 0.5;
+
+                    Matrix matrix = zoomTransform.Matrix;
+                    matrix.Translate(deltaX, deltaY);
+                    zoomTransform.Matrix = matrix;
+
+                    lastMousePosition = currentPosition;
+                }
             }
         }
     }
