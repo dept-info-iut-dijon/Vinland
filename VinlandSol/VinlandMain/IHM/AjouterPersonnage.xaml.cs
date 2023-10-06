@@ -23,7 +23,6 @@ namespace VinlandSol.IHM
         public AjouterPersonnage()
         {
             InitializeComponent();
-            btnAjouter.Click += BtnAjouter_Click;
         }
 
         /// <summary>

@@ -106,6 +106,7 @@ namespace VinlandSol.IHM
                 }
             }
         }
+
         /// <summary>
         /// Ouvre la fenêtre Campagnes et ferme la fenêtre actuelle
         /// </summary>

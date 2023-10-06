@@ -43,9 +43,9 @@ namespace VinlandSol.IHM
             Closed += ShutdownEnForce; // ShutdownEnForce est appelé à la fermeture de cette fenêtre
             LoadCartes();
         }
+
         public void LoadCartes()
         {
-            CartesListe.Items.Clear();
             // Chemin du fichier
             string filePath = "cartes.txt";
 
@@ -61,7 +61,7 @@ namespace VinlandSol.IHM
                     // Divisez la ligne en ID du joueur et Nom du personnage
                     string[] elements = ligne.Split(',');
 
-                    if (elements.Length == 3)
+                    if (elements.Length == 5)
                     {
                         string NomCarte = elements[0].Trim();
                         string nLinge = elements[1].Trim();
@@ -79,6 +79,7 @@ namespace VinlandSol.IHM
                 }
             }
         }
+
         private void CartesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int selectedIndex = CartesListe.SelectedIndex;

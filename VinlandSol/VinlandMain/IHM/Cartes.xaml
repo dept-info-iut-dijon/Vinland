@@ -13,7 +13,7 @@
         <Label Content="Campagne - Cartes" FontSize="25" HorizontalAlignment="Center" Margin="0,125,0,0" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
 
         <!--Partie Gauche-->
-        <ListBox x:Name="CartesListe" FontSize="40" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="100,250,800,160"/>
+        <ListBox x:Name="CartesListe" FontSize="40" d:ItemsSource="{Binding CarteeCollection}" Margin="100,250,800,160" SelectionChanged="CartesListe_SelectionChanged"/>
         <Button Content="Nouvelle Carte" FontSize="30" Margin="0,0,800,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="500" Click="OuvrirCreationCarte_Click"/>
         <Button Content="Retour" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="56" Width="121" Click="OuvrirPersonnages_Click"/>
 

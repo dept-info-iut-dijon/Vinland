@@ -21,10 +21,9 @@ namespace VinlandSol.IHM
     /// </summary>
     public partial class CreationCarte : Window
     {
-        Cartes cartes = new Cartes();
         public CreationCarte()
         {
-            InitializeComponent();
+            InitializeComponent(); 
         }
 
         private void CreationCarte_Click(object sender, RoutedEventArgs e)
@@ -61,11 +60,7 @@ namespace VinlandSol.IHM
                 // Affichez un message d'erreur si les données sont vides
                 MessageBox.Show("Veuillez remplir toutes les informations avant de créer une carte");
             }
-            NameTextBox.Clear();
-            if (Owner is Cartes parentWindow)
-            {
-                parentWindow.LoadCartes();
-            }
+            
 
         }
     }
