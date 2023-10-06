@@ -26,7 +26,9 @@ namespace VinlandSol.IHM
         {
             NomCartes = "",
             DateCreation = DateTime.Now,
-            DateModification = DateTime.Now
+            DateModification = DateTime.Now,
+            NbLignes = 1,
+            NbColonnes = 1
         };
         List<Cartee> cartes = new List<Cartee>();
         public struct Cartee
@@ -34,10 +36,15 @@ namespace VinlandSol.IHM
             public string NomCartes { get; set; }
             public DateTime DateCreation { get; set; }
             public DateTime DateModification { get; set; }
+            public int NbLignes { get; set; }
+            public int NbColonnes { get; set; }
         }
         private CreationCarte? pagecreationcarte;
         private bool creaCarteOpen = false;
 
+        /// <summary>
+        /// Constructeur de la page
+        /// </summary>
         public Cartes()
         {
             InitializeComponent();
@@ -45,43 +52,49 @@ namespace VinlandSol.IHM
             LoadCartes();
         }
 
+        /// <summary>
+        /// Afficher les noms des cartes dans la liste
+        /// </summary>
         public void LoadCartes()
         {
-            // Chemin du fichier
+
             string filePath = "cartes.txt";
             cartes.Clear();
             CartesListe.Items.Clear();
 
-            // Assurez-vous que le fichier existe
             if (File.Exists(filePath))
             {
-                // Lire toutes les lignes du fichier
                 string[] lignes = File.ReadAllLines(filePath);
 
-                // Parcourir chaque ligne pour extraire les donnÃ©es
                 foreach (string ligne in lignes)
                 {
-                    // Divisez la ligne en ID du joueur et Nom du personnage
                     string[] elements = ligne.Split(',');
 
                     if (elements.Length == 5)
                     {
                         string NomCarte = elements[0].Trim();
-                       
+                        int nLignes = int.Parse(elements[1].Trim());
+                        int nColonnes = int.Parse(elements[2].Trim());
 
-                        // Ajoutez les données à la ListBox
                         CartesListe.Items.Add($"{NomCarte}");
                         cartes.Add(new Cartee
                         {
                             NomCartes = NomCarte,
                             DateCreation = DateTime.Now,
-                            DateModification = DateTime.Now
+                            DateModification = DateTime.Now,
+                            NbLignes = nLignes,
+                            NbColonnes = nColonnes
                         });
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Actualise les informations de la carte selectionnée
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CartesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int selectedIndex = CartesListe.SelectedIndex;
@@ -119,6 +132,11 @@ namespace VinlandSol.IHM
             Sauv.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Sauvegarde les changements de la carte
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Sauv_Click(object sender, RoutedEventArgs e)
         {
             string nouveauNomCarte = NomCarteTextBox.Text;
@@ -131,7 +149,10 @@ namespace VinlandSol.IHM
                 cartesClone[selectedIndex] = new Cartee
                 {
                     NomCartes = nouveauNomCarte,
-                    DateCreation = cartes[selectedIndex].DateCreation
+                    DateCreation = cartes[selectedIndex].DateCreation,
+                    DateModification = cartes[selectedIndex].DateModification,
+                    NbLignes = cartes[selectedIndex].NbLignes,
+                    NbColonnes = cartes[selectedIndex].NbColonnes
                 };
 
                 CartesListe.Items[selectedIndex] = nouveauNomCarte;
@@ -141,13 +162,45 @@ namespace VinlandSol.IHM
                 NomCarteTextBlock.Text = nouveauNomCarte;
 
                 string filePath = "cartes.txt";
-                File.WriteAllLines(filePath, cartes.Select(p => $"{p.NomCartes}"));
+                File.WriteAllLines(filePath, cartes.Select(p => $"{p.NomCartes}, {p.NbLignes}, {p.NbColonnes}, {p.DateCreation}, {p.DateModification}"));
             }
             NomCarteTextBox.Text = "";
             NomCarteTextBox.Visibility = Visibility.Collapsed;
             Sauv.Visibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// Supprime la carte
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SupprimerCarte(object sender, RoutedEventArgs e)
+        {
+            int selectedIndex = CartesListe.SelectedIndex;
+            string filePath = "cartes.txt";
+
+            if (selectedIndex >= 0 && selectedIndex < cartes.Count)
+            {
+
+                string nomCarteASupprimer = cartes[selectedIndex].NomCartes;
+
+                CartesListe.Items.RemoveAt(selectedIndex);
+
+                cartes.RemoveAt(selectedIndex);
+
+                File.WriteAllLines(filePath, cartes.Select(p => $"{p.NomCartes}, {p.NbLignes}, {p.NbColonnes}, {p.DateCreation}, {p.DateModification}"));
+
+                NomCarteTextBlock.Text = "";
+                DateCreationTextBlock.Text = "";
+                DateCreationTextBlock.Text = "";
+            }
+        }
+
+        /// <summary>
+        /// Change la visibilité de la carte aux joueurs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OeilChange(object sender, RoutedEventArgs e)
         {
             Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeilbarre.png", UriKind.RelativeOrAbsolute));
