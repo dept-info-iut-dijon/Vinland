@@ -13,7 +13,7 @@
         <Label Content="Campagne - Personnages" FontSize="25" HorizontalAlignment="Center" Margin="0,125,0,0" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
 
         <!--Partie Gauche-->
-        <ListBox x:Name="PersonnagesListe" FontSize="40" d:ItemsSource="{Binding PersonnagesCollection}" Margin="100,250,800,160" SelectionChanged="CampagnesListe_SelectionChanged"/>
+        <ListBox x:Name="PersonnagesListe" FontSize="40" d:ItemsSource="{Binding PersonnagesCollection}" Margin="100,250,800,160" SelectionChanged="PersonnagesListe_SelectionChanged"/>
         <Button Content="Ajouter un personnage" FontSize="30" Margin="0,0,800,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="500" Click="OuvrirAjouterPersonnage_Click"/>
         <Button Content="Retour" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="56" Width="121" Click="OuvrirCampagnes_Click"/>
 

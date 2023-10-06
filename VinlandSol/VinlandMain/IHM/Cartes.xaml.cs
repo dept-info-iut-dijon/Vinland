@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,19 @@ namespace VinlandSol.IHM
     /// </summary>
     public partial class Cartes : Window
     {
+        Cartee nouvellecarte = new Cartee
+        {
+            NomCartes = "",
+            DateCreation = DateTime.Now,
+            DateModification = DateTime.Now
+        };
+        List<Cartee> cartes = new List<Cartee>();
+        public struct Cartee
+        {
+            public string NomCartes { get; set; }
+            public DateTime DateCreation { get; set; }
+            public DateTime DateModification { get; set; }
+        }
         private CreationCarte? pagecreationcarte;
         private bool creaCarteOpen = false;
 
@@ -27,6 +41,69 @@ namespace VinlandSol.IHM
         {
             InitializeComponent();
             Closed += ShutdownEnForce; // ShutdownEnForce est appelé à la fermeture de cette fenêtre
+            LoadCartes();
+        }
+        public void LoadCartes()
+        {
+            CartesListe.Items.Clear();
+            // Chemin du fichier
+            string filePath = "cartes.txt";
+
+            // Assurez-vous que le fichier existe
+            if (File.Exists(filePath))
+            {
+                // Lire toutes les lignes du fichier
+                string[] lignes = File.ReadAllLines(filePath);
+
+                // Parcourir chaque ligne pour extraire les donnÃ©es
+                foreach (string ligne in lignes)
+                {
+                    // Divisez la ligne en ID du joueur et Nom du personnage
+                    string[] elements = ligne.Split(',');
+
+                    if (elements.Length == 3)
+                    {
+                        string NomCarte = elements[0].Trim();
+                        string nLinge = elements[1].Trim();
+                        string nColonne = elements[2].Trim();
+
+                        // Ajoutez les donnÃ©es Ã  la ListBox
+                        CartesListe.Items.Add($"{NomCarte}");
+                        cartes.Add(new Cartee
+                        {
+                            NomCartes = NomCarte,
+                            DateCreation = DateTime.Now,
+                            DateModification = DateTime.Now
+                        });
+                    }
+                }
+            }
+        }
+        private void CartesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int selectedIndex = CartesListe.SelectedIndex;
+            if (selectedIndex >= 0 && selectedIndex < cartes.Count)
+            {
+                string filePath = "cartes.txt";
+                if (File.Exists(filePath))
+                {
+                    string[] lignes = File.ReadAllLines(filePath);
+                    string[] elements = lignes[selectedIndex].Split(',');
+
+                    if (elements.Length == 5)
+                    {
+                        string NomCarte = elements[0].Trim();
+                        string nLinge = elements[1].Trim();
+                        string nColonne = elements[2].Trim();
+                        string dateCreationStr = elements[3].Trim();
+                        string dateModificationStr = elements[4].Trim();
+
+                        NomCarteTextBlock.Text = NomCarte;
+                        DateCreationTextBlock.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+                        DateModificationTextBlock.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+                    }
+                }
+            }
         }
 
         /// <summary>
