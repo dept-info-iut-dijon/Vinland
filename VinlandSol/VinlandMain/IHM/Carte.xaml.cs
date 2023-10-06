@@ -67,8 +67,11 @@ namespace VinlandSol.IHM
             hexagonManager = new HexagonManager(HexagonCanvas); // Add les hexagones
             this.nom = nom;
             this.largeur = largeur;
-            this.hauteur = hauteur;  
-            
+            this.hauteur = hauteur;
+
+            NomCarteLabel.Content = nom;
+            DimCarteLabel.Content = largeur+"x"+hauteur;
+
             GenerateHexagonalMap(largeur, hauteur); // Géneration de la map
 
             HexagonCanvas.MouseRightButtonDown += Canvas_MouseRightButtonDown; // Déplacement de la map avec le clic droit

@@ -44,7 +44,9 @@
 
         <Border BorderBrush="Black" BorderThickness="3" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
             <StackPanel Background="Transparent">
-                <Button FontSize="20" Content="Enregistrer" Height="40" Width="150" Margin="0,600,0,0" Background="lightgreen" Click="OuvrirCartes_Click"/>
+                <Label x:Name="NomCarteLabel" FontSize="20" Content="Nom Carte"/>
+                <Label x:Name="DimCarteLabel" FontSize="20" Content="Dimensions Carte"/>
+                <Button FontSize="20" Content="Enregistrer" Height="40" Width="150" Margin="0,525,0,0" Background="lightgreen" Click="OuvrirCartes_Click"/>
                 <Button FontSize="20" Content="Retour carte" Height="40" Width="150" Margin="0,20,0,0" Background="LightSalmon" Click="OuvrirCartes_Click"/>
             </StackPanel>
         </Border>
