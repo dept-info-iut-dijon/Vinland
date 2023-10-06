@@ -21,6 +21,9 @@ namespace VinlandMain.IHM
     /// </summary>
     public partial class Campagnes : Window
     {
+        /// <summary>
+        /// Campagne de test
+        /// </summary>
         Campagne nouvelleCampagne = new Campagne
         {
             Nom = "test",
@@ -29,6 +32,10 @@ namespace VinlandMain.IHM
             NombreCartes = 0,
             NombrePersonnages = 0
         };
+
+        /// <summary>
+        /// Structure d'une campagne
+        /// </summary>
         public struct Campagne
         {
             public string Nom { get; set; }
@@ -38,8 +45,11 @@ namespace VinlandMain.IHM
             public int NombrePersonnages { get; set; }
         }
         List<Campagne> campagnes = new List<Campagne>(); 
-
         private int indiceCampagneEnEdition = -1;
+
+        /// <summary>
+        /// Constructeur de la fenêtre
+        /// </summary>
         public Campagnes()
         {
             InitializeComponent();            
@@ -48,6 +58,10 @@ namespace VinlandMain.IHM
         }
         //Le fichier se save dans -> VinlandSol\VinlandMain\bin\Debug\net6.0-windows
         
+        /// <summary>
+        /// Sauvegarde les campagnes
+        /// </summary>
+        /// <param name="filePath"></param>
         private void SaveCampagnesTxt(string filePath)
         {
             try
@@ -61,6 +75,12 @@ namespace VinlandMain.IHM
                 MessageBox.Show("Une erreur s'est produite lors de l'enregistrement dans le fichier texte : " + ex.Message, "Erreur d'Enregistrement", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        /// <summary>
+        /// Récupère les campagnes depuis le fichier campagnes.txt
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns>Une liste des campagnes</returns>
         private List<string> LoadCampagnesTxt(string filePath)
         {
             try
@@ -74,6 +94,11 @@ namespace VinlandMain.IHM
                 return new List<string>();
             }
         }
+
+        /// <summary>
+        /// Crée les campagnes par rapport aux données récupérées par LoadCampagnesTxt
+        /// </summary>
+        /// <param name="filePath"></param>
         private void LoadCampagnes(string filePath)
         {
             List<string> nomsDeCampagnes = LoadCampagnesTxt(filePath);
@@ -92,6 +117,11 @@ namespace VinlandMain.IHM
             CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
         }
         
+        /// <summary>
+        /// Affiche les informations sur la droite de l'écran par rapport à la campagne sélectionnée
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CampagnesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int selectedIndex = CampagnesListe.SelectedIndex;
@@ -105,12 +135,23 @@ namespace VinlandMain.IHM
                 NombrePersonnagesTextBlock.Text = selectedCampagne.NombrePersonnages.ToString();
             }
         }     
+
+        /// <summary>
+        /// Affiche les éléments permettant de créer une campagne
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NouvelleCampagne_Click(object sender, RoutedEventArgs e)
         {
             NomNouvCamp.Visibility = Visibility.Visible;
             Valider.Visibility = Visibility.Visible;
         }
         
+        /// <summary>
+        /// Ajoute la nouvelle campagne dans le .txt
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Valider_Click(object sender, RoutedEventArgs e)
         {
             string contenu = NomNouvCamp.Text;
@@ -140,6 +181,11 @@ namespace VinlandMain.IHM
             Valider.Visibility = Visibility.Collapsed;
         }   
         
+        /// <summary>
+        /// Affiche les options d'édition des informations de la campagne
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
             int selectedIndex = CampagnesListe.SelectedIndex;
@@ -159,10 +205,22 @@ namespace VinlandMain.IHM
                 indiceCampagneEnEdition = selectedIndex;
             }
         }
+
+        /// <summary>
+        /// Cache les options d'édition des informations de la campagne
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditS_Click(object sender, RoutedEventArgs e)
         {
             MasquerElements();
         }
+
+        /// <summary>
+        /// Edite la campagne sélectionnée avec les nouvelles informations
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             if (indiceCampagneEnEdition >= 0 && indiceCampagneEnEdition < campagnes.Count)
@@ -182,6 +240,13 @@ namespace VinlandMain.IHM
             indiceCampagneEnEdition = -1;
             MasquerElements();
         }
+
+
+        /// <summary>
+        /// Ouvre la fenêtre Personnages et ferme la fenêtre actuelle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OuvrirPersonnages_Click(object sender, RoutedEventArgs e)
         {
             Personnages pagecreation = new Personnages();
@@ -191,6 +256,11 @@ namespace VinlandMain.IHM
             CampagnesWindow.Close();
         }
 
+        /// <summary>
+        /// Supprime la campagne sélectionnée
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SupprimerCamp_Click(object sender, RoutedEventArgs e)
         {
             int selection = CampagnesListe.SelectedIndex;
@@ -210,6 +280,7 @@ namespace VinlandMain.IHM
             }
             MasquerElements();
         }
+
         /// <summary>
         /// Méthode pour masquer les éléments du menu d'édition
         /// </summary>
