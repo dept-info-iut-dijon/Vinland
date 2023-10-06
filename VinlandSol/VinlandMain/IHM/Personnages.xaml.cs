@@ -30,11 +30,6 @@ namespace VinlandSol.IHM
             NomUtilisateur = ""
         };
         List<Personnage> personnages = new List<Personnage>();
-        public List<Personnage> PersonnagesL 
-        {
-            get { return personnages; }
-            set { personnages.Add(value[0]) ; }
-        }
 
         public struct Personnage
         {
@@ -77,7 +72,7 @@ namespace VinlandSol.IHM
 
                         
                         PersonnagesListe.Items.Add($"{idPersonnage}");
-                        PersonnagesL.Add(new Personnage
+                        personnages.Add(new Personnage
                         {
                             NomUtilisateur = idJoueur,
                             NomPersonnage = idPersonnage,

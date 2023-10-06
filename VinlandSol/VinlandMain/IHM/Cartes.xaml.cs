@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VinlandMain.IHM;
+using static VinlandSol.IHM.Personnages;
 
 namespace VinlandSol.IHM
 {
@@ -48,6 +49,8 @@ namespace VinlandSol.IHM
         {
             // Chemin du fichier
             string filePath = "cartes.txt";
+            cartes.Clear();
+            CartesListe.Items.Clear();
 
             // Assurez-vous que le fichier existe
             if (File.Exists(filePath))
