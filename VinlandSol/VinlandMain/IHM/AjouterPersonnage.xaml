@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VinlandSol.IHM"
         mc:Ignorable="d"
+        x:Name="AjouterPersonnageWindow"
         Title="AjouterPersonnage" Height="750" Width="750">
     <Grid>
         <!--Titres-->

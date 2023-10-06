@@ -45,7 +45,7 @@ namespace VinlandSol.IHM
             // Appelez la méthode pour charger les personnages depuis le fichier
             LoadPersonnages();
         }
-        private void LoadPersonnages()
+        public void LoadPersonnages()
         {
             // Chemin du fichier
             string filePath = "personnages.txt";
@@ -166,7 +166,7 @@ namespace VinlandSol.IHM
         {
             if (ajouterPersoOpen == false)
             {
-                pageajouterPerso = new AjouterPersonnage();
+                pageajouterPerso = new AjouterPersonnage(this);
                 pageajouterPerso.Closed += AjouterPerso_Closed;
                 pageajouterPerso.Left = this.Left;
                 pageajouterPerso.Top = this.Top;
