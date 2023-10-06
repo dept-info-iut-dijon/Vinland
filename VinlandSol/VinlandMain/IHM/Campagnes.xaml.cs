@@ -68,7 +68,7 @@ namespace VinlandMain.IHM
             {
                 System.IO.File.WriteAllLines(filePath, campagnes.Select(c => c.Nom));
 
-                MessageBox.Show("La sauvegarde c'est réalisé avec succès.", "Enregistrement Réussi", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("La sauvegarde s'est réalisée avec succès.", "Enregistrement Réussi", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
@@ -124,17 +124,25 @@ namespace VinlandMain.IHM
         /// <param name="e"></param>
         private void CampagnesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int selectedIndex = CampagnesListe.SelectedIndex;
-            if (selectedIndex >= 0 && selectedIndex < campagnes.Count)
+            AfficherInfos(CampagnesListe.SelectedIndex);
+        }     
+
+        /// <summary>
+        /// Permet d'actualiser les informations de la campagne selectionnée/modifiée
+        /// </summary>
+        /// <param name="index"></param>
+        private void AfficherInfos(int index)
+        {
+            if (index >= 0 && index < campagnes.Count)
             {
-                Campagne selectedCampagne = campagnes[selectedIndex];
+                Campagne selectedCampagne = campagnes[index];
                 NomCampTextBlock.Text = selectedCampagne.Nom;
                 DateCreationTextBlock.Text = selectedCampagne.DateCreation.ToString("dd/MM/yyyy HH:mm:ss");
                 DateModificationTextBlock.Text = selectedCampagne.DateModification.ToString("dd/MM/yyyy HH:mm:ss");
                 NombreCartesTextBlock.Text = selectedCampagne.NombreCartes.ToString();
                 NombrePersonnagesTextBlock.Text = selectedCampagne.NombrePersonnages.ToString();
             }
-        }     
+        }
 
         /// <summary>
         /// Affiche les éléments permettant de créer une campagne
@@ -237,6 +245,7 @@ namespace VinlandMain.IHM
                 string fileName = "campagnes_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
                 SaveCampagnesTxt("campagnes.txt");
             }
+            AfficherInfos(indiceCampagneEnEdition);
             indiceCampagneEnEdition = -1;
             MasquerElements();
         }

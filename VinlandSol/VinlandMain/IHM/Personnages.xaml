@@ -19,7 +19,7 @@
 
         <!--Partie Droite-->
         <Label HorizontalAlignment="Left" Margin="910,180,0,0" Content="Informations :" FontSize="40" VerticalAlignment="Top"/>
-        
+
         <Label Content="Nom de l'utilisateur :" Margin="680,300,363,0" VerticalAlignment="Top" FontSize="35"/>
         <Label Content="Nom du personnage : " Margin="680,400,340,0" VerticalAlignment="Top" FontSize="35"/>
         <Label Content="Date de création : " Margin="680,500,423,0" VerticalAlignment="Top" FontSize="35"/>
@@ -34,8 +34,8 @@
         <Button FontSize="40" Background="Red" Margin="0,0,40,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="SupprimerPersonnage" >
             <Image Source="Media/Icones/Poubelle.png" Height="70" Width="70" />
         </Button>
-        <TextBox x:Name="NomPersonnageTextBox" FontSize="30" Visibility="Collapsed" Margin="760,599,340,0" VerticalAlignment="Top" Height="50" Width="300"/>
-        <Button x:Name="ValiderButton" Content="Valider" FontSize="30" Visibility="Collapsed" Margin="835,654,415,0" VerticalAlignment="Top" Height="50" Width="150" Click="ValiderButton_Click"/>
+        <TextBox x:Name="NomPersonnageTextBox" FontSize="30" Margin="760,599,201,0" Visibility="Collapsed" VerticalAlignment="Top" Height="50"/>
+        <Button x:Name="ValiderButton" Content="Valider" FontSize="30" Visibility="Collapsed" Margin="917,654,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="50" Click="ValiderButton_Click" Width="125"/>
         <Button Content="Selection de carte" FontSize="20" HorizontalAlignment="Left" Margin="1180,10,0,0" VerticalAlignment="Top" Height="56" Width="200" Click="OuvrirCartes_Click"/>
     </Grid>
 </Window>

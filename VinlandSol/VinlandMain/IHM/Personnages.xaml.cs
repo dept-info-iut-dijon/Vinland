@@ -31,6 +31,9 @@ namespace VinlandSol.IHM
         };
         List<Personnage> personnages = new List<Personnage>();
 
+        /// <summary>
+        /// Structure d'un personnage
+        /// </summary>
         public struct Personnage
         {
             public string NomPersonnage { get; set; }
@@ -40,6 +43,9 @@ namespace VinlandSol.IHM
         private AjouterPersonnage? pageajouterPerso;
         private bool ajouterPersoOpen = false;
 
+        /// <summary>
+        /// Constructeur de la fenêtre
+        /// </summary>
         public Personnages()
         {
             InitializeComponent();
@@ -47,6 +53,10 @@ namespace VinlandSol.IHM
             LoadPersonnages();
 
         }
+
+        /// <summary>
+        /// Charge les personnages dans la listbox depuis le txt
+        /// </summary>
         public void LoadPersonnages()
         {
            
@@ -82,11 +92,22 @@ namespace VinlandSol.IHM
                 }
             }
         }
+        
+        /// <summary>
+        /// Permet d'afficher les informations du personnage selectionné
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PersonnagesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int selectedIndex = PersonnagesListe.SelectedIndex;
             AfficherInformationsPersonnage(selectedIndex);
         }
+
+        /// <summary>
+        /// Permet d'afficher les informations du personnage selectionné/modifié
+        /// </summary>
+        /// <param name="selectedIndex"></param>
         private void AfficherInformationsPersonnage(int selectedIndex)
         {
             if (selectedIndex >= 0 && selectedIndex < personnages.Count)
@@ -178,6 +199,11 @@ namespace VinlandSol.IHM
             }
         }
 
+        /// <summary>
+        /// Supprime le personnage
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SupprimerPersonnage(object sender, RoutedEventArgs e)
         {
             int selectedIndex = PersonnagesListe.SelectedIndex;
@@ -200,6 +226,11 @@ namespace VinlandSol.IHM
             }
         }
 
+        /// <summary>
+        /// Ouvre les options d'édition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CrayonEdit_Click(object sender, RoutedEventArgs e)
         {
             NomPersonnageTextBox.Visibility = Visibility.Visible;
@@ -208,6 +239,11 @@ namespace VinlandSol.IHM
 
         }
 
+        /// <summary>
+        /// Mets à jour les informations modifiées
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void ValiderButton_Click(object sender, RoutedEventArgs e)
         {
             string nouveauNomPersonnage = NomPersonnageTextBox.Text;
