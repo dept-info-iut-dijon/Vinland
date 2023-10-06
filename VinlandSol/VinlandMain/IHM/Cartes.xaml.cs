@@ -209,5 +209,21 @@ namespace VinlandSol.IHM
                 Application.Current.Shutdown();
             }
         }
+
+        /// <summary>
+        /// Ouvre les options d'édition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            NomPersonnageTextBox.Visibility = Visibility.Visible;
+            Sauv.Visibility = Visibility.Visible;
+        }
+
+        private void Sauv_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
