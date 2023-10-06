@@ -165,10 +165,14 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void OuvrirCarte_Click(object sender, RoutedEventArgs e)
         {
-            Carte pagecreation = new Carte("test",15,15);
-            pagecreation.Left = this.Left;
-            pagecreation.Top = this.Top;
-            pagecreation.Show();
+            string filePath = "cartes.txt";
+            string[] lignes = File.ReadAllLines(filePath);
+            string[] elements = lignes[CartesListe.SelectedIndex].Split(',');
+
+            Carte carteselect = new Carte(elements[0],int.Parse(elements[1]), int.Parse(elements[2]));
+            carteselect.Left = this.Left;
+            carteselect.Top = this.Top;
+            carteselect.Show();
 
             CartesWindow.Hide(); // Evite de voir la fenêtre se fermer en retard
             var timer = new System.Timers.Timer(100); // Délai de 100 millisecondes 
