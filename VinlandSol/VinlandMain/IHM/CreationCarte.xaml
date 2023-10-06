@@ -21,7 +21,7 @@
         <Button x:Name="btnCreer" Content="Créer carte" HorizontalAlignment="Center" Margin="0,620,0,0" VerticalAlignment="Top" Height="50" Width="170" FontSize="18" Click="CreationCarte_Click"/>
         
         <Label Content="Nom de la carte :" HorizontalAlignment="Center" Margin="0,212,0,0" VerticalAlignment="Top" Width="146" FontSize="18"/>
-        <Label Content="Nombre de colonnes :" HorizontalAlignment="Center" Margin="0,334,0,0" VerticalAlignment="Top" Width="258" FontSize="18"/>
+        <Label Content="Nombre de colonnes :" HorizontalAlignment="Center" Margin="0,334,0,0" VerticalAlignment="Top" Width="198" FontSize="18"/>
         <Label Content="Nombre de lignes :" HorizontalAlignment="Center" Margin="0,454,0,0" VerticalAlignment="Top" Width="170" FontSize="18"/>
     </Grid>
 </Window>
