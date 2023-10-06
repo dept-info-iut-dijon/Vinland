@@ -70,7 +70,7 @@ namespace VinlandSol.IHM
                         string nLinge = elements[1].Trim();
                         string nColonne = elements[2].Trim();
 
-                        // Ajoutez les donnÃ©es Ã  la ListBox
+                        // Ajoutez les données à la ListBox
                         CartesListe.Items.Add($"{NomCarte}");
                         cartes.Add(new Cartee
                         {
