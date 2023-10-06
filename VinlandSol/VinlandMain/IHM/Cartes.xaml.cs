@@ -146,7 +146,7 @@ namespace VinlandSol.IHM
         {     
             if (creaCarteOpen == false)
             {
-                pagecreationcarte = new CreationCarte();
+                pagecreationcarte = new CreationCarte(this);
                 pagecreationcarte.Closed += CreationCarte_Closed;
                 pagecreationcarte.Left = this.Left;
                 pagecreationcarte.Top = this.Top;

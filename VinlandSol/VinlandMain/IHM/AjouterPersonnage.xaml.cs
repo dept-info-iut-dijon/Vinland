@@ -20,9 +20,12 @@ namespace VinlandSol.IHM
     /// </summary>
     public partial class AjouterPersonnage : Window
     {
-        public AjouterPersonnage()
+        private Personnages perso;
+        public AjouterPersonnage(Personnages perso)
         {
             InitializeComponent();
+            btnAjouter.Click += FermerPopupActu_Click;
+            this.perso = perso;
         }
 
         /// <summary>
@@ -51,12 +54,25 @@ namespace VinlandSol.IHM
                 IdJoueur.Clear();
                 IdPersonnage.Clear();
 
+                // Affichez un message de confirmation
                 MessageBox.Show("Personnage ajouté avec succès !");                
             }
             else
             {
                 MessageBox.Show("Veuillez remplir toutes les informations avant de créer un personnage");
             }
+
+        }
+
+        /// <summary>
+        /// Ferme la fenêtre actuelle et actualise la liste des persos
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FermerPopupActu_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            perso.LoadPersonnages();
         }
     }
 }
