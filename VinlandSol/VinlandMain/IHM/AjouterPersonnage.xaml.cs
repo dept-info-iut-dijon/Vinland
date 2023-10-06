@@ -24,7 +24,7 @@ namespace VinlandSol.IHM
         public AjouterPersonnage(Personnages perso)
         {
             InitializeComponent();
-            btnAjouter.Click += FermerPopup_Click;
+            btnAjouter.Click += FermerPopupActu_Click;
             this.perso = perso;
         }
 
@@ -68,13 +68,13 @@ namespace VinlandSol.IHM
         }
 
         /// <summary>
-        /// Ouvre la fenêtre Personnages et ferme la fenêtre actuelle
+        /// Ferme la fenêtre actuelle et actualise la liste des persos
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void FermerPopup_Click(object sender, RoutedEventArgs e)
+        private void FermerPopupActu_Click(object sender, RoutedEventArgs e)
         {
-            AjouterPersonnageWindow.Close();
+            this.Close();
             perso.LoadPersonnages();
         }
     }
