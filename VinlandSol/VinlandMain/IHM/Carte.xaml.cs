@@ -29,9 +29,13 @@ namespace VinlandSol.IHM
         private int hauteur;
         private bool isRightMouseDown = false;
         private Point lastMousePosition;
-        private int zoomLevel = 100;
-        private int zoomLimit = 95;
+        private int zoomLevel = 0; // + = Dézoom // - = Zoom
+        private int zoomLimit = 5; // zoomLimit doit être plus grand que zoomLevel
 
+        /// <summary>
+        /// Carte de base - Dédiée au tests
+        /// </summary>
+        /// <author>Aaron</author>
         public Carte()
         {
             InitializeComponent();
@@ -48,6 +52,13 @@ namespace VinlandSol.IHM
             HexagonCanvas.MouseMove += Canvas_MouseMove;
         }
 
+        /// <summary>
+        /// Constructeur de carte - Appelé depuis Cartes.xaml ("vrai constructeur")
+        /// </summary>
+        /// <param name="nom"></param>
+        /// <param name="largeur"></param>
+        /// <param name="hauteur"></param>
+        /// <author>Aaron</author>
         public Carte(string nom, int largeur, int hauteur)
         {
             InitializeComponent();
@@ -62,7 +73,6 @@ namespace VinlandSol.IHM
             HexagonCanvas.MouseRightButtonDown += Canvas_MouseRightButtonDown; // Déplacement de la map avec le clic droit
             HexagonCanvas.MouseRightButtonUp += Canvas_MouseRightButtonUp;
             HexagonCanvas.MouseMove += Canvas_MouseMove;
-
         }
 
         /// <summary>
@@ -70,6 +80,7 @@ namespace VinlandSol.IHM
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
+        /// <author>Camille</author>
         private void GenerateHexagonalMap(int width, int height)
         {
             HexagonCanvas.Children.Clear();
@@ -79,8 +90,6 @@ namespace VinlandSol.IHM
             double hexWidth = 70;
             double hexHeight = 70;
             double verticalSpacing = 0;
-
-
 
             for (int row = 0; row < height; row++)
             {
@@ -94,15 +103,13 @@ namespace VinlandSol.IHM
                         x += hexWidth * 0.48;
                     }
 
-                    Hexagon hexagon = new Hexagon(x + ((Width/7*5 - hexWidth * largeur) / 2) , y + ((Height - hexHeight * hauteur / 1.923076923 - 260) / 2)); // Le calcul permet de centrer les hexagones dans la fenêtre. 1.923076923 correspond a 500 (la hauteur d'un hexagone) divisé par 260 (la somme de la hauteur de la partie supérieure et de la partie inférieure de ce dernier) )
+                    Hexagon hexagon = new Hexagon(x + ((Width/7*5 - hexWidth * largeur) / 2) , y + ((Height - hexHeight * hauteur / 1.923076923 - 260) / 2)); // Le calcul permet de centrer de façon approximative les hexagones dans la fenêtre. 1.923076923 correspond a 500 (la hauteur d'un hexagone) divisé par 260 (la somme de la hauteur de la partie supérieure et de la partie inférieure de ce dernier) )
                     hexagonManager.AddHexagon(hexagon);
 
                     Image hexagonImage = hexagon.CreateImage();
                     HexagonCanvas.Children.Add(hexagonImage);
                 }
             }
-
-            
         }
 
         /// <summary>
@@ -110,24 +117,23 @@ namespace VinlandSol.IHM
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /// 
+        /// <author>Camille</author>
         private void Canvas_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             Point position = e.GetPosition(HexagonCanvas);
             double zoomFactor = 1.1;
             Matrix matrix = zoomTransform.Matrix;
-            if (e.Delta > 0)
+            if (e.Delta > 0) // Zoom
             {
-                zoomLevel += 1;
+                zoomLevel -= 1;
                 matrix.ScaleAtPrepend(zoomFactor, zoomFactor, position.X, position.Y);
             }
-            else
-            {   if(zoomLevel > zoomLimit)
+            else // Dézoom
+            {   if(zoomLevel < zoomLimit) // On ne peut pas trop dézoomer
                 {
-                    zoomLevel -= 1;
+                    zoomLevel += 1;
                     matrix.ScaleAtPrepend(1.0 / zoomFactor, 1.0 / zoomFactor, position.X, position.Y);
-                }
-               
+                }               
             }
             zoomTransform.Matrix = matrix;
         }
@@ -137,6 +143,7 @@ namespace VinlandSol.IHM
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <author>Aaron</author>
         private void OuvrirCartes_Click(object sender, RoutedEventArgs e)
         {
             Cartes pagecreation = new Cartes();
@@ -151,6 +158,7 @@ namespace VinlandSol.IHM
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <author>Evan</author>
         private void Canvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.RightButton == MouseButtonState.Pressed)
@@ -166,6 +174,7 @@ namespace VinlandSol.IHM
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <author>Evan</author>
         private void Canvas_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (isRightMouseDown)
@@ -176,10 +185,11 @@ namespace VinlandSol.IHM
         }
 
         /// <summary>
-        /// Déplacement de la map suivant la position de la souris
+        /// Déplacement de la map suivant la position de la souris et de ifRightMouseDown
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <author>Evan</author>
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
             if (isRightMouseDown)
@@ -195,6 +205,5 @@ namespace VinlandSol.IHM
                 lastMousePosition = currentPosition;
             }
         }
-
     }
 }
