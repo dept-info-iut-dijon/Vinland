@@ -13,8 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VinlandMain.IHM;
+using VinlandSol.BDD;
 using VinlandSol.IHM;
-using VinlandSol.Métier;
 
 namespace VinlandSol
 {
@@ -53,7 +53,7 @@ namespace VinlandSol
             string username = TBNomUtilisateur.Text;
             string password = TBMdp.Password;
 
-            UserAccountManager accountManager = new UserAccountManager();
+            FakeDAO accountManager = new FakeDAO();
             if (accountManager.VerifyUserAccount(username, password))
             {
                 Campagnes pagecreation = new Campagnes();

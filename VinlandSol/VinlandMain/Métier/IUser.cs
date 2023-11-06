@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace VinlandSol.Métier
 {
-    internal interface IUser
+    public interface IUser
     {
+        int Id { get; set; }
+        string Nom { get; set; }
+        string Mdp { get; set; }
     }
 }

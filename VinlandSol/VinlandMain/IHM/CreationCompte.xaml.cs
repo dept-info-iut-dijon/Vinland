@@ -12,8 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VinlandMain.IHM;
+using VinlandSol.BDD;
 using VinlandSol.IHM;
-using VinlandSol.Métier;
 
 namespace VinlandSol.IHM
 {
@@ -53,7 +53,7 @@ namespace VinlandSol.IHM
 
             if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
             {
-                UserAccountManager accountManager = new UserAccountManager();
+                FakeDAO accountManager = new FakeDAO();
                 accountManager.CreateUserAccount(username, password);
                 MainWindow pagecreation = new MainWindow();
                 pagecreation.Left = this.Left;
