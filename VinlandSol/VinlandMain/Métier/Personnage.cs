@@ -6,18 +6,12 @@ using System.Threading.Tasks;
 
 namespace VinlandSol.Métier
 {
-    public class Carte
+    public class Personnage
     {
         public int ID { get; set; }
         public string Nom { get; set; }
+        public int ID_Joueur { get; set; }
         public int ID_Campagne { get; set; }
-
-        public Carte(int ID, string Nom, int ID_Campagne)
-        {
-            this.ID = ID;
-            this.Nom = Nom;
-            this.ID_Campagne = ID_Campagne;
-        }
-
     }
+
 }

@@ -53,8 +53,8 @@ namespace VinlandSol
             string username = TBNomUtilisateur.Text;
             string password = TBMdp.Password;
 
-            UserAccountManager accountManager = new UserAccountManager();
-            if (accountManager.VerifyUserAccount(username, password))
+            UserManager accountManager = new UserManager();
+            if (accountManager.VerifyUser(username, password))
             {
                 Campagnes pagecreation = new Campagnes();
                 pagecreation.Left = this.Left;

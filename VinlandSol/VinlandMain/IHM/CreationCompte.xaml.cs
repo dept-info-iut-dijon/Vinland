@@ -53,8 +53,8 @@ namespace VinlandSol.IHM
 
             if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
             {
-                UserAccountManager accountManager = new UserAccountManager();
-                accountManager.CreateUserAccount(username, password);
+                UserManager accountManager = new UserManager();
+                accountManager.CreateUser(username, password);
                 MainWindow pagecreation = new MainWindow();
                 pagecreation.Left = this.Left;
                 pagecreation.Top = this.Top;
