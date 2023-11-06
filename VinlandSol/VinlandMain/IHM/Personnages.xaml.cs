@@ -235,7 +235,7 @@ namespace VinlandSol.IHM
         {
             NomPersonnageTextBox.Visibility = Visibility.Visible;
             ValiderButton.Visibility = Visibility.Visible;
-
+            BoutonSuppression.Visibility= Visibility.Visible;
 
         }
 
@@ -272,6 +272,7 @@ namespace VinlandSol.IHM
 
             NomPersonnageTextBox.Visibility = Visibility.Collapsed;
             ValiderButton.Visibility = Visibility.Collapsed;
+            BoutonSuppression.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
