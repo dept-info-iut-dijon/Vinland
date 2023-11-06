@@ -3,9 +3,9 @@
 
 ## Usage
 
-Vous voulez faire du jeu de rôle avec des cartes mais vous n'avez aucun outil qui vous permette de le faire?
+Vous voulez faire du jeu de rôle avec des cartes mais vous n'avez aucun outil qui vous permette de le faire?  
 Vinland vous permet de créer des campagnes contenant des cartes que vous pouvez créer et modifier vous même pour vos parties de jeu de rôle.
-Créez un compte MJ, créez vos campagnes et leurs cartes et invitez vos amis pour jouer.
+Créez un compte MJ, créez vos campagnes et leurs cartes et invitez vos amis pour jouer.  
 
 ## Installation
 
@@ -15,5 +15,5 @@ Créez un compte MJ, créez vos campagnes et leurs cartes et invitez vos amis po
 
 ## Auteurs
 
-Vinland est une idée originale de François Tavin
+Vinland est une idée originale de François Tavin.  
 Le Projet est développé par l'équipe 'Talc Mexicain' 
