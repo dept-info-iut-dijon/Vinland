@@ -13,7 +13,7 @@
         <Label Content="Campagne - Personnages" FontSize="25" HorizontalAlignment="Center" Margin="0,125,0,0" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
 
         <!--Partie Gauche-->
-        <ListBox x:Name="PersonnagesListe" FontSize="40" d:ItemsSource="{Binding PersonnagesCollection}" Margin="100,250,800,160" SelectionChanged="PersonnagesListe_SelectionChanged"/>
+        <ListBox x:Name="PersonnagesListe" FontSize="30" d:ItemsSource="{Binding PersonnagesCollection}" Margin="100,250,800,160" SelectionChanged="PersonnagesListe_SelectionChanged"/>
         <Button Content="Ajouter un personnage" FontSize="30" Margin="0,0,800,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="500" Click="OuvrirAjouterPersonnage_Click"/>
         <Button Content="Retour" FontSize="25" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="56" Width="121" Click="OuvrirCampagnes_Click"/>
 
@@ -26,7 +26,7 @@
 
         <TextBlock x:Name="NomUtilisateurTextBlock" Margin="1065,306,120,0" VerticalAlignment="Top" FontSize="27.5" Height="70"/>
         <TextBlock x:Name="NomPersonnageTextBlock" Margin="1065,406,120,0" VerticalAlignment="Top" FontSize="27.5" Height="70"/>
-        <TextBlock x:Name="DateCreationTextBlock" Margin="982,500,120,0" VerticalAlignment="Top" FontSize="27.5" Height="70"/>
+        <TextBlock x:Name="DateCreationTextBlock" Margin="982,505,120,0" VerticalAlignment="Top" FontSize="27.5" Height="47"/>
 
         <Button x:Name="boutonCrayon" FontSize="40" Margin="0,0,40,265" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" Click="CrayonEdit_Click">
             <Image x:Name="crayon" Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
@@ -34,8 +34,8 @@
         <Button x:Name="BoutonSuppression" FontSize="40" Background="Red" Margin="0,0,40,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="SupprimerPersonnage" Visibility="Collapsed">
             <Image Source="Media/Icones/Poubelle.png" Height="70" Width="70" />
         </Button>
-        <TextBox x:Name="NomPersonnageTextBox" FontSize="30" Margin="760,599,201,0" Visibility="Collapsed" VerticalAlignment="Top" Height="50"/>
-        <Button x:Name="ValiderButton" Content="Valider" FontSize="25" Visibility="Collapsed" Margin="917,654,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="50" Click="ValiderButton_Click" Width="125"/>
-        <Button Content="Selection de carte" FontSize="25" HorizontalAlignment="Left" Margin="1180,10,0,0" VerticalAlignment="Top" Height="56" Width="200" Click="OuvrirCartes_Click"/>
+        <TextBox x:Name="NomPersonnageTextBox" FontSize="30" Margin="941,599,170,0" Visibility="Collapsed" VerticalAlignment="Top" Height="50"/>
+        <Button x:Name="ValiderButton" Content="Valider" FontSize="25" Visibility="Collapsed" Margin="1023,654,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="50" Click="ValiderButton_Click" Width="125"/>
+        <Button Content="Selection de carte" FontSize="25" HorizontalAlignment="Right" Margin="0,0,500,50" VerticalAlignment="Bottom"  Height="70" Width="252" Click="OuvrirCartes_Click"/>
     </Grid>
 </Window>
