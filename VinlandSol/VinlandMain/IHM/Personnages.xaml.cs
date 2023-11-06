@@ -79,7 +79,6 @@ namespace VinlandSol.IHM
                     {
                         string idJoueur = elements[0].Trim();
                         string idPersonnage = elements[1].Trim();
-
                         
                         PersonnagesListe.Items.Add($"{idPersonnage}");
                         personnages.Add(new Personnage

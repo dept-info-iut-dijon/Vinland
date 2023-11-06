@@ -130,6 +130,8 @@ namespace VinlandSol.IHM
         {
             NomCarteTextBox.Visibility = Visibility.Visible;
             Sauv.Visibility = Visibility.Visible;
+            Suppr.Visibility = Visibility.Visible;
+
         }
 
         /// <summary>

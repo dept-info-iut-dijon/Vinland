@@ -25,7 +25,7 @@
             <Image Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
         </Button>
 
-        <Button FontSize="40" Background="Red" Margin="0,0,40,35" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="SupprimerCarte" >
+        <Button x:Name="Suppr" FontSize="40" Background="Red" Margin="0,0,40,35" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="SupprimerCarte" Visibility="Collapsed">
             <Image Source="Media/Icones/Poubelle.png" Height="70" Width="70" />
         </Button>
 
