@@ -8,6 +8,9 @@
         x:Name="CampagnesWindow"
         Title="Campagnes" Height="750" Width="1400" FontSize="40">
     <Grid>
+        <Grid.Background>
+            <SolidColorBrush Color="#87CEEB" />
+        </Grid.Background>
         <!--Titres-->
         <TextBlock Text="Vinland" Margin="450,10,440,601" FontSize="100" TextAlignment="Center" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
         <TextBlock Text="Campagne Selector" Margin="400,133,400,525" TextAlignment="Center" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>

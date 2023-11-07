@@ -8,6 +8,10 @@
         x:Name="CartesWindow"
         Title="Cartes" Height="750" Width="1400">
     <Grid>
+        <Grid.Background>
+            <SolidColorBrush Color="#87CEEB" />
+        </Grid.Background>
+        
         <!--Titres-->
         <Label Content="Vinland" FontSize="100" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
         <Label Content="Campagne - Cartes" FontSize="25" HorizontalAlignment="Center" Margin="0,125,0,0" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>

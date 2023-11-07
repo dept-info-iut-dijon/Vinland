@@ -8,7 +8,10 @@
         x:Name="Vinland"
         Title="Vinland" Height="750" Width="1400">
     <Grid>
-
+        <Grid.Background>
+            <SolidColorBrush Color="#87CEEB" />
+        </Grid.Background>
+        
         <Button x:Name="Skip" Content="Skip" HorizontalAlignment="Left" Margin="163,656,0,0" VerticalAlignment="Top" FontSize="35" Click="Skip_Click"/>
 
 
@@ -17,11 +20,11 @@
         <Label Content="Mot de passe :" FontSize="35" HorizontalAlignment="Left" Margin="441,0,0,0" VerticalAlignment="Center"/>
 
         <Button x:Name="Entrer" Content="Entrer" FontSize="50" Padding="60,20,60,20" HorizontalAlignment="Center" Margin="0,500,0,0" VerticalAlignment="Top"  Click="OuvrirCampagnes_Click"/>
-        <Button Content="Créer un compte" FontSize="25" HorizontalAlignment="Center" Margin="0,650,0,0" VerticalAlignment="Top" Click="OuvrirCreationCompte_Click"/>
+        <Button Content="Créer un compte" FontSize="25" HorizontalAlignment="Center" Margin="0,656,0,0" VerticalAlignment="Top" Click="OuvrirCreationCompte_Click" Height="51"/>
 
         <TextBox x:Name="TBNomUtilisateur" HorizontalAlignment="Left" Margin="762,238,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Height="55" BorderThickness="3" FontSize="35"/>
 
-        <PasswordBox x:Name="TBMdp" HorizontalAlignment="Left" Margin="762,345,0,0" VerticalAlignment="Top" Width="300" Height="52" FontSize="25"/>
+        <PasswordBox x:Name="TBMdp" HorizontalAlignment="Left" Margin="762,345,0,0" VerticalAlignment="Top" Width="300" Height="52" FontSize="25" BorderThickness="3"/>
 
     </Grid>
 </Window>
