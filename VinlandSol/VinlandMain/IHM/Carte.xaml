@@ -30,12 +30,12 @@
                 <Label x:Name="DimCarteLabel" FontSize="20" Content="Dimensions Carte" Margin="0,0,0,20"/>
 
                 <StackPanel Orientation="Horizontal" Width="184" >
-                    <CheckBox IsChecked="True" VerticalAlignment="Center" Height="33"/>
+                    <CheckBox IsChecked="False" VerticalAlignment="Center" Height="33"/>
                     <TextBlock Text="Vision d'une carte" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,20"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Width="192" >
-                    <CheckBox IsChecked="True" VerticalAlignment="Center" Height="33"/>
+                    <CheckBox IsChecked="False" VerticalAlignment="Center" Height="33"/>
                     <TextBlock Text="Visibilité de la carte" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,20" Width="172"/>
                 </StackPanel>
 
@@ -91,7 +91,7 @@
                 <ComboBox Width="170" Margin="0,0,0,20"/>
 
                 <StackPanel Orientation="Horizontal" Width="170" >
-                    <CheckBox IsChecked="True" VerticalAlignment="Center" Height="33"/>
+                    <CheckBox IsChecked="False" VerticalAlignment="Center" Height="33"/>
                     <TextBlock Text="Vision du joueur" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,20"/>
                 </StackPanel>
 
@@ -112,7 +112,54 @@
 
         <Border BorderBrush="Black" BorderThickness="3" Grid.Column="2" Grid.Row="0">
             <StackPanel Background="Transparent">
-                <Button FontSize="20" Content="Enregistrer" Height="40" Width="150" Margin="0,660,0,0" Background="lightgreen" Click="OuvrirCartes_Click"/>
+
+                <Label x:Name="TypeEmplacementCaseLabel" FontSize="20" Content='"Type Case" 0;0' HorizontalAlignment="Center" Margin="0,0,0,5"/>
+
+                <TextBox TextWrapping="Wrap" Text="Note" Width="190" Height="50" Margin="0,0,0,5"/>
+
+                <StackPanel Orientation="Horizontal" Width="160" >
+                    <CheckBox IsChecked="False" VerticalAlignment="Center" Height="20"/>
+                    <TextBlock Text="Visibilité joueur" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,10"/>
+                </StackPanel>
+
+                <Label FontSize="20" Content="Point d'intérêt" Margin="0,0,0,0"/>
+                <TextBox TextWrapping="Wrap" Text="Nom" Width="190" Height="26" Margin="0,0,0,10" FontSize="16"/>
+
+                <Label FontSize="20" Content="Description" Margin="0,0,0,0"/>
+                <TextBox TextWrapping="Wrap" Text="Description" Width="190" Height="26" Margin="0,0,0,5" FontSize="16"/>
+
+                <StackPanel Orientation="Horizontal" Width="160" >
+                    <CheckBox IsChecked="False" VerticalAlignment="Center" Height="30"/>
+                    <TextBlock Text="Visibilité joueur" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,20"/>
+                </StackPanel>
+
+                <Label Content="Type de terrain" FontSize="16" HorizontalAlignment="Center" Width="115"/>
+                <ComboBox Width="170" Margin="0,0,0,5"/>
+
+                <Label Content="Type d'activité" FontSize="16" HorizontalAlignment="Center" Width="111"/>
+                <ComboBox Width="170" Margin="0,0,0,10"/>
+
+                <StackPanel Orientation="Horizontal" Width="160" >
+                    <CheckBox IsChecked="False" VerticalAlignment="Center" Height="20"/>
+                    <TextBlock Text="Exploré" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,5"/>
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal" Width="160" >
+                    <CheckBox IsChecked="False" VerticalAlignment="Center" Height="20"/>
+                    <TextBlock Text="Route" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,5"/>
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal" Width="160" >
+                    <CheckBox IsChecked="False" VerticalAlignment="Center" Height="20"/>
+                    <TextBlock Text="Cité" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,10"/>
+                </StackPanel>
+
+                <TextBox TextWrapping="Wrap" Text="Nom" Width="190" Height="26" Margin="0,0,0,5" FontSize="16"/>
+
+                <Label Content="Faction" FontSize="16" HorizontalAlignment="Center" Width="60"/>
+                <ComboBox Width="170" Margin="0,0,0,15"/>
+
+                <Button FontSize="20" Content="Enregistrer" Height="40" Width="150" Background="lightgreen" Click="OuvrirCartes_Click"/>
             </StackPanel>
         </Border>
 
