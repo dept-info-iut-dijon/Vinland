@@ -50,8 +50,10 @@ namespace VinlandSol.BDD
             return joueurs;
         }
 
-        public void AjouterMJ(MJ mj)
+        public void AjouterMJ(string nom, string mdp)
         {
+            int id = mjs.Count + 1;
+            MJ mj = new MJ(id, nom, mdp);
             mjs.Add(mj);
         }
 
