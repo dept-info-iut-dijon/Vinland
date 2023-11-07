@@ -15,10 +15,17 @@
     <None Remove="IHM\Media\Icones\oeil.png" />
     <None Remove="IHM\Media\Icones\oeilbarre.png" />
     <None Remove="IHM\Media\Icones\poubelle.png" />
+    <None Remove="IHM\Media\Resources\actualiser.png" />
     <None Remove="IHM\Media\Resources\crayon.png" />
     <None Remove="IHM\Media\Resources\hexagon.png" />
     <None Remove="IHM\Media\Resources\hexagon_vert.png" />
     <None Remove="IHM\Media\Resources\poubelle.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="IHM\Media\Resources\actualiser.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
