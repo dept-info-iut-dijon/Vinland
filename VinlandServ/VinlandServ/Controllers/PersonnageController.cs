@@ -14,7 +14,6 @@ namespace VinlandServ.Controllers
             _context = context;
         }
 
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Personnage>>> GetPersonnages()
         {
