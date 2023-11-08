@@ -154,12 +154,13 @@ namespace VinlandMain.IHM
             NomNouvCamp.Visibility = Visibility.Visible;
             Valider.Visibility = Visibility.Visible;
         }
-        
+
         /// <summary>
         /// Ajoute la nouvelle campagne dans le .txt
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        
         private void Valider_Click(object sender, RoutedEventArgs e)
         {
             string contenu = NomNouvCamp.Text;
@@ -168,7 +169,13 @@ namespace VinlandMain.IHM
                 writer.Write(contenu + ",");
             }
             NomCampTextBlock.Text += contenu + Environment.NewLine;
-            
+
+            if (string.IsNullOrWhiteSpace(contenu))
+            {
+                MessageBox.Show("Le nom de la campagne ne peut pas être vide.", "Erreur de Nom de Campagne", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             string newCampaignName = NomNouvCamp.Text;
             if (!campagnes.Any(c => c.Nom == newCampaignName))            {
                 nouvelleCampagne.Nom = newCampaignName;
@@ -188,7 +195,6 @@ namespace VinlandMain.IHM
             NomNouvCamp.Visibility = Visibility.Collapsed;
             Valider.Visibility = Visibility.Collapsed;
         }   
-        
         /// <summary>
         /// Affiche les options d'édition des informations de la campagne
         /// </summary>
@@ -203,6 +209,8 @@ namespace VinlandMain.IHM
             EditS.Visibility = Visibility.Visible;
             Sauv.Visibility = Visibility.Visible;
             SupprimerCamp.Visibility = Visibility.Visible;
+            NomCampTextBox.Visibility = Visibility.Visible;
+            NomCampTextBlock.Visibility = Visibility.Collapsed;
 
             if (selectedIndex >= 0 && selectedIndex < campagnes.Count)
             {
@@ -235,6 +243,11 @@ namespace VinlandMain.IHM
             {
                 string newCampaignName = NomCampTextBox.Text;
 
+                if (string.IsNullOrWhiteSpace(newCampaignName))
+                {
+                    MessageBox.Show("Le nom de la campagne ne peut pas être vide.", "Erreur de Nom de Campagne", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
                 campagnes[indiceCampagneEnEdition] = new Campagne
                 {
                     Nom = newCampaignName,
@@ -249,7 +262,6 @@ namespace VinlandMain.IHM
             indiceCampagneEnEdition = -1;
             MasquerElements();
         }
-
 
         /// <summary>
         /// Ouvre la fenêtre Personnages et ferme la fenêtre actuelle

@@ -260,25 +260,31 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         public void ValiderButton_Click(object sender, RoutedEventArgs e)
         {
-            string nouveauNomPersonnage = NomPersonnageTextBox.Text;
+            string nouvNomPersonnage = NomPersonnageTextBox.Text;
 
+            if (string.IsNullOrWhiteSpace(nouvNomPersonnage))
+            {
+                MessageBox.Show("Le nom de la campagne ne peut pas être vide.", "Erreur de Nom de Campagne", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             int selectedIndex = PersonnagesListe.SelectedIndex;
             if (selectedIndex >= 0 && selectedIndex < personnages.Count)
             {
+
                 List<Personnage> personnagesClone = personnages.ToList();
 
                 personnagesClone[selectedIndex] = new Personnage
                 {
-                    NomPersonnage = nouveauNomPersonnage,
+                    NomPersonnage = nouvNomPersonnage,
                     NomUtilisateur = personnages[selectedIndex].NomUtilisateur,
                     DateCreation = personnages[selectedIndex].DateCreation
                 };
 
-                PersonnagesListe.Items[selectedIndex] = nouveauNomPersonnage;
+                PersonnagesListe.Items[selectedIndex] = nouvNomPersonnage;
 
                 personnages = personnagesClone;
 
-                NomPersonnageTextBlock.Text = nouveauNomPersonnage;
+                NomPersonnageTextBlock.Text = nouvNomPersonnage;
 
                 string filePath = "personnages.txt";
                 File.WriteAllLines(filePath, personnages.Select(p => $"{p.NomUtilisateur}, {p.NomPersonnage}"));
