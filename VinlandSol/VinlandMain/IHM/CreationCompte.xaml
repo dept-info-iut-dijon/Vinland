@@ -11,13 +11,13 @@
         <Grid.Background>
             <ImageBrush ImageSource="/IHM/Media/Resources/background.png"/>
         </Grid.Background>
-        
+
         <!--Partie Titre-->
         <TextBlock Text="Vinland" Margin="493,10,491,598" FontSize="90" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
         <TextBlock Margin="436,114,436,550" Height="70" TextAlignment="Center" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"><Run Language="fr-fr" Text="Compte"/><Run Language="fr-fr" Text=" - Création"/></TextBlock>
 
         <!--Partie Login-->
-        <TextBlock Text="Nom d'utilisateur :" Margin="300,220,0,450" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Left" Width="391" Height="70" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+        <TextBlock Text="Nom d'utilisateur :" Margin="300,220,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" Width="391" Height="70" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
         <TextBlock Text="Mot de passe :" Margin="300,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Left" Width="391" Height="70" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
 
         <TextBox x:Name="TBNomUtilisateur" Margin="750,220,0,0" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="390" FontSize="40" Height="70" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
@@ -32,18 +32,18 @@
 
         <!--Bouton creer/annuler-->
         <Button Background="#fbf1cc" x:Name="Creer" Content="Créer" Margin="400,600,800,50" Click="Creer_Click" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
-        <Button.Resources>
-             <Style TargetType="{x:Type Border}">
-                <Setter Property="CornerRadius" Value="10"/>
-             </Style>
-        </Button.Resources>
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
         </Button>
         <Button Background="#fbf1cc" x:Name="Annuler" Content="Annuler" Margin="800,600,400,50" Click="AnnuleCreaCompte_Click" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
-        <Button.Resources>
-            <Style TargetType="{x:Type Border}">
-                <Setter Property="CornerRadius" Value="10"/>
-            </Style>
-        </Button.Resources>
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
         </Button>
     </Grid>
 </Window>
