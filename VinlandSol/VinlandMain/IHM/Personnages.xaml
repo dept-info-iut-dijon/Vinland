@@ -62,7 +62,7 @@
             </Style>
         </Button.Resources>
         </Button>
-        <Button Background="#fbf1cc" Content="Selection de carte" FontSize="25" HorizontalAlignment="Right" Margin="0,0,500,50" VerticalAlignment="Bottom"  Height="70" Width="252" Click="OuvrirCartes_Click" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
+        <Button Background="#fbf1cc" Content="Selection de carte" FontSize="30" HorizontalAlignment="Right" Margin="0,0,500,50" VerticalAlignment="Bottom"  Height="70" Width="252" Click="OuvrirCartes_Click" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
         <Button.Resources>
             <Style TargetType="{x:Type Border}">
                 <Setter Property="CornerRadius" Value="10"/>

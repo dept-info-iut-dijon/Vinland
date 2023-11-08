@@ -131,6 +131,23 @@ namespace VinlandSol.IHM
             NomCarteTextBox.Visibility = Visibility.Visible;
             Sauv.Visibility = Visibility.Visible;
             Suppr.Visibility = Visibility.Visible;
+            EditSBtn.Visibility = Visibility.Visible;
+            EditBtn.Visibility = Visibility.Collapsed;
+
+        }
+
+        /// <summary>
+        /// Ferme les options d'édition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditS_Click(object sender, RoutedEventArgs e)
+        {
+            NomCarteTextBox.Visibility = Visibility.Collapsed;
+            Sauv.Visibility = Visibility.Collapsed;
+            Suppr.Visibility = Visibility.Collapsed;
+            EditSBtn.Visibility = Visibility.Collapsed;
+            EditBtn.Visibility = Visibility.Visible;
 
         }
 

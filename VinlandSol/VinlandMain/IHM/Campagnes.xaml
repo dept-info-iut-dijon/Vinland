@@ -53,7 +53,7 @@
         <TextBlock x:Name="NombrePersonnagesTextBlock" Margin="1004,534,144,0" VerticalAlignment="Top" FontSize="30" Height="46" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
 
         <!--Partie Droite bas-->
-        <Button Background="#fbf1cc" Content="Rejoindre la Campagne" x:Name="RejoidComp" Margin="0,0,314,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="430" Click="OuvrirPersonnages_Click" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" Visibility="Collapsed">
+        <Button Background="#fbf1cc" Content="Rejoindre la Campagne" x:Name="RejoidComp" Margin="0,0,314,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="430" Click="OuvrirPersonnages_Click" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" >
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>

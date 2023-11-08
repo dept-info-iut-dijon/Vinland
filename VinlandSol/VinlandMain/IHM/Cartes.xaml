@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         x:Name="CartesWindow"
         ResizeMode="NoResize"
-        Title="Cartes" Height="750" Width="1400">
+        Title="Cartes" Height="750" Width="1400" FontSize="30">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/IHM/Media/Resources/background.png"/>
@@ -19,32 +19,25 @@
 
         <!--Partie Gauche-->
         <ListBox Background="#f5d9a9" x:Name="CartesListe" FontSize="40" d:ItemsSource="{Binding CarteeCollection}" Margin="49,247,851,163" SelectionChanged="CartesListe_SelectionChanged" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
-        <Button Background="#fbf1cc" Content="Nouvelle Carte" FontSize="30" Margin="0,0,851,35" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="500" Click="OuvrirCreationCarte_Click" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
+        <Button Background="#fbf1cc" Content="Nouvelle Carte" Margin="0,0,851,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="500" Click="OuvrirCreationCarte_Click" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button Background="#fbf1cc" Content="Retour" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="56" Width="121" Click="OuvrirPersonnages_Click" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
+        <Button Background="#fbf1cc" Content="Retour" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="56" Width="121" Click="OuvrirPersonnages_Click" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>
                 </Style>
             </Button.Resources>
         </Button>
-        
+
         <!--Partie Droite-->
-        <Label HorizontalAlignment="Left" Margin="859,177,0,0" Content="Informations :" FontSize="40" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+        <Label Content="Informations :" Margin="859,177,0,0" FontSize="40" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
 
         <Label Content="Nom :" Margin="624,246,636,0" VerticalAlignment="Top" FontSize="35" Height="55" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
-        <Button Margin="0,0,40,410" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" Click="Edit_Click">
-            <Image Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
-        </Button>
-
-        <Button x:Name="Suppr" FontSize="40" Background="Red" Margin="0,0,40,35" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="SupprimerCarte" Visibility="Collapsed">
-            <Image Source="Media/Icones/Poubelle.png" Height="70" Width="70" />
-        </Button>
 
         <Label Content="Visibilité de la carte : " Margin="624,321,426,0" VerticalAlignment="Top" FontSize="35" Height="55" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
         <Button Margin="958,317,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" BorderThickness="0,0,0,0" Click="OeilChange">
@@ -54,25 +47,38 @@
         <Label Content="Date de création : " Margin="624,396,486,0" VerticalAlignment="Top" FontSize="35" Height="55" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
         <Label Content="Date de modification : " Margin="624,471,426,0" VerticalAlignment="Top" FontSize="35" Height="55" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
 
-        <Button Background="#fbf1cc" Content="Rejoindre la Carte" FontSize="30" Margin="0,0,386,35" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="430" Click="OuvrirCarte_Click" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
-        <Button.Resources>
-            <Style TargetType="{x:Type Border}">
-                <Setter Property="CornerRadius" Value="10"/>
-            </Style>
-        </Button.Resources>
-        </Button>
-        
-        <TextBlock x:Name="NomCarteTextBlock" FontSize="30" HorizontalAlignment="Left" Margin="738,256,0,0" VerticalAlignment="Top" Height="42" Width="500" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
-        <TextBlock x:Name="DateCreationTextBlock" FontSize="30" HorizontalAlignment="Left" Margin="919,406,0,0" VerticalAlignment="Top" Height="42" Width="441" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
-        <TextBlock x:Name="DateModificationTextBlock" FontSize="30" HorizontalAlignment="Left" Margin="986,484,0,0" VerticalAlignment="Top" Height="42" Width="374" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+        <TextBlock x:Name="NomCarteTextBlock" Margin="738,256,0,0" Height="42" Width="500" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+        <TextBlock x:Name="DateCreationTextBlock" Margin="919,406,0,0" Height="42" Width="441" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+        <TextBlock x:Name="DateModificationTextBlock" Margin="986,484,0,0" Height="42" Width="374" HorizontalAlignment="Left"  VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
 
-        <TextBox x:Name="NomCarteTextBox" FontSize="30" Margin="738,256,200,0"  VerticalAlignment="Top" Height="50" Visibility="Collapsed" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
-        <Button Background="#fbf1cc" Content="Sauvegarder" FontSize="25" x:Name="Sauv" Margin="1030,0,150,35"  VerticalAlignment="Bottom" Height="70" Click="Sauv_Click" Visibility="Collapsed" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
-        <Button.Resources>
-            <Style TargetType="{x:Type Border}">
-                <Setter Property="CornerRadius" Value="10"/>
-            </Style>
-        </Button.Resources>
+        <Button x:Name="EditBtn" Margin="0,0,40,410" Click="Edit_Click" Background="{x:Null}" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="0,0,0,0">
+            <Image Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
+        </Button>
+
+        <Button x:Name="EditSBtn" Margin="0,0,40,410" Click="EditS_Click" Visibility="Collapsed" Background="{x:Null}" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="0,0,0,0" >
+            <Image Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
+        </Button>
+
+        <Button Content="Rejoindre la Carte" Margin="0,0,560,40" Click="OuvrirCarte_Click" Height="70" Width="256" Background="#fbf1cc" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <TextBox x:Name="NomCarteTextBox" Margin="0,0,278,40" Visibility="Visible" Height="68" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" Width="277"/>
+
+        <Button Content="Sauvegarder" x:Name="Sauv" Margin="0,0,122,40" Click="Sauv_Click" Visibility="Visible" Height="70" Background="#fbf1cc" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button x:Name="Suppr" Margin="0,0,35,40" Click="SupprimerCarte" Visibility="Visible" FontSize="40" Background="Red" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Image Source="Media/Icones/Poubelle.png" Height="70" Width="70" />
         </Button>
     </Grid>
 </Window>
