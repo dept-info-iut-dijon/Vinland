@@ -47,6 +47,9 @@
         <Button x:Name="boutonCrayon" FontSize="40" Margin="0,0,40,265" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" Click="CrayonEdit_Click">
             <Image x:Name="crayon" Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
         </Button>
+        <Button x:Name="boutonCrayon2" FontSize="40" Margin="0,0,40,265" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" Click="CrayonEditC_Click" Visibility="Collapsed">
+            <Image x:Name="crayon2" Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
+        </Button>
         <Button x:Name="BoutonSuppression" FontSize="40" Background="Red" Margin="0,0,40,50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="SupprimerPersonnage" Visibility="Collapsed">
             <Image Source="Media/Icones/Poubelle.png" Height="70" Width="70" />
         </Button>

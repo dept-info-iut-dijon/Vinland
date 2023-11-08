@@ -235,7 +235,22 @@ namespace VinlandSol.IHM
             NomPersonnageTextBox.Visibility = Visibility.Visible;
             ValiderButton.Visibility = Visibility.Visible;
             BoutonSuppression.Visibility= Visibility.Visible;
+            boutonCrayon2.Visibility= Visibility.Visible;
+            boutonCrayon.Visibility = Visibility.Collapsed;
 
+        }
+        /// <summary>
+        /// Ferme les options d'édition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CrayonEditC_Click(object sender, RoutedEventArgs e)
+        {
+            NomPersonnageTextBox.Visibility = Visibility.Collapsed;
+            ValiderButton.Visibility = Visibility.Collapsed;
+            BoutonSuppression.Visibility = Visibility.Collapsed;
+            boutonCrayon.Visibility = Visibility.Visible;
+            boutonCrayon2.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
@@ -268,10 +283,13 @@ namespace VinlandSol.IHM
                 string filePath = "personnages.txt";
                 File.WriteAllLines(filePath, personnages.Select(p => $"{p.NomUtilisateur}, {p.NomPersonnage}"));
             }
+            NomPersonnageTextBox.Text = "";
 
             NomPersonnageTextBox.Visibility = Visibility.Collapsed;
             ValiderButton.Visibility = Visibility.Collapsed;
             BoutonSuppression.Visibility = Visibility.Collapsed;
+            boutonCrayon.Visibility = Visibility.Visible;
+            boutonCrayon2.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
