@@ -15,14 +15,14 @@ namespace VinlandServ.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("getAll")]
         public async Task<ActionResult<IEnumerable<Campagne>>> GetCampagnes()
         {
             return await _context.Campagnes.ToListAsync();
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Campagne>> GetCampagnes(int id)
+        [HttpGet("getById/{id}")]
+        public async Task<ActionResult<Campagne>> GetCampagne(int id)
         {
             var campagne = await _context.Campagnes.FindAsync(id);
 
