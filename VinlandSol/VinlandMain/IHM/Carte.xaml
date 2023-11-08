@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:VinlandSol.IHM"
         mc:Ignorable="d"
         x:Name="CarteWindow"
+        ResizeMode="NoResize"
         Title="Carte" Height="750" Width="1400">
 
     <Grid x:Name="LaGrid">

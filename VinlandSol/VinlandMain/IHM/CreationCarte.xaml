@@ -7,25 +7,32 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         x:Name="Creation_Carte"
+        ResizeMode="NoResize"
         Title="Création d'une carte" Height="800" Width="800">
 
     <Grid>
 
         <Grid.Background>
-            <SolidColorBrush Color="#87CEEB" />
+            <ImageBrush ImageSource="/IHM/Media/Resources/background.png"/>
         </Grid.Background>
         <!--Titres-->
         <Label Content="Vinland" FontSize="100" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
         <Label Content="Carte - Création" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir" Margin="0,125,0,0"/>
-        
-        <xctk:IntegerUpDown x:Name="NColonne" Increment="1" Minimum="1" Value="1" Maximum="15" HorizontalAlignment="Center" VerticalAlignment="Top" Height="60" Width="110" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" Margin="0,373,0,0"/>
-        <xctk:IntegerUpDown x:Name="NLigne" Increment="1" Minimum="1" Value="1" Maximum="15" HorizontalAlignment="Center" VerticalAlignment="Top" Height="60" Width="110" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" Margin="0,493,0,0"/>
 
-        <TextBox x:Name="NameTextBox" HorizontalAlignment="Center" Text="New carte" HorizontalContentAlignment="Center" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="258" Height="52" FontSize="18" Margin="0,251,0,0"/>
-        <Button x:Name="btnCreer" Content="Créer carte" HorizontalAlignment="Center" Margin="0,620,0,0" VerticalAlignment="Top" Height="50" Width="170" FontSize="18" Click="CreationCarte_Click"/>
-        
-        <Label Content="Nom de la carte :" HorizontalAlignment="Center" Margin="0,212,0,0" VerticalAlignment="Top" Width="146" FontSize="18"/>
-        <Label Content="Nombre de colonnes :" HorizontalAlignment="Center" Margin="0,334,0,0" VerticalAlignment="Top" Width="198" FontSize="18"/>
-        <Label Content="Nombre de lignes :" HorizontalAlignment="Center" Margin="0,454,0,0" VerticalAlignment="Top" Width="170" FontSize="18"/>
+        <xctk:IntegerUpDown x:Name="NColonne" Increment="1" Minimum="1" Value="1" Maximum="15" HorizontalAlignment="Center" VerticalAlignment="Top" Height="60" Width="110" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" Margin="0,373,0,0" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+        <xctk:IntegerUpDown x:Name="NLigne" Increment="1" Minimum="1" Value="1" Maximum="15" HorizontalAlignment="Center" VerticalAlignment="Top" Height="60" Width="110" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" Margin="0,493,0,0" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+
+        <TextBox x:Name="NameTextBox" HorizontalAlignment="Center" Text="New carte" HorizontalContentAlignment="Center" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="258" Height="52" FontSize="18" Margin="0,251,0,0" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+        <Button Background="#fbf1cc" x:Name="btnCreer" Content="Créer carte" HorizontalAlignment="Center" Margin="0,620,0,0" VerticalAlignment="Top" Height="50" Width="170" FontSize="24" Click="CreationCarte_Click" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
+        <Button.Resources>
+            <Style TargetType="{x:Type Border}">
+                <Setter Property="CornerRadius" Value="10"/>
+            </Style>
+        </Button.Resources>
+        </Button>
+
+        <Label Content="Nom de la carte :" HorizontalAlignment="Center" Margin="0,212,0,0" VerticalAlignment="Top" Width="146" FontSize="18" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+        <Label Content="Nombre de colonnes :" HorizontalAlignment="Center" Margin="0,334,0,0" VerticalAlignment="Top" Width="170" FontSize="18" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+        <Label Content="Nombre de lignes :" HorizontalAlignment="Center" Margin="0,454,0,0" VerticalAlignment="Top" Width="146" FontSize="18" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
     </Grid>
 </Window>
