@@ -2,19 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Automation;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using VinlandMain.IHM;
-using static VinlandMain.IHM.Campagnes;
 
 namespace VinlandSol.IHM
 {
@@ -49,7 +39,7 @@ namespace VinlandSol.IHM
         public Personnages()
         {
             InitializeComponent();
-            Closed += ShutdownEnForce;          
+            Closed += ShutdownEnForce;
             LoadPersonnages();
 
         }
@@ -59,39 +49,39 @@ namespace VinlandSol.IHM
         /// </summary>
         public void LoadPersonnages()
         {
-           
+
             string filePath = "personnages.txt";
             personnages.Clear();
-            PersonnagesListe.Items.Clear(); 
-            
+            PersonnagesListe.Items.Clear();
+
             if (File.Exists(filePath))
             {
-               
+
                 string[] lignes = File.ReadAllLines(filePath);
 
-                
+
                 foreach (string ligne in lignes)
                 {
-                    
+
                     string[] elements = ligne.Split(',');
 
                     if (elements.Length == 2)
                     {
                         string idJoueur = elements[0].Trim();
                         string idPersonnage = elements[1].Trim();
-                        
+
                         PersonnagesListe.Items.Add($"{idPersonnage}");
                         personnages.Add(new Personnage
                         {
                             NomUtilisateur = idJoueur,
                             NomPersonnage = idPersonnage,
-                            DateCreation = DateTime.Now 
+                            DateCreation = DateTime.Now
                         });
                     }
                 }
             }
         }
-        
+
         /// <summary>
         /// Permet d'afficher les informations du personnage selectionné
         /// </summary>
@@ -234,8 +224,8 @@ namespace VinlandSol.IHM
         {
             NomPersonnageTextBox.Visibility = Visibility.Visible;
             ValiderButton.Visibility = Visibility.Visible;
-            BoutonSuppression.Visibility= Visibility.Visible;
-            boutonCrayon2.Visibility= Visibility.Visible;
+            BoutonSuppression.Visibility = Visibility.Visible;
+            boutonCrayon2.Visibility = Visibility.Visible;
             boutonCrayon.Visibility = Visibility.Collapsed;
 
         }

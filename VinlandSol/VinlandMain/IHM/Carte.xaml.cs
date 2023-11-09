@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using VinlandMain.IHM;
 using VinlandSol.Métier;
 
 namespace VinlandSol.IHM
@@ -70,7 +61,7 @@ namespace VinlandSol.IHM
             this.hauteur = hauteur;
 
             NomCarteLabel.Content = nom;
-            DimCarteLabel.Content = largeur+"x"+hauteur;
+            DimCarteLabel.Content = largeur + "x" + hauteur;
 
             GenerateHexagonalMap(largeur, hauteur); // Géneration de la map
 
@@ -107,7 +98,7 @@ namespace VinlandSol.IHM
                         x += hexWidth * 0.48;
                     }
 
-                    Hexagon hexagon = new Hexagon(x + ((Width/7*5 - hexWidth * largeur) / 2) , y + ((Height - hexHeight * hauteur / 1.923076923 - 260) / 2)); // Le calcul permet de centrer de façon approximative les hexagones dans la fenêtre. 1.923076923 correspond a 500 (la hauteur d'un hexagone) divisé par 260 (la somme de la hauteur de la partie supérieure et de la partie inférieure de ce dernier) )
+                    Hexagon hexagon = new Hexagon(x + ((Width / 7 * 5 - hexWidth * largeur) / 2), y + ((Height - hexHeight * hauteur / 1.923076923 - 260) / 2)); // Le calcul permet de centrer de façon approximative les hexagones dans la fenêtre. 1.923076923 correspond a 500 (la hauteur d'un hexagone) divisé par 260 (la somme de la hauteur de la partie supérieure et de la partie inférieure de ce dernier) )
                     hexagonManager.AddHexagon(hexagon);
 
                     Image hexagonImage = hexagon.CreateImage();
@@ -136,11 +127,12 @@ namespace VinlandSol.IHM
                 }
             }
             else // Dézoom
-            {   if(zoomLevel < zoomLimitDezoom) // On ne peut pas trop dézoomer
+            {
+                if (zoomLevel < zoomLimitDezoom) // On ne peut pas trop dézoomer
                 {
                     zoomLevel += 1;
                     matrix.ScaleAtPrepend(1.0 / zoomFactor, 1.0 / zoomFactor, position.X, position.Y);
-                }               
+                }
             }
             zoomTransform.Matrix = matrix;
         }

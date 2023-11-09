@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using VinlandSol.IHM;
-using VinlandSol;
 using System.Windows.Controls;
-using System.Globalization;
-using System.IO;
+using VinlandSol.IHM;
 
 namespace VinlandMain.IHM
 {
@@ -44,7 +36,7 @@ namespace VinlandMain.IHM
             public int NombreCartes { get; set; }
             public int NombrePersonnages { get; set; }
         }
-        List<Campagne> campagnes = new List<Campagne>(); 
+        List<Campagne> campagnes = new List<Campagne>();
         private int indiceCampagneEnEdition = -1;
 
         /// <summary>
@@ -52,12 +44,12 @@ namespace VinlandMain.IHM
         /// </summary>
         public Campagnes()
         {
-            InitializeComponent();            
-            LoadCampagnes("campagnes.txt");            
+            InitializeComponent();
+            LoadCampagnes("campagnes.txt");
             CampagnesListe.SelectionChanged += CampagnesListe_SelectionChanged;
         }
         //Le fichier se save dans -> VinlandSol\VinlandMain\bin\Debug\net6.0-windows
-        
+
         /// <summary>
         /// Sauvegarde les campagnes
         /// </summary>
@@ -116,7 +108,7 @@ namespace VinlandMain.IHM
             }
             CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
         }
-        
+
         /// <summary>
         /// Affiche les informations sur la droite de l'écran par rapport à la campagne sélectionnée
         /// </summary>
@@ -125,7 +117,7 @@ namespace VinlandMain.IHM
         private void CampagnesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             AfficherInfos(CampagnesListe.SelectedIndex);
-        }     
+        }
 
         /// <summary>
         /// Permet d'actualiser les informations de la campagne selectionnée/modifiée
@@ -160,7 +152,7 @@ namespace VinlandMain.IHM
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        
+
         private void Valider_Click(object sender, RoutedEventArgs e)
         {
             string contenu = NomNouvCamp.Text;
@@ -177,7 +169,8 @@ namespace VinlandMain.IHM
             }
 
             string newCampaignName = NomNouvCamp.Text;
-            if (!campagnes.Any(c => c.Nom == newCampaignName))            {
+            if (!campagnes.Any(c => c.Nom == newCampaignName))
+            {
                 nouvelleCampagne.Nom = newCampaignName;
 
                 NomCampTextBlock.Text = newCampaignName;
@@ -194,7 +187,7 @@ namespace VinlandMain.IHM
             }
             NomNouvCamp.Visibility = Visibility.Collapsed;
             Valider.Visibility = Visibility.Collapsed;
-        }   
+        }
         /// <summary>
         /// Affiche les options d'édition des informations de la campagne
         /// </summary>
@@ -252,7 +245,7 @@ namespace VinlandMain.IHM
                 {
                     Nom = newCampaignName,
                     DateCreation = campagnes[indiceCampagneEnEdition].DateCreation,
-                    DateModification = DateTime.Now                    
+                    DateModification = DateTime.Now
                 };
                 CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
                 string fileName = "campagnes_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
@@ -291,7 +284,7 @@ namespace VinlandMain.IHM
                 campagnes.RemoveAt(selection);
 
                 CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
-                
+
                 SaveCampagnesTxt("campagnes.txt");
 
                 // Champs qui se rénitialisent 

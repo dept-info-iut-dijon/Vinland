@@ -1,18 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using VinlandMain.IHM;
-using VinlandSol.IHM;
+﻿using System.Windows;
 using VinlandSol.Métier;
 
 namespace VinlandSol.IHM
@@ -36,7 +22,7 @@ namespace VinlandSol.IHM
         {
             MainWindow pagecreation = new MainWindow();
             pagecreation.Left = this.Left;
-            pagecreation.Top = this.Top; 
+            pagecreation.Top = this.Top;
             pagecreation.Show();
             Creation_Compte.Close();
         }
