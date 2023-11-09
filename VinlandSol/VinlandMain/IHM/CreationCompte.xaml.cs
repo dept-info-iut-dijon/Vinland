@@ -1,4 +1,14 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using VinlandMain.IHM;
+using VinlandSol.BDD;
+using VinlandSol.IHM;
 using VinlandSol.Métier;
 
 namespace VinlandSol.IHM
@@ -39,8 +49,8 @@ namespace VinlandSol.IHM
 
             if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
             {
-                UserAccountManager accountManager = new UserAccountManager();
-                accountManager.CreateUserAccount(username, password);
+                FakeDAO accountManager = new FakeDAO();
+                accountManager.AjouterMJ(username, password);
                 MainWindow pagecreation = new MainWindow();
                 pagecreation.Left = this.Left;
                 pagecreation.Top = this.Top;
