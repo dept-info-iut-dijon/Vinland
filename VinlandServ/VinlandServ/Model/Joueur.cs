@@ -1,11 +1,14 @@
 ﻿namespace VinlandServ
 {
+    /// <summary>
+    /// Un joueur
+    /// </summary>
     public class Joueur : IUser
     {
         public int Id { get; set; }
         public string Nom { get; set; }
         public string Mdp { get; set; }
-        public List<Personnage> Personnages { get; set; }
+        public List<Personnage> Personnages { get; set; } // La liste des Personnages de ce Joueur
 
         public Joueur(int id, string nom, string mdp)
         {

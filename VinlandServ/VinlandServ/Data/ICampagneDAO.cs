@@ -5,7 +5,7 @@
     /// </summary>
     public interface ICampagneDAO
     {
-        List<Campagne> GetCampagnes();
+        List<Campagne> GetCampagnes(); 
         Campagne GetCampagne(int id);
         void NewCampagne(Campagne campagne);
         void UpdateCampagne(int id, Campagne campagne);
