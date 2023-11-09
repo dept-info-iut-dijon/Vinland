@@ -50,7 +50,7 @@ namespace VinlandSol.IHM
             if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
             {
                 FakeDAO accountManager = new FakeDAO();
-                accountManager.AjouterMJ(username, password);
+                accountManager.CreateMJ(username, password);
                 MainWindow pagecreation = new MainWindow();
                 pagecreation.Left = this.Left;
                 pagecreation.Top = this.Top;
