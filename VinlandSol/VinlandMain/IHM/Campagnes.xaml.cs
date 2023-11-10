@@ -129,7 +129,16 @@ namespace VinlandMain.IHM
         /// <param name="e"></param>
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
-                AfficherElements();
+
+            int selectedIndex = CampagnesListe.SelectedIndex;            
+
+            if (selectedIndex >= 0 && selectedIndex < campagnes.Count)
+            {
+                Campagne selectedCampagne = campagnes[selectedIndex];
+                NomCampTextBox.Text = selectedCampagne.Nom;
+                indiceCampagneEnEdition = selectedIndex;
+            }
+            AfficherElements();
         }
 
         /// <summary>
@@ -250,6 +259,7 @@ namespace VinlandMain.IHM
             Sauv.Visibility = Visibility.Collapsed;
             SupprimerCamp.Visibility = Visibility.Collapsed;
         }
+
         /// <summary>
         /// Méthode pour afficher les éléments du menu d'édition
         /// </summary>

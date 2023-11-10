@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:VinlandSol.IHM"
         mc:Ignorable="d"
         x:Name="CarteWindow"
@@ -18,7 +19,14 @@
 
 
         <Canvas Name="HexagonCanvas" Background="White" MouseWheel="Canvas_MouseWheel" Grid.Column="1">
-            <!-- Les images des hexagones seront générées ici -->
+            <Canvas.Resources>
+                <Style TargetType="Image">
+                    <Setter Property="Stretch" Value="Uniform" />
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="Width" Value="50" />
+                    <Setter Property="Height" Value="50" />
+                </Style>
+            </Canvas.Resources>
         </Canvas>
 
         <!-- Stackpanel Gauche -->
@@ -114,7 +122,7 @@
         <Border BorderBrush="Black" BorderThickness="3" Grid.Column="2" Grid.Row="0">
             <StackPanel Background="Transparent">
 
-                <Label x:Name="TypeEmplacementCaseLabel" FontSize="20" Content='"Type Case" 0;0' HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                <Label x:Name="typeEmplacementCaseLabel" FontSize="20" Content='"Type Case" 0;0' HorizontalAlignment="Center" Margin="0,0,0,5"/>
 
                 <TextBox TextWrapping="Wrap" Text="Note" Width="190" Height="50" Margin="0,0,0,5"/>
 
@@ -135,21 +143,23 @@
                 </StackPanel>
 
                 <Label Content="Type de terrain" FontSize="16" HorizontalAlignment="Center" Width="115"/>
-                <ComboBox Width="170" Margin="0,0,0,5"/>
+                <ComboBox x:Name="ListTerrains" Width="170" SelectionChanged="Terrains_SelectionChanged" Margin="0,0,0,5"/>
 
-                <Label Content="Type d'activité" FontSize="16" HorizontalAlignment="Center" Width="111"/>
-                <ComboBox Width="170" Margin="0,0,0,10"/>
+
+                <xctk:ColorPicker x:Name="colorPicker" Width="100" Height="20" Margin="0,0,0,5" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden"/>
+                <Button x:Name="colorValidator" Content="Changer la couleur" Click="ChangeColorButton_Click" HorizontalAlignment="Center" Visibility="Hidden"/>
+
 
                 <StackPanel Orientation="Horizontal" Width="160" >
                     <CheckBox IsChecked="False" VerticalAlignment="Center" Height="20"/>
                     <TextBlock Text="Exploré" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,5"/>
                 </StackPanel>
-                
+
                 <StackPanel Orientation="Horizontal" Width="160" >
                     <CheckBox IsChecked="False" VerticalAlignment="Center" Height="20"/>
                     <TextBlock Text="Route" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,5"/>
                 </StackPanel>
-                
+
                 <StackPanel Orientation="Horizontal" Width="160" >
                     <CheckBox IsChecked="False" VerticalAlignment="Center" Height="20"/>
                     <TextBlock Text="Cité" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,10"/>
