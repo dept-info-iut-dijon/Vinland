@@ -21,7 +21,6 @@
     <None Remove="IHM\Media\Resources\background.png" />
     <None Remove="IHM\Media\Resources\crayon.png" />
     <None Remove="IHM\Media\Resources\hexagon.png" />
-    <None Remove="IHM\Media\Resources\hexagon_vert.png" />
     <None Remove="IHM\Media\Resources\poubelle.png" />
   </ItemGroup>
 
@@ -67,9 +66,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="IHM\Media\Resources\hexagon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="IHM\Media\Resources\hexagon_vert.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="IHM\Media\Resources\poubelle.png">
