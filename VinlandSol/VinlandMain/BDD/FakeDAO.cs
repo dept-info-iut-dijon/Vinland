@@ -224,6 +224,22 @@ namespace VinlandSol.BDD
             }
         }
 
+        // Renommez la méthode existante pour refléter sa fonction
+        public void UpdateCampagneDetails(int id, Campagne campagne)
+        {
+            if (campagnes.Count != 0)
+            {
+                for (int i = 0; i < campagnes.Count; i++)
+                {
+                    if (campagnes[i].ID == id)
+                    {
+                        campagnes[i].Nom = campagne.Nom;
+                        campagnes[i].DateModification = DateTime.Now;
+                    }
+                }
+            }
+        }
+
         public void UpdatePersonnage(int id, Personnage personnage)
         {
             if (personnages.Count != 0)

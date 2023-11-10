@@ -31,10 +31,10 @@ namespace VinlandSol.Métier
             Cartes = new List<Carte>();
         }
 
-
+        /*
 
         private string _nom;
-        public string NomT
+        public string Nom
         {
             get { return _nom; }
             set
@@ -47,9 +47,10 @@ namespace VinlandSol.Métier
                 }
             }
         }
-
+        */
         // Ajoutez des événements pour d'autres propriétés si nécessaire
         public event EventHandler OnNomChanged;
+       
     }
 }
 

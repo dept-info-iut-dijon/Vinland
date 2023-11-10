@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using VinlandSol.IHM;
 using VinlandSol.Métier;
 using VinlandSol.BDD;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace VinlandMain.IHM
 {
@@ -16,7 +17,7 @@ namespace VinlandMain.IHM
     public partial class Campagnes : Window
     {
         private FakeDAO fakeDAO;
-        
+
         /// <summary>
         /// Constructeur de la fenêtre
         /// </summary>
@@ -64,13 +65,6 @@ namespace VinlandMain.IHM
                 DateModificationTextBlock.Text = selectedCampagne.DateModification.ToString();
             }
         }
-        /*
-        private void NomCampTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string text = NomCampTextBox.Text;
-            text = NomCampTextBox.Text;
-        }
-        */
 
         /// <summary>
         /// Affiche les éléments permettant de créer une campagne
@@ -90,17 +84,43 @@ namespace VinlandMain.IHM
         /// <param name="e"></param>
         private void Valider_Click(object sender, RoutedEventArgs e)
         {
-            string newCampagneName = NomNouvCamp.Text;
-            Campagne newCampagne = new Campagne(fakeDAO.GetCampagnes().Count + 1, newCampagneName);
-            newCampagne.OnNomChanged += (s, args) => UpdateCampagneDetails();
 
-            fakeDAO.AjouterCampagne(newCampagne);
+            // Obtenir le nouveau nom de la campagne à partir de NomCampTextBox
+            string nouveauNom = NomCampTextBox.Text;
 
-            NomNouvCamp.Visibility = Visibility.Collapsed;
-            Valider.Visibility = Visibility.Collapsed;
+            // Vérifier si un élément est sélectionné dans la liste
+            if (CampagnesListe.SelectedItem != null)
+            {
+                // Tenter de convertir l'élément sélectionné en Campagne
+                Campagne selectedCampagne = CampagnesListe.SelectedItem as Campagne;
 
-            // Mettez à jour la source de données de la ListBox avec des noms de campagne
-            CampagnesListe.ItemsSource = fakeDAO.GetCampagnes().Select(c => c.Nom).ToList();
+                // Vérifier si la conversion a réussi (selectedCampagne n'est pas null)
+                if (selectedCampagne != null)
+                {
+                    // Modifier la propriété Nom de l'objet Campagne
+                    selectedCampagne.Nom = nouveauNom;
+
+                    // Rafraîchir l'affichage de la ListBox
+                    CampagnesListe.Items.Refresh();
+
+                    // Mettre à jour les détails dans les TextBlocks
+                    NomCampTextBlock.Text = selectedCampagne.Nom;
+                    DateModificationTextBlock.Text = selectedCampagne.DateModification.ToString();
+                }
+                else
+                {
+                    // Gérer le cas où l'élément sélectionné n'est pas un objet Campagne
+                    MessageBox.Show("L'élément sélectionné n'est pas une campagne.");
+                }
+            }
+            else
+            {
+                // Gérer le cas où aucun élément n'est sélectionné
+                MessageBox.Show("Aucun élément sélectionné.");
+            }
+
+            // Masquer les éléments d'édition
+            MasquerElements();
         }
         /// <summary>
         /// Affiche les options d'édition des informations de la campagne
@@ -129,6 +149,7 @@ namespace VinlandMain.IHM
         /// <param name="e"></param>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            /*
             if (CampagnesListe.SelectedItem != null)
             {
                 Campagne selectedCampagne = (Campagne)CampagnesListe.SelectedItem;
@@ -141,6 +162,35 @@ namespace VinlandMain.IHM
                 UpdateCampagneDetails();
                 MasquerElements();
             }
+            */
+            // Vérifier si un élément est sélectionné dans la liste
+            if (CampagnesListe.SelectedItem != null)
+            {
+                // Tenter de convertir l'élément sélectionné en Campagne
+                Campagne selectedCampagne = CampagnesListe.SelectedItem as Campagne;
+
+                // Vérifier si la conversion a réussi (selectedCampagne n'est pas null)
+                if (selectedCampagne != null)
+                {
+                    // Modifier la propriété Nom de l'objet Campagne
+                    string nouveauNom = NomCampTextBox.Text;
+                    selectedCampagne.Nom = nouveauNom;
+
+                    // Rafraîchir l'affichage de la ListBox
+                    CampagnesListe.Items.Refresh();
+                }
+                else
+                {
+                    // Gérer le cas où l'élément sélectionné n'est pas un objet Campagne
+                    MessageBox.Show("L'élément sélectionné n'est pas une campagne.");
+                }
+            }
+            else
+            {
+                // Gérer le cas où aucun élément n'est sélectionné
+                MessageBox.Show("Aucun élément sélectionné.");
+            }
+            MasquerElements();
         }
 
         /// <summary>
