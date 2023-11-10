@@ -135,7 +135,7 @@ namespace VinlandSol.IHM
                         x += hexWidth * 0.48;
                     }
                     Hexagon hexagon = new Hexagon(x + ((Width / 7 * 5 - hexWidth * largeur) / 2), y + ((Height - hexHeight * hauteur / 1.923076923 - 260) / 2)); // Le calcul permet de centrer de façon approximative les hexagones dans la fenêtre. 1.923076923 correspond a 500 (la hauteur d'un hexagone) divisé par 260 (la somme de la hauteur de la partie supérieure et de la partie inférieure de ce dernier) )
-                    hexagon.ImageSource = new BitmapImage(new Uri(Path.Combine(basePath, "hexagon.png")));
+                    hexagon.ImageSource = new BitmapImage(new Uri(Path.Combine("pack://application:,,,/VinlandSol;component/IHM/Media/Resources/", "hexagon.png")));
                     hexagon.ImagePath = "hexagon.png";
                     hexagon.X = row+1; // Commence par 1
                     hexagon.Y = col+1; // Commence par 1
