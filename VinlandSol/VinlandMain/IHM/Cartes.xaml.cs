@@ -2,18 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using VinlandMain.IHM;
-using static VinlandSol.IHM.Personnages;
 
 namespace VinlandSol.IHM
 {
@@ -109,7 +100,7 @@ namespace VinlandSol.IHM
                     if (elements.Length == 5)
                     {
                         string NomCarte = elements[0].Trim();
-                       
+
                         string dateCreationStr = elements[3].Trim();
                         string dateModificationStr = elements[4].Trim();
 
@@ -130,6 +121,25 @@ namespace VinlandSol.IHM
         {
             NomCarteTextBox.Visibility = Visibility.Visible;
             Sauv.Visibility = Visibility.Visible;
+            Suppr.Visibility = Visibility.Visible;
+            EditSBtn.Visibility = Visibility.Visible;
+            EditBtn.Visibility = Visibility.Collapsed;
+
+        }
+
+        /// <summary>
+        /// Ferme les options d'édition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditS_Click(object sender, RoutedEventArgs e)
+        {
+            NomCarteTextBox.Visibility = Visibility.Collapsed;
+            Sauv.Visibility = Visibility.Collapsed;
+            Suppr.Visibility = Visibility.Collapsed;
+            EditSBtn.Visibility = Visibility.Collapsed;
+            EditBtn.Visibility = Visibility.Visible;
+
         }
 
         /// <summary>
@@ -237,7 +247,7 @@ namespace VinlandSol.IHM
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OuvrirCreationCarte_Click(object sender, RoutedEventArgs e)
-        {     
+        {
             if (creaCarteOpen == false)
             {
                 pagecreationcarte = new CreationCarte(this);
@@ -246,7 +256,7 @@ namespace VinlandSol.IHM
                 pagecreationcarte.Top = this.Top;
                 pagecreationcarte.Show();
                 creaCarteOpen = true;
-            }     
+            }
         }
 
         /// <summary>
@@ -260,7 +270,7 @@ namespace VinlandSol.IHM
             string[] lignes = File.ReadAllLines(filePath);
             string[] elements = lignes[CartesListe.SelectedIndex].Split(',');
 
-            Carte carteselect = new Carte(elements[0],int.Parse(elements[1]), int.Parse(elements[2]));
+            Carte carteselect = new Carte(elements[0], int.Parse(elements[1]), int.Parse(elements[2]));
             carteselect.Left = this.Left;
             carteselect.Top = this.Top;
             carteselect.Show();
@@ -286,10 +296,10 @@ namespace VinlandSol.IHM
         private void CreationCarte_Closed(object sender, EventArgs e)
         {
             creaCarteOpen = false;
-            if (Application.Current.Windows.Count == 1) 
+            if (Application.Current.Windows.Count == 1)
             {
                 Application.Current.Shutdown();
-            }        
+            }
         }
 
         /// <summary>
@@ -305,6 +315,6 @@ namespace VinlandSol.IHM
             }
         }
 
-        
+
     }
 }

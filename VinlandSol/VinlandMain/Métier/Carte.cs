@@ -8,15 +8,17 @@ namespace VinlandSol.Métier
 {
     public class Carte
     {
-        private int hauteur;
+        public int Id { get; set; }
+        public int Hauteur { get; set; }
+        public int Largeur { get; set; }
+        public Campagne Campagne { get; set; } // Campagne à laquelle la Carte appartient
 
-        public int Hauteur { get { return hauteur; } }
-
-        private int largeur;
-
-        public int Largeur { get { return largeur; } }
-
-        public Carte() { }
-
+        public Carte(int id, int hauteur, int largeur, Campagne campagne)
+        {
+            Id = id;
+            Hauteur = hauteur;
+            Largeur = largeur;
+            Campagne = campagne;
+        }
     }
 }
