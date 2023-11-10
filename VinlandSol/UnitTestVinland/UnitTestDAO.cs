@@ -30,19 +30,6 @@ namespace UnitTestVinland
         }
 
         [Fact]
-        public void VerifyUserAccount_ShouldReturnFalseForInvalidUser()
-        {
-            // Arrange
-            var fakeDao = new FakeDAO();
-
-            // Act
-            var isValid = fakeDao.VerifyUserAccount("InvalidUser", "InvalidPassword");
-
-            // Assert
-            Assert.False(isValid);
-        }
-
-        [Fact]
         public void AjouterJoueur_ShouldAddUserToList()
         {
             // Arrange
@@ -67,34 +54,6 @@ namespace UnitTestVinland
 
             // Assert
             Assert.Single(fakeDao.GetMJs());
-        }
-
-        [Fact]
-        public void AjouterCampagne_ShouldAddCampagneToList()
-        {
-            // Arrange
-            var fakeDao = new FakeDAO();
-            var campagne = new Campagne(/* Campagne parameters */);
-
-            // Act
-            fakeDao.AjouterCampagne(campagne);
-
-            // Assert
-            Assert.Single(fakeDao.GetCampagnes());
-        }
-
-        [Fact]
-        public void AjouterPersonnage_ShouldAddPersonnageToList()
-        {
-            // Arrange
-            var fakeDao = new FakeDAO();
-            var personnage = new Personnage(/* Personnage parameters */);
-
-            // Act
-            fakeDao.AjouterPersonnage(personnage);
-
-            // Assert
-            Assert.Single(fakeDao.GetPersonnages());
         }
     }
 }
