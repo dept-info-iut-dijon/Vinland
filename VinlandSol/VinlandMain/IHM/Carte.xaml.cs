@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -15,6 +16,8 @@ namespace VinlandSol.IHM
     /// </summary>
     public partial class Carte : Window
     {
+        #region Attributs
+
         private string basePath = Directory.GetCurrentDirectory();
         private FileStream output;
         private MatrixTransform zoomTransform = new MatrixTransform();
@@ -27,8 +30,12 @@ namespace VinlandSol.IHM
         private int zoomLevel = 0; // + = Dézoom // - = Zoom
         private int zoomLimitDezoom = 5; // zoomLimit doit être plus grand que zoomLevelDezoom
         private int zoomLimitZoom = -5; // zoomLimit doit être plus petit que zoomLevelZoom
-        private List<Hexagon> hexagons;
-        private List<Terrain> terrains;
+        private List<Hexagon> hexagons = new List<Hexagon>();
+        private List<Terrain> terrains = new List<Terrain>();
+
+        #endregion
+
+        #region Constructeurs
 
         /// <summary>
         /// Carte de base - Dédiée au tests
@@ -37,14 +44,14 @@ namespace VinlandSol.IHM
         public Carte()
         {
             InitializeComponent();
+            GenerateHexagonalMap(largeur, hauteur); // Géneration de la map
+            InitializeTerrains();
+
             HexagonCanvas.RenderTransform = zoomTransform; // zoom map
-            hexagons = new List<Hexagon>();
-            terrains = new List<Terrain>();
+
             this.nom = "Carte par default";
             this.largeur = 10;
             this.hauteur = 10;
-            InitializeTerrains();
-            GenerateHexagonalMap(largeur, hauteur); // Géneration de la map
 
             HexagonCanvas.MouseRightButtonDown += Canvas_MouseRightButtonDown; // Déplacement de la map avec le clic droit
             HexagonCanvas.MouseRightButtonUp += Canvas_MouseRightButtonUp;
@@ -61,29 +68,33 @@ namespace VinlandSol.IHM
         public Carte(string nom, int largeur, int hauteur)
         {
             InitializeComponent();
+            GenerateHexagonalMap(largeur, hauteur); // Géneration de la map
+            InitializeTerrains();
+
             HexagonCanvas.RenderTransform = zoomTransform; // zoom map
-            hexagons = new List<Hexagon>();
-            terrains = new List<Terrain>();
+
             this.nom = nom;
             this.largeur = largeur;
             this.hauteur = hauteur;
 
             NomCarteLabel.Content = nom;
             DimCarteLabel.Content = largeur + "x" + hauteur;
-            InitializeTerrains();
-            GenerateHexagonalMap(largeur, hauteur); // Géneration de la map
-
+        
             HexagonCanvas.MouseRightButtonDown += Canvas_MouseRightButtonDown; // Déplacement de la map avec le clic droit
             HexagonCanvas.MouseRightButtonUp += Canvas_MouseRightButtonUp;
             HexagonCanvas.MouseMove += Canvas_MouseMove;
         }
+
+        #endregion
+
+        #region Initialisations
 
         /// <summary>
         /// Créé les terrains et les mettre dans la list
         /// </summary>
         private void InitializeTerrains()
         {
-            Terrain vide = new Terrain { Name = "Vide", ImagePath = "hexagon.png", Color = Colors.White };
+            Terrain vide = new Terrain { Name = "Vide", ImagePath = "vide.png", Color = Colors.White };
             Terrain plaine = new Terrain { Name = "Plaine", ImagePath = "plaine.png", Color = Colors.Red };
             Terrain desert = new Terrain { Name = "Desert", ImagePath = "desert.png", Color = Colors.Blue };
 
@@ -126,6 +137,8 @@ namespace VinlandSol.IHM
                     Hexagon hexagon = new Hexagon(x + ((Width / 7 * 5 - hexWidth * largeur) / 2), y + ((Height - hexHeight * hauteur / 1.923076923 - 260) / 2)); // Le calcul permet de centrer de façon approximative les hexagones dans la fenêtre. 1.923076923 correspond a 500 (la hauteur d'un hexagone) divisé par 260 (la somme de la hauteur de la partie supérieure et de la partie inférieure de ce dernier) )
                     hexagon.ImageSource = new BitmapImage(new Uri(Path.Combine(basePath, "hexagon.png")));
                     hexagon.ImagePath = "hexagon.png";
+                    hexagon.X = row+1; // Commence par 1
+                    hexagon.Y = col+1; // Commence par 1
 
                     Image imageControl = new Image
                     {
@@ -148,6 +161,10 @@ namespace VinlandSol.IHM
             }
         }
 
+        #endregion
+
+        #region Selection Hexagones
+
         /// <summary>
         /// Modifie l'image de l'hexagone en fonction du terrain
         /// </summary>
@@ -155,9 +172,15 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void Hexagon_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            foreach(Terrain terrain in terrains)
+            {
+                UpdateHexagonsColor(terrain);
+            }
+
             Image clickedHexagon = (Image)sender;
 
             int index = hexagons.FindIndex(hex => hex.ImageControl == clickedHexagon);
+            typeEmplacementCaseLabel.Content = "Case Vide " + hexagons[index].X + "," + hexagons[index].Y;
 
             if (ListTerrains.SelectedIndex != -1 && ListTerrains.Items.Count > 0)
             {
@@ -166,54 +189,43 @@ namespace VinlandSol.IHM
 
                 hexagons[index].AssociatedTerrain = selectedTerrain;
                 hexagons[index].ImageSource = CreateColoredBitmap(hexagons[index].ImagePath, selectedTerrain.Color);
-                clickedHexagon.Source = hexagons[index].ImageSource;
 
+                // Ajoutez ces lignes pour déboguer
+                Debug.WriteLine($"Terrain changed: {hexagons[index].AssociatedTerrain.Name} at ({hexagons[index].X},{hexagons[index].Y})");
+                Debug.WriteLine($"New ImageSource: {hexagons[index].ImageSource}");
+
+                clickedHexagon.Source = hexagons[index].ImageSource;
+                typeEmplacementCaseLabel.Content = "Case " + hexagons[index].AssociatedTerrain.Name + " " + hexagons[index].X + "," + hexagons[index].Y;
                 SaveTerrainImage(selectedTerrain, hexagons[index].ImageSource);
             }
         }
 
+        #endregion
+
+        #region Selection Terrains
+
         /// <summary>
-        /// Sauvergarde l'image assignée au terrain
+        /// Cache les changements de couleur de Terrain si le premier est sélectionné ou aucun
         /// </summary>
-        /// <param name="terrain"></param>
-        /// <param name="image"></param>
-        private void SaveTerrainImage(Terrain terrain, BitmapImage image)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Terrains_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string terrainOutputPath = Path.Combine(basePath, terrain.ImagePath);
-
-            PngBitmapEncoder encoder = new PngBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(image));
-
-            try
+            if (ListTerrains.SelectedItem != null && ListTerrains.SelectedIndex != 0)
             {
-                output = new FileStream(terrainOutputPath, FileMode.Create);
-                encoder.Save(output);
+                colorPicker.Visibility = Visibility.Visible;
+                colorValidator.Visibility = Visibility.Visible;
             }
-            catch (Exception ex)
+            else
             {
-                System.Windows.MessageBox.Show("An error occurred while saving the terrain image: " + ex.Message);
-            }
-            finally
-            {
-                output?.Close();
+                colorPicker.Visibility = Visibility.Hidden;
+                colorValidator.Visibility = Visibility.Hidden;
             }
         }
 
-        /// <summary>
-        /// Change l'image de l'hexagone par rapport a son terrain
-        /// </summary>
-        /// <param name="terrain"></param>
-        private void UpdateHexagonsColor(Terrain terrain)
-        {
-            foreach (var hexagon in hexagons)
-            {
-                if (hexagon.AssociatedTerrain == terrain)
-                {
-                    hexagon.ImageSource = CreateColoredBitmap(hexagon.ImagePath, terrain.Color);
-                    hexagon.ImageControl.Source = hexagon.ImageSource;
-                }
-            }
-        }
+        #endregion
+
+        #region ColorPicker
 
         /// <summary>
         /// Récupere la couleur selectionée du picker
@@ -258,6 +270,8 @@ namespace VinlandSol.IHM
             }
         }
 
+        #endregion
+
         #region Creation Image
 
         /// <summary>
@@ -301,7 +315,6 @@ namespace VinlandSol.IHM
                 coloredBitmap.StreamSource = new MemoryStream(memoryStream.ToArray());
                 coloredBitmap.EndInit();
             }
-
             return coloredBitmap;
         }
 
@@ -326,12 +339,11 @@ namespace VinlandSol.IHM
                     }
                 }
             }
-
             return Colors.White;
         }
 
         /// <summary>
-        /// Vérifie si la réference est bonne 
+        /// Vérifie si la couleur de référence est égale au pixel donné 
         /// </summary>
         /// <param name="pixels"></param>
         /// <param name="index"></param>
@@ -343,6 +355,53 @@ namespace VinlandSol.IHM
         }
 
         #endregion
+
+        #region Updates
+
+        /// <summary>
+        /// Sauvergarde l'image assignée au terrain
+        /// </summary>
+        /// <param name="terrain"></param>
+        /// <param name="image"></param>
+        private void SaveTerrainImage(Terrain terrain, BitmapImage image)
+        {
+            string terrainOutputPath = Path.Combine(basePath, terrain.ImagePath);
+
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(image));
+
+            try
+            {
+                output = new FileStream(terrainOutputPath, FileMode.Create);
+                encoder.Save(output);
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("An error occurred while saving the terrain image: " + ex.Message);
+            }
+            finally
+            {
+                output?.Close();
+            }
+        }
+
+        /// <summary>
+        /// Change l'image de l'hexagone par rapport a son terrain
+        /// </summary>
+        /// <param name="terrain"></param>
+        private void UpdateHexagonsColor(Terrain terrain)
+        {
+            foreach (var hexagon in hexagons)
+            {
+                if (hexagon.AssociatedTerrain == terrain)
+                {
+                    hexagon.ImageSource = CreateColoredBitmap(hexagon.ImagePath, terrain.Color);
+                    hexagon.ImageControl.Source = hexagon.ImageSource;
+                }
+            }
+        }
+
+        #endregion 
 
         #region Zoom Canvas
 

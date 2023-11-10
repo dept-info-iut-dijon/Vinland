@@ -8,7 +8,12 @@ namespace VinlandSol.IHM
     {
         private double x;
         private double y;
+        private Terrain associatedTerrain;
         private BitmapImage imageSource;
+
+
+        public double X { get; set; }
+        public double Y { get; set; }
         public string ImagePath { get; set; }
         public Terrain AssociatedTerrain { get; set; }
         public Image ImageControl { get; set; }
@@ -23,7 +28,7 @@ namespace VinlandSol.IHM
         }
 
         /// <summary>
-        /// Créé une instance d'hexagone au coordonnées 
+        /// Créé une instance d'hexagone au coordonnées (du canvas)
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
