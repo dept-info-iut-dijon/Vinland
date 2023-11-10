@@ -42,7 +42,12 @@
 
         <TextBox x:Name="TBNomUtilisateur" HorizontalAlignment="Left" Margin="762,238,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Height="55" BorderThickness="3" FontSize="35" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
 
-        <PasswordBox x:Name="TBMdp" HorizontalAlignment="Left" Margin="762,345,0,0" VerticalAlignment="Top" Width="300" Height="52" FontSize="25" BorderThickness="3" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+        <PasswordBox x:Name="TBMdp" HorizontalAlignment="Left" Margin="762,345,0,0" VerticalAlignment="Top" Width="300" Height="52" FontSize="25" BorderThickness="2" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" PasswordChanged="TBMdp_PasswordChanged"/>
 
+        <TextBox x:Name="TBVisibleMdp" Margin="762,345,0,0" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="25" Height="52" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" Visibility="Collapsed"/>
+
+        <Button Margin="1080,335,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" BorderThickness="0,0,0,0" Click="MdpVisibilityChanged">
+            <Image x:Name="Loeil" Source="Media/Icones/Oeil.png" Height="70" Width="70"/>
+        </Button>
     </Grid>
 </Window>

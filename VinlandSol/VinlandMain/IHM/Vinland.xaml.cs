@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Media.Imaging;
 using VinlandMain.IHM;
 using VinlandSol.BDD;
 using VinlandSol.IHM;
@@ -10,6 +12,7 @@ namespace VinlandSol
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool isPasswordVisible = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -63,6 +66,30 @@ namespace VinlandSol
             pagecreation.Top = this.Top;
             pagecreation.Show();
             Vinland.Close();
+        }
+
+        private void MdpVisibilityChanged(object sender, RoutedEventArgs e)
+        {
+            if (isPasswordVisible)
+            {
+                TBVisibleMdp.Visibility = Visibility.Collapsed;
+                TBMdp.Visibility = Visibility.Visible;
+                Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeil.png", UriKind.RelativeOrAbsolute));
+            }
+            else
+            {
+                TBMdp.Visibility = Visibility.Collapsed;
+                TBVisibleMdp.Visibility = Visibility.Visible;
+                Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeilbarre.png", UriKind.RelativeOrAbsolute));
+            }
+
+            // Inversez l'état
+            isPasswordVisible = !isPasswordVisible;
+        }
+
+        private void TBMdp_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            TBVisibleMdp.Text = TBMdp.Password;
         }
     }
 }
