@@ -17,8 +17,21 @@
         <TextBlock Text="Campagne Selector" Margin="400,133,400,525" TextAlignment="Center" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
 
         <!--Partie Gauche-->
+
+        <ListBox x:Name="CampagnesListe" Background="#f5d9a9" Margin="80,250,820,246" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" SelectionChanged="CampagnesListe_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Nom}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+
+        <Button Background="#fbf1cc" Content="Nouvelle Campagne" Margin="80,0,0,160" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="420" Height="70" Click="NouvelleCampagne_Click" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
+
         <ListBox x:Name="CampagnesListe" Margin="80,250,820,246" d:ItemsSource="{d:SampleData ItemCount=5}" Background="#f5d9a9" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
         <Button Content="Nouvelle Campagne" Click="NouvelleCampagne_Click" Margin="80,0,0,160" Width="420" Height="70" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="#fbf1cc" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
+
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>

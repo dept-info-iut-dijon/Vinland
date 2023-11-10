@@ -30,5 +30,27 @@ namespace VinlandSol.Métier
             Personnages = new List<Personnage>();
             Cartes = new List<Carte>();
         }
+
+        /*
+
+        private string _nom;
+        public string Nom
+        {
+            get { return _nom; }
+            set
+            {
+                if (_nom != value)
+                {
+                    _nom = value;
+                    DateModification = DateTime.Now;
+                    OnNomChanged?.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
+        */
+        // Ajoutez des événements pour d'autres propriétés si nécessaire
+        public event EventHandler OnNomChanged;
+       
     }
 }
+
