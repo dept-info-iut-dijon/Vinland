@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using VinlandSol.Métier;
 using Carte = VinlandSol.Métier.Carte;
@@ -187,11 +188,38 @@ namespace VinlandSol.BDD
 
         public void UpdateCampagne(int id, Campagne campagne)
         {
+            /*
             if (campagnes.Count != 0)
             {
                 for (int i = 0; i < campagnes.Count; i++)
                 {
                     if (campagnes[i].ID == campagne.ID) campagnes[i] = campagne;
+                }
+            }
+            */
+            if (campagnes.Count != 0)
+            {
+                for (int i = 0; i < campagnes.Count; i++)
+                {
+                    if (campagnes[i].ID == id)
+                    {
+                        campagnes[i].Nom = campagne.Nom;
+                        campagnes[i].DateModification = DateTime.Now;
+                    }
+                }
+            }
+        }
+        public void UpdateCampagneName(int id, string newNom)
+        {
+            if (campagnes.Count != 0)
+            {
+                for (int i = 0; i < campagnes.Count; i++)
+                {
+                    if (campagnes[i].ID == id)
+                    {
+                        campagnes[i].Nom = newNom;
+                        campagnes[i].DateModification = DateTime.Now;
+                    }
                 }
             }
         }

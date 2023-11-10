@@ -5,6 +5,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using VinlandSol.IHM;
+using VinlandSol.Métier;
+using VinlandSol.BDD;
 
 namespace VinlandMain.IHM
 {
@@ -13,128 +15,62 @@ namespace VinlandMain.IHM
     /// </summary>
     public partial class Campagnes : Window
     {
-        /// <summary>
-        /// Campagne de test
-        /// </summary>
-        Campagne nouvelleCampagne = new Campagne
-        {
-            Nom = "test",
-            DateCreation = DateTime.Now,
-            DateModification = DateTime.Now,
-            NombreCartes = 0,
-            NombrePersonnages = 0
-        };
-
-        /// <summary>
-        /// Structure d'une campagne
-        /// </summary>
-        public struct Campagne
-        {
-            public string Nom { get; set; }
-            public DateTime DateCreation { get; set; }
-            public DateTime DateModification { get; set; }
-            public int NombreCartes { get; set; }
-            public int NombrePersonnages { get; set; }
-        }
-        List<Campagne> campagnes = new List<Campagne>();
-        private int indiceCampagneEnEdition = -1;
-
+        private FakeDAO fakeDAO;
+        
         /// <summary>
         /// Constructeur de la fenêtre
         /// </summary>
         public Campagnes()
         {
             InitializeComponent();
-            LoadCampagnes("campagnes.txt");
-            CampagnesListe.SelectionChanged += CampagnesListe_SelectionChanged;
+            fakeDAO = new FakeDAO();
+            CampagnesListe.ItemsSource = fakeDAO.GetCampagnes();
+            NomNouvCamp.TextChanged += NomNouvCamp_TextChanged;
+            //NomCampTextBox.TextChanged += NomCampTextBox_TextChanged;
+            SupprimerCamp.Click += SupprimerCamp_Click;
         }
-        //Le fichier se save dans -> VinlandSol\VinlandMain\bin\Debug\net6.0-windows
 
-        /// <summary>
-        /// Sauvegarde les campagnes
-        /// </summary>
-        /// <param name="filePath"></param>
-        private void SaveCampagnesTxt(string filePath)
+        private void NomNouvCamp_TextChanged(object sender, TextChangedEventArgs e)
         {
-            try
-            {
-                System.IO.File.WriteAllLines(filePath, campagnes.Select(c => c.Nom));
-
-                MessageBox.Show("La sauvegarde s'est réalisée avec succès.", "Enregistrement Réussi", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Une erreur s'est produite lors de l'enregistrement dans le fichier texte : " + ex.Message, "Erreur d'Enregistrement", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            NomCampTextBlock.Text = NomNouvCamp.Text;
         }
 
-        /// <summary>
-        /// Récupère les campagnes depuis le fichier campagnes.txt
-        /// </summary>
-        /// <param name="filePath"></param>
-        /// <returns>Une liste des campagnes</returns>
-        private List<string> LoadCampagnesTxt(string filePath)
-        {
-            try
-            {
-                List<string> campagneNoms = System.IO.File.ReadAllLines(filePath).ToList();
-                return campagneNoms;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Une erreur s'est produite lors de la lecture du fichier texte : " + ex.Message, "Erreur de Lecture", MessageBoxButton.OK, MessageBoxImage.Error);
-                return new List<string>();
-            }
-        }
-
-        /// <summary>
-        /// Crée les campagnes par rapport aux données récupérées par LoadCampagnesTxt
-        /// </summary>
-        /// <param name="filePath"></param>
-        private void LoadCampagnes(string filePath)
-        {
-            List<string> nomsDeCampagnes = LoadCampagnesTxt(filePath);
-            campagnes.Clear();
-            foreach (string nom in nomsDeCampagnes)
-            {
-                campagnes.Add(new Campagne
-                {
-                    Nom = nom,
-                    DateCreation = DateTime.Now,
-                    DateModification = DateTime.Now,
-                    NombreCartes = 0,
-                    NombrePersonnages = 0,
-                });
-            }
-            CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
-        }
-
-        /// <summary>
-        /// Affiche les informations sur la droite de l'écran par rapport à la campagne sélectionnée
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void CampagnesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            AfficherInfos(CampagnesListe.SelectedIndex);
-        }
-
-        /// <summary>
-        /// Permet d'actualiser les informations de la campagne selectionnée/modifiée
-        /// </summary>
-        /// <param name="index"></param>
-        private void AfficherInfos(int index)
-        {
-            if (index >= 0 && index < campagnes.Count)
+            if (CampagnesListe.SelectedItem != null)
             {
-                Campagne selectedCampagne = campagnes[index];
-                NomCampTextBlock.Text = selectedCampagne.Nom;
-                DateCreationTextBlock.Text = selectedCampagne.DateCreation.ToString("dd/MM/yyyy HH:mm:ss");
-                DateModificationTextBlock.Text = selectedCampagne.DateModification.ToString("dd/MM/yyyy HH:mm:ss");
-                NombreCartesTextBlock.Text = selectedCampagne.NombreCartes.ToString();
-                NombrePersonnagesTextBlock.Text = selectedCampagne.NombrePersonnages.ToString();
+                string selectedCampagneName = (string)CampagnesListe.SelectedItem;
+                Campagne selectedCampagne = fakeDAO.GetCampagnes().FirstOrDefault(c => c.Nom == selectedCampagneName);
+                NomCampTextBox.Text = selectedCampagne.Nom;
+
+                if (selectedCampagne != null)
+                {
+                    NomCampTextBlock.Text = selectedCampagne.Nom;
+                    DateCreationTextBlock.Text = selectedCampagne.DateCreation.ToString();
+                    DateModificationTextBlock.Text = selectedCampagne.DateModification.ToString();
+                    NombreCartesTextBlock.Text = selectedCampagne.NombreCartes.ToString();
+                    NombrePersonnagesTextBlock.Text = selectedCampagne.NombrePersonnages.ToString();
+                }
             }
         }
+
+        private void UpdateCampagneDetails()
+        {
+            // Mettez à jour les informations de la campagne actuellement sélectionnée
+            if (CampagnesListe.SelectedItem != null)
+            {
+                Campagne selectedCampagne = (Campagne)CampagnesListe.SelectedItem;
+                NomCampTextBlock.Text = selectedCampagne.Nom;
+                DateModificationTextBlock.Text = selectedCampagne.DateModification.ToString();
+            }
+        }
+        /*
+        private void NomCampTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string text = NomCampTextBox.Text;
+            text = NomCampTextBox.Text;
+        }
+        */
 
         /// <summary>
         /// Affiche les éléments permettant de créer une campagne
@@ -152,41 +88,19 @@ namespace VinlandMain.IHM
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
         private void Valider_Click(object sender, RoutedEventArgs e)
         {
-            string contenu = NomNouvCamp.Text;
-            using (StreamWriter writer = File.AppendText("campagnes.txt"))
-            {
-                writer.Write(contenu + ",");
-            }
-            NomCampTextBlock.Text += contenu + Environment.NewLine;
+            string newCampagneName = NomNouvCamp.Text;
+            Campagne newCampagne = new Campagne(fakeDAO.GetCampagnes().Count + 1, newCampagneName);
+            newCampagne.OnNomChanged += (s, args) => UpdateCampagneDetails();
 
-            if (string.IsNullOrWhiteSpace(contenu))
-            {
-                MessageBox.Show("Le nom de la campagne ne peut pas être vide.", "Erreur de Nom de Campagne", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            fakeDAO.AjouterCampagne(newCampagne);
 
-            string newCampaignName = NomNouvCamp.Text;
-            if (!campagnes.Any(c => c.Nom == newCampaignName))
-            {
-                nouvelleCampagne.Nom = newCampaignName;
-
-                NomCampTextBlock.Text = newCampaignName;
-                campagnes.Add(nouvelleCampagne);
-                CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
-                CampagnesListe.SelectedItem = newCampaignName;
-                NomNouvCamp.Text = "";
-                string fileName = "campagnes_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
-                SaveCampagnesTxt("campagnes.txt");
-            }
-            else
-            {
-                MessageBox.Show("Le nom de la campagne existe déjà.", "Erreur de Nom de Campagne", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
             NomNouvCamp.Visibility = Visibility.Collapsed;
             Valider.Visibility = Visibility.Collapsed;
+
+            // Mettez à jour la source de données de la ListBox avec des noms de campagne
+            CampagnesListe.ItemsSource = fakeDAO.GetCampagnes().Select(c => c.Nom).ToList();
         }
         /// <summary>
         /// Affiche les options d'édition des informations de la campagne
@@ -195,24 +109,7 @@ namespace VinlandMain.IHM
         /// <param name="e"></param>
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
-            int selectedIndex = CampagnesListe.SelectedIndex;
-            RejoidComp.Visibility = Visibility.Collapsed;
-            RejoidCompS.Visibility = Visibility.Visible;
-            Edit.Visibility = Visibility.Collapsed;
-            EditS.Visibility = Visibility.Visible;
-            Sauv.Visibility = Visibility.Visible;
-            SupprimerCamp.Visibility = Visibility.Visible;
-            NomCampTextBox.Visibility = Visibility.Visible;
-            NomCampTextBlock.Visibility = Visibility.Collapsed;
-
-            if (selectedIndex >= 0 && selectedIndex < campagnes.Count)
-            {
-                Campagne selectedCampagne = campagnes[selectedIndex];
-                NomCampTextBox.Text = selectedCampagne.Nom;
-                NomCampTextBox.Visibility = Visibility.Visible;
-                NomCampTextBlock.Visibility = Visibility.Collapsed;
-                indiceCampagneEnEdition = selectedIndex;
-            }
+                AfficherElements();
         }
 
         /// <summary>
@@ -232,28 +129,18 @@ namespace VinlandMain.IHM
         /// <param name="e"></param>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            if (indiceCampagneEnEdition >= 0 && indiceCampagneEnEdition < campagnes.Count)
+            if (CampagnesListe.SelectedItem != null)
             {
-                string newCampaignName = NomCampTextBox.Text;
+                Campagne selectedCampagne = (Campagne)CampagnesListe.SelectedItem;
+                string editedCampaignName = NomCampTextBox.Text;
 
-                if (string.IsNullOrWhiteSpace(newCampaignName))
-                {
-                    MessageBox.Show("Le nom de la campagne ne peut pas être vide.", "Erreur de Nom de Campagne", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                campagnes[indiceCampagneEnEdition] = new Campagne
-                {
-                    Nom = newCampaignName,
-                    DateCreation = campagnes[indiceCampagneEnEdition].DateCreation,
-                    DateModification = DateTime.Now
-                };
-                CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
-                string fileName = "campagnes_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
-                SaveCampagnesTxt("campagnes.txt");
+                // Mettre à jour la liste des campagnes dans le FakeDAO avec le nouveau nom
+                fakeDAO.UpdateCampagneName(selectedCampagne.ID, editedCampaignName);
+
+                // Mettre à jour l'interface utilisateur
+                UpdateCampagneDetails();
+                MasquerElements();
             }
-            AfficherInfos(indiceCampagneEnEdition);
-            indiceCampagneEnEdition = -1;
-            MasquerElements();
         }
 
         /// <summary>
@@ -277,22 +164,25 @@ namespace VinlandMain.IHM
         /// <param name="e"></param>
         private void SupprimerCamp_Click(object sender, RoutedEventArgs e)
         {
-            int selection = CampagnesListe.SelectedIndex;
-
-            if (selection >= 0 && selection < campagnes.Count)
+            if (CampagnesListe.SelectedItem != null)
             {
-                campagnes.RemoveAt(selection);
+                // Supprimer la campagne sélectionnée de la liste
+                Campagne selectedCampagne = (Campagne)CampagnesListe.SelectedItem;
+                fakeDAO.DeleteCampagne(selectedCampagne.ID);
 
-                CampagnesListe.ItemsSource = campagnes.Select(c => c.Nom).ToList();
+                // Mettez à jour la source de données de la ListBox
+                CampagnesListe.ItemsSource = fakeDAO.GetCampagnes().Select(c => c.Nom).ToList();
 
-                SaveCampagnesTxt("campagnes.txt");
-
-                // Champs qui se rénitialisent 
+                // Effacez les détails dans les TextBlocks
                 NomCampTextBlock.Text = "";
                 DateCreationTextBlock.Text = "";
                 DateModificationTextBlock.Text = "";
+                NombreCartesTextBlock.Text = "";
+                NombrePersonnagesTextBlock.Text = "";
+
+                // Masquez les éléments d'édition
+                MasquerElements();
             }
-            MasquerElements();
         }
 
         /// <summary>
@@ -309,6 +199,20 @@ namespace VinlandMain.IHM
             EditS.Visibility = Visibility.Collapsed;
             Sauv.Visibility = Visibility.Collapsed;
             SupprimerCamp.Visibility = Visibility.Collapsed;
+        }
+        /// <summary>
+        /// Méthode pour afficher les éléments du menu d'édition
+        /// </summary>
+        private void AfficherElements()
+        {
+            RejoidComp.Visibility = Visibility.Collapsed;
+            RejoidCompS.Visibility = Visibility.Visible;
+            NomCampTextBox.Visibility = Visibility.Visible;
+            RejoidCompS.Visibility = Visibility.Visible;
+            SupprimerCamp.Visibility = Visibility.Visible;
+            Sauv.Visibility = Visibility.Visible;
+            EditS.Visibility = Visibility.Visible;
+            Edit.Visibility = Visibility.Collapsed;
         }
     }
 }
