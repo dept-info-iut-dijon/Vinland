@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -18,6 +19,7 @@ namespace VinlandSol.IHM
     /// </summary>
     public partial class CreationCompte : Window
     {
+        private bool isPasswordVisible = false;
         public CreationCompte()
         {
             InitializeComponent();
@@ -45,7 +47,7 @@ namespace VinlandSol.IHM
         private void Creer_Click(object sender, RoutedEventArgs e)
         {
             string username = TBNomUtilisateur.Text;
-            string password = TBMdp.Password;
+            string password = TBVisibleMdp.Text;
 
             if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
             {
@@ -57,6 +59,30 @@ namespace VinlandSol.IHM
                 pagecreation.Show();
                 Creation_Compte.Close();
             }
+        }
+
+        private void MdpVisibilityChanged(object sender, RoutedEventArgs e)
+        {
+            if (isPasswordVisible)
+            {
+                TBVisibleMdp.Visibility = Visibility.Collapsed;
+                TBMdp.Visibility = Visibility.Visible;
+                Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeil.png", UriKind.RelativeOrAbsolute));
+            }
+            else
+            {
+                TBMdp.Visibility = Visibility.Collapsed;
+                TBVisibleMdp.Visibility = Visibility.Visible;
+                Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeilbarre.png", UriKind.RelativeOrAbsolute));
+            }
+
+            // Inversez l'état
+            isPasswordVisible = !isPasswordVisible;
+        }
+
+        private void TBMdp_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            TBVisibleMdp.Text = TBMdp.Password;
         }
     }
 }
