@@ -195,24 +195,15 @@ namespace VinlandMain.IHM
         /// <param name="e"></param>
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
-            int selectedIndex = CampagnesListe.SelectedIndex;
-            RejoidComp.Visibility = Visibility.Collapsed;
-            RejoidCompS.Visibility = Visibility.Visible;
-            Edit.Visibility = Visibility.Collapsed;
-            EditS.Visibility = Visibility.Visible;
-            Sauv.Visibility = Visibility.Visible;
-            SupprimerCamp.Visibility = Visibility.Visible;
-            NomCampTextBox.Visibility = Visibility.Visible;
-            NomCampTextBlock.Visibility = Visibility.Collapsed;
+            int selectedIndex = CampagnesListe.SelectedIndex;            
 
             if (selectedIndex >= 0 && selectedIndex < campagnes.Count)
             {
                 Campagne selectedCampagne = campagnes[selectedIndex];
                 NomCampTextBox.Text = selectedCampagne.Nom;
-                NomCampTextBox.Visibility = Visibility.Visible;
-                NomCampTextBlock.Visibility = Visibility.Collapsed;
                 indiceCampagneEnEdition = selectedIndex;
             }
+            AfficherElements();
         }
 
         /// <summary>
@@ -309,6 +300,21 @@ namespace VinlandMain.IHM
             EditS.Visibility = Visibility.Collapsed;
             Sauv.Visibility = Visibility.Collapsed;
             SupprimerCamp.Visibility = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Méthode pour afficher les éléments du menu d'édition
+        /// </summary>
+        private void AfficherElements()
+        {
+            RejoidComp.Visibility = Visibility.Collapsed;
+            RejoidCompS.Visibility = Visibility.Visible;
+            NomCampTextBox.Visibility = Visibility.Visible;
+            RejoidCompS.Visibility = Visibility.Visible;
+            SupprimerCamp.Visibility = Visibility.Visible;
+            Sauv.Visibility = Visibility.Visible;
+            EditS.Visibility = Visibility.Visible;
+            Edit.Visibility = Visibility.Collapsed;
         }
     }
 }
