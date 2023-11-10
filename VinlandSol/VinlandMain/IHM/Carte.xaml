@@ -122,7 +122,7 @@
         <Border BorderBrush="Black" BorderThickness="3" Grid.Column="2" Grid.Row="0">
             <StackPanel Background="Transparent">
 
-                <Label x:Name="TypeEmplacementCaseLabel" FontSize="20" Content='"Type Case" 0;0' HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                <Label x:Name="typeEmplacementCaseLabel" FontSize="20" Content='"Type Case" 0;0' HorizontalAlignment="Center" Margin="0,0,0,5"/>
 
                 <TextBox TextWrapping="Wrap" Text="Note" Width="190" Height="50" Margin="0,0,0,5"/>
 
@@ -143,11 +143,11 @@
                 </StackPanel>
 
                 <Label Content="Type de terrain" FontSize="16" HorizontalAlignment="Center" Width="115"/>
-                <ComboBox x:Name="ListTerrains" Width="170" Margin="0,0,0,5"/>
+                <ComboBox x:Name="ListTerrains" Width="170" SelectionChanged="Terrains_SelectionChanged" Margin="0,0,0,5"/>
 
 
-                <xctk:ColorPicker x:Name="colorPicker" Width="100" Height="20" Margin="0,0,0,5" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                <Button Content="Changer la couleur" Click="ChangeColorButton_Click" HorizontalAlignment="Center"/>
+                <xctk:ColorPicker x:Name="colorPicker" Width="100" Height="20" Margin="0,0,0,5" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden"/>
+                <Button x:Name="colorValidator" Content="Changer la couleur" Click="ChangeColorButton_Click" HorizontalAlignment="Center" Visibility="Hidden"/>
 
 
                 <StackPanel Orientation="Horizontal" Width="160" >
