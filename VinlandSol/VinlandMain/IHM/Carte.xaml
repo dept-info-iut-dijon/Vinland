@@ -3,62 +3,176 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:VinlandSol.IHM"
         mc:Ignorable="d"
         x:Name="CarteWindow"
+        ResizeMode="NoResize"
         Title="Carte" Height="750" Width="1400">
-    
+
     <Grid x:Name="LaGrid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
-            <ColumnDefinition Width="5*"></ColumnDefinition>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="210*"></ColumnDefinition>
+            <ColumnDefinition Width="989*"></ColumnDefinition>
+            <ColumnDefinition Width="210*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="5*"></RowDefinition>
-        </Grid.RowDefinitions>
 
-        
-        <Canvas Name="HexagonCanvas" Background="White" MouseWheel="Canvas_MouseWheel" Grid.Column="1" Grid.Row="1">
-            <!-- Les images des hexagones seront générées ici -->
+
+        <Canvas Name="HexagonCanvas" Background="White" MouseWheel="Canvas_MouseWheel" Grid.Column="1">
+            <Canvas.Resources>
+                <Style TargetType="Image">
+                    <Setter Property="Stretch" Value="Uniform" />
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="Width" Value="50" />
+                    <Setter Property="Height" Value="50" />
+                </Style>
+            </Canvas.Resources>
         </Canvas>
-        
-
-        <!-- Stackpanel Haut -->
-        <StackPanel Grid.Row="0" Grid.Column="1"  Background="LightGray"/>
-
-        <Border BorderBrush="Black" BorderThickness="3" Grid.Row="0" Grid.Column="1">
-            <StackPanel Background="Transparent">
-
-                <Button FontSize="20" Height="40" Width="40" Margin="800,10,0,0" Click="OuvrirCartes_Click" Background="{x:Null}" BorderThickness="0">
-                    <Image Source="/IHM/Media/Icones/actualiser.png" Height="30" Width="30" />
-                </Button>
-
-                <Button FontSize="20" Content="Enregistrer" Height="40" Width="150" Margin="800,15,0,0" Background="lightgreen" Click="OuvrirCartes_Click"/>
-            </StackPanel>
-        </Border>
 
         <!-- Stackpanel Gauche -->
-        <StackPanel Grid.Column="0" Grid.RowSpan="2" Background="LightGray" Grid.Row="0"/>
+        <StackPanel Grid.Column="0" Background="LightGray" Grid.Row="0"/>
 
-        <Border BorderBrush="Black" BorderThickness="3" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Row="0" Grid.Column="0">
             <StackPanel Background="Transparent">
                 <Label x:Name="NomCarteLabel" FontSize="20" Content="Nom Carte"/>
-                <Label x:Name="DimCarteLabel" FontSize="20" Content="Dimensions Carte"/>
-                <Button FontSize="20" Content="Enregistrer" Height="40" Width="150" Margin="0,525,0,0" Background="lightgreen" Click="OuvrirCartes_Click"/>
-                <Button FontSize="20" Content="Retour carte" Height="40" Width="150" Margin="0,20,0,0" Background="LightSalmon" Click="OuvrirCartes_Click"/>
+
+                <Label x:Name="DimCarteLabel" FontSize="20" Content="Dimensions Carte" Margin="0,0,0,20"/>
+
+                <StackPanel Orientation="Horizontal" Width="184" >
+                    <CheckBox IsChecked="False" VerticalAlignment="Center" Height="33"/>
+                    <TextBlock Text="Vision d'une carte" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,20"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Width="192" >
+                    <CheckBox IsChecked="False" VerticalAlignment="Center" Height="33"/>
+                    <TextBlock Text="Visibilité de la carte" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,20" Width="172"/>
+                </StackPanel>
+
+                <Grid Height="100" Width="100" Margin="0,0,0,5">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="/IHM/Media/Resources/hexagon.png"></ImageBrush>
+                    </Grid.Background>
+
+                    <Button Height="20" RenderTransformOrigin="0.5,0.5" Width="20" Margin="10,25,70,55">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+                    <Button Height="20" RenderTransformOrigin="0.5,0.5" Width="20" Margin="70,25,10,55">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+                    <Button Height="20" RenderTransformOrigin="0.5,0.5" Width="20" Margin="40,40,40,40">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+                    <Button Height="20" RenderTransformOrigin="0.5,0.5" Width="20" Margin="10,55,70,25">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+                    <Button Height="20" RenderTransformOrigin="0.5,0.5" Width="20" Margin="70,55,10,25">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+
+                <ComboBox Width="170" Margin="0,0,0,20"/>
+
+                <Label Content="Changer le fond des cases" FontSize="16" HorizontalAlignment="Center" Width="195"/>
+                <ComboBox Width="170" Margin="0,0,0,20"/>
+
+                <StackPanel Orientation="Horizontal" Width="170" >
+                    <CheckBox IsChecked="False" VerticalAlignment="Center" Height="33"/>
+                    <TextBlock Text="Vision du joueur" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,20"/>
+                </StackPanel>
+
+                <Label Content="Faction" FontSize="16" HorizontalAlignment="Center" Width="60"/>
+                <ComboBox Width="170" Margin="0,0,0,20"/>
+
+                <Button FontSize="20" Content="Enregistrer" Height="40" Width="150" Background="lightgreen" Click="OuvrirCartes_Click"/>
+                <Button FontSize="20" Content="Retour carte" Height="40" Width="150" Margin="0,20,0,20" Background="LightSalmon" Click="OuvrirCartes_Click"/>
+                <Button Height="50" Width="50" BorderThickness="0" Background="LightGray">
+                    <Image Source="/IHM/Media/Resources/actualiser.png"/>
+                </Button>
+
             </StackPanel>
         </Border>
 
         <!-- Stackpanel Droite -->
-        <StackPanel Grid.Column="2" Grid.RowSpan="2" Background="LightGray" Grid.Row="0"/>
+        <StackPanel Grid.Column="2" Background="LightGray" Grid.Row="0"/>
 
-        <Border BorderBrush="Black" BorderThickness="3" Grid.Column="2" Grid.Row="0" Grid.RowSpan="2">
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Column="2" Grid.Row="0">
             <StackPanel Background="Transparent">
-                <Button FontSize="20" Content="Enregistrer" Height="40" Width="150" Margin="0,660,0,0" Background="lightgreen" Click="OuvrirCartes_Click"/>
+
+                <Label x:Name="typeEmplacementCaseLabel" FontSize="20" Content='"Type Case" 0;0' HorizontalAlignment="Center" Margin="0,0,0,5"/>
+
+                <TextBox TextWrapping="Wrap" Text="Note" Width="190" Height="50" Margin="0,0,0,5"/>
+
+                <StackPanel Orientation="Horizontal" Width="160" >
+                    <CheckBox IsChecked="False" VerticalAlignment="Center" Height="20"/>
+                    <TextBlock Text="Visibilité joueur" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,10"/>
+                </StackPanel>
+
+                <Label FontSize="20" Content="Point d'intérêt" Margin="0,0,0,0"/>
+                <TextBox TextWrapping="Wrap" Text="Nom" Width="190" Height="26" Margin="0,0,0,10" FontSize="16"/>
+
+                <Label FontSize="20" Content="Description" Margin="0,0,0,0"/>
+                <TextBox TextWrapping="Wrap" Text="Description" Width="190" Height="26" Margin="0,0,0,5" FontSize="16"/>
+
+                <StackPanel Orientation="Horizontal" Width="160" >
+                    <CheckBox IsChecked="False" VerticalAlignment="Center" Height="30"/>
+                    <TextBlock Text="Visibilité joueur" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,20"/>
+                </StackPanel>
+
+                <Label Content="Type de terrain" FontSize="16" HorizontalAlignment="Center" Width="115"/>
+                <ComboBox x:Name="ListTerrains" Width="170" SelectionChanged="Terrains_SelectionChanged" Margin="0,0,0,5"/>
+
+
+                <xctk:ColorPicker x:Name="colorPicker" Width="100" Height="20" Margin="0,0,0,5" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden"/>
+                <Button x:Name="colorValidator" Content="Changer la couleur" Click="ChangeColorButton_Click" HorizontalAlignment="Center" Visibility="Hidden"/>
+
+
+                <StackPanel Orientation="Horizontal" Width="160" >
+                    <CheckBox IsChecked="False" VerticalAlignment="Center" Height="20"/>
+                    <TextBlock Text="Exploré" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,5"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Width="160" >
+                    <CheckBox IsChecked="False" VerticalAlignment="Center" Height="20"/>
+                    <TextBlock Text="Route" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,5"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Width="160" >
+                    <CheckBox IsChecked="False" VerticalAlignment="Center" Height="20"/>
+                    <TextBlock Text="Cité" FontSize="20" VerticalAlignment="Center" Margin="5,0,0,10"/>
+                </StackPanel>
+
+                <TextBox TextWrapping="Wrap" Text="Nom" Width="190" Height="26" Margin="0,0,0,5" FontSize="16"/>
+
+                <Label Content="Faction" FontSize="16" HorizontalAlignment="Center" Width="60"/>
+                <ComboBox Width="170" Margin="0,0,0,15"/>
+
+                <Button FontSize="20" Content="Enregistrer" Height="40" Width="150" Background="lightgreen" Click="OuvrirCartes_Click"/>
             </StackPanel>
         </Border>
-        
+
     </Grid>
 </Window>

@@ -6,48 +6,89 @@
         xmlns:local="clr-namespace:VinlandMain.IHM"
         mc:Ignorable="d"
         x:Name="CampagnesWindow"
-        Title="Campagnes" Height="750" Width="1400" FontSize="40">
+        ResizeMode="NoResize"
+        Title="Campagnes" Height="750" Width="1400" FontSize="35">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/IHM/Media/Resources/background.png"/>
+        </Grid.Background>
         <!--Titres-->
         <TextBlock Text="Vinland" Margin="450,10,440,601" FontSize="100" TextAlignment="Center" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
         <TextBlock Text="Campagne Selector" Margin="400,133,400,525" TextAlignment="Center" FontFamily="/VinlandSol;component/IHM/fonts/Mjolnir.ttf#Mjolnir"/>
 
         <!--Partie Gauche-->
-        <ListBox x:Name="CampagnesListe" Margin="100,250,745,246" d:ItemsSource="{d:SampleData ItemCount=5}"/>
-        <Button Content="Nouvelle Campagne" Margin="100,0,0,160" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="440" Height="70" Click="NouvelleCampagne_Click"/>
-        <TextBox x:Name="NomNouvCamp" Margin="100,0,0,80" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="440" Height="70" Visibility="Collapsed"></TextBox>
-        <Button x:Name="Valider" Content="Valider" Margin="255,0,0,15" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="130" Click="Valider_Click" Visibility="Collapsed"/>
+        <ListBox x:Name="CampagnesListe" Margin="80,250,820,246" d:ItemsSource="{d:SampleData ItemCount=5}" Background="#f5d9a9" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+        <Button Content="Nouvelle Campagne" Click="NouvelleCampagne_Click" Margin="80,0,0,160" Width="420" Height="70" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="#fbf1cc" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <TextBox x:Name="NomNouvCamp" Visibility="Collapsed" Margin="80,0,0,80" Width="420" Height="70" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"></TextBox>
+        <Button x:Name="Valider" Content="Valider" Click="Valider_Click" Visibility="Collapsed" Margin="235,0,0,10" Width="130" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="#fbf1cc" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
 
         <!--Partie Droite Information des campagnes-->
-        <TextBlock HorizontalAlignment="Left" Margin="950,180,0,0" Text="Informations :" VerticalAlignment="Top"/>
+        <TextBlock Text="Informations :" Margin="906,180,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
 
-        <Label Content="Nom :" Margin="700,250,586,0" VerticalAlignment="Top" FontSize="30" Height="55"/>
-        <TextBox x:Name="NomCampTextBox" Margin="799,250,200,0" VerticalAlignment="Top" FontSize="30" Height="55" Visibility="Collapsed"/>
-        <TextBlock x:Name="NomCampTextBlock" Margin="799,250,200,0" VerticalAlignment="Top" FontSize="30" Height="55"/>
+        <Label Content="Nom :" Margin="656,250,630,0" FontSize="30" Height="55" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+        <TextBlock x:Name="NomCampTextBlock" Margin="755,253,244,0" FontSize="30" Height="55" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
 
-        <Label Content="Date de création : " Margin="700,320,440,0" VerticalAlignment="Top" FontSize="30" Height="55"/>
-        <TextBlock x:Name="DateCreationTextBlock" Margin="960,320,100,0" VerticalAlignment="Top" FontSize="30" Height="55"/>
+        <Label Content="Date de création :" Margin="656,320,484,0" VerticalAlignment="Top" FontSize="30" Height="55" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+        <TextBlock x:Name="DateCreationTextBlock" Margin="916,323,144,0" VerticalAlignment="Top" FontSize="30" Height="55" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
 
-        <Label Content="Date de modification : " Margin="700,390,371,0" VerticalAlignment="Top" FontSize="30" Height="55"/>
-        <TextBlock x:Name="DateModificationTextBlock" Margin="1015,390,100,0" VerticalAlignment="Top" FontSize="30" Height="55"/>
+        <Label Content="Date de modification :" Margin="656,390,415,0" VerticalAlignment="Top" FontSize="30" Height="55" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+        <TextBlock x:Name="DateModificationTextBlock" Margin="971,393,144,0" VerticalAlignment="Top" FontSize="30" Height="55" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
 
-        <Label Content="Nombre de cartes : " Margin="700,460,420,0" VerticalAlignment="Top" FontSize="30" Height="55"/>
-        <TextBlock x:Name="NombreCartesTextBlock" Margin="980,464,100,0" VerticalAlignment="Top" FontSize="30" Height="46"/>
+        <Label Content="Nombre de cartes :" Margin="656,460,464,0" VerticalAlignment="Top" FontSize="30" Height="55" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+        <TextBlock x:Name="NombreCartesTextBlock" Margin="936,464,144,0" VerticalAlignment="Top" FontSize="30" Height="46" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
 
-        <Label Content="Nombre de personnage : " Margin="700,530,328,0" VerticalAlignment="Top" FontSize="30" Height="55"/>
-        <TextBlock x:Name="NombrePersonnagesTextBlock" Margin="1048,534,100,0" VerticalAlignment="Top" FontSize="30" Height="46"/>
+        <Label Content="Nombre de personnage :" Margin="656,530,372,0" VerticalAlignment="Top" FontSize="30" Height="55" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+        <TextBlock x:Name="NombrePersonnagesTextBlock" Margin="1004,534,144,0" FontSize="30" Height="46" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
 
         <!--Partie Droite bas-->
-        <Button Content="Rejoindre la Campagne" x:Name="RejoidComp" Margin="0,0,270,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="430" Click="OuvrirPersonnages_Click" />
-        <Button Content="Rejoindre la Camp" x:Name="RejoidCompS" Margin="0,0,420,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="340" Click="OuvrirPersonnages_Click" Visibility="Collapsed"/>
-        <Button x:Name="Edit" FontSize="40" Margin="0,0,10,422" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="70" Background="{x:Null}" BorderThickness="0,0,0,0" Click="Edit_Click">
+        <Button Content="Rejoindre la Campagne" x:Name="RejoidComp" Click="OuvrirPersonnages_Click" Margin="0,0,314,40" Height="70" Width="430" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#fbf1cc" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" >
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button x:Name="Edit" Click="Edit_Click" Margin="0,0,10,422" FontSize="40" Width="120" Height="70" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0">
             <Image Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
         </Button>
-        <Button x:Name="EditS" FontSize="40" Margin="0,0,10,422" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="70" Background="{x:Null}" BorderThickness="0,0,0,0" Click="EditS_Click" Visibility="Collapsed">
+        
+        <!--Partie Droite bas cachées-->
+        <Button x:Name="EditS" Click="EditS_Click" Visibility="Collapsed" Margin="0,0,10,422" FontSize="40" Width="120" Height="70" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" >
             <Image Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
         </Button>
-        <Button Content="Sauvegarder" x:Name="Sauv" Margin="0,0,160,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Click="Save_Click" Visibility="Collapsed"/>
-        <Button FontSize="40" x:Name="SupprimerCamp" Background="Red" Margin="0,0,20,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="SupprimerCamp_Click"  Visibility="Collapsed">
+
+        <Button Content="Rejoindre la Camp" x:Name="RejoidCompS" Click="OuvrirPersonnages_Click" Visibility="Collapsed" Margin="0,0,545,40" Height="70" Width="297" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#fbf1cc" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        
+        <TextBox x:Name="NomCampTextBox" Visibility="Collapsed" Margin="0,0,294,40" FontSize="30" Height="70" Width="246" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" />
+        
+        <Button Content="Sauvegarder" x:Name="Sauv" Click="Save_Click" Visibility="Collapsed" Margin="0,0,114,40" Height="70" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#fbf1cc" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button x:Name="SupprimerCamp" Click="SupprimerCamp_Click" Visibility="Collapsed" Margin="0,0,20,40" FontSize="40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="Red" >
             <Image Source="Media/Icones/Poubelle.png" Height="70" Width="70" />
         </Button>
     </Grid>

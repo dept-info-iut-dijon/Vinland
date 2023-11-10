@@ -1,20 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using VinlandMain.IHM;
+using VinlandSol.BDD;
 using VinlandSol.IHM;
-using VinlandSol.Métier;
 
 namespace VinlandSol
 {
@@ -23,6 +12,7 @@ namespace VinlandSol
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool isPasswordVisible = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -37,8 +27,8 @@ namespace VinlandSol
         private void OuvrirCreationCompte_Click(object sender, RoutedEventArgs e)
         {
             CreationCompte pagecreation = new CreationCompte();
-            pagecreation.Left = this.Left; 
-            pagecreation.Top = this.Top; 
+            pagecreation.Left = this.Left;
+            pagecreation.Top = this.Top;
             pagecreation.Show();
             Vinland.Close();
         }
@@ -53,7 +43,7 @@ namespace VinlandSol
             string username = TBNomUtilisateur.Text;
             string password = TBMdp.Password;
 
-            UserAccountManager accountManager = new UserAccountManager();
+            FakeDAO accountManager = new FakeDAO();
             if (accountManager.VerifyUserAccount(username, password))
             {
                 Campagnes pagecreation = new Campagnes();
@@ -76,6 +66,30 @@ namespace VinlandSol
             pagecreation.Top = this.Top;
             pagecreation.Show();
             Vinland.Close();
+        }
+
+        private void MdpVisibilityChanged(object sender, RoutedEventArgs e)
+        {
+            if (isPasswordVisible)
+            {
+                TBVisibleMdp.Visibility = Visibility.Collapsed;
+                TBMdp.Visibility = Visibility.Visible;
+                Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeil.png", UriKind.RelativeOrAbsolute));
+            }
+            else
+            {
+                TBMdp.Visibility = Visibility.Collapsed;
+                TBVisibleMdp.Visibility = Visibility.Visible;
+                Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeilbarre.png", UriKind.RelativeOrAbsolute));
+            }
+
+            // Inversez l'état
+            isPasswordVisible = !isPasswordVisible;
+        }
+
+        private void TBMdp_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            TBVisibleMdp.Text = TBMdp.Password;
         }
     }
 }
