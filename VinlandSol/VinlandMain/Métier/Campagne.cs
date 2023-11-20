@@ -7,17 +7,26 @@ using VinlandSol.IHM;
 
 namespace VinlandSol.Métier
 {
+    /// <summary>
+    /// Une Campagne
+    /// </summary>
     public class Campagne
     {
+        #region Propriétés
+
         public int ID { get; set; }
-        public string Nom { get; set; }
-        public DateTime DateCreation { get; set; }
-        public DateTime DateModification { get; set; }
+        public string Nom { get; set; } // Nom de la campagne
+        public DateTime DateCreation { get; set; } // Date de la création de la campagne
+        public DateTime DateModification { get; set; } // Dernière date de modification
         public int NombreCartes { get; set; }
         public int NombrePersonnages { get; set; }
-        public List<Personnage> Personnages { get; set; }
-        public List<Carte> Cartes { get; set; }
+        public List<Personnage> Personnages { get; set; } // Les personnages de la campagne
+        public List<Carte> Cartes { get; set; } // Les cartes de la campagne
+        public MJ MJ { get; set; } // Le MJ qui a créé la campagne
 
+        #endregion
+
+        #region Constructeur
 
         public Campagne(int id, string nom) 
         {
@@ -31,26 +40,7 @@ namespace VinlandSol.Métier
             Cartes = new List<Carte>();
         }
 
-        /*
-
-        private string _nom;
-        public string Nom
-        {
-            get { return _nom; }
-            set
-            {
-                if (_nom != value)
-                {
-                    _nom = value;
-                    DateModification = DateTime.Now;
-                    OnNomChanged?.Invoke(this, EventArgs.Empty);
-                }
-            }
-        }
-        */
-        // Ajoutez des événements pour d'autres propriétés si nécessaire
-        public event EventHandler OnNomChanged;
-       
+        #endregion
     }
 }
 
