@@ -7,10 +7,16 @@ namespace VinlandSol.Métier
     /// </summary>
     public class MJ : IUser
     {
+        #region Propriétés
+
         public int Id { get; set; }
         public string Nom { get; set; }
         public string Mdp { get; set; }
         public List<Campagne> Campagnes { get; set; } // La liste des Campagnes dont le MJ est le créateur
+
+        #endregion
+
+        #region Constructeur
 
         public MJ(int id, string nom, string mdp)
         {
@@ -19,5 +25,7 @@ namespace VinlandSol.Métier
             Mdp = mdp;
             Campagnes = new List<Campagne>();
         }
+
+        #endregion
     }
 }

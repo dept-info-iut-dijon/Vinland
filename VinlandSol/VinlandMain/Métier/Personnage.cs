@@ -11,10 +11,16 @@ namespace VinlandSol.Métier
     /// </summary>
     public class Personnage
     {
+        #region Propriétés 
+
         public int Id { get; set; }
         public string Nom { get; set; }
         public Joueur Joueur { get; set; } // Le Joueur propriétaire de ce Personnage
         public Campagne Campagne { get; set; } // La Campagne dont le Personnage fait partie
+
+        #endregion
+
+        #region Constructeur
 
         public Personnage(int id, string nom, Joueur joueur, Campagne campagne)
         {
@@ -24,6 +30,7 @@ namespace VinlandSol.Métier
             this.Campagne = campagne;
         }
 
+        #endregion
     }
 
 }

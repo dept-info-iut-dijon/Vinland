@@ -7,10 +7,16 @@ namespace VinlandSol.Métier
     /// </summary>
     public class Joueur : IUser
     {
+        #region Propriétés
+
         public int Id { get; set; }
         public string Nom { get; set; }
         public string Mdp { get; set; }
         public List<Personnage> Personnages { get; set; } // La liste des Personnages de ce Joueur
+
+        #endregion
+
+        #region Constructeur
 
         public Joueur(int id, string nom, string mdp)
         {
@@ -20,5 +26,6 @@ namespace VinlandSol.Métier
             Personnages = new List<Personnage>();
         }
 
+        #endregion
     }
 }
