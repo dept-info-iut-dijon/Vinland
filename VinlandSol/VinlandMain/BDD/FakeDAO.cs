@@ -11,12 +11,15 @@ namespace VinlandSol.BDD
     /// </summary>
     class FakeDAO
     {
+        #region lists
         private List<Joueur> joueurs;
         private List<MJ> mjs;
         private List<Campagne> campagnes;
         private List<Personnage> personnages;
         private List<Carte> cartes;
+        #endregion
 
+        #region méthodes
         /// <summary>
         /// Constructeur de la classe 
         /// </summary>
@@ -387,6 +390,6 @@ namespace VinlandSol.BDD
         {
             return (joueurs.Any(account => account.Nom == username && account.Mdp == password) || mjs.Any(account => account.Nom == username && account.Mdp == password));
         }
-
+        #endregion
     }
 }
