@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using VinlandSol.BDD;
+using VinlandSol.Métier;
 
 namespace VinlandSol.IHM
 {
@@ -19,14 +20,13 @@ namespace VinlandSol.IHM
     {
         #region Attributs
 
+        private IUser user;
+        private Métier.Carte carte;
         private FakeDAO fakeDAO = FakeDAO.Instance;
         private string basePath = Directory.GetCurrentDirectory();
         private FileStream output;
         private MatrixTransform zoomTransform = new MatrixTransform();
         private List<Image> selectedHexagons = new List<Image>();
-        private string nom;
-        private int largeur;
-        private int hauteur;
         private bool isRightMouseDown = false;
         private Point lastMousePosition;
         private int zoomLevel = 0; // + = Dézoom // - = Zoom
@@ -43,18 +43,14 @@ namespace VinlandSol.IHM
         /// Carte de base - Dédiée au tests
         /// </summary>
         /// <author>Aaron</author>
-        public Carte()
+        public Carte(IUser user, Campagne campagne)
         {
             InitializeComponent();
-            GenerateHexagonalMap(largeur, hauteur); // Géneration de la map
+            Métier.Carte carte = new Métier.Carte(-1, "Carte par default", 10, 10, campagne);
+            GenerateHexagonalMap(carte.Largeur, carte.Hauteur); // Géneration de la map
             InitializeTerrains();
 
             HexagonCanvas.RenderTransform = zoomTransform; // zoom map
-
-            this.nom = "Carte par default";
-            this.largeur = 10;
-            this.hauteur = 10;
-
             HexagonCanvas.MouseRightButtonDown += Canvas_MouseRightButtonDown; // Déplacement de la map avec le clic droit
             HexagonCanvas.MouseRightButtonUp += Canvas_MouseRightButtonUp;
             HexagonCanvas.MouseMove += Canvas_MouseMove;
@@ -63,24 +59,19 @@ namespace VinlandSol.IHM
         /// <summary>
         /// Constructeur de carte - Appelé depuis Cartes.xaml ("vrai constructeur")
         /// </summary>
-        /// <param name="nom"></param>
-        /// <param name="largeur"></param>
-        /// <param name="hauteur"></param>
+        /// <param name="user">utilisateur connecté</param>
+        /// <param name="carte"></param>
         /// <author>Aaron</author>
-        public Carte(string nom, int largeur, int hauteur)
+        public Carte(IUser user, int id)
         {
             InitializeComponent();
-            GenerateHexagonalMap(largeur, hauteur); // Géneration de la map
+            carte = fakeDAO.GetCarte(id);
+            GenerateHexagonalMap(carte.Largeur, carte.Hauteur); // Géneration de la map
             InitializeTerrains();
 
             HexagonCanvas.RenderTransform = zoomTransform; // zoom map
-
-            this.nom = nom;
-            this.largeur = largeur;
-            this.hauteur = hauteur;
-
-            NomCarteLabel.Content = nom;
-            DimCarteLabel.Content = largeur + "x" + hauteur;
+            NomCarteLabel.Content = carte.Nom;
+            DimCarteLabel.Content = carte.Largeur + "x" + carte.Hauteur;
         
             HexagonCanvas.MouseRightButtonDown += Canvas_MouseRightButtonDown; // Déplacement de la map avec le clic droit
             HexagonCanvas.MouseRightButtonUp += Canvas_MouseRightButtonUp;
@@ -136,7 +127,7 @@ namespace VinlandSol.IHM
                     {
                         x += hexWidth * 0.48;
                     }
-                    Hexagon hexagon = new Hexagon(x + ((Width / 7 * 5 - hexWidth * largeur) / 2), y + ((Height - hexHeight * hauteur / 1.923076923 - 260) / 2)); // Le calcul permet de centrer de façon approximative les hexagones dans la fenêtre. 1.923076923 correspond a 500 (la hauteur d'un hexagone) divisé par 260 (la somme de la hauteur de la partie supérieure et de la partie inférieure de ce dernier) )
+                    Hexagon hexagon = new Hexagon(x + ((Width / 7 * 5 - hexWidth * carte.Largeur) / 2), y + ((Height - hexHeight * carte.Hauteur / 1.923076923 - 260) / 2)); // Le calcul permet de centrer de façon approximative les hexagones dans la fenêtre. 1.923076923 correspond a 500 (la hauteur d'un hexagone) divisé par 260 (la somme de la hauteur de la partie supérieure et de la partie inférieure de ce dernier) )
                     hexagon.ImageSource = new BitmapImage(new Uri(Path.Combine("pack://application:,,,/VinlandSol;component/IHM/Media/Resources/", "hexagon.png")));
                     hexagon.ImagePath = "hexagon.png";
                     hexagon.X = row+1; // Commence par 1
@@ -513,7 +504,7 @@ namespace VinlandSol.IHM
         /// <author>Aaron</author>
         private void OuvrirCartes_Click(object sender, RoutedEventArgs e)
         {
-            Cartes pagecreation = new Cartes();
+            Cartes pagecreation = new Cartes(user, carte.Campagne);
             pagecreation.Left = this.Left;
             pagecreation.Top = this.Top;
             pagecreation.Show();

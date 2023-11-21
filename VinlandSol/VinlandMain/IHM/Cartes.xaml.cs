@@ -6,6 +6,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using VinlandSol.BDD;
+using VinlandSol.Métier;
+using VinlandMain.IHM;
 
 namespace VinlandSol.IHM
 {
@@ -15,6 +17,8 @@ namespace VinlandSol.IHM
     public partial class Cartes : Window
     {
         private FakeDAO fakeDAO = FakeDAO.Instance;
+        private IUser user;
+        private Campagne campagne;
 
         Cartee nouvellecarte = new Cartee
         {
@@ -39,9 +43,11 @@ namespace VinlandSol.IHM
         /// <summary>
         /// Constructeur de la page
         /// </summary>
-        public Cartes()
+        public Cartes(IUser user, Campagne campagne)
         {
             InitializeComponent();
+            this.user = user;
+            this.campagne = campagne;
             Closed += ShutdownEnForce; // ShutdownEnForce est appelé à la fermeture de cette fenêtre
             LoadCartes();
         }
@@ -226,7 +232,7 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void OuvrirPersonnages_Click(object sender, RoutedEventArgs e)
         {
-            Personnages pagecreationperso = new Personnages();
+            Personnages pagecreationperso = new Personnages(user, campagne);
             pagecreationperso.Left = this.Left;
             pagecreationperso.Top = this.Top;
             pagecreationperso.Show();
@@ -269,11 +275,8 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void OuvrirCarte_Click(object sender, RoutedEventArgs e)
         {
-            string filePath = "cartes.txt";
-            string[] lignes = File.ReadAllLines(filePath);
-            string[] elements = lignes[CartesListe.SelectedIndex].Split(',');
-
-            Carte carteselect = new Carte(elements[0], int.Parse(elements[1]), int.Parse(elements[2]));
+            int idCarte = CartesListe.SelectedIndex;           
+            Carte carteselect = new Carte(user, idCarte);
             carteselect.Left = this.Left;
             carteselect.Top = this.Top;
             carteselect.Show();

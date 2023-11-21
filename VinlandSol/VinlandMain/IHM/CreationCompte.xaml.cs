@@ -50,10 +50,26 @@ namespace VinlandSol.IHM
         {
             string username = TBNomUtilisateur.Text;
             string password = TBVisibleMdp.Text;
+            string? roleSelectionne = ((ComboBoxItem)ChoixRole.SelectedItem)?.Content.ToString();
+            string? messageCheckFail = null;
+            int comboCheckFail = 0;
 
-            if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
+            #region Checks
+
+            if (fakeDAO.UsernameTaken(username) == false) { messageCheckFail = "Nom d'utilisateur déjà pris"; comboCheckFail++;}
+            if (string.IsNullOrWhiteSpace(username)) { messageCheckFail = "Veuillez remplir le champ Nom d'Utilisateur"; comboCheckFail++; }
+            if (string.IsNullOrWhiteSpace(password)) { messageCheckFail = "Veuillez remplir le champ Mot de Passe"; comboCheckFail++; }
+            if (roleSelectionne == null) { messageCheckFail = "Veuillez sélectionner un rôle pour votre compte"; comboCheckFail++; }
+
+            if(comboCheckFail >= 2) messageCheckFail = "Plusieurs des champs nécéssaires ne sont pas renseignés";
+            if (comboCheckFail >= 1) MessageBox.Show(messageCheckFail);
+
+            #endregion
+
+            if(comboCheckFail == 0) // Si tout va bien
             {
-                fakeDAO.CreateMJ(username, password);
+                if (roleSelectionne == "Maitre du jeu") { fakeDAO.CreateMJ(username, password); }
+                else if (roleSelectionne == "Joueur") { fakeDAO.CreateJoueur(username, password); }
                 MainWindow pagecreation = new MainWindow();
                 pagecreation.Left = this.Left;
                 pagecreation.Top = this.Top;
@@ -62,28 +78,46 @@ namespace VinlandSol.IHM
             }
         }
 
+        /// <summary>
+        /// Cache ou Révèle le mot de passe en fonction
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MdpVisibilityChanged(object sender, RoutedEventArgs e)
         {
-            if (isPasswordVisible)
+            if (isPasswordVisible) // Si le mot de passe est visible - le rendre invisible
             {
                 TBVisibleMdp.Visibility = Visibility.Collapsed;
                 TBMdp.Visibility = Visibility.Visible;
                 Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeil.png", UriKind.RelativeOrAbsolute));
             }
-            else
+            else // Si le mot de passe est invisible - le rendre visible
             {
                 TBMdp.Visibility = Visibility.Collapsed;
                 TBVisibleMdp.Visibility = Visibility.Visible;
                 Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeilbarre.png", UriKind.RelativeOrAbsolute));
             }
-
-            // Inversez l'état
             isPasswordVisible = !isPasswordVisible;
         }
 
-        private void TBMdp_PasswordChanged(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Synchronise le texte visible par rapport à celui invisible
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TBMdp_Synchronisation(object sender, RoutedEventArgs e)
         {
             TBVisibleMdp.Text = TBMdp.Password;
+        }
+
+        /// <summary>
+        /// Synchronise le texte invisible par rapport à celui visible
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TBVisibleMdp_Synchronisation(object sender, RoutedEventArgs e)
+        {
+            TBMdp.Password = TBVisibleMdp.Text;
         }
     }
 }

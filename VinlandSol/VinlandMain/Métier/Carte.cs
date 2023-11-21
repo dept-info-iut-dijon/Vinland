@@ -14,6 +14,7 @@ namespace VinlandSol.Métier
         #region Propriétés
 
         public int Id { get; set; }
+        public string Nom { get; set; }
         public int Hauteur { get; set; } // Hauteur (en Hexagones) de la carte
         public int Largeur { get; set; } // Largeur (en Hexagones) de la carte
         public Campagne Campagne { get; set; } // Campagne à laquelle la Carte appartient
@@ -22,9 +23,10 @@ namespace VinlandSol.Métier
 
         #region Constructeur
 
-        public Carte(int id, int hauteur, int largeur, Campagne campagne)
+        public Carte(int id, string nom, int hauteur, int largeur, Campagne campagne)
         {
             Id = id;
+            Nom = nom;
             Hauteur = hauteur;
             Largeur = largeur;
             Campagne = campagne;

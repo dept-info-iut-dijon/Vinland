@@ -101,10 +101,10 @@ namespace VinlandSol.BDD
         /// <param name="hauteur">Hauteur d'une carte</param>
         /// <param name="largeur">Largeur d'une carte</param>
         /// <param name="campagne">Campagne visée</param>
-        public void CreateCarte(int hauteur, int largeur, Campagne campagne)
+        public void CreateCarte(int hauteur ,string nom ,int largeur ,Campagne campagne)
         {
             int id = cartes.Count + 1;
-            Carte newMap = new Carte(id, hauteur, largeur, campagne);
+            Carte newMap = new Carte(id,nom ,hauteur, largeur, campagne);
             cartes.Add(newMap);
         }
 
@@ -200,13 +200,33 @@ namespace VinlandSol.BDD
 
         #endregion
 
+        #region Recupération Liste
+
         /// <summary>
-        /// Donne la liste des campagnes 
+        /// Retourne la liste des joueurs
         /// </summary>
-        /// <returns>une liste</returns>
-        public List<Campagne> GetCampagnes()
+        /// <returns>Une liste</returns>
+        public List<Joueur> GetJoueurs()
         {
-            return campagnes;
+            return joueurs;
+        }
+
+        /// <summary>
+        /// Retourne la liste des MJS
+        /// </summary>
+        /// <returns>Une liste</returns>
+        public List<MJ> GetMJs()
+        {
+            return mjs;
+        }
+
+        /// <summary>
+        /// Retourne la liste des personnages
+        /// </summary>
+        /// <returns>Une liste</returns>
+        public List<Personnage> GetPersonnages()
+        {
+            return personnages;
         }
 
         /// <summary>
@@ -216,6 +236,59 @@ namespace VinlandSol.BDD
         public List<Carte> GetCartes()
         {
             return cartes;
+        }
+
+        /// <summary>
+        /// Donne la liste des campagnes 
+        /// </summary>
+        /// <returns>une liste</returns>
+        public List<Campagne> GetCampagnes()
+        {
+            return campagnes;
+        }
+
+        #endregion
+
+        #region Recupération Instance
+
+        /// <summary>
+        /// Donne la joueur demandée
+        /// </summary>
+        /// <param name="id">l'id du joueur demandée</param>
+        /// <returns>Un joueur ou null</returns>
+        public Joueur GetJoueur(int id)
+        {
+            if (joueurs.Count == 0)
+            {
+                return null;
+            }
+
+            Joueur joueur = null;
+            for (int i = 0; i < joueurs.Count; i++)
+            {
+                if (joueurs[i].Id == id) joueur = joueurs[i];
+            }
+            return joueur;
+        }
+
+        /// <summary>
+        /// Donne le mj demandée
+        /// </summary>
+        /// <param name="id">l'id du mj demandée</param>
+        /// <returns>Un mj ou null</returns>
+        public MJ GetMJ(int id)
+        {
+            if (mjs.Count == 0)
+            {
+                return null;
+            }
+
+            MJ mj = null;
+            for (int i = 0; i < mjs.Count; i++)
+            {
+                if (mjs[i].Id == id) mj = mjs[i];
+            }
+            return mj;
         }
 
         /// <summary>
@@ -278,32 +351,9 @@ namespace VinlandSol.BDD
             return map;
         }
 
-        /// <summary>
-        /// Retourne la liste des joueurs
-        /// </summary>
-        /// <returns>Une liste</returns>
-        public List<Joueur> GetJoueurs()
-        {
-            return joueurs;
-        }
+        #endregion
 
-        /// <summary>
-        /// Retourne la liste des MJS
-        /// </summary>
-        /// <returns>Une liste</returns>
-        public List<MJ> GetMJs()
-        {
-            return mjs;
-        }
-
-        /// <summary>
-        /// Retourne la liste des personnages
-        /// </summary>
-        /// <returns>Une liste</returns>
-        public List<Personnage> GetPersonnages()
-        {
-            return personnages;
-        }
+        #region Update
 
         /// <summary>
         /// Met à jour la campagne
@@ -406,16 +456,56 @@ namespace VinlandSol.BDD
             }
         }
 
+        #endregion
+
+        #region Login Check
+
         /// <summary>
         /// Permet de vérifier si un compte valide est saisi
         /// </summary>
         /// <param name="username">Nom d'utilisateur</param>
         /// <param name="password">Mot de passe</param>
-        /// <returns>un accès ou non</returns>
-        public bool VerifyUserAccount(string username, string password)
+        /// <returns>l'id du user trouvé</returns>
+        public (int Id, string Role) VerifyUserAccount(string username, string password)
         {
-            return (joueurs.Any(account => account.Nom == username && account.Mdp == password) || mjs.Any(account => account.Nom == username && account.Mdp == password));
+            var joueur = joueurs.FirstOrDefault(account => account.Nom == username && account.Mdp == password);
+            if (joueur != null)
+            {
+                return (joueur.Id, "Joueur");
+            }
+
+            var mj = mjs.FirstOrDefault(account => account.Nom == username && account.Mdp == password);
+            if (mj != null)
+            {
+                return (mj.Id, "MJ");
+            }
+
+            return (-1, "Non trouvé");
         }
+
+        /// <summary>
+        /// Permet de vérifier si un nom d'utilisateur n'est pas déjà pris
+        /// </summary>
+        /// <param name="username">Nom d'utilisateur</param>
+        /// <returns>Booléen indiquant si le nom est pris ou non</returns>
+        public bool UsernameTaken(string username)
+        {
+            bool disponible = true;
+            var joueur = joueurs.FirstOrDefault(account => account.Nom == username);
+            if (joueur != null) // Le username est pris par un joueur
+            {
+                disponible = false;
+            }
+            var mj = mjs.FirstOrDefault(account => account.Nom == username);
+            if (mj != null) // Le username est pris par un mj
+            {
+                disponible = false;
+            }
+            return disponible;
+        }
+
+        #endregion
+
         #endregion
     }
 }

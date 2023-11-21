@@ -46,13 +46,27 @@ namespace VinlandSol
             string username = TBNomUtilisateur.Text;
             string password = TBMdp.Password;
 
-            if (fakeDAO.VerifyUserAccount(username, password))
+            (var userId, var userRole) = fakeDAO.VerifyUserAccount(username, password);
+
+            if (userRole == "Joueur")
             {
-                Campagnes pagecreation = new Campagnes();
+                Campagnes pagecreation = new Campagnes(fakeDAO.GetJoueur(userId));
                 pagecreation.Left = this.Left;
                 pagecreation.Top = this.Top;
                 pagecreation.Show();
                 Vinland.Close();
+            }
+            if (userRole == "MJ")
+            {
+                Campagnes pagecreation = new Campagnes(fakeDAO.GetMJ(userId));
+                pagecreation.Left = this.Left;
+                pagecreation.Top = this.Top;
+                pagecreation.Show();
+                Vinland.Close();
+            }
+            if (userRole == "Non trouvé")
+            {
+                MessageBox.Show("Utilisateur non trouvé ou un des champs est incorrect");
             }
         }
 
