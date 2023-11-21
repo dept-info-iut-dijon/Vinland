@@ -4,6 +4,7 @@ using System.Windows.Media.Imaging;
 using VinlandMain.IHM;
 using VinlandSol.BDD;
 using VinlandSol.IHM;
+using VinlandSol.Métier;
 
 namespace VinlandSol
 {
@@ -12,11 +13,13 @@ namespace VinlandSol
     /// </summary>
     public partial class MainWindow : Window
     {
+        private FakeDAO fakeDAO = FakeDAO.Instance;
         private bool isPasswordVisible = false;
         public MainWindow()
         {
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen; // La fenêtre de départ est ouverte au centre de l'écran
+
         }
 
         /// <summary>
@@ -43,8 +46,7 @@ namespace VinlandSol
             string username = TBNomUtilisateur.Text;
             string password = TBMdp.Password;
 
-            FakeDAO accountManager = new FakeDAO();
-            if (accountManager.VerifyUserAccount(username, password))
+            if (fakeDAO.VerifyUserAccount(username, password))
             {
                 Campagnes pagecreation = new Campagnes();
                 pagecreation.Left = this.Left;
@@ -52,20 +54,6 @@ namespace VinlandSol
                 pagecreation.Show();
                 Vinland.Close();
             }
-        }
-
-        /// <summary>
-        /// Ouvre la fenêtre Campagnes et ferme la fenêtre actuelle en passant l'authentification comme un véritable hacker
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Skip_Click(object sender, RoutedEventArgs e)
-        {
-            Campagnes pagecreation = new Campagnes();
-            pagecreation.Left = this.Left;
-            pagecreation.Top = this.Top;
-            pagecreation.Show();
-            Vinland.Close();
         }
 
         private void MdpVisibilityChanged(object sender, RoutedEventArgs e)
@@ -83,7 +71,6 @@ namespace VinlandSol
                 Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeilbarre.png", UriKind.RelativeOrAbsolute));
             }
 
-            // Inversez l'état
             isPasswordVisible = !isPasswordVisible;
         }
 

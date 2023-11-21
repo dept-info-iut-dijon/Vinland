@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using VinlandMain.IHM;
+using VinlandSol.BDD;
 
 namespace VinlandSol.IHM
 {
@@ -13,6 +14,8 @@ namespace VinlandSol.IHM
     /// </summary>
     public partial class Personnages : Window
     {
+        private FakeDAO fakeDAO = FakeDAO.Instance;
+
         Personnage nouveauPersonnage = new Personnage
         {
             NomPersonnage = "",

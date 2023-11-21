@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using VinlandSol.BDD;
 
 namespace VinlandSol.IHM
 {
@@ -9,6 +10,7 @@ namespace VinlandSol.IHM
     /// </summary>
     public partial class CreationCarte : Window
     {
+        private FakeDAO fakeDAO = FakeDAO.Instance;
         private Cartes cartes;
         public CreationCarte(Cartes cartes)
         {
