@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace VinlandServ.Controllers
 {
@@ -24,7 +24,7 @@ namespace VinlandServ.Controllers
         [HttpGet("getAll")]
         public async Task<ActionResult<IEnumerable<Personnage>>> GetPersonnages()
         {
-            return Ok(await _context.Personnages.ToListAsync());
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -35,14 +35,7 @@ namespace VinlandServ.Controllers
         [HttpGet("getById/{id}")]
         public async Task<ActionResult<Personnage>> GetPersonnage(int id)
         {
-            var personnage = await _context.Personnages.FindAsync(id);
-
-            if (personnage == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(personnage);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -53,10 +46,7 @@ namespace VinlandServ.Controllers
         [HttpPost("new")]
         public async Task<ActionResult<Personnage>> NewPersonnage(Personnage personnage)
         {
-            _context.Personnages.Add(personnage);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetPersonnage", new { id = personnage.Id }, personnage);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -68,30 +58,7 @@ namespace VinlandServ.Controllers
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdatePersonnage(int id, Personnage personnage)
         {
-            if (id != personnage.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(personnage).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PersonnageExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -102,16 +69,7 @@ namespace VinlandServ.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeletePersonnage(int id)
         {
-            var personnage = await _context.Personnages.FindAsync(id);
-            if (personnage == null)
-            {
-                return NotFound();
-            }
-
-            _context.Personnages.Remove(personnage);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -121,7 +79,7 @@ namespace VinlandServ.Controllers
         /// <returns>true si trouvé, sinon false</returns>
         private bool PersonnageExists(int id)
         {
-            return _context.Personnages.Any(e => e.Id == id);
+            throw new NotImplementedException();
         }
     }
 }

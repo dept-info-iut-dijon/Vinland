@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace VinlandServ.Controllers
 {
@@ -24,7 +24,7 @@ namespace VinlandServ.Controllers
         [HttpGet("getAll")]
         public async Task<ActionResult<IEnumerable<MJ>>> GetMJs()
         {
-            return Ok(await _context.MJs.ToListAsync());
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -35,14 +35,7 @@ namespace VinlandServ.Controllers
         [HttpGet("getById/{id}")]
         public async Task<ActionResult<MJ>> GetMJ(int id)
         {
-            var mj = await _context.MJs.FindAsync(id);
-
-            if (mj == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(mj);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -53,10 +46,7 @@ namespace VinlandServ.Controllers
         [HttpPost("new")]
         public async Task<ActionResult<MJ>> NewMJ(MJ mj)
         {
-            _context.MJs.Add(mj);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetMJ", new { id = mj.Id }, mj);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -68,30 +58,7 @@ namespace VinlandServ.Controllers
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateMJ(int id, MJ mj)
         {
-            if (id != mj.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(mj).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MJExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -102,16 +69,7 @@ namespace VinlandServ.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteMJ(int id)
         {
-            var mj = await _context.MJs.FindAsync(id);
-            if (mj == null)
-            {
-                return NotFound();
-            }
-
-            _context.MJs.Remove(mj);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -121,7 +79,7 @@ namespace VinlandServ.Controllers
         /// <returns>true si trouvé, sinon false</returns>
         private bool MJExists(int id)
         {
-            return _context.MJs.Any(e => e.Id == id);
+            throw new NotImplementedException();
         }
     }
 }

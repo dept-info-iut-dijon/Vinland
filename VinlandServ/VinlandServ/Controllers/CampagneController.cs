@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace VinlandServ.Controllers
 {
@@ -24,7 +23,7 @@ namespace VinlandServ.Controllers
         [HttpGet("getAll")]
         public async Task<ActionResult<IEnumerable<Campagne>>> GetCampagnes()
         {
-            return Ok(await _context.Campagnes.ToListAsync());
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -35,14 +34,8 @@ namespace VinlandServ.Controllers
         [HttpGet("getById/{id}")]
         public async Task<ActionResult<Campagne>> GetCampagne(int id)
         {
-            var campagne = await _context.Campagnes.FindAsync(id);
+            throw new NotImplementedException();
 
-            if (campagne == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(campagne);
         }
 
         /// <summary>
@@ -53,10 +46,8 @@ namespace VinlandServ.Controllers
         [HttpPost("new")]
         public async Task<ActionResult<Campagne>> NewCampagne(Campagne campagne)
         {
-            _context.Campagnes.Add(campagne);
-            await _context.SaveChangesAsync();
+            throw new NotImplementedException();
 
-            return CreatedAtAction("GetCampagne", new { id = campagne.Id }, campagne); 
         }
 
         /// <summary>
@@ -68,30 +59,7 @@ namespace VinlandServ.Controllers
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateCampagne(int id, Campagne campagne)
         {
-            if (id != campagne.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(campagne).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CampagneExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -102,16 +70,8 @@ namespace VinlandServ.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteCampagne(int id)
         {
-            var campagne = await _context.Campagnes.FindAsync(id);
-            if (campagne == null)
-            {
-                return NotFound();
-            }
+            throw new NotImplementedException();
 
-            _context.Campagnes.Remove(campagne);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
         /// <summary>

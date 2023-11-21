@@ -1,26 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace VinlandServ
+﻿namespace VinlandServ
 {
-    public class Context : DbContext
+    /// <summary>
+    /// Lists Repository 
+    /// </summary>
+    public class Context
     {
-        public Context()
-        {
-            Database.EnsureCreated();
-        }
+        public List <Campagne> Campagnes = new List<Campagne>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            string con = "User Id =IQ_BD_GRITTI; Password =GRITTI0000; Data Source =srv-iq-ora:1521/orclpdb.iut21.u-bourgogne.fr";
-            optionsBuilder.UseOracle(con);
-        }
+        public List <Carte> Cartes = new List<Carte>();
 
-        public DbSet<Joueur> Joueurs { get; set; }
-        public DbSet<MJ> MJs { get; set; }
-        public DbSet<Campagne> Campagnes { get; set; }
-        public DbSet<Personnage> Personnages { get; set; }
-        public DbSet<Carte> Cartes { get; set; }
+        public List <Joueur> Joueurs = new List<Joueur>();
 
+        public List <MJ> MJS = new List<MJ>();
+
+        public List <Personnage> Personnages = new List<Personnage>();
     }
 }

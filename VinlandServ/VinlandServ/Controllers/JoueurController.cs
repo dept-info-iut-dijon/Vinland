@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace VinlandServ.Controllers
 {
@@ -24,7 +24,7 @@ namespace VinlandServ.Controllers
         [HttpGet("getAll")]
         public async Task<ActionResult<IEnumerable<Joueur>>> GetJoueurs()
         {
-            return Ok(await _context.Joueurs.ToListAsync());
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -35,14 +35,7 @@ namespace VinlandServ.Controllers
         [HttpGet("getById/{id}")]
         public async Task<ActionResult<Joueur>> GetJoueur(int id)
         {
-            var joueur = await _context.Joueurs.FindAsync(id);
-
-            if (joueur == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(joueur);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -53,10 +46,7 @@ namespace VinlandServ.Controllers
         [HttpPost("new")]
         public async Task<ActionResult<Joueur>> NewJoueur(Joueur joueur)
         {
-            _context.Joueurs.Add(joueur);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetJoueur", new { id = joueur.Id }, joueur); 
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -68,30 +58,7 @@ namespace VinlandServ.Controllers
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateJoueur(int id, Joueur joueur)
         {
-            if (id != joueur.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(joueur).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!JoueurExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -102,16 +69,7 @@ namespace VinlandServ.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteJoueur(int id)
         {
-            var joueur = await _context.Joueurs.FindAsync(id);
-            if (joueur == null)
-            {
-                return NotFound();
-            }
-
-            _context.Joueurs.Remove(joueur);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -121,7 +79,7 @@ namespace VinlandServ.Controllers
         /// <returns>true si trouvé, sinon false</returns>
         private bool JoueurExists(int id)
         {
-            return _context.Joueurs.Any(e => e.Id == id);
+            throw new NotImplementedException();
         }
     }
 }
