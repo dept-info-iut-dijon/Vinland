@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using VinlandMain.IHM;
 using VinlandSol.BDD;
+using VinlandSol.Métier;
 
 namespace VinlandSol.IHM
 {
@@ -15,6 +16,8 @@ namespace VinlandSol.IHM
     public partial class Personnages : Window
     {
         private FakeDAO fakeDAO = FakeDAO.Instance;
+        private IUser user;
+        private Campagne campagne;
 
         Personnage nouveauPersonnage = new Personnage
         {
@@ -39,9 +42,11 @@ namespace VinlandSol.IHM
         /// <summary>
         /// Constructeur de la fenêtre
         /// </summary>
-        public Personnages()
+        public Personnages(IUser user, Campagne campagne)
         {
             InitializeComponent();
+            this.campagne = campagne;
+            this.user = user;
             Closed += ShutdownEnForce;
             LoadPersonnages();
 
@@ -130,7 +135,7 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void OuvrirCampagnes_Click(object sender, RoutedEventArgs e)
         {
-            Campagnes pagecreation = new Campagnes();
+            Campagnes pagecreation = new Campagnes(user);
             pagecreation.Left = this.Left;
             pagecreation.Top = this.Top;
             pagecreation.Show();
@@ -155,7 +160,7 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void OuvrirCartes_Click(object sender, RoutedEventArgs e)
         {
-            Cartes pagecreation = new Cartes();
+            Cartes pagecreation = new Cartes(user, campagne);
             pagecreation.Left = this.Left;
             pagecreation.Top = this.Top;
             pagecreation.Show();

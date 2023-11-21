@@ -13,7 +13,7 @@
             <ImageBrush ImageSource="/IHM/Media/Resources/background.png"/>
         </Grid.Background>
 
-        <Button Background="#fbf1cc" x:Name="Skip" Content="Skip" HorizontalAlignment="Left" Margin="163,656,0,0" VerticalAlignment="Top" FontSize="35" Click="Skip_Click" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" Width="86">
+        <Button Background="#fbf1cc" x:Name="Skip" Content="Skip" HorizontalAlignment="Left" Margin="163,656,0,0" VerticalAlignment="Top" FontSize="35" Visibility="Hidden" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" Width="86">
         <Button.Resources>
             <Style TargetType="{x:Type Border}">
                 <Setter Property="CornerRadius" Value="10"/>
