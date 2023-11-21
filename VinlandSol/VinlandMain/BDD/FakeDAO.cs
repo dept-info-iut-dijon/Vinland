@@ -11,19 +11,14 @@ namespace VinlandSol.BDD
     /// </summary>
     class FakeDAO
     {
-        #region lists
-        private List<Joueur> joueurs;
-        private List<MJ> mjs;
-        private List<Campagne> campagnes;
-        private List<Personnage> personnages;
-        private List<Carte> cartes;
-        #endregion
+        #region Setup Singleton
 
-        #region méthodes
+        private static FakeDAO _instance; // Instance interne du singleton
+
         /// <summary>
         /// Constructeur de la classe 
         /// </summary>
-        public FakeDAO()
+        private FakeDAO()
         {
             joueurs = new List<Joueur>();
             mjs = new List<MJ>();
@@ -33,49 +28,35 @@ namespace VinlandSol.BDD
         }
 
         /// <summary>
-        /// Permet l'ajout d'une campagne
+        /// Instance Unique accessible depuis l'extérieur
         /// </summary>
-        /// <param name="campagne">Une simple campagne</param>
-        public void AjouterCampagne(Campagne campagne)
+        public static FakeDAO Instance
         {
-            campagnes.Add(campagne);
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new FakeDAO(); // Cette première instance est et devrait toujours être créée dans la fenêtre Vinland.xaml
+                }
+                return _instance;
+            }
         }
 
-        /// <summary>
-        /// Permet l'ajout d'un joueur
-        /// </summary>
-        /// <param name="joueur">Un simple joueur</param>
-        public void AjouterJoueur(Joueur joueur)
-        {
-            joueurs.Add(joueur);
-        }
+        #endregion
 
-        /// <summary>
-        /// Permet l'ajout d'un maître de jeu
-        /// </summary>
-        /// <param name="mj"></param>
-        public void AjouterMJ(MJ mj)
-        {
-            mjs.Add(mj);
-        }
+        #region Listes
 
-        /// <summary>
-        /// Permet l'ajout de personnages
-        /// </summary>
-        /// <param name="personnage">Un simple personnage</param>
-        public void AjouterPersonnage(Personnage personnage)
-        {
-            personnages.Add(personnage);
-        }
+        private List<Joueur> joueurs;
+        private List<MJ> mjs;
+        private List<Campagne> campagnes;
+        private List<Personnage> personnages;
+        private List<Carte> cartes;
 
-        /// <summary>
-        /// Permet l'ajout d'une carte 
-        /// </summary>
-        /// <param name="carte">Une carte</param>
-        public void AjouterCarte(Carte carte)
-        {
-            cartes.Add(carte);
-        }
+        #endregion
+
+        #region Méthodes
+
+        #region Création
 
         /// <summary>
         /// Ajoute un joueur à la liste des joueurs, permettant ainsi sa création
@@ -138,10 +119,44 @@ namespace VinlandSol.BDD
             campagnes.Add(newCampagne);
         }
 
+        #endregion
+
+        #region Suppression
+
+        /// <summary>
+        /// Permet la suppression d'un Joueur par son identifiant 
+        /// </summary>
+        /// <param name="id">Identifiant permettant de différencier un Joueur</param>
+        public void DeleteJoueur(int id)
+        {
+            if (joueurs.Count != 0)
+            {
+                for (int i = 0; i < joueurs.Count; i++)
+                {
+                    if (joueurs[i].Id == id) joueurs.RemoveAt(i);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Permet la suppression d'un MJ par son identifiant 
+        /// </summary>
+        /// <param name="id">Identifiant permettant de différencier un MJ</param>
+        public void DeleteMJ(int id)
+        {
+            if (mjs.Count != 0)
+            {
+                for (int i = 0; i < mjs.Count; i++)
+                {
+                    if (mjs[i].Id == id) mjs.RemoveAt(i);
+                }
+            }
+        }
+
         /// <summary>
         /// Permet la suppression d'un personnage par son identifiant 
         /// </summary>
-        /// <param name="id">Identifiant permettant de différencier une personnage</param>
+        /// <param name="id">Identifiant permettant de différencier un personnage</param>
         public void DeletePersonnage(int id)
         {
             if (personnages.Count != 0)
@@ -183,6 +198,8 @@ namespace VinlandSol.BDD
             }
         }
 
+        #endregion
+
         /// <summary>
         /// Donne la liste des campagnes 
         /// </summary>
@@ -190,6 +207,15 @@ namespace VinlandSol.BDD
         public List<Campagne> GetCampagnes()
         {
             return campagnes;
+        }
+
+        /// <summary>
+        /// Donne la liste des cartes
+        /// </summary>
+        /// <returns>une liste</returns>
+        public List<Carte> GetCartes()
+        {
+            return cartes;
         }
 
         /// <summary>

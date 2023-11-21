@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using VinlandSol.BDD;
 using VinlandSol.IHM;
+using VinlandSol.Métier;
 
 namespace VinlandMain.IHM
 {
@@ -13,6 +15,8 @@ namespace VinlandMain.IHM
     /// </summary>
     public partial class Campagnes : Window
     {
+        private FakeDAO fakeDAO = FakeDAO.Instance; 
+
         /// <summary>
         /// Campagne de test
         /// </summary>

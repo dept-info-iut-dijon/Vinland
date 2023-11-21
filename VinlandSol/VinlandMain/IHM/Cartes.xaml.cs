@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using VinlandSol.BDD;
 
 namespace VinlandSol.IHM
 {
@@ -13,6 +14,8 @@ namespace VinlandSol.IHM
     /// </summary>
     public partial class Cartes : Window
     {
+        private FakeDAO fakeDAO = FakeDAO.Instance;
+
         Cartee nouvellecarte = new Cartee
         {
             NomCartes = "",

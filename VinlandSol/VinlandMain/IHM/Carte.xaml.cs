@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using VinlandSol.BDD;
 
 namespace VinlandSol.IHM
 {
@@ -18,6 +19,7 @@ namespace VinlandSol.IHM
     {
         #region Attributs
 
+        private FakeDAO fakeDAO = FakeDAO.Instance;
         private string basePath = Directory.GetCurrentDirectory();
         private FileStream output;
         private MatrixTransform zoomTransform = new MatrixTransform();

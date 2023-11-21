@@ -19,7 +19,9 @@ namespace VinlandSol.IHM
     /// </summary>
     public partial class CreationCompte : Window
     {
+        private FakeDAO fakeDAO = FakeDAO.Instance;
         private bool isPasswordVisible = false;
+
         public CreationCompte()
         {
             InitializeComponent();
@@ -51,8 +53,7 @@ namespace VinlandSol.IHM
 
             if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
             {
-                FakeDAO accountManager = new FakeDAO();
-                accountManager.CreateMJ(username, password);
+                fakeDAO.CreateMJ(username, password);
                 MainWindow pagecreation = new MainWindow();
                 pagecreation.Left = this.Left;
                 pagecreation.Top = this.Top;
