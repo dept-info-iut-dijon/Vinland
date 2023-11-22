@@ -66,31 +66,51 @@ namespace VinlandSol
             }
             if (userRole == "Non trouvé")
             {
-                MessageBox.Show("Utilisateur non trouvé ou un des champs est incorrect");
+                CustomMessageBox messagebox = new CustomMessageBox("Utilisateur non trouvé ou un des champs est incorrect");
+                messagebox.ShowDialog();
             }
         }
 
+        /// <summary>
+        /// Cache ou Révèle le mot de passe en fonction
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MdpVisibilityChanged(object sender, RoutedEventArgs e)
         {
-            if (isPasswordVisible)
+            if (isPasswordVisible) // Si le mot de passe est visible - le rendre invisible
             {
                 TBVisibleMdp.Visibility = Visibility.Collapsed;
                 TBMdp.Visibility = Visibility.Visible;
                 Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeil.png", UriKind.RelativeOrAbsolute));
             }
-            else
+            else // Si le mot de passe est invisible - le rendre visible
             {
                 TBMdp.Visibility = Visibility.Collapsed;
                 TBVisibleMdp.Visibility = Visibility.Visible;
                 Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeilbarre.png", UriKind.RelativeOrAbsolute));
             }
-
             isPasswordVisible = !isPasswordVisible;
         }
 
-        private void TBMdp_PasswordChanged(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Synchronise le texte visible par rapport à celui invisible
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TBMdp_Synchronisation(object sender, RoutedEventArgs e)
         {
             TBVisibleMdp.Text = TBMdp.Password;
+        }
+
+        /// <summary>
+        /// Synchronise le texte invisible par rapport à celui visible
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TBVisibleMdp_Synchronisation(object sender, RoutedEventArgs e)
+        {
+            TBMdp.Password = TBVisibleMdp.Text;
         }
     }
 }

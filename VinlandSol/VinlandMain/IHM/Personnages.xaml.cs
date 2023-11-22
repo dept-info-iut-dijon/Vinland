@@ -262,8 +262,8 @@ namespace VinlandSol.IHM
 
             if (string.IsNullOrWhiteSpace(nouvNomPersonnage))
             {
-                MessageBox.Show("Le nom de la campagne ne peut pas être vide.", "Erreur de Nom de Campagne", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                CustomMessageBox customMessageBox = new CustomMessageBox("Le nom de la campagne ne peut pas être vide.");
+                customMessageBox.ShowDialog();
             }
             int selectedIndex = PersonnagesListe.SelectedIndex;
             if (selectedIndex >= 0 && selectedIndex < personnages.Count)
