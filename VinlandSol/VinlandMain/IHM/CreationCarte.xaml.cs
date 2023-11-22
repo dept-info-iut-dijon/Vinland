@@ -46,12 +46,14 @@ namespace VinlandSol.IHM
                 //NColonne.ClearValue();
 
                 // Affichez un message de confirmation
-                MessageBox.Show("Carte ajouté avec succès !");
+                CustomMessageBox customMessageBox = new CustomMessageBox("Carte ajouté avec succès !");
+                customMessageBox.ShowDialog();
             }
             else
             {
                 // Affichez un message d'erreur si les données sont vides
-                MessageBox.Show("Veuillez remplir toutes les informations avant de créer une carte");
+                CustomMessageBox customMessageBox = new CustomMessageBox("Veuillez remplir toutes les informations avant de créer une carte");
+                customMessageBox.ShowDialog();
             }
 
         }

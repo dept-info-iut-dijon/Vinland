@@ -66,11 +66,13 @@ namespace VinlandMain.IHM
             {
                 System.IO.File.WriteAllLines(filePath, campagnes.Select(c => c.Nom));
 
-                MessageBox.Show("La sauvegarde s'est réalisée avec succès.", "Enregistrement Réussi", MessageBoxButton.OK, MessageBoxImage.Information);
+                CustomMessageBox messageBox = new CustomMessageBox("La sauvegarde s'est réalisée avec succès !");
+                messageBox.ShowDialog();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Une erreur s'est produite lors de l'enregistrement dans le fichier texte : " + ex.Message, "Erreur d'Enregistrement", MessageBoxButton.OK, MessageBoxImage.Error);
+                CustomMessageBox messageBox = new CustomMessageBox("Une erreur s'est produite lors de l'enregistrement dans le fichier texte :" + ex.Message);
+                messageBox.ShowDialog();
             }
         }
 
@@ -88,7 +90,8 @@ namespace VinlandMain.IHM
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Une erreur s'est produite lors de la lecture du fichier texte : " + ex.Message, "Erreur de Lecture", MessageBoxButton.OK, MessageBoxImage.Error);
+                CustomMessageBox messageBox = new CustomMessageBox("Une erreur s'est produite lors de la lecture du fichier texte : " + ex.Message);
+                messageBox.ShowDialog();
                 return new List<string>();
             }
         }
@@ -170,8 +173,8 @@ namespace VinlandMain.IHM
 
             if (string.IsNullOrWhiteSpace(contenu))
             {
-                MessageBox.Show("Le nom de la campagne ne peut pas être vide.", "Erreur de Nom de Campagne", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                CustomMessageBox messageBox = new CustomMessageBox("Le nom de la campagne ne peut pas être vide");
+                messageBox.ShowDialog();
             }
 
             string newCampaignName = NomNouvCamp.Text;
@@ -189,7 +192,8 @@ namespace VinlandMain.IHM
             }
             else
             {
-                MessageBox.Show("Le nom de la campagne existe déjà.", "Erreur de Nom de Campagne", MessageBoxButton.OK, MessageBoxImage.Error);
+                CustomMessageBox messageBox = new CustomMessageBox("Le nom de la campagne existe déjà.");
+                messageBox.ShowDialog();
             }
             NomNouvCamp.Visibility = Visibility.Collapsed;
             Valider.Visibility = Visibility.Collapsed;
@@ -244,8 +248,8 @@ namespace VinlandMain.IHM
 
                 if (string.IsNullOrWhiteSpace(newCampaignName))
                 {
-                    MessageBox.Show("Le nom de la campagne ne peut pas être vide.", "Erreur de Nom de Campagne", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                    CustomMessageBox messageBox = new CustomMessageBox("Le nom de la campagne ne peut pas être vide");
+                    messageBox.ShowDialog();
                 }
                 campagnes[indiceCampagneEnEdition] = new Campagne
                 {

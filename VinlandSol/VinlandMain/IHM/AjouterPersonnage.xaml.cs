@@ -46,11 +46,14 @@ namespace VinlandSol.IHM
                 IdPersonnage.Clear();
 
                 // Affichez un message de confirmation
-                MessageBox.Show("Personnage ajouté avec succès !");
+                CustomMessageBox messagebox = new CustomMessageBox("Personnage ajouté avec succès !");
+                messagebox.ShowDialog();
             }
             else
             {
-                MessageBox.Show("Veuillez remplir toutes les informations avant de créer un personnage");
+                CustomMessageBox messagebox = new CustomMessageBox("Veuillez remplir toutes les informations avant \n de créer un personnage");
+                messagebox.ShowDialog();
+                
             }
 
         }

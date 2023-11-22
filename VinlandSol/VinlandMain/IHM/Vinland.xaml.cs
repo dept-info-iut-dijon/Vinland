@@ -66,7 +66,8 @@ namespace VinlandSol
             }
             if (userRole == "Non trouvé")
             {
-                MessageBox.Show("Utilisateur non trouvé ou un des champs est incorrect");
+                CustomMessageBox messagebox = new CustomMessageBox("Utilisateur non trouvé ou un des champs est incorrect");
+                messagebox.ShowDialog();
             }
         }
 
