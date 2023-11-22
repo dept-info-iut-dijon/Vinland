@@ -370,7 +370,8 @@ namespace VinlandSol.IHM
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("An error occurred while saving the terrain image: " + ex.Message);
+                CustomMessageBox messageBox = new CustomMessageBox("An error occurred while saving the terrain image: " + ex.Message);
+                messageBox.ShowDialog();
             }
             finally
             {

@@ -62,7 +62,11 @@ namespace VinlandSol.IHM
             if (roleSelectionne == null) { messageCheckFail = "Veuillez sélectionner un rôle pour votre compte"; comboCheckFail++; }
 
             if(comboCheckFail >= 2) messageCheckFail = "Plusieurs des champs nécéssaires ne sont pas renseignés";
-            if (comboCheckFail >= 1) MessageBox.Show(messageCheckFail);
+            if (comboCheckFail >= 1) 
+            {
+                CustomMessageBox messagebox = new CustomMessageBox(messageCheckFail);
+                messagebox.ShowDialog();
+            } 
 
             #endregion
 
