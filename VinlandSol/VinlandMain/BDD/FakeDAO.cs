@@ -22,11 +22,12 @@ namespace VinlandSol.BDD
         /// </summary>
         private FakeDAO()
         {
-            joueurs = new List<Joueur>();
-            mjs = new List<MJ>();
+            joueurs = _gestionnaireDeFichiers.Load<Joueur>("joueurs.txt");
+            mjs = _gestionnaireDeFichiers.Load<MJ>("mjs.txt");
             campagnes = new List<Campagne>();
             personnages = new List<Personnage>();
             cartes = new List<Carte>();
+            
         }
 
         /// <summary>
@@ -70,6 +71,8 @@ namespace VinlandSol.BDD
             int id = joueurs.Count + 1;
             Joueur newUser = new Joueur(id, nom, mdp);
             joueurs.Add(newUser);
+
+            _gestionnaireDeFichiers.Save(joueurs, "Joueurs.txt");
         }
 
         /// <summary>
@@ -82,6 +85,8 @@ namespace VinlandSol.BDD
             int id = mjs.Count + 1;
             MJ newMJ = new MJ(id, nom, mdp);
             mjs.Add(newMJ);
+
+            _gestionnaireDeFichiers.Save(mjs, "Mjs.txt");
         }
 
         /// <summary>
@@ -93,7 +98,7 @@ namespace VinlandSol.BDD
         public void CreatePersonnage(string nom, Joueur joueur, Campagne campagne)
         {
             int id = personnages.Count + 1;
-            Personnage newCharacter = new Personnage(id, nom, joueur, campagne);
+            Personnage newCharacter = new Personnage(id, nom, joueur.ID, campagne.ID);
             personnages.Add(newCharacter);
         }
 
@@ -106,7 +111,7 @@ namespace VinlandSol.BDD
         public void CreateCarte(int hauteur ,string nom ,int largeur ,Campagne campagne)
         {
             int id = cartes.Count + 1;
-            Carte newMap = new Carte(id,nom ,hauteur, largeur, campagne);
+            Carte newMap = new Carte(id,nom ,hauteur, largeur, campagne.ID);
             cartes.Add(newMap);
         }
 
@@ -135,7 +140,7 @@ namespace VinlandSol.BDD
             {
                 for (int i = 0; i < joueurs.Count; i++)
                 {
-                    if (joueurs[i].Id == id) joueurs.RemoveAt(i);
+                    if (joueurs[i].ID == id) joueurs.RemoveAt(i);
                 }
             }
         }
@@ -150,7 +155,7 @@ namespace VinlandSol.BDD
             {
                 for (int i = 0; i < mjs.Count; i++)
                 {
-                    if (mjs[i].Id == id) mjs.RemoveAt(i);
+                    if (mjs[i].ID == id) mjs.RemoveAt(i);
                 }
             }
         }
@@ -165,7 +170,7 @@ namespace VinlandSol.BDD
             {
                 for (int i = 0; i < personnages.Count; i++)
                 {
-                    if (personnages[i].Id == id) personnages.RemoveAt(i);
+                    if (personnages[i].ID == id) personnages.RemoveAt(i);
                 }
             }
         }
@@ -268,7 +273,7 @@ namespace VinlandSol.BDD
             Joueur joueur = null;
             for (int i = 0; i < joueurs.Count; i++)
             {
-                if (joueurs[i].Id == id) joueur = joueurs[i];
+                if (joueurs[i].ID == id) joueur = joueurs[i];
             }
             return joueur;
         }
@@ -288,7 +293,7 @@ namespace VinlandSol.BDD
             MJ mj = null;
             for (int i = 0; i < mjs.Count; i++)
             {
-                if (mjs[i].Id == id) mj = mjs[i];
+                if (mjs[i].ID == id) mj = mjs[i];
             }
             return mj;
         }
@@ -328,7 +333,7 @@ namespace VinlandSol.BDD
             Personnage character = null;
             for (int i = 0; i < personnages.Count; i++)
             {
-                if (personnages[i].Id == id) character = personnages[i];
+                if (personnages[i].ID == id) character = personnages[i];
             }
             return character;
         }
@@ -437,7 +442,7 @@ namespace VinlandSol.BDD
             {
                 for (int i = 0; i < personnages.Count; i++)
                 {
-                    if (personnages[i].Id == personnage.Id) personnages[i] = personnage;
+                    if (personnages[i].ID == personnage.ID) personnages[i] = personnage;
                 }
             }
         }
@@ -473,13 +478,13 @@ namespace VinlandSol.BDD
             var joueur = joueurs.FirstOrDefault(account => account.Nom == username && account.Mdp == password);
             if (joueur != null)
             {
-                return (joueur.Id, "Joueur");
+                return (joueur.ID, "Joueur");
             }
 
             var mj = mjs.FirstOrDefault(account => account.Nom == username && account.Mdp == password);
             if (mj != null)
             {
-                return (mj.Id, "MJ");
+                return (mj.ID, "MJ");
             }
 
             return (-1, "Non trouvé");

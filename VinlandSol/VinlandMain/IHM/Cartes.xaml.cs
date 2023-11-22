@@ -43,11 +43,11 @@ namespace VinlandSol.IHM
         /// <summary>
         /// Constructeur de la page
         /// </summary>
-        public Cartes(IUser user, Campagne campagne)
+        public Cartes(IUser user, int idcampagne)
         {
             InitializeComponent();
             this.user = user;
-            this.campagne = campagne;
+            this.campagne = fakeDAO.GetCampagne(idcampagne);
             Closed += ShutdownEnForce; // ShutdownEnForce est appelé à la fermeture de cette fenêtre
             LoadCartes();
         }

@@ -13,7 +13,7 @@ namespace VinlandSol.Métier
     {
         #region Propriétés
 
-        int Id { get; set; }
+        int ID { get; set; }
         string Nom { get; set; }
         string Mdp { get; set; }
 

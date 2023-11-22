@@ -46,7 +46,7 @@ namespace VinlandSol.IHM
         public Carte(IUser user, Campagne campagne)
         {
             InitializeComponent();
-            Métier.Carte carte = new Métier.Carte(-1, "Carte par default", 10, 10, campagne);
+            Métier.Carte carte = new Métier.Carte(-1, "Carte par default", 10, 10, campagne.ID);
             GenerateHexagonalMap(carte.Largeur, carte.Hauteur); // Géneration de la map
             InitializeTerrains();
 
@@ -504,7 +504,7 @@ namespace VinlandSol.IHM
         /// <author>Aaron</author>
         private void OuvrirCartes_Click(object sender, RoutedEventArgs e)
         {
-            Cartes pagecreation = new Cartes(user, carte.Campagne);
+            Cartes pagecreation = new Cartes(user, carte.IDCampagne);
             pagecreation.Left = this.Left;
             pagecreation.Top = this.Top;
             pagecreation.Show();

@@ -18,15 +18,14 @@ namespace VinlandSol.Métier
         public string Nom { get; set; } // Nom de la campagne
         public DateTime DateCreation { get; set; } // Date de la création de la campagne
         public DateTime DateModification { get; set; } // Dernière date de modification
-        public int NombreCartes { get; set; }
-        public int NombrePersonnages { get; set; }
-        public List<Personnage> Personnages { get; set; } // Les personnages de la campagne
-        public List<Carte> Cartes { get; set; } // Les cartes de la campagne
-        public MJ MJ { get; set; } // Le MJ qui a créé la campagne
+        public List<int> IDPersonnages { get; set; } // Les ids des personnages de la campagne
+        public List<int> IDCartes { get; set; } // Les ids des cartes de la campagne
 
         #endregion
 
         #region Constructeur
+
+        public Campagne() { }   
 
         public Campagne(int id, string nom) 
         {
@@ -34,10 +33,8 @@ namespace VinlandSol.Métier
             Nom = nom;
             DateCreation = DateTime.Now;
             DateModification = DateTime.Now;
-            NombreCartes = 0;
-            NombrePersonnages = 0;
-            Personnages = new List<Personnage>();
-            Cartes = new List<Carte>();
+            IDPersonnages = new List<int>();
+            IDCartes = new List<int>();
         }
 
         #endregion

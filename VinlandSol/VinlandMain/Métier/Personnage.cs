@@ -13,21 +13,23 @@ namespace VinlandSol.Métier
     {
         #region Propriétés 
 
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string Nom { get; set; }
-        public Joueur Joueur { get; set; } // Le Joueur propriétaire de ce Personnage
-        public Campagne Campagne { get; set; } // La Campagne dont le Personnage fait partie
+        public int IDJoueur { get; set; } // L'id du Joueur propriétaire de ce Personnage
+        public int IDCampagne { get; set; } // L'id de la Campagne dont le Personnage fait partie
 
         #endregion
 
         #region Constructeur
 
-        public Personnage(int id, string nom, Joueur joueur, Campagne campagne)
+        public Personnage() { }
+
+        public Personnage(int id, string nom, int idjoueur, int idcampagne)
         {
-            this.Id = id;
+            this.ID = id;
             this.Nom = nom;
-            this.Joueur = joueur;
-            this.Campagne = campagne;
+            this.IDJoueur = idjoueur;
+            this.IDCampagne = idcampagne;
         }
 
         #endregion
