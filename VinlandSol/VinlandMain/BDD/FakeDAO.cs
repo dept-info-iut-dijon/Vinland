@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using VinlandSol.Métier;
 using Carte = VinlandSol.Métier.Carte;
@@ -7,12 +8,13 @@ using Carte = VinlandSol.Métier.Carte;
 namespace VinlandSol.BDD
 {
     /// <summary>
-    /// Classe du DAO
+    /// Classe du DAO - Utilisation de .txt
     /// </summary>
-    class FakeDAO
+    public class FakeDAO
     {
         #region Setup Singleton
 
+        private GestionnaireDeFichiers _gestionnaireDeFichiers = GestionnaireDeFichiers.Instance;
         private static FakeDAO _instance; // Instance interne du singleton
 
         /// <summary>
