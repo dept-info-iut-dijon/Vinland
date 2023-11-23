@@ -50,20 +50,20 @@ namespace VinlandSol.IHM
         private void Creer_Click(object sender, RoutedEventArgs e)
         {
             string username = TBNomUtilisateur.Text;
-            string password = TBVisibleMdp.Text;
+            string password;
+            if(!isPasswordVisible) { password = TBMdp.Password; } else {  password = TBVisibleMdp.Text; }
             string? roleSelectionne = ((ComboBoxItem)ChoixRole.SelectedItem)?.Content.ToString();
             string? messageCheckFail = null;
-            int comboCheckFail = 0;
+            bool okCheck = true;
 
             #region Checks
+            // Un seul check à la fois, on ne veut pas aggresser l'utilisateur avec des popups en chaine
+            if (fakeDAO.UsernameTaken(username) == false) { messageCheckFail = "Nom d'utilisateur déjà pris"; okCheck=false; }
+            else if (string.IsNullOrWhiteSpace(username)) { messageCheckFail = "Veuillez remplir le champ Nom d'Utilisateur"; okCheck = false; }
+            else if (string.IsNullOrWhiteSpace(password)) { messageCheckFail = "Veuillez remplir le champ Mot de Passe"; okCheck = false; }
+            else if (roleSelectionne == null) { messageCheckFail = "Veuillez sélectionner un rôle pour votre compte"; okCheck = false; }
 
-            if (fakeDAO.UsernameTaken(username) == false) { messageCheckFail = "Nom d'utilisateur déjà pris"; comboCheckFail++;}
-            if (string.IsNullOrWhiteSpace(username)) { messageCheckFail = "Veuillez remplir le champ Nom d'Utilisateur"; comboCheckFail++; }
-            if (string.IsNullOrWhiteSpace(password)) { messageCheckFail = "Veuillez remplir le champ Mot de Passe"; comboCheckFail++; }
-            if (roleSelectionne == null) { messageCheckFail = "Veuillez sélectionner un rôle pour votre compte"; comboCheckFail++; }
-
-            if(comboCheckFail >= 2) messageCheckFail = "Plusieurs des champs nécéssaires ne sont pas renseignés";
-            if (comboCheckFail >= 1) 
+            if (!okCheck) 
             {
                 CustomMessageBox messagebox = new CustomMessageBox(messageCheckFail);
                 messagebox.ShowDialog();
@@ -71,7 +71,7 @@ namespace VinlandSol.IHM
 
             #endregion
 
-            if(comboCheckFail == 0) // Si tout va bien
+            if(okCheck) // Si tout va bien
             {
                 if (roleSelectionne == "Maitre du jeu") { fakeDAO.CreateMJ(username, password); }
                 else if (roleSelectionne == "Joueur") { fakeDAO.CreateJoueur(username, password); }

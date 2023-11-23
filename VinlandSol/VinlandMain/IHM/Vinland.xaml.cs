@@ -46,9 +46,7 @@ namespace VinlandSol
         {
             string username = TBNomUtilisateur.Text;
             string password;
-            if (!isPasswordVisible) password = TBMdp.Password;
-            else password = TBVisibleMdp.Text ;
-
+            if (!isPasswordVisible) { password = TBMdp.Password; } else { password = TBVisibleMdp.Text; }
 
             (var userId, var userRole) = fakeDAO.VerifyUserAccount(username, password);
 
