@@ -9,21 +9,23 @@ namespace VinlandSol.Métier
     {
         #region Propriétés
 
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string Nom { get; set; }
         public string Mdp { get; set; }
-        public List<Campagne> Campagnes { get; set; } // La liste des Campagnes dont le MJ est le créateur
+        public List<int> IDCampagnes { get; set; } // La liste des id des Campagnes dont le MJ est le créateur
 
         #endregion
 
         #region Constructeur
 
+        public MJ() { }
+
         public MJ(int id, string nom, string mdp)
         {
-            Id = id;
+            ID = id;
             Nom = nom;
             Mdp = mdp;
-            Campagnes = new List<Campagne>();
+            IDCampagnes = new List<int>();
         }
 
         #endregion

@@ -50,7 +50,7 @@ namespace VinlandSol
 
             if (userRole == "Joueur")
             {
-                Campagnes pagecreation = new Campagnes(fakeDAO.GetJoueur(userId));
+                Campagnes pagecreation = new Campagnes(userId,userRole);
                 pagecreation.Left = this.Left;
                 pagecreation.Top = this.Top;
                 pagecreation.Show();
@@ -58,7 +58,7 @@ namespace VinlandSol
             }
             if (userRole == "MJ")
             {
-                Campagnes pagecreation = new Campagnes(fakeDAO.GetMJ(userId));
+                Campagnes pagecreation = new Campagnes(userId,userRole);
                 pagecreation.Left = this.Left;
                 pagecreation.Top = this.Top;
                 pagecreation.Show();

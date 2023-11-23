@@ -15,21 +15,29 @@ namespace VinlandSol.Métier
 
         public int Id { get; set; }
         public string Nom { get; set; }
+        public DateTime DateCreation { get; set; } // Date de la création de la campagne
+        public DateTime DateModification { get; set; } // Dernière date de modification
         public int Hauteur { get; set; } // Hauteur (en Hexagones) de la carte
         public int Largeur { get; set; } // Largeur (en Hexagones) de la carte
-        public Campagne Campagne { get; set; } // Campagne à laquelle la Carte appartient
+        public int IDCampagne { get; set; } // Id de la Campagne à laquelle la Carte appartient
+        public bool Visibilite { get; set; } // La carte est elle visible aux joueurs de la campagne? 
 
         #endregion
 
         #region Constructeur
 
-        public Carte(int id, string nom, int hauteur, int largeur, Campagne campagne)
+        public Carte() { }
+
+        public Carte(int id, string nom, int hauteur, int largeur, int idcampagne)
         {
             Id = id;
             Nom = nom;
+            DateCreation = DateTime.Now;
+            DateModification = DateTime.Now;
             Hauteur = hauteur;
             Largeur = largeur;
-            Campagne = campagne;
+            IDCampagne = idcampagne;
+            Visibilite = false;
         }
 
         #endregion
