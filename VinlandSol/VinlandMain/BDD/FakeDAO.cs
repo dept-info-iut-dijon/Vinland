@@ -10,6 +10,7 @@ namespace VinlandSol.BDD
     /// <summary>
     /// Classe du DAO - Utilisation de .txt
     /// </summary>
+    /// <author>Aaron</author>
     public class FakeDAO
     {
         #region Setup Singleton
@@ -20,6 +21,7 @@ namespace VinlandSol.BDD
         /// <summary>
         /// Constructeur de la classe 
         /// </summary>
+        /// <author>Aaron</author>
         private FakeDAO()
         {
             joueurs = _gestionnaireDeFichiers.Load<Joueur>("joueurs.txt");
@@ -33,6 +35,7 @@ namespace VinlandSol.BDD
         /// <summary>
         /// Instance Unique accessible depuis l'extérieur
         /// </summary>
+        /// <author>Aaron</author>
         public static FakeDAO Instance
         {
             get
@@ -66,6 +69,7 @@ namespace VinlandSol.BDD
         /// </summary>
         /// <param name="nom">Nom d'un joueur</param>
         /// <param name="mdp">Mot de passe d'un joueur</param>
+        /// <author>Alexis(setup) + Aaron</author>
         public void CreateJoueur(string nom, string mdp)
         {
             int id = joueurs.Count + 1;
@@ -80,6 +84,7 @@ namespace VinlandSol.BDD
         /// </summary>
         /// <param name="nom">Nom d'un MJ</param>
         /// <param name="mdp">Mot de passe d'un MJ</param>
+        /// <author>Alexis(setup) + Aaron</author>
         public void CreateMJ(string nom, string mdp)
         {
             int id = mjs.Count + 1;
@@ -95,6 +100,7 @@ namespace VinlandSol.BDD
         /// <param name="nom">Nom d'un joueur</param>
         /// <param name="mdp">Mot de passe d'un joueur</param>
         /// <param name="campagne">Campagne souhaitée pour un personnage</param>
+        /// <author>Alexis(setup) + Aaron</author>
         public void CreatePersonnage(string nom, Joueur joueur, Campagne campagne)
         {
             int id = personnages.Count + 1;
@@ -110,6 +116,7 @@ namespace VinlandSol.BDD
         /// <param name="hauteur">Hauteur d'une carte</param>
         /// <param name="largeur">Largeur d'une carte</param>
         /// <param name="campagne">Campagne visée</param>
+        /// <author>Alexis(setup) + Aaron</author>
         public void CreateCarte(int hauteur ,string nom ,int largeur ,Campagne campagne)
         {
             int id = cartes.Count + 1;
@@ -123,6 +130,7 @@ namespace VinlandSol.BDD
         /// Ajoute une campagne à la liste des campagnes, permettant ainsi sa création et son accès
         /// </summary>
         /// <param name="nom">Nom d'une campagne</param>
+        /// <author>Alexis(setup) + Aaron</author>
         public void CreateCampagne(string nom)
         {
             int id = campagnes.Count + 1;
@@ -140,6 +148,7 @@ namespace VinlandSol.BDD
         /// Permet la suppression d'un Joueur par son identifiant 
         /// </summary>
         /// <param name="id">Identifiant permettant de différencier un Joueur</param>
+        /// <author>Alexis(setup) + Aaron</author>
         public void DeleteJoueur(int id)
         {
             if (joueurs.Count != 0)
@@ -156,6 +165,7 @@ namespace VinlandSol.BDD
         /// Permet la suppression d'un MJ par son identifiant 
         /// </summary>
         /// <param name="id">Identifiant permettant de différencier un MJ</param>
+        /// <author>Alexis(setup) + Aaron</author>
         public void DeleteMJ(int id)
         {
             if (mjs.Count != 0)
@@ -172,6 +182,7 @@ namespace VinlandSol.BDD
         /// Permet la suppression d'un personnage par son identifiant 
         /// </summary>
         /// <param name="id">Identifiant permettant de différencier un personnage</param>
+        /// <author>Alexis(setup) + Aaron</author>
         public void DeletePersonnage(int id)
         {
             if (personnages.Count != 0)
@@ -188,6 +199,7 @@ namespace VinlandSol.BDD
         /// Permet la suppression d'une carte par son identifiant 
         /// </summary>
         /// <param name="id">Identifiant permettant de différencier une carte</param>
+        /// <author>Alexis(setup) + Aaron</author>
         public void DeleteCarte(int id)
         {
             if (cartes.Count != 0)
@@ -204,6 +216,7 @@ namespace VinlandSol.BDD
         /// Permet la suppression d'une campagne par son identifiant 
         /// </summary>
         /// <param name="id">Identifiant permettant de différencier une campagne</param>
+        /// <author>Alexis(setup) + Aaron</author>
         public void DeleteCampagne(int id)
         {
             if (campagnes.Count != 0)
@@ -224,6 +237,7 @@ namespace VinlandSol.BDD
         /// Retourne la liste des joueurs
         /// </summary>
         /// <returns>Une liste</returns>
+        /// <author>Alexis(setup) + Aaron</author>
         public List<Joueur> GetJoueurs()
         {
             _gestionnaireDeFichiers.Load<Joueur>("joueurs.txt");
@@ -234,6 +248,7 @@ namespace VinlandSol.BDD
         /// Retourne la liste des MJS
         /// </summary>
         /// <returns>Une liste</returns>
+        /// <author>Alexis(setup) + Aaron</author>
         public List<MJ> GetMJs()
         {
             _gestionnaireDeFichiers.Load<MJ>("mjs.txt");
@@ -245,6 +260,7 @@ namespace VinlandSol.BDD
         /// Donne la liste des campagnes 
         /// </summary>
         /// <returns>une liste</returns>
+        /// <author>Alexis(setup) + Aaron</author>
         public List<Campagne> GetCampagnes()
         {
             _gestionnaireDeFichiers.Load<Campagne>("campagnes.txt");
@@ -255,6 +271,7 @@ namespace VinlandSol.BDD
         /// Retourne la liste des personnages
         /// </summary>
         /// <returns>Une liste</returns>
+        /// <author>Alexis(setup) + Aaron</author>
         public List<Personnage> GetPersonnages()
         {
             _gestionnaireDeFichiers.Load<Personnage>("personnages.txt");
@@ -265,6 +282,7 @@ namespace VinlandSol.BDD
         /// Donne la liste des cartes
         /// </summary>
         /// <returns>une liste</returns>
+        /// <author>Alexis(setup) + Aaron</author>
         public List<Carte> GetCartes()
         {
             _gestionnaireDeFichiers.Load<Carte>("cartes.txt");
@@ -281,6 +299,7 @@ namespace VinlandSol.BDD
         /// </summary>
         /// <param name="id">l'id du joueur demandée</param>
         /// <returns>Un joueur ou null</returns>
+        /// <author>Alexis(setup) + Aaron</author>
         public Joueur GetJoueur(int id)
         {
             _gestionnaireDeFichiers.Load<Joueur>("joueurs.txt");
@@ -302,6 +321,7 @@ namespace VinlandSol.BDD
         /// </summary>
         /// <param name="id">l'id du mj demandée</param>
         /// <returns>Un mj ou null</returns>
+        /// <author>Alexis(setup) + Aaron</author>
         public MJ GetMJ(int id)
         {
             _gestionnaireDeFichiers.Load<MJ>("mjs.txt");
@@ -323,6 +343,7 @@ namespace VinlandSol.BDD
         /// </summary>
         /// <param name="id">l'id de la campagne demandée</param>
         /// <returns>Une campagne ou null</returns>
+        /// <author>Alexis(setup) + Aaron</author>
         public Campagne GetCampagne(int id)
         {
             _gestionnaireDeFichiers.Load<Campagne>("campagnes.txt");
@@ -344,6 +365,7 @@ namespace VinlandSol.BDD
         /// </summary>
         /// <param name="id">l'identifiant d'un personnage</param>
         /// <returns>Un personnage</returns>
+        /// <author>Alexis(setup) + Aaron</author>
         public Personnage GetPersonnage(int id)
         {
             _gestionnaireDeFichiers.Load<Personnage>("personnages.txt");
@@ -364,7 +386,8 @@ namespace VinlandSol.BDD
         /// Permet l'acquisition d'une carte
         /// </summary>
         /// <param name="id">l'identifiant d'une carte</param>
-        /// <returns></returns>
+        /// <returns>Une carte</returns>
+        /// <author>Alexis(setup) + Aaron</author>
         public Carte GetCarte(int id)
         {
             _gestionnaireDeFichiers.Load<Carte>("cartes.txt");
@@ -390,6 +413,7 @@ namespace VinlandSol.BDD
         /// </summary>
         /// <param name="id">Identifiant d'une campagne</param>
         /// <param name="campagne">Une campagne</param>
+        /// <author>Alexis(setup) + Aaron</author>
         public void UpdateCampagne(int id, Campagne campagne)
         {
             if (campagnes.Count != 0)
@@ -411,6 +435,7 @@ namespace VinlandSol.BDD
         /// </summary>
         /// <param name="id">Identifiant d'une campagne</param>
         /// <param name="newNom">Nouveau nom</param>
+        /// <author>Alexis(setup) + Aaron</author>
         public void UpdateCampagneName(int id, string newNom)
         {
             if (campagnes.Count != 0)
@@ -432,6 +457,7 @@ namespace VinlandSol.BDD
         /// </summary>
         /// <param name="id">identifiant d'un personnage</param>
         /// <param name="personnage">un personnage</param>
+        /// <author>Alexis(setup) + Aaron</author>
         public void UpdatePersonnage(int id, Personnage personnage)
         {
             if (personnages.Count != 0)
@@ -449,6 +475,7 @@ namespace VinlandSol.BDD
         /// </summary>
         /// <param name="id">Identifiant d'une carte</param>
         /// <param name="carte">Une carte</param>
+        /// <author>Alexis(setup) + Aaron</author>
         public void UpdateCarte(int id, Carte carte)
         {
             if (cartes.Count != 0)
@@ -471,6 +498,7 @@ namespace VinlandSol.BDD
         /// <param name="username">Nom d'utilisateur</param>
         /// <param name="password">Mot de passe</param>
         /// <returns>l'id du user trouvé</returns>
+        /// <author>Aaron</author>
         public (int Id, string Role) VerifyUserAccount(string username, string password)
         {
             var joueur = joueurs.FirstOrDefault(account => account.Nom == username && account.Mdp == password);
@@ -493,6 +521,7 @@ namespace VinlandSol.BDD
         /// </summary>
         /// <param name="username">Nom d'utilisateur</param>
         /// <returns>Booléen indiquant si le nom est pris ou non</returns>
+        /// <author>Aaron</author>
         public bool UsernameTaken(string username)
         {
             bool disponible = true;

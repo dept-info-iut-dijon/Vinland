@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.DirectoryServices.ActiveDirectory;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -100,6 +101,13 @@ namespace VinlandSol.BDD
             }
         }
 
+        /// <summary>
+        /// Méthode Générique - Ecrase le fichier actuel et ajoute dans le fichier les données de la nouvelle liste
+        /// </summary>
+        /// <typeparam name="T">Classe Type (par exemple Joueur)</typeparam>
+        /// <param name="liste">liste contenant les instances T</param>
+        /// <param name="filePath">chemin vers le fichier correspondant a T</param>
+        /// <author>Aaron</author>
         public void Override<T>(List<T> liste, string filePath)
         {
             File.WriteAllText(filePath, GetHeader<T>()); // Setup de l'override, le fichier est clear sauf son header
@@ -112,10 +120,11 @@ namespace VinlandSol.BDD
         }
 
         /// <summary>
-        /// Renvoie le header type de la classe donnée
+        /// Méthode Générique - Renvoie le header type de la classe donnée
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">Classe Type (par exemple Joueur)</typeparam>
+        /// <returns>une chaine de caractères correspondant aux propriétés de T (séparées par des virgules)</returns>
+        /// <author>Aaron</author>
         private string GetHeader<T>()
         {
             PropertyInfo[] properties = typeof(T).GetProperties();
@@ -124,11 +133,11 @@ namespace VinlandSol.BDD
         }
 
         /// <summary>
-        /// Transforme les instances en string afin de les mettre dans le fichier
+        /// Méthode Générique - Transforme les instances en string afin de les mettre dans le fichier
         /// </summary>
         /// <typeparam name="T">Classe Type (par exemple Joueur)</typeparam>
         /// <param name="item">instance de T</param>
-        /// <returns></returns>
+        /// <returns>une chaine de caractères correspondant aux propriétés de l'instance de T (séparées par des virgules - les propriétés de type liste voient leurs éléments séparés par '|' )</returns>
         /// <author>Aaron</author>
         private string GetFormattedLine<T>(T item)
         {
@@ -187,11 +196,11 @@ namespace VinlandSol.BDD
         {
             List<T> instances = new List<T>();
 
-            if (File.Exists(filePath))
+            if (File.Exists(filePath)) // Si le fichier existe
             {
-                bool premièreLigneSkip = true;
+                bool premièreLigneSkip = true; // L'entête doit être ignorée
 
-                foreach (string line in File.ReadLines(filePath))
+                foreach (string line in File.ReadLines(filePath)) // On ajoute les instances à partir des lignes du fichier (nbInstances = nbLignesFichier -1)
                 {
                     if(!premièreLigneSkip)
                     {
@@ -205,14 +214,13 @@ namespace VinlandSol.BDD
                     {
                         premièreLigneSkip = false;
                     }
-
                 }
             }
             return instances;
         }
 
         /// <summary>
-        /// Transforme une ligne de texte en une instance de la classe T
+        /// Méthode Générique - Transforme une ligne de texte en une instance de la classe T
         /// </summary>
         /// <typeparam name="T">Classe Type (par exemple Joueur)</typeparam>
         /// <param name="line">Ligne de texte</param>
@@ -220,16 +228,16 @@ namespace VinlandSol.BDD
         /// <author>Aaron</author>
         private T GetInstanceFromLine<T>(string line)
         {
-            string[] values = line.Split(',');
+            string[] values = line.Split(','); // Les propriétés sont séparées en une liste de string
 
-            T instance = Activator.CreateInstance<T>();
+            T instance = Activator.CreateInstance<T>(); // On créé une instance de T pour y ajouter les valeurs par la suite
 
-            PropertyInfo[] properties = typeof(T).GetProperties();
-            for (int i = 0; i < Math.Min(properties.Length, values.Length); i++)
+            PropertyInfo[] properties = typeof(T).GetProperties(); // On détermine les types des propriétés en se référant à la classe modele T
+            for (int i = 0; i < Math.Min(properties.Length, values.Length); i++) // Pour chaque propriété a intégrer
             {
-                Type propertyType = properties[i].PropertyType;
+                Type propertyType = properties[i].PropertyType; // On récupère le type de la Propriété
 
-                if (propertyType == typeof(DateTime))
+                if (propertyType == typeof(DateTime)) // Si la propriété est un DateTime
                 {
                     DateTime parsedDate;
                     if (DateTime.TryParse(values[i], out parsedDate))
@@ -237,7 +245,7 @@ namespace VinlandSol.BDD
                         properties[i].SetValue(instance, parsedDate);
                     }
                 }
-                else if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(List<>))
+                else if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(List<>)) // Si la propriété est une liste
                 {
                     Type elementType = propertyType.GetGenericArguments()[0];
                     string[] listValues = values[i].Split(',');
@@ -265,15 +273,15 @@ namespace VinlandSol.BDD
                         properties[i].SetValue(instance, list);
                     }
                 }
-                else
+                else // Si la propriété est convertissable depuis Convert
                 {
                     object convertedValue = Convert.ChangeType(values[i], propertyType);
                     properties[i].SetValue(instance, convertedValue);
                 }
             }
-
             return instance;
         }
+
         #endregion
     }
 }
