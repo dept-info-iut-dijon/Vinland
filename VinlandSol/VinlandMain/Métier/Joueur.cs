@@ -9,21 +9,23 @@ namespace VinlandSol.Métier
     {
         #region Propriétés
 
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string Nom { get; set; }
         public string Mdp { get; set; }
-        public List<Personnage> Personnages { get; set; } // La liste des Personnages de ce Joueur
+        public List<int>IDPersonnages { get; set; } // La liste des id des Personnages de ce Joueur
 
         #endregion
 
         #region Constructeur
 
+        public Joueur() { }
+
         public Joueur(int id, string nom, string mdp)
         {
-            Id = id;
+            ID = id;
             Nom = nom;
             Mdp = mdp;
-            Personnages = new List<Personnage>();
+            IDPersonnages = new List<int>();
         }
 
         #endregion
