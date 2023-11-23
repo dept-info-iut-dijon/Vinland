@@ -25,6 +25,7 @@ namespace VinlandSol.IHM
         public CreationCompte()
         {
             InitializeComponent();
+            UpdatePasswordVisibility();
         }
 
         /// <summary>
@@ -89,39 +90,30 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void MdpVisibilityChanged(object sender, RoutedEventArgs e)
         {
-            if (isPasswordVisible) // Si le mot de passe est visible - le rendre invisible
+            isPasswordVisible = !isPasswordVisible; // On inverse
+
+            UpdatePasswordVisibility();
+        }
+
+        /// <summary>
+        /// Met à jour la visibilité du mot de passe en fonction de isPasswordVisible
+        /// </summary>
+        private void UpdatePasswordVisibility()
+        {
+            if (isPasswordVisible)
             {
-                TBVisibleMdp.Visibility = Visibility.Collapsed;
-                TBMdp.Visibility = Visibility.Visible;
-                Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeil.png", UriKind.RelativeOrAbsolute));
-            }
-            else // Si le mot de passe est invisible - le rendre visible
-            {
+                TBVisibleMdp.Text = TBMdp.Password;
                 TBMdp.Visibility = Visibility.Collapsed;
                 TBVisibleMdp.Visibility = Visibility.Visible;
                 Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeilbarre.png", UriKind.RelativeOrAbsolute));
             }
-            isPasswordVisible = !isPasswordVisible;
-        }
-
-        /// <summary>
-        /// Synchronise le texte visible par rapport à celui invisible
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TBMdp_Synchronisation(object sender, RoutedEventArgs e)
-        {
-            TBVisibleMdp.Text = TBMdp.Password;
-        }
-
-        /// <summary>
-        /// Synchronise le texte invisible par rapport à celui visible
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TBVisibleMdp_Synchronisation(object sender, RoutedEventArgs e)
-        {
-            TBMdp.Password = TBVisibleMdp.Text;
+            else
+            {
+                TBMdp.Password = TBVisibleMdp.Text;
+                TBVisibleMdp.Visibility = Visibility.Collapsed;
+                TBMdp.Visibility = Visibility.Visible;
+                Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeil.png", UriKind.RelativeOrAbsolute));
+            }
         }
     }
 }
