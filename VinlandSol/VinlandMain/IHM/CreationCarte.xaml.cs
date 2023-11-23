@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows;
 using VinlandSol.BDD;
+using VinlandSol.Métier;
 
 namespace VinlandSol.IHM
 {
@@ -12,50 +13,49 @@ namespace VinlandSol.IHM
     {
         private FakeDAO fakeDAO = FakeDAO.Instance;
         private Cartes cartes;
-        public CreationCarte(Cartes cartes)
+        private int idCampagne;
+        public CreationCarte(Cartes cartes, int idCampagne)
         {
             InitializeComponent();
             btnCreer.Click += FermerPopupActu_Click;
             this.cartes = cartes;
+            this.idCampagne = idCampagne;
         }
 
+        /// <summary>
+        /// Ajoute une carte à la liste des cartes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CreationCarte_Click(object sender, RoutedEventArgs e)
         {
-            // Récupérez le contenu des TextBox
-            string NomCarte = NameTextBox.Text;
-            string nLinge = NLigne.Text;
+            string nomCarte = NameTextBox.Text;
+            string nLigne = NLigne.Text;
             string nColonne = NColonne.Text;
             DateTime dateCreation = DateTime.Now;
             DateTime dateModification = DateTime.Now;
+            string? messageCheckFail = null;
+            int comboCheckFail = 0;
 
+            #region Checks 
 
-            // Vérifiez que les données ne sont pas vides
-            if (!string.IsNullOrEmpty(NomCarte) && !string.IsNullOrEmpty(nLinge) && !string.IsNullOrEmpty(nColonne))
+            if (string.IsNullOrWhiteSpace(nomCarte)) { messageCheckFail = "Le nom de la carte ne peut pas être vide"; comboCheckFail++; }
+
+            if (comboCheckFail >= 1)
             {
-                // Créez ou ouvrez un fichier .txt pour sauvegarder les données
-                string filePath = "cartes.txt";
-
-                using (StreamWriter sw = File.AppendText(filePath))
-                {
-                    // Écrivez les données dans le fichier
-                    sw.WriteLine($"{NomCarte}, {nLinge}, {nColonne}, {dateCreation}, {dateModification}");
-                }
-                // Effacez les TextBox après sauvegarde
-                NameTextBox.Clear();
-                //NLigne.ClearValue();
-                //NColonne.ClearValue();
-
-                // Affichez un message de confirmation
-                CustomMessageBox customMessageBox = new CustomMessageBox("Carte ajouté avec succès !");
-                customMessageBox.ShowDialog();
-            }
-            else
-            {
-                // Affichez un message d'erreur si les données sont vides
-                CustomMessageBox customMessageBox = new CustomMessageBox("Veuillez remplir toutes les informations avant de créer une carte");
-                customMessageBox.ShowDialog();
+                CustomMessageBox messagebox = new CustomMessageBox(messageCheckFail);
+                messagebox.ShowDialog();
             }
 
+            #endregion
+
+            if (comboCheckFail == 0) // Si tout va bien
+            {
+                fakeDAO.CreateCarte(nomCarte, int.Parse(nLigne), int.Parse(nColonne), idCampagne);
+                CustomMessageBox messagebox = new CustomMessageBox("Carte ajoutée avec succès !");
+                messagebox.ShowDialog();
+                this.Close();
+            }
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace VinlandSol.IHM
         private void FermerPopupActu_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-            cartes.LoadCartes();
+            cartes.MettreAJourListBox();
         }
     }
 }

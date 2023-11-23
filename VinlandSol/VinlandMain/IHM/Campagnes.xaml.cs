@@ -39,7 +39,11 @@ namespace VinlandMain.IHM
         /// <param name="e"></param>
         private void CampagnesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(CampagnesListe.SelectedItem != null) { Edit.Visibility = Visibility.Visible; }
+            if(CampagnesListe.SelectedItem != null) 
+            { 
+                Edit.Visibility = Visibility.Visible; 
+                RejoidComp.IsEnabled = true;
+            }
             AfficherInfos(CampagnesListe.SelectedIndex);
         }
 
@@ -168,6 +172,7 @@ namespace VinlandMain.IHM
             MettreAJourListBox();
             MasquerElements();
             Edit.Visibility = Visibility.Collapsed;
+            RejoidComp.IsEnabled = false;
 
         }
 
@@ -204,6 +209,7 @@ namespace VinlandMain.IHM
             MettreAJourListBox();
             MasquerElements();
             Edit.Visibility = Visibility.Collapsed;
+            RejoidComp.IsEnabled = false;
         }
 
         /// <summary>

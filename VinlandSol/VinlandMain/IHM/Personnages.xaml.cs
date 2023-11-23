@@ -120,14 +120,15 @@ namespace VinlandSol.IHM
 
             if (string.IsNullOrWhiteSpace(nouvNomPersonnage))
             {
-                CustomMessageBox customMessageBox = new CustomMessageBox("Le nom de la campagne ne peut pas être vide.");
+                CustomMessageBox customMessageBox = new CustomMessageBox("Le nom du personnage ne peut pas être vide.");
                 customMessageBox.ShowDialog();
+                return;
             }
 
             fakeDAO.UpdatePersonnageName(PersonnagesListe.SelectedIndex+1,nouvNomPersonnage);
 
             NomPersonnageTextBox.Text = "";
-
+            AfficherInformationsPersonnage(PersonnagesListe.SelectedIndex);
             MettreAJourListBox();
             MasquerElements();
             Edit.Visibility = Visibility.Collapsed;
@@ -154,11 +155,11 @@ namespace VinlandSol.IHM
 
             PersonnagesListe.Items.Clear(); // On efface les éléments existants dans la ListBox
 
-            foreach (Personnage personnage in personnages) // On ajoute chaque campagne de la liste
+            foreach (Personnage personnage in personnages) // On ajoute chaque personnage de la liste
             {
                 PersonnagesListe.Items.Add(personnage);
             }
-            PersonnagesListe.DisplayMemberPath = "Nom"; // On affiche le contenu de la propriété 'Nom' des campagnes
+            PersonnagesListe.DisplayMemberPath = "Nom"; // On affiche le contenu de la propriété 'Nom' des personnages
         }
 
         #region Ajouter Personnage

@@ -20,24 +20,6 @@ namespace VinlandSol.IHM
         private int idUser;
         private string roleUser;
         private int idCampagne;
-
-        Cartee nouvellecarte = new Cartee
-        {
-            NomCartes = "",
-            DateCreation = DateTime.Now,
-            DateModification = DateTime.Now,
-            NbLignes = 1,
-            NbColonnes = 1
-        };
-        List<Cartee> cartes = new List<Cartee>();
-        public struct Cartee
-        {
-            public string NomCartes { get; set; }
-            public DateTime DateCreation { get; set; }
-            public DateTime DateModification { get; set; }
-            public int NbLignes { get; set; }
-            public int NbColonnes { get; set; }
-        }
         private CreationCarte? pagecreationcarte;
         private bool creaCarteOpen = false;
 
@@ -50,48 +32,12 @@ namespace VinlandSol.IHM
             this.idUser = idUser;
             this.roleUser = roleUser;
             this.idCampagne = idCampagne;
+            MettreAJourListBox();
             Closed += ShutdownEnForce; // ShutdownEnForce est appelé à la fermeture de cette fenêtre
-            LoadCartes();
+
         }
 
-        /// <summary>
-        /// Afficher les noms des cartes dans la liste
-        /// </summary>
-        public void LoadCartes()
-        {
-
-            string filePath = "cartes.txt";
-            cartes.Clear();
-            CartesListe.Items.Clear();
-
-            if (File.Exists(filePath))
-            {
-                string[] lignes = File.ReadAllLines(filePath);
-
-                foreach (string ligne in lignes)
-                {
-                    string[] elements = ligne.Split(',');
-
-                    if (elements.Length == 5)
-                    {
-                        string NomCarte = elements[0].Trim();
-                        int nLignes = int.Parse(elements[1].Trim());
-                        int nColonnes = int.Parse(elements[2].Trim());
-
-                        CartesListe.Items.Add($"{NomCarte}");
-                        cartes.Add(new Cartee
-                        {
-                            NomCartes = NomCarte,
-                            DateCreation = DateTime.Now,
-                            DateModification = DateTime.Now,
-                            NbLignes = nLignes,
-                            NbColonnes = nColonnes
-                        });
-                    }
-                }
-            }
-        }
-
+       
         /// <summary>
         /// Actualise les informations de la carte selectionnée
         /// </summary>
@@ -99,27 +45,26 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void CartesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int selectedIndex = CartesListe.SelectedIndex;
-            if (selectedIndex >= 0 && selectedIndex < cartes.Count)
+            if (CartesListe.SelectedItem != null)
+            { 
+                Edit.Visibility = Visibility.Visible;
+                RejoidCarte.IsEnabled = true;
+            }
+            AfficherInformationsCarte(CartesListe.SelectedIndex);
+        }
+
+        /// <summary>
+        /// Permet d'afficher les informations de la carte selectionnée
+        /// </summary>
+        /// <param name="selectedIndex"></param>
+        private void AfficherInformationsCarte(int selectedIndex)
+        {
+            if (selectedIndex >= 0 && selectedIndex < fakeDAO.GetCartes().Count)
             {
-                string filePath = "cartes.txt";
-                if (File.Exists(filePath))
-                {
-                    string[] lignes = File.ReadAllLines(filePath);
-                    string[] elements = lignes[selectedIndex].Split(',');
-
-                    if (elements.Length == 5)
-                    {
-                        string NomCarte = elements[0].Trim();
-
-                        string dateCreationStr = elements[3].Trim();
-                        string dateModificationStr = elements[4].Trim();
-
-                        NomCarteTextBlock.Text = NomCarte;
-                        DateCreationTextBlock.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-                        DateModificationTextBlock.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-                    }
-                }
+                Métier.Carte carte = fakeDAO.GetCartes()[selectedIndex];
+                NomCarteTextBlock.Text = carte.Nom;
+                DateCreationTextBlock.Text = carte.DateCreation.ToString("dd/MM/yyyy HH:mm:ss");
+                DateModificationTextBlock.Text = carte.DateModification.ToString("dd/MM/yyyy HH:mm:ss");
             }
         }
 
@@ -133,8 +78,8 @@ namespace VinlandSol.IHM
             NomCarteTextBox.Visibility = Visibility.Visible;
             Sauv.Visibility = Visibility.Visible;
             Suppr.Visibility = Visibility.Visible;
-            EditSBtn.Visibility = Visibility.Visible;
-            EditBtn.Visibility = Visibility.Collapsed;
+            EditS.Visibility = Visibility.Visible;
+            Edit.Visibility = Visibility.Collapsed;
 
         }
 
@@ -145,11 +90,7 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void EditS_Click(object sender, RoutedEventArgs e)
         {
-            NomCarteTextBox.Visibility = Visibility.Collapsed;
-            Sauv.Visibility = Visibility.Collapsed;
-            Suppr.Visibility = Visibility.Collapsed;
-            EditSBtn.Visibility = Visibility.Collapsed;
-            EditBtn.Visibility = Visibility.Visible;
+            MasquerElements();
 
         }
 
@@ -162,32 +103,20 @@ namespace VinlandSol.IHM
         {
             string nouveauNomCarte = NomCarteTextBox.Text;
 
-            int selectedIndex = CartesListe.SelectedIndex;
-            if (selectedIndex >= 0 && selectedIndex < cartes.Count)
+            if (string.IsNullOrEmpty(nouveauNomCarte))
             {
-                List<Cartee> cartesClone = cartes.ToList();
-
-                cartesClone[selectedIndex] = new Cartee
-                {
-                    NomCartes = nouveauNomCarte,
-                    DateCreation = cartes[selectedIndex].DateCreation,
-                    DateModification = cartes[selectedIndex].DateModification,
-                    NbLignes = cartes[selectedIndex].NbLignes,
-                    NbColonnes = cartes[selectedIndex].NbColonnes
-                };
-
-                CartesListe.Items[selectedIndex] = nouveauNomCarte;
-
-                cartes = cartesClone;
-
-                NomCarteTextBlock.Text = nouveauNomCarte;
-
-                string filePath = "cartes.txt";
-                File.WriteAllLines(filePath, cartes.Select(p => $"{p.NomCartes}, {p.NbLignes}, {p.NbColonnes}, {p.DateCreation}, {p.DateModification}"));
+                CustomMessageBox customMessageBox = new CustomMessageBox("Le nom de la carte ne peut pas être vide.");
+                customMessageBox.ShowDialog();
+                return;
             }
+            fakeDAO.UpdateCarteName(CartesListe.SelectedIndex + 1, nouveauNomCarte);
+
             NomCarteTextBox.Text = "";
-            NomCarteTextBox.Visibility = Visibility.Collapsed;
-            Sauv.Visibility = Visibility.Collapsed;
+            AfficherInformationsCarte(CartesListe.SelectedIndex);
+            MettreAJourListBox();
+            MasquerElements();
+            Edit.Visibility = Visibility.Collapsed;
+            RejoidCarte.IsEnabled = false;
         }
 
         /// <summary>
@@ -198,23 +127,16 @@ namespace VinlandSol.IHM
         private void SupprimerCarte(object sender, RoutedEventArgs e)
         {
             int selectedIndex = CartesListe.SelectedIndex;
-            string filePath = "cartes.txt";
 
-            if (selectedIndex >= 0 && selectedIndex < cartes.Count)
-            {
+            fakeDAO.DeleteCarte(selectedIndex + 1);
 
-                string nomCarteASupprimer = cartes[selectedIndex].NomCartes;
-
-                CartesListe.Items.RemoveAt(selectedIndex);
-
-                cartes.RemoveAt(selectedIndex);
-
-                File.WriteAllLines(filePath, cartes.Select(p => $"{p.NomCartes}, {p.NbLignes}, {p.NbColonnes}, {p.DateCreation}, {p.DateModification}"));
-
-                NomCarteTextBlock.Text = "";
-                DateCreationTextBlock.Text = "";
-                DateCreationTextBlock.Text = "";
-            }
+            NomCarteTextBlock.Text = "";
+            DateCreationTextBlock.Text = "";
+            DateModificationTextBlock.Text = "";
+            MettreAJourListBox();
+            MasquerElements();
+            Edit.Visibility = Visibility.Collapsed;
+            RejoidCarte.IsEnabled = false;
         }
 
         /// <summary>
@@ -226,6 +148,73 @@ namespace VinlandSol.IHM
         {
             Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeilbarre.png", UriKind.RelativeOrAbsolute));
         }
+
+        /// <summary>
+        /// Méthode pour masquer les éléments du menu d'édition
+        /// </summary>
+        /// <author>Aaron</author>
+        private void MasquerElements()
+        {
+            NomCarteTextBox.Visibility = Visibility.Collapsed;
+            Sauv.Visibility = Visibility.Collapsed;
+            Suppr.Visibility = Visibility.Collapsed;
+            Edit.Visibility = Visibility.Visible;
+            EditS.Visibility = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Mets à jour CartesListe selon les données du DAO 
+        /// </summary>
+        public void MettreAJourListBox()
+        {
+            List<Métier.Carte> cartes = fakeDAO.GetCartes(); // On récupère les cartes depuis le fakeDAO
+
+            CartesListe.Items.Clear(); // On efface les éléments existants dans la ListBox
+
+            foreach (Métier.Carte carte in cartes) // On ajoute chaque carte de la liste
+            {
+                CartesListe.Items.Add(carte);
+            }
+            CartesListe.DisplayMemberPath = "Nom"; // On affiche le contenu de la propriété 'Nom' des cartes
+        }
+
+        #region Creation Carte
+
+        /// <summary>
+        /// Ouvre la fenêtre CreationCarte et limite cette action tant que cette dernière n'est pas fermée
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OuvrirCreationCarte_Click(object sender, RoutedEventArgs e)
+        {
+            if (creaCarteOpen == false)
+            {
+                pagecreationcarte = new CreationCarte(this,idCampagne);
+                pagecreationcarte.Closed += CreationCarte_Closed;
+                pagecreationcarte.Left = this.Left;
+                pagecreationcarte.Top = this.Top;
+                pagecreationcarte.Show();
+                creaCarteOpen = true;
+            }
+        }
+
+        /// <summary>
+        /// Force le shutdown de l'application quand CreationCarte est la dernière fenêtre à être fermée
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CreationCarte_Closed(object sender, EventArgs e)
+        {
+            creaCarteOpen = false;
+            if (Application.Current.Windows.Count == 1)
+            {
+                Application.Current.Shutdown();
+            }
+        }
+
+        #endregion
+
+        #region Sortie Cartes
 
         /// <summary>
         /// Ouvre le fenêtre Personnages et ferme la fenêtre actuelle
@@ -253,31 +242,13 @@ namespace VinlandSol.IHM
         }
 
         /// <summary>
-        /// Ouvre la fenêtre CreationCarte et limite cette action tant que cette dernière n'est pas fermée
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OuvrirCreationCarte_Click(object sender, RoutedEventArgs e)
-        {
-            if (creaCarteOpen == false)
-            {
-                pagecreationcarte = new CreationCarte(this);
-                pagecreationcarte.Closed += CreationCarte_Closed;
-                pagecreationcarte.Left = this.Left;
-                pagecreationcarte.Top = this.Top;
-                pagecreationcarte.Show();
-                creaCarteOpen = true;
-            }
-        }
-
-        /// <summary>
         /// Ouvre le fenêtre Carte et ferme la fenêtre actuelle
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OuvrirCarte_Click(object sender, RoutedEventArgs e)
         {
-            int idCarte = CartesListe.SelectedIndex;           
+            int idCarte = CartesListe.SelectedIndex;
             Carte carteselect = new Carte(idUser, roleUser, idCarte, idCampagne);
             carteselect.Left = this.Left;
             carteselect.Top = this.Top;
@@ -297,20 +268,6 @@ namespace VinlandSol.IHM
         }
 
         /// <summary>
-        /// Force le shutdown de l'application quand CreationCarte est la dernière fenêtre à être fermée
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CreationCarte_Closed(object sender, EventArgs e)
-        {
-            creaCarteOpen = false;
-            if (Application.Current.Windows.Count == 1)
-            {
-                Application.Current.Shutdown();
-            }
-        }
-
-        /// <summary>
         /// Force le shutdown de l'application quand cette fenêtre est la dernière a être fermée
         /// </summary>
         /// <param name="sender"></param>
@@ -323,6 +280,6 @@ namespace VinlandSol.IHM
             }
         }
 
-
+        #endregion
     }
 }

@@ -117,7 +117,7 @@ namespace VinlandSol.BDD
         /// <param name="largeur">Largeur d'une carte</param>
         /// <param name="idCampagne">id de la campagne don fait partie la carte</param>
         /// <author>Alexis(setup) + Aaron</author>
-        public void CreateCarte(int hauteur ,string nom ,int largeur , int idCampagne)
+        public void CreateCarte(string nom, int hauteur, int largeur , int idCampagne)
         {
             int id = cartes.Count + 1;
             Carte newMap = new Carte(id,nom ,hauteur, largeur, idCampagne);
@@ -504,6 +504,28 @@ namespace VinlandSol.BDD
                 for (int i = 0; i < cartes.Count; i++)
                 {
                     if (cartes[i].Id == carte.Id) cartes[i] = carte;
+                }
+            }
+            _gestionnaireDeFichiers.Override(cartes, "Cartes.txt");
+        }
+
+        /// <summary>
+        /// Mets à jour une carte et ses informations
+        /// </summary>
+        /// <param name="id">identifiant de la carte</param>
+        /// <param name="personnage">une carte</param>
+        /// <author>Aaron</author>
+        public void UpdateCarteName(int id, string newNom)
+        {
+            if (cartes.Count != 0)
+            {
+                for (int i = 0; i < cartes.Count; i++)
+                {
+                    if (cartes[i].Id == id)
+                    {
+                        cartes[i].Nom = newNom;
+                        cartes[i].DateModification = DateTime.Now;
+                    }
                 }
             }
             _gestionnaireDeFichiers.Override(cartes, "Cartes.txt");

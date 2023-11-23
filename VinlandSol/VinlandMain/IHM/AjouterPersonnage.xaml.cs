@@ -29,7 +29,6 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void BtnAjouter_Click(object sender, RoutedEventArgs e)
         {
-            // Récupération du contenu des TextBox
             string idJoueur = IdJoueur.Text;
             string personnageNom = PersonnageNom.Text;
             DateTime dateCreation = DateTime.Now;

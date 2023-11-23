@@ -51,15 +51,15 @@
         <TextBlock x:Name="DateCreationTextBlock" Margin="919,406,0,0" Height="42" Width="441" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
         <TextBlock x:Name="DateModificationTextBlock" Margin="986,484,0,0" Height="42" Width="374" HorizontalAlignment="Left"  VerticalAlignment="Top" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
 
-        <Button x:Name="EditBtn" Margin="0,0,10,422" Click="Edit_Click" Background="{x:Null}" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="0,0,0,0">
+        <Button x:Name="Edit" Margin="0,0,10,422" Click="Edit_Click" Background="{x:Null}" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="0,0,0,0" Visibility="Collapsed">
             <Image Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
         </Button>
 
-        <Button x:Name="EditSBtn" Margin="0,0,10,422" Click="EditS_Click" Visibility="Collapsed" Background="{x:Null}" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="0,0,0,0" >
+        <Button x:Name="EditS" Margin="0,0,10,422" Click="EditS_Click" Background="{x:Null}" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="0,0,0,0"  Visibility="Collapsed">
             <Image Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
         </Button>
 
-        <Button Content="Rejoindre la Carte" Margin="0,0,560,40" Click="OuvrirCarte_Click" Height="70" Width="256" Background="#fbf1cc" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
+        <Button Content="Rejoindre la Carte" x:Name="RejoidCarte" Margin="0,0,560,40" Click="OuvrirCarte_Click" Height="70" Width="256" Background="#fbf1cc" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" IsEnabled="False">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>
