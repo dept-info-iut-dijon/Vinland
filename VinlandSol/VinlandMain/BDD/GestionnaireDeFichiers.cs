@@ -86,22 +86,6 @@ namespace VinlandSol.BDD
         #region Save
 
         /// <summary>
-        /// Méthode Générique - Sauvegarde la liste donnée dans le fichier 
-        /// </summary>
-        /// <typeparam name="T">Classe Type (par exemple Joueur)</typeparam>
-        /// <param name="liste">liste contenant les instances T</param>
-        /// <param name="filePath">chemin vers le fichier correspondant a T</param>
-        /// <author>Aaron</author>
-        public void Save<T>(List<T> liste, string filePath)
-        {
-            foreach (var item in liste) // Pour toutes les instances de T
-            {
-                string line = GetFormattedLine(item);
-                WriteToFile(filePath, line);
-            }
-        }
-
-        /// <summary>
         /// Méthode Générique - Ecrase le fichier actuel et ajoute dans le fichier les données de la nouvelle liste
         /// </summary>
         /// <typeparam name="T">Classe Type (par exemple Joueur)</typeparam>
@@ -110,9 +94,9 @@ namespace VinlandSol.BDD
         /// <author>Aaron</author>
         public void Override<T>(List<T> liste, string filePath)
         {
-            File.WriteAllText(filePath, GetHeader<T>()); // Setup de l'override, le fichier est clear sauf son header
+            File.WriteAllText(filePath, GetHeader<T>()); // Setup de l'override, le fichier est recréé avec le header
             using (StreamWriter sw = File.AppendText(filePath)) sw.WriteLine(); // On passe une ligne pour ne pas écrire la première instance sur l'entête
-            foreach (var item in liste) // Pour toutes les instances de T
+            foreach (var item in liste) // On réécrit toutes les instances dans le fichier
             {
                 string line = GetFormattedLine(item);
                 WriteToFile(filePath, line);

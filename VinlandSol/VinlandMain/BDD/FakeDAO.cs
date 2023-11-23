@@ -76,7 +76,7 @@ namespace VinlandSol.BDD
             Joueur newUser = new Joueur(id, nom, mdp);
             joueurs.Add(newUser);
 
-            _gestionnaireDeFichiers.Save(joueurs, "Joueurs.txt");
+            _gestionnaireDeFichiers.Override(joueurs, "Joueurs.txt");
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace VinlandSol.BDD
             MJ newMJ = new MJ(id, nom, mdp);
             mjs.Add(newMJ);
 
-            _gestionnaireDeFichiers.Save(mjs, "Mjs.txt");
+            _gestionnaireDeFichiers.Override(mjs, "Mjs.txt");
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace VinlandSol.BDD
             Personnage newCharacter = new Personnage(id, nom, idJoueur, idCampagne);
             personnages.Add(newCharacter);
 
-            _gestionnaireDeFichiers.Save(personnages, "Personnages.txt");
+            _gestionnaireDeFichiers.Override(personnages, "Personnages.txt");
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace VinlandSol.BDD
             Carte newMap = new Carte(id,nom ,hauteur, largeur, idCampagne);
             cartes.Add(newMap);
 
-            _gestionnaireDeFichiers.Save(cartes, "Cartes.txt");
+            _gestionnaireDeFichiers.Override(cartes, "Cartes.txt");
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace VinlandSol.BDD
             Campagne newCampagne = new Campagne(id, nom);
             campagnes.Add(newCampagne);
 
-            _gestionnaireDeFichiers.Save(campagnes, "Campagnes.txt");
+            _gestionnaireDeFichiers.Override(campagnes, "Campagnes.txt");
         }
 
         #endregion
