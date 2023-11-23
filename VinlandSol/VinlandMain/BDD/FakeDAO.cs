@@ -24,10 +24,10 @@ namespace VinlandSol.BDD
         {
             joueurs = _gestionnaireDeFichiers.Load<Joueur>("joueurs.txt");
             mjs = _gestionnaireDeFichiers.Load<MJ>("mjs.txt");
-            campagnes = new List<Campagne>();
-            personnages = new List<Personnage>();
-            cartes = new List<Carte>();
-            
+            campagnes = _gestionnaireDeFichiers.Load<Campagne>("campagnes.txt");
+            personnages = _gestionnaireDeFichiers.Load<Personnage>("personnages.txt");
+            cartes = _gestionnaireDeFichiers.Load<Carte>("cartes.txt");
+
         }
 
         /// <summary>
@@ -100,6 +100,8 @@ namespace VinlandSol.BDD
             int id = personnages.Count + 1;
             Personnage newCharacter = new Personnage(id, nom, joueur.ID, campagne.ID);
             personnages.Add(newCharacter);
+
+            _gestionnaireDeFichiers.Save(personnages, "Personnages.txt");
         }
 
         /// <summary>
@@ -113,6 +115,8 @@ namespace VinlandSol.BDD
             int id = cartes.Count + 1;
             Carte newMap = new Carte(id,nom ,hauteur, largeur, campagne.ID);
             cartes.Add(newMap);
+
+            _gestionnaireDeFichiers.Save(cartes, "Cartes.txt");
         }
 
         /// <summary>
@@ -124,6 +128,8 @@ namespace VinlandSol.BDD
             int id = campagnes.Count + 1;
             Campagne newCampagne = new Campagne(id, nom);
             campagnes.Add(newCampagne);
+
+            _gestionnaireDeFichiers.Save(campagnes, "Campagnes.txt");
         }
 
         #endregion
@@ -143,6 +149,7 @@ namespace VinlandSol.BDD
                     if (joueurs[i].ID == id) joueurs.RemoveAt(i);
                 }
             }
+            _gestionnaireDeFichiers.Override(joueurs, "Joueurs.txt");
         }
 
         /// <summary>
@@ -158,6 +165,7 @@ namespace VinlandSol.BDD
                     if (mjs[i].ID == id) mjs.RemoveAt(i);
                 }
             }
+            _gestionnaireDeFichiers.Override(mjs, "Mjs.txt");
         }
 
         /// <summary>
@@ -173,6 +181,7 @@ namespace VinlandSol.BDD
                     if (personnages[i].ID == id) personnages.RemoveAt(i);
                 }
             }
+            _gestionnaireDeFichiers.Override(personnages, "Personnages.txt");
         }
 
         /// <summary>
@@ -188,6 +197,7 @@ namespace VinlandSol.BDD
                     if (cartes[i].Id == id) cartes.RemoveAt(i);
                 }
             }
+            _gestionnaireDeFichiers.Override(cartes, "Cartes.txt");
         }
 
         /// <summary>
@@ -203,6 +213,7 @@ namespace VinlandSol.BDD
                     if (campagnes[i].ID == id) campagnes.RemoveAt(i);
                 }
             }
+            _gestionnaireDeFichiers.Override(campagnes, "Campagnes.txt");
         }
 
         #endregion
@@ -215,6 +226,7 @@ namespace VinlandSol.BDD
         /// <returns>Une liste</returns>
         public List<Joueur> GetJoueurs()
         {
+            _gestionnaireDeFichiers.Load<Joueur>("joueurs.txt");
             return joueurs;
         }
 
@@ -224,7 +236,19 @@ namespace VinlandSol.BDD
         /// <returns>Une liste</returns>
         public List<MJ> GetMJs()
         {
+            _gestionnaireDeFichiers.Load<MJ>("mjs.txt");
             return mjs;
+        }
+
+
+        /// <summary>
+        /// Donne la liste des campagnes 
+        /// </summary>
+        /// <returns>une liste</returns>
+        public List<Campagne> GetCampagnes()
+        {
+            _gestionnaireDeFichiers.Load<Campagne>("campagnes.txt");
+            return campagnes;
         }
 
         /// <summary>
@@ -233,6 +257,7 @@ namespace VinlandSol.BDD
         /// <returns>Une liste</returns>
         public List<Personnage> GetPersonnages()
         {
+            _gestionnaireDeFichiers.Load<Personnage>("personnages.txt");
             return personnages;
         }
 
@@ -242,17 +267,10 @@ namespace VinlandSol.BDD
         /// <returns>une liste</returns>
         public List<Carte> GetCartes()
         {
+            _gestionnaireDeFichiers.Load<Carte>("cartes.txt");
             return cartes;
         }
 
-        /// <summary>
-        /// Donne la liste des campagnes 
-        /// </summary>
-        /// <returns>une liste</returns>
-        public List<Campagne> GetCampagnes()
-        {
-            return campagnes;
-        }
 
         #endregion
 
@@ -265,6 +283,7 @@ namespace VinlandSol.BDD
         /// <returns>Un joueur ou null</returns>
         public Joueur GetJoueur(int id)
         {
+            _gestionnaireDeFichiers.Load<Joueur>("joueurs.txt");
             if (joueurs.Count == 0)
             {
                 return null;
@@ -285,6 +304,7 @@ namespace VinlandSol.BDD
         /// <returns>Un mj ou null</returns>
         public MJ GetMJ(int id)
         {
+            _gestionnaireDeFichiers.Load<MJ>("mjs.txt");
             if (mjs.Count == 0)
             {
                 return null;
@@ -305,6 +325,7 @@ namespace VinlandSol.BDD
         /// <returns>Une campagne ou null</returns>
         public Campagne GetCampagne(int id)
         {
+            _gestionnaireDeFichiers.Load<Campagne>("campagnes.txt");
             if (campagnes.Count == 0)
             {
                 return null;
@@ -325,6 +346,7 @@ namespace VinlandSol.BDD
         /// <returns>Un personnage</returns>
         public Personnage GetPersonnage(int id)
         {
+            _gestionnaireDeFichiers.Load<Personnage>("personnages.txt");
             if (personnages.Count == 0)
             {
                 return null;
@@ -345,6 +367,7 @@ namespace VinlandSol.BDD
         /// <returns></returns>
         public Carte GetCarte(int id)
         {
+            _gestionnaireDeFichiers.Load<Carte>("cartes.txt");
             if (cartes.Count == 0)
             {
                 return null;
@@ -369,15 +392,6 @@ namespace VinlandSol.BDD
         /// <param name="campagne">Une campagne</param>
         public void UpdateCampagne(int id, Campagne campagne)
         {
-            /*
-            if (campagnes.Count != 0)
-            {
-                for (int i = 0; i < campagnes.Count; i++)
-                {
-                    if (campagnes[i].ID == campagne.ID) campagnes[i] = campagne;
-                }
-            }
-            */
             if (campagnes.Count != 0)
             {
                 for (int i = 0; i < campagnes.Count; i++)
@@ -389,6 +403,7 @@ namespace VinlandSol.BDD
                     }
                 }
             }
+            _gestionnaireDeFichiers.Override(campagnes, "Campagnes.txt");
         }
 
         /// <summary>
@@ -409,26 +424,7 @@ namespace VinlandSol.BDD
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Mettre à jour les dates dans les campagnes
-        /// </summary>
-        /// <param name="id">Identifiant d'une campagne</param>
-        /// <param name="campagne">une campagne</param>
-        public void UpdateCampagneDetails(int id, Campagne campagne)
-        {
-            if (campagnes.Count != 0)
-            {
-                for (int i = 0; i < campagnes.Count; i++)
-                {
-                    if (campagnes[i].ID == id)
-                    {
-                        campagnes[i].Nom = campagne.Nom;
-                        campagnes[i].DateModification = DateTime.Now;
-                    }
-                }
-            }
+            _gestionnaireDeFichiers.Override(campagnes, "Campagnes.txt");
         }
 
         /// <summary>
@@ -445,6 +441,7 @@ namespace VinlandSol.BDD
                     if (personnages[i].ID == personnage.ID) personnages[i] = personnage;
                 }
             }
+            _gestionnaireDeFichiers.Override(personnages, "Personnages.txt");
         }
 
         /// <summary>
@@ -461,6 +458,7 @@ namespace VinlandSol.BDD
                     if (cartes[i].Id == carte.Id) cartes[i] = carte;
                 }
             }
+            _gestionnaireDeFichiers.Override(cartes, "Cartes.txt");
         }
 
         #endregion

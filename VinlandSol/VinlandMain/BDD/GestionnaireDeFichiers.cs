@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
+using VinlandSol.Métier;
 
 namespace VinlandSol.BDD
 {
@@ -56,11 +58,11 @@ namespace VinlandSol.BDD
         /// <author>Aaron</author>
         private void SetupFichiers()
         {
-            SetupFichier("Joueurs.txt", "Id,Nom,Mdp,IDPersonnges");
-            SetupFichier("Mjs.txt", "Id,Nom,Mdp,IDCampagnes");
-            SetupFichier("Campagnes.txt", "Id,Nom,DateCreation,DateModification,IDPersonnages,IDCartes");
-            SetupFichier("Personnages.txt", "Id,Nom,IDJoueur,IDCampagne");
-            SetupFichier("Carte.txt", "Id,Nom,Hauteur,Largeur,IDCampagne");
+            SetupFichier("Joueurs.txt", GetHeader<Joueur>());
+            SetupFichier("Mjs.txt", GetHeader<MJ>());
+            SetupFichier("Campagnes.txt", GetHeader<Campagne>());
+            SetupFichier("Personnages.txt", GetHeader<Personnage>());
+            SetupFichier("Cartes.txt", GetHeader<Carte>());
         }
 
         /// <summary>
@@ -96,6 +98,29 @@ namespace VinlandSol.BDD
                 string line = GetFormattedLine(item);
                 WriteToFile(filePath, line);
             }
+        }
+
+        public void Override<T>(List<T> liste, string filePath)
+        {
+            File.WriteAllText(filePath, GetHeader<T>()); // Setup de l'override, le fichier est clear sauf son header
+            using (StreamWriter sw = File.AppendText(filePath)) sw.WriteLine(); // On passe une ligne pour ne pas écrire la première instance sur l'entête
+            foreach (var item in liste) // Pour toutes les instances de T
+            {
+                string line = GetFormattedLine(item);
+                WriteToFile(filePath, line);
+            }
+        }
+
+        /// <summary>
+        /// Renvoie le header type de la classe donnée
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        private string GetHeader<T>()
+        {
+            PropertyInfo[] properties = typeof(T).GetProperties();
+            string header = string.Join(",", properties.Select(p => p.Name));
+            return header;
         }
 
         /// <summary>

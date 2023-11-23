@@ -18,6 +18,8 @@ namespace VinlandSol.Métier
 
         #region Constructeur
 
+        public Joueur() { }
+
         public Joueur(int id, string nom, string mdp)
         {
             ID = id;

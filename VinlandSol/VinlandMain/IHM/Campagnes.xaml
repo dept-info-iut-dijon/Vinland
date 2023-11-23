@@ -71,7 +71,7 @@
 
         <TextBox x:Name="NomCampTextBox" Margin="0,0,294,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="30" Height="70" Visibility="Collapsed" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" Width="246"/>
 
-        <Button x:Name="Edit" FontSize="40" Margin="0,0,10,422" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="70" Background="{x:Null}" BorderThickness="0,0,0,0" Click="Edit_Click">
+        <Button x:Name="Edit" FontSize="40" Margin="0,0,10,422" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="70" Background="{x:Null}" BorderThickness="0,0,0,0" Click="Edit_Click" Visibility="Collapsed">
             <Image Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
         </Button>
 
