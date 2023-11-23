@@ -16,78 +16,25 @@ namespace VinlandSol.IHM
     public partial class Personnages : Window
     {
         private FakeDAO fakeDAO = FakeDAO.Instance;
-        private IUser user;
-        private Campagne campagne;
-
-        Personnage nouveauPersonnage = new Personnage
-        {
-            NomPersonnage = "",
-            DateCreation = DateTime.Now,
-            NomUtilisateur = ""
-        };
-        List<Personnage> personnages = new List<Personnage>();
-
-        /// <summary>
-        /// Structure d'un personnage
-        /// </summary>
-        public struct Personnage
-        {
-            public string NomPersonnage { get; set; }
-            public string NomUtilisateur { get; set; }
-            public DateTime DateCreation { get; set; }
-        }
+        private int idUser;
+        private string roleUser;
+        private int idCampagne;
+        private int indicePersonnageEnEdition = -1;
         private AjouterPersonnage? pageajouterPerso;
         private bool ajouterPersoOpen = false;
 
         /// <summary>
         /// Constructeur de la fenêtre
         /// </summary>
-        public Personnages(IUser user, Campagne campagne)
+        public Personnages(int idUser, string roleUser, int idCampagne)
         {
             InitializeComponent();
-            this.campagne = campagne;
-            this.user = user;
+            this.idCampagne = idCampagne;
+            this.idUser = idUser;
+            this.roleUser = roleUser;
+            MettreAJourListBox();
             Closed += ShutdownEnForce;
-            LoadPersonnages();
 
-        }
-
-        /// <summary>
-        /// Charge les personnages dans la listbox depuis le txt
-        /// </summary>
-        public void LoadPersonnages()
-        {
-
-            string filePath = "personnages.txt";
-            personnages.Clear();
-            PersonnagesListe.Items.Clear();
-
-            if (File.Exists(filePath))
-            {
-
-                string[] lignes = File.ReadAllLines(filePath);
-
-
-                foreach (string ligne in lignes)
-                {
-
-                    string[] elements = ligne.Split(',');
-
-                    if (elements.Length == 2)
-                    {
-                        string idJoueur = elements[0].Trim();
-                        string idPersonnage = elements[1].Trim();
-
-                        PersonnagesListe.Items.Add($"{idPersonnage}");
-                        personnages.Add(new Personnage
-                        {
-                            NomUtilisateur = idJoueur,
-                            NomPersonnage = idPersonnage,
-                            DateCreation = DateTime.Now
-                        });
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -97,8 +44,8 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void PersonnagesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int selectedIndex = PersonnagesListe.SelectedIndex;
-            AfficherInformationsPersonnage(selectedIndex);
+            if (PersonnagesListe.SelectedItem != null) { Edit.Visibility = Visibility.Visible; }
+            AfficherInformationsPersonnage(PersonnagesListe.SelectedIndex);
         }
 
         /// <summary>
@@ -107,26 +54,150 @@ namespace VinlandSol.IHM
         /// <param name="selectedIndex"></param>
         private void AfficherInformationsPersonnage(int selectedIndex)
         {
-            if (selectedIndex >= 0 && selectedIndex < personnages.Count)
+            if (selectedIndex >= 0 && selectedIndex < fakeDAO.GetPersonnages().Count)
             {
-                string filePath = "personnages.txt";
-                if (File.Exists(filePath))
-                {
-                    string[] lignes = File.ReadAllLines(filePath);
-                    string[] elements = lignes[selectedIndex].Split(',');
-
-                    if (elements.Length == 2)
-                    {
-                        string idJoueur = elements[0].Trim();
-                        string idPersonnage = elements[1].Trim();
-
-                        NomUtilisateurTextBlock.Text = idJoueur;
-                        NomPersonnageTextBlock.Text = idPersonnage;
-                        DateCreationTextBlock.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-                    }
-                }
+                Personnage personnage = fakeDAO.GetPersonnages()[selectedIndex];
+                NomUtilisateurTextBlock.Text = fakeDAO.GetJoueur(personnage.ID).Nom;
+                NomPersonnageTextBlock.Text = personnage.Nom;
+                DateCreationTextBlock.Text = personnage.DateCreation.ToString("dd/MM/yyyy HH:mm:ss"); ;
             }
         }
+
+
+
+        /// <summary>
+        /// Supprime le personnage
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SupprimerPersonnage(object sender, RoutedEventArgs e)
+        {
+            int selectedIndex = PersonnagesListe.SelectedIndex;
+
+            fakeDAO.DeletePersonnage(selectedIndex + 1);
+
+            NomUtilisateurTextBlock.Text = "";
+            NomPersonnageTextBlock.Text = "";
+            DateCreationTextBlock.Text = "";
+            MettreAJourListBox();
+            MasquerElements();
+            Edit.Visibility = Visibility.Collapsed;
+            
+        }
+
+        /// <summary>
+        /// Ouvre les options d'édition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            NomPersonnageTextBox.Visibility = Visibility.Visible;
+            ValiderButton.Visibility = Visibility.Visible;
+            BoutonSuppression.Visibility = Visibility.Visible;
+            EditS.Visibility = Visibility.Visible;
+            Edit.Visibility = Visibility.Collapsed;
+
+        }
+        /// <summary>
+        /// Ferme les options d'édition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditS_Click(object sender, RoutedEventArgs e)
+        {
+            MasquerElements();
+        }
+
+        /// <summary>
+        /// Mets à jour les informations modifiées
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void ValiderButton_Click(object sender, RoutedEventArgs e)
+        {
+            string nouvNomPersonnage = NomPersonnageTextBox.Text;
+
+            if (string.IsNullOrWhiteSpace(nouvNomPersonnage))
+            {
+                CustomMessageBox customMessageBox = new CustomMessageBox("Le nom de la campagne ne peut pas être vide.");
+                customMessageBox.ShowDialog();
+            }
+
+            fakeDAO.UpdatePersonnageName(PersonnagesListe.SelectedIndex+1,nouvNomPersonnage);
+
+            NomPersonnageTextBox.Text = "";
+
+            MettreAJourListBox();
+            MasquerElements();
+            Edit.Visibility = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Méthode pour masquer les éléments du menu d'édition
+        /// </summary>
+        private void MasquerElements()
+        {
+            NomPersonnageTextBox.Visibility = Visibility.Collapsed;
+            ValiderButton.Visibility = Visibility.Collapsed;
+            BoutonSuppression.Visibility = Visibility.Collapsed;
+            Edit.Visibility = Visibility.Visible;
+            EditS.Visibility = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Mets à jour PersonnagesListe selon les données du DAO 
+        /// </summary>
+        public void MettreAJourListBox()
+        {
+            List<Personnage> personnages = fakeDAO.GetPersonnages(); // On récupère les personnages depuis le fakeDAO
+
+            PersonnagesListe.Items.Clear(); // On efface les éléments existants dans la ListBox
+
+            foreach (Personnage personnage in personnages) // On ajoute chaque campagne de la liste
+            {
+                PersonnagesListe.Items.Add(personnage);
+            }
+            PersonnagesListe.DisplayMemberPath = "Nom"; // On affiche le contenu de la propriété 'Nom' des campagnes
+        }
+
+        #region Ajouter Personnage
+
+        /// <summary>
+        /// Ouvre la fenêtre AjouterPersonnage et limite cette action tant que cette dernière n'est pas fermée
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OuvrirAjouterPersonnage_Click(object sender, RoutedEventArgs e)
+        {
+            if (ajouterPersoOpen == false)
+            {
+                pageajouterPerso = new AjouterPersonnage(this,idCampagne);
+                pageajouterPerso.Closed += AjouterPerso_Closed;
+                pageajouterPerso.Left = this.Left;
+                pageajouterPerso.Top = this.Top;
+                pageajouterPerso.Show();
+                ajouterPersoOpen = true;
+            }
+        }
+
+        /// <summary>
+        /// Force le shutdown de l'application quand AjouterPersonnage est la dernière fenêtre a être fermée
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AjouterPerso_Closed(object sender, EventArgs e)
+        {
+            ajouterPersoOpen = false;
+            if (Application.Current.Windows.Count == 1)
+            {
+                Application.Current.Shutdown();
+            }
+        }
+
+        #endregion
+
+        #region Sortie Personnages
 
         /// <summary>
         /// Ouvre la fenêtre Campagnes et ferme la fenêtre actuelle
@@ -135,7 +206,7 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void OuvrirCampagnes_Click(object sender, RoutedEventArgs e)
         {
-            Campagnes pagecreation = new Campagnes(user);
+            Campagnes pagecreation = new Campagnes(idUser,roleUser);
             pagecreation.Left = this.Left;
             pagecreation.Top = this.Top;
             pagecreation.Show();
@@ -160,7 +231,7 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void OuvrirCartes_Click(object sender, RoutedEventArgs e)
         {
-            Cartes pagecreation = new Cartes(user, campagne.ID);
+            Cartes pagecreation = new Cartes(idUser, roleUser, idCampagne);
             pagecreation.Left = this.Left;
             pagecreation.Top = this.Top;
             pagecreation.Show();
@@ -179,138 +250,6 @@ namespace VinlandSol.IHM
         }
 
         /// <summary>
-        /// Ouvre la fenêtre AjouterPersonnage et limite cette action tant que cette dernière n'est pas fermée
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OuvrirAjouterPersonnage_Click(object sender, RoutedEventArgs e)
-        {
-            if (ajouterPersoOpen == false)
-            {
-                pageajouterPerso = new AjouterPersonnage(this);
-                pageajouterPerso.Closed += AjouterPerso_Closed;
-                pageajouterPerso.Left = this.Left;
-                pageajouterPerso.Top = this.Top;
-                pageajouterPerso.Show();
-                ajouterPersoOpen = true;
-            }
-        }
-
-        /// <summary>
-        /// Supprime le personnage
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SupprimerPersonnage(object sender, RoutedEventArgs e)
-        {
-            int selectedIndex = PersonnagesListe.SelectedIndex;
-            string filePath = "personnages.txt";
-
-            if (selectedIndex >= 0 && selectedIndex < personnages.Count)
-            {
-
-                string nomPersonnageASupprimer = personnages[selectedIndex].NomPersonnage;
-
-                PersonnagesListe.Items.RemoveAt(selectedIndex);
-
-                personnages.RemoveAt(selectedIndex);
-
-                File.WriteAllLines(filePath, personnages.Select(p => $"{p.NomUtilisateur}, {p.NomPersonnage}"));
-
-                NomUtilisateurTextBlock.Text = "";
-                NomPersonnageTextBlock.Text = "";
-                DateCreationTextBlock.Text = "";
-            }
-        }
-
-        /// <summary>
-        /// Ouvre les options d'édition
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CrayonEdit_Click(object sender, RoutedEventArgs e)
-        {
-            NomPersonnageTextBox.Visibility = Visibility.Visible;
-            ValiderButton.Visibility = Visibility.Visible;
-            BoutonSuppression.Visibility = Visibility.Visible;
-            boutonCrayon2.Visibility = Visibility.Visible;
-            boutonCrayon.Visibility = Visibility.Collapsed;
-
-        }
-        /// <summary>
-        /// Ferme les options d'édition
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CrayonEditC_Click(object sender, RoutedEventArgs e)
-        {
-            NomPersonnageTextBox.Visibility = Visibility.Collapsed;
-            ValiderButton.Visibility = Visibility.Collapsed;
-            BoutonSuppression.Visibility = Visibility.Collapsed;
-            boutonCrayon.Visibility = Visibility.Visible;
-            boutonCrayon2.Visibility = Visibility.Collapsed;
-        }
-
-        /// <summary>
-        /// Mets à jour les informations modifiées
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void ValiderButton_Click(object sender, RoutedEventArgs e)
-        {
-            string nouvNomPersonnage = NomPersonnageTextBox.Text;
-
-            if (string.IsNullOrWhiteSpace(nouvNomPersonnage))
-            {
-                CustomMessageBox customMessageBox = new CustomMessageBox("Le nom de la campagne ne peut pas être vide.");
-                customMessageBox.ShowDialog();
-            }
-            int selectedIndex = PersonnagesListe.SelectedIndex;
-            if (selectedIndex >= 0 && selectedIndex < personnages.Count)
-            {
-
-                List<Personnage> personnagesClone = personnages.ToList();
-
-                personnagesClone[selectedIndex] = new Personnage
-                {
-                    NomPersonnage = nouvNomPersonnage,
-                    NomUtilisateur = personnages[selectedIndex].NomUtilisateur,
-                    DateCreation = personnages[selectedIndex].DateCreation
-                };
-
-                PersonnagesListe.Items[selectedIndex] = nouvNomPersonnage;
-
-                personnages = personnagesClone;
-
-                NomPersonnageTextBlock.Text = nouvNomPersonnage;
-
-                string filePath = "personnages.txt";
-                File.WriteAllLines(filePath, personnages.Select(p => $"{p.NomUtilisateur}, {p.NomPersonnage}"));
-            }
-            NomPersonnageTextBox.Text = "";
-
-            NomPersonnageTextBox.Visibility = Visibility.Collapsed;
-            ValiderButton.Visibility = Visibility.Collapsed;
-            BoutonSuppression.Visibility = Visibility.Collapsed;
-            boutonCrayon.Visibility = Visibility.Visible;
-            boutonCrayon2.Visibility = Visibility.Collapsed;
-        }
-
-        /// <summary>
-        /// Force le shutdown de l'application quand AjouterPersonnage est la dernière fenêtre a être fermée
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AjouterPerso_Closed(object sender, EventArgs e)
-        {
-            ajouterPersoOpen = false;
-            if (Application.Current.Windows.Count == 1)
-            {
-                Application.Current.Shutdown();
-            }
-        }
-
-        /// <summary>
         /// Force le shutdown de l'application quand cette fenêtre est la dernière a être fermée
         /// </summary>
         /// <param name="sender"></param>
@@ -324,6 +263,7 @@ namespace VinlandSol.IHM
             }
         }
 
+        #endregion
 
     }
 }

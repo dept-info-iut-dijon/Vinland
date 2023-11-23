@@ -17,8 +17,9 @@ namespace VinlandSol.IHM
     public partial class Cartes : Window
     {
         private FakeDAO fakeDAO = FakeDAO.Instance;
-        private IUser user;
-        private Campagne campagne;
+        private int idUser;
+        private string roleUser;
+        private int idCampagne;
 
         Cartee nouvellecarte = new Cartee
         {
@@ -43,11 +44,12 @@ namespace VinlandSol.IHM
         /// <summary>
         /// Constructeur de la page
         /// </summary>
-        public Cartes(IUser user, int idcampagne)
+        public Cartes(int idUser, string roleUser, int idcampagne)
         {
             InitializeComponent();
-            this.user = user;
-            this.campagne = fakeDAO.GetCampagne(idcampagne);
+            this.idUser = idUser;
+            this.roleUser = roleUser;
+            this.idCampagne = idCampagne;
             Closed += ShutdownEnForce; // ShutdownEnForce est appelé à la fermeture de cette fenêtre
             LoadCartes();
         }
@@ -232,7 +234,7 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void OuvrirPersonnages_Click(object sender, RoutedEventArgs e)
         {
-            Personnages pagecreationperso = new Personnages(user, campagne);
+            Personnages pagecreationperso = new Personnages(idUser, roleUser, idCampagne);
             pagecreationperso.Left = this.Left;
             pagecreationperso.Top = this.Top;
             pagecreationperso.Show();
@@ -276,7 +278,7 @@ namespace VinlandSol.IHM
         private void OuvrirCarte_Click(object sender, RoutedEventArgs e)
         {
             int idCarte = CartesListe.SelectedIndex;           
-            Carte carteselect = new Carte(user, idCarte);
+            Carte carteselect = new Carte(idUser, roleUser, idCarte, idCampagne);
             carteselect.Left = this.Left;
             carteselect.Top = this.Top;
             carteselect.Show();

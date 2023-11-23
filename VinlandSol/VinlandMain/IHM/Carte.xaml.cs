@@ -20,7 +20,9 @@ namespace VinlandSol.IHM
     {
         #region Attributs
 
-        private IUser user;
+        private int idUser;
+        private string roleUser;
+        private int idCampagne;
         private Métier.Carte carte;
         private FakeDAO fakeDAO = FakeDAO.Instance;
         private string basePath = Directory.GetCurrentDirectory();
@@ -40,32 +42,15 @@ namespace VinlandSol.IHM
         #region Constructeurs
 
         /// <summary>
-        /// Carte de base - Dédiée au tests
-        /// </summary>
-        /// <author>Aaron</author>
-        public Carte(IUser user, Campagne campagne)
-        {
-            InitializeComponent();
-            Métier.Carte carte = new Métier.Carte(-1, "Carte par default", 10, 10, campagne.ID);
-            GenerateHexagonalMap(carte.Largeur, carte.Hauteur); // Géneration de la map
-            InitializeTerrains();
-
-            HexagonCanvas.RenderTransform = zoomTransform; // zoom map
-            HexagonCanvas.MouseRightButtonDown += Canvas_MouseRightButtonDown; // Déplacement de la map avec le clic droit
-            HexagonCanvas.MouseRightButtonUp += Canvas_MouseRightButtonUp;
-            HexagonCanvas.MouseMove += Canvas_MouseMove;
-        }
-
-        /// <summary>
         /// Constructeur de carte - Appelé depuis Cartes.xaml ("vrai constructeur")
         /// </summary>
         /// <param name="user">utilisateur connecté</param>
         /// <param name="carte"></param>
         /// <author>Aaron</author>
-        public Carte(IUser user, int id)
+        public Carte(int idUser, string roleUser,int idCarte, int idCampagne)
         {
             InitializeComponent();
-            carte = fakeDAO.GetCarte(id);
+            carte = fakeDAO.GetCarte(idCarte);
             GenerateHexagonalMap(carte.Largeur, carte.Hauteur); // Géneration de la map
             InitializeTerrains();
 
@@ -505,7 +490,7 @@ namespace VinlandSol.IHM
         /// <author>Aaron</author>
         private void OuvrirCartes_Click(object sender, RoutedEventArgs e)
         {
-            Cartes pagecreation = new Cartes(user, carte.IDCampagne);
+            Cartes pagecreation = new Cartes(idUser, roleUser, idCampagne);
             pagecreation.Left = this.Left;
             pagecreation.Top = this.Top;
             pagecreation.Show();

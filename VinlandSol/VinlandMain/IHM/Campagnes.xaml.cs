@@ -16,16 +16,18 @@ namespace VinlandMain.IHM
     public partial class Campagnes : Window
     {
         private FakeDAO fakeDAO = FakeDAO.Instance;
-        private IUser user;
+        private int idUser;
+        private string roleUser;
         private int indiceCampagneEnEdition = -1;
 
         /// <summary>
         /// Constructeur de la fenêtre
         /// </summary>
-        public Campagnes(IUser user)
+        public Campagnes(int idUser, string roleUser)
         {
             InitializeComponent();
-            this.user = user;
+            this.idUser = idUser;
+            this.roleUser = roleUser;
             MettreAJourListBox();
             CampagnesListe.SelectionChanged += CampagnesListe_SelectionChanged;
         }
@@ -176,9 +178,8 @@ namespace VinlandMain.IHM
         /// <param name="e"></param>
         private void OuvrirPersonnages_Click(object sender, RoutedEventArgs e)
         {
-            int idCampagne = CampagnesListe.SelectedIndex;
-            VinlandSol.Métier.Campagne campagne = fakeDAO.GetCampagne(idCampagne);
-            Personnages pagecreation = new Personnages(user, campagne);
+            int idCampagne = CampagnesListe.SelectedIndex+1;
+            Personnages pagecreation = new Personnages(idUser,roleUser, idCampagne);
             pagecreation.Show();
             pagecreation.Left = this.Left;
             pagecreation.Top = this.Top;

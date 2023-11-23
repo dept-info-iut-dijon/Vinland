@@ -15,6 +15,7 @@ namespace VinlandSol.Métier
 
         public int ID { get; set; }
         public string Nom { get; set; }
+        public DateTime DateCreation { get; set; }
         public int IDJoueur { get; set; } // L'id du Joueur propriétaire de ce Personnage
         public int IDCampagne { get; set; } // L'id de la Campagne dont le Personnage fait partie
 
@@ -28,6 +29,7 @@ namespace VinlandSol.Métier
         {
             this.ID = id;
             this.Nom = nom;
+            this.DateCreation = DateTime.Now;
             this.IDJoueur = idjoueur;
             this.IDCampagne = idcampagne;
         }

@@ -97,14 +97,14 @@ namespace VinlandSol.BDD
         /// <summary>
         /// Ajoute un personnage à la liste des personnages, permettant ainsi sa création
         /// </summary>
-        /// <param name="nom">Nom d'un joueur</param>
-        /// <param name="mdp">Mot de passe d'un joueur</param>
-        /// <param name="campagne">Campagne souhaitée pour un personnage</param>
+        /// <param name="nom">Nom du personnage</param>
+        /// <param name="idJoueur">id du joueur propriétaire</param>
+        /// <param name="idCampagne">id de la campagne dont le personnage fait partie</param>
         /// <author>Alexis(setup) + Aaron</author>
-        public void CreatePersonnage(string nom, Joueur joueur, Campagne campagne)
+        public void CreatePersonnage(string nom, int idJoueur, int idCampagne)
         {
             int id = personnages.Count + 1;
-            Personnage newCharacter = new Personnage(id, nom, joueur.ID, campagne.ID);
+            Personnage newCharacter = new Personnage(id, nom, idJoueur, idCampagne);
             personnages.Add(newCharacter);
 
             _gestionnaireDeFichiers.Save(personnages, "Personnages.txt");
@@ -115,12 +115,12 @@ namespace VinlandSol.BDD
         /// </summary>
         /// <param name="hauteur">Hauteur d'une carte</param>
         /// <param name="largeur">Largeur d'une carte</param>
-        /// <param name="campagne">Campagne visée</param>
+        /// <param name="idCampagne">id de la campagne don fait partie la carte</param>
         /// <author>Alexis(setup) + Aaron</author>
-        public void CreateCarte(int hauteur ,string nom ,int largeur ,Campagne campagne)
+        public void CreateCarte(int hauteur ,string nom ,int largeur , int idCampagne)
         {
             int id = cartes.Count + 1;
-            Carte newMap = new Carte(id,nom ,hauteur, largeur, campagne.ID);
+            Carte newMap = new Carte(id,nom ,hauteur, largeur, idCampagne);
             cartes.Add(newMap);
 
             _gestionnaireDeFichiers.Save(cartes, "Cartes.txt");
@@ -471,6 +471,27 @@ namespace VinlandSol.BDD
         }
 
         /// <summary>
+        /// Mets à jour un personnage et ses informations
+        /// </summary>
+        /// <param name="id">identifiant d'un personnage</param>
+        /// <param name="personnage">un personnage</param>
+        /// <author>Alexis(setup) + Aaron</author>
+        public void UpdatePersonnageName(int id, string newNom)
+        {
+            if (personnages.Count != 0)
+            {
+                for (int i = 0; i < personnages.Count; i++)
+                {
+                    if (personnages[i].ID == id)
+                    {
+                        personnages[i].Nom = newNom;
+                    }
+                }
+            }
+            _gestionnaireDeFichiers.Override(personnages, "Personnages.txt");
+        }
+
+        /// <summary>
         /// Permet la mise à jour d'une carte 
         /// </summary>
         /// <param name="id">Identifiant d'une carte</param>
@@ -490,7 +511,7 @@ namespace VinlandSol.BDD
 
         #endregion
 
-        #region Login Check
+        #region Checks
 
         /// <summary>
         /// Permet de vérifier si un compte valide est saisi
@@ -534,6 +555,22 @@ namespace VinlandSol.BDD
             if (mj != null) // Le username est pris par un mj
             {
                 disponible = false;
+            }
+            return disponible;
+        }
+
+        /// <summary>
+        /// Permet de vérifier si le nom du personnage est déjà utilisé dans la campagne actuelle
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="idCampagne"></param>
+        /// <returns>Booléen indiquant si le nom est pris ou non</returns>
+        public bool PersonnageTaken(string username, int idCampagne) 
+        {
+            bool disponible = true;
+            for (int i = 0; i < GetCampagne(idCampagne).IDPersonnages.Count; i++) 
+            {
+                if (GetPersonnage(GetCampagne(idCampagne).IDPersonnages[i]).Nom == username) { disponible = false; break; }
             }
             return disponible;
         }

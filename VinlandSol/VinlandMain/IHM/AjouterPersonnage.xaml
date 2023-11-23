@@ -20,7 +20,7 @@
         <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300" Height="50" BorderThickness="3" Margin="0,283,0,0" x:Name="IdJoueur" FontSize="20" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
 
         <Label Content="Nom du personnage :" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,420,0,0" VerticalAlignment="Top" Width="292" FontSize="25" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
-        <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300" Height="50" BorderThickness="3" Margin="0,479,0,0" x:Name="IdPersonnage" FontSize="20" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+        <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300" Height="50" BorderThickness="3" Margin="0,479,0,0" x:Name="PersonnageNom" FontSize="20" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
 
         <Button Background="#fbf1cc" Content="Ajouter" HorizontalAlignment="Center" Margin="0,614,0,0" VerticalAlignment="Top" Height="50" Width="170" FontSize="24" x:Name="btnAjouter" Click="BtnAjouter_Click" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
         <Button.Resources>
