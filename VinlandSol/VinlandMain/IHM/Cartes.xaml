@@ -40,8 +40,12 @@
         <Label Content="Nom :" Margin="624,246,636,0" VerticalAlignment="Top" FontSize="35" Height="55" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
 
         <Label Content="Visibilité de la carte : " Margin="624,321,426,0" VerticalAlignment="Top" FontSize="35" Height="55" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
-        <Button Margin="958,317,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" BorderThickness="0,0,0,0" Click="OeilChange">
-            <Image x:Name="Loeil" Source="Media/Icones/Oeil.png" Height="70" Width="70"/>
+        <Button x:Name="VisibleCarte" Margin="958,317,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" BorderThickness="0,0,0,0" Click="OeilChange" Visibility="Collapsed">
+            <Image Source="Media/Icones/Oeil.png" Height="70" Width="70"/>
+        </Button>
+
+        <Button x:Name="VisibleCarteHidden" Margin="958,317,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" BorderThickness="0,0,0,0" Click="OeilChangeHidden" Visibility="Collapsed">
+            <Image Source="Media/Icones/Oeilbarre.png" Height="70" Width="70"/>
         </Button>
 
         <Label Content="Date de création : " Margin="624,396,486,0" VerticalAlignment="Top" FontSize="35" Height="55" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>

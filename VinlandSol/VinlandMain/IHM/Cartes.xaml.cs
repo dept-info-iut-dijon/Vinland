@@ -65,6 +65,19 @@ namespace VinlandSol.IHM
                 NomCarteTextBlock.Text = carte.Nom;
                 DateCreationTextBlock.Text = carte.DateCreation.ToString("dd/MM/yyyy HH:mm:ss");
                 DateModificationTextBlock.Text = carte.DateModification.ToString("dd/MM/yyyy HH:mm:ss");
+
+                if (fakeDAO.GetCartes()[selectedIndex].Visibilite) 
+                {
+                    VisibleCarte.Visibility = Visibility.Visible;
+                    VisibleCarteHidden.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    VisibleCarte.Visibility = Visibility.Collapsed;
+                    VisibleCarteHidden.Visibility = Visibility.Visible;
+                }
+
+               
             }
         }
 
@@ -144,9 +157,23 @@ namespace VinlandSol.IHM
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <author>Aaron</author>
         private void OeilChange(object sender, RoutedEventArgs e)
         {
-            Loeil.Source = new BitmapImage(new Uri("Media/Icones/Oeilbarre.png", UriKind.RelativeOrAbsolute));
+            fakeDAO.UpdateCarteVisibilite(CartesListe.SelectedIndex + 1, false);
+            AfficherInformationsCarte(CartesListe.SelectedIndex);
+        }
+
+        /// <summary>
+        /// Change la visibilité de la carte aux joueurs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <author>Aaron</author>
+        private void OeilChangeHidden(object sender, RoutedEventArgs e)
+        {
+            fakeDAO.UpdateCarteVisibilite(CartesListe.SelectedIndex + 1, true);
+            AfficherInformationsCarte(CartesListe.SelectedIndex);
         }
 
         /// <summary>
@@ -160,6 +187,8 @@ namespace VinlandSol.IHM
             Suppr.Visibility = Visibility.Collapsed;
             Edit.Visibility = Visibility.Visible;
             EditS.Visibility = Visibility.Collapsed;
+            VisibleCarte.Visibility = Visibility.Collapsed;
+            VisibleCarteHidden.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
@@ -248,7 +277,7 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void OuvrirCarte_Click(object sender, RoutedEventArgs e)
         {
-            int idCarte = CartesListe.SelectedIndex;
+            int idCarte = CartesListe.SelectedIndex+1;
             Carte carteselect = new Carte(idUser, roleUser, idCarte, idCampagne);
             carteselect.Left = this.Left;
             carteselect.Top = this.Top;

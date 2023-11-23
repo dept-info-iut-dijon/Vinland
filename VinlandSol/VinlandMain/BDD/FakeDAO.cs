@@ -474,7 +474,7 @@ namespace VinlandSol.BDD
         /// Mets à jour un personnage et ses informations
         /// </summary>
         /// <param name="id">identifiant d'un personnage</param>
-        /// <param name="personnage">un personnage</param>
+        /// <param name="newNom">le nom du personnage</param>
         /// <author>Alexis(setup) + Aaron</author>
         public void UpdatePersonnageName(int id, string newNom)
         {
@@ -513,7 +513,7 @@ namespace VinlandSol.BDD
         /// Mets à jour une carte et ses informations
         /// </summary>
         /// <param name="id">identifiant de la carte</param>
-        /// <param name="personnage">une carte</param>
+        /// <param name="newNom">le nom de la carte</param>
         /// <author>Aaron</author>
         public void UpdateCarteName(int id, string newNom)
         {
@@ -524,6 +524,28 @@ namespace VinlandSol.BDD
                     if (cartes[i].Id == id)
                     {
                         cartes[i].Nom = newNom;
+                        cartes[i].DateModification = DateTime.Now;
+                    }
+                }
+            }
+            _gestionnaireDeFichiers.Override(cartes, "Cartes.txt");
+        }
+
+        /// <summary>
+        /// Mets à jour une carte et ses informations
+        /// </summary>
+        /// <param name="id">identifiant de la carte</param>
+        /// <param name="visible">la visibilité de la carte</param>
+        /// <author>Aaron</author>
+        public void UpdateCarteVisibilite(int id, bool visible)
+        {
+            if (cartes.Count != 0)
+            {
+                for (int i = 0; i < cartes.Count; i++)
+                {
+                    if (cartes[i].Id == id)
+                    {
+                        cartes[i].Visibilite = visible;
                         cartes[i].DateModification = DateTime.Now;
                     }
                 }
