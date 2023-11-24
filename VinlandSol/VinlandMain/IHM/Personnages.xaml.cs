@@ -72,9 +72,10 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void SupprimerPersonnage(object sender, RoutedEventArgs e)
         {
-            int selectedIndex = PersonnagesListe.SelectedIndex;
+            Personnage selectedIndex = (Personnage)PersonnagesListe.SelectedItem;
+            int idPersonnage = selectedIndex.ID;
 
-            fakeDAO.DeletePersonnage(selectedIndex + 1);
+            fakeDAO.DeletePersonnage(idPersonnage);
 
             NomUtilisateurTextBlock.Text = "";
             NomPersonnageTextBlock.Text = "";

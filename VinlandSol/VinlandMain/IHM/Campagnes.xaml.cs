@@ -198,9 +198,10 @@ namespace VinlandMain.IHM
         /// <param name="e"></param>
         private void SupprimerCamp_Click(object sender, RoutedEventArgs e)
         {
-            int selection = CampagnesListe.SelectedIndex;
+            Campagne selection = (Campagne)CampagnesListe.SelectedItem;
 
-            fakeDAO.DeleteCampagne(selection+1);
+            int idCampagne = selection.ID ;
+            fakeDAO.DeleteCampagne(idCampagne);
 
             // Champs qui se réinitialisent 
             NomCampTextBlock.Text = "";

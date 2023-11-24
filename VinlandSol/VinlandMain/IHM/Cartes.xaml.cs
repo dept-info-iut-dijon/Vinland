@@ -139,9 +139,10 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void SupprimerCarte(object sender, RoutedEventArgs e)
         {
-            int selectedIndex = CartesListe.SelectedIndex;
+            Métier.Carte selection = (Métier.Carte)CartesListe.SelectedItem;
+            int idCarte = selection.Id;
 
-            fakeDAO.DeleteCarte(selectedIndex + 1);
+            fakeDAO.DeleteCarte(idCarte);
 
             NomCarteTextBlock.Text = "";
             DateCreationTextBlock.Text = "";
