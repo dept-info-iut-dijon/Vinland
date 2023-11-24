@@ -62,6 +62,17 @@ namespace VinlandSol.BDD
 
         #region Méthodes
 
+        public void ClearLists()
+        {
+            joueurs.Clear();
+            mjs.Clear();
+            campagnes.Clear();
+            personnages.Clear();
+            cartes.Clear();
+
+            _gestionnaireDeFichiers.SetupFichiers();
+        }
+
         #region Création
 
         /// <summary>

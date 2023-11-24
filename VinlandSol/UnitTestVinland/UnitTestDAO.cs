@@ -9,6 +9,10 @@ namespace UnitTestVinland
     {
         private FakeDAO fakeDAO = FakeDAO.Instance;
 
+        public UnitTestDAO() 
+        {
+            fakeDAO.ClearLists();
+        }
 
         /// <summary>
         /// Vérifie que la méthode `CreateJoueur` crée un joueur avec les informations spécifiées.
@@ -25,7 +29,7 @@ namespace UnitTestVinland
             Assert.Equal(nom, joueur.Nom);
             Assert.Equal(mdp, joueur.Mdp);
 
-            fakeDAO.DeleteJoueur(joueur.ID); // Remet le FakeDAO à son état d'origine d'avant-test 
+            fakeDAO.ClearLists(); 
         }
 
         /// <summary>
@@ -43,7 +47,7 @@ namespace UnitTestVinland
             Assert.Equal(nom, mj.Nom);
             Assert.Equal(mdp, mj.Mdp);
 
-            fakeDAO.DeleteMJ(mj.ID); // Remet le FakeDAO à son état d'origine d'avant-test 
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
@@ -63,7 +67,7 @@ namespace UnitTestVinland
             Assert.Equal(idJoueur, personnage.IDJoueur);
             Assert.Equal(idCampagne, personnage.IDCampagne);
 
-            fakeDAO.DeletePersonnage(personnage.ID); // Remet le FakeDAO à son état d'origine d'avant-test 
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
@@ -86,7 +90,7 @@ namespace UnitTestVinland
             Assert.Equal(largeur, carte.Largeur);
             Assert.Equal(idCampagne, carte.IDCampagne);
 
-            fakeDAO.DeleteCarte(carte.Id); // Remet le FakeDAO à son état d'origine d'avant-test 
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
@@ -96,14 +100,14 @@ namespace UnitTestVinland
         public void Test_CreateCampagne()
         {
             
-            string nom = "Campagne 1";
+            string nom = "Campagne Create";
 
             fakeDAO.CreateCampagne(nom);
 
             Campagne campagne = fakeDAO.GetCampagnes().Last();
             Assert.Equal(nom, campagne.Nom);
 
-            fakeDAO.DeleteCampagne(campagne.ID); // Remet le FakeDAO à son état d'origine d'avant-test 
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
@@ -184,7 +188,7 @@ namespace UnitTestVinland
         public void Test_DeleteCampagne()
         {
            
-            string nom = "Campagne 1";
+            string nom = "Campagne Delete";
             fakeDAO.CreateCampagne(nom);
             
             fakeDAO.DeleteCampagne(1);
@@ -208,10 +212,8 @@ namespace UnitTestVinland
             Assert.NotEmpty(joueurs);
             Assert.Equal(2, joueurs.Count);
 
-           for (int i = 0; i <= joueurs.Count; i++) 
-           {
-                fakeDAO.DeleteJoueur(i+1);
-           }
+            fakeDAO.ClearLists();
+
         }
 
         /// <summary>
@@ -229,10 +231,8 @@ namespace UnitTestVinland
             Assert.NotEmpty(mjs);
             Assert.Equal(2, mjs.Count);
 
-            for (int i = 0; i <= mjs.Count; i++)
-            {
-                fakeDAO.DeleteMJ(i + 1);
-            }
+            fakeDAO.ClearLists();
+
         }
 
         /// <summary>
@@ -241,8 +241,8 @@ namespace UnitTestVinland
         [Fact]
         public void Test_GetCampagnes()
         {
-            fakeDAO.CreateCampagne("Campagne 1");
-            fakeDAO.CreateCampagne("Campagne 2");
+            fakeDAO.CreateCampagne("Campagne GetCampagnes1");
+            fakeDAO.CreateCampagne("Campagne GetCampagnes2");
 
             List<Campagne> campagnes = fakeDAO.GetCampagnes();
 
@@ -250,10 +250,8 @@ namespace UnitTestVinland
             Assert.NotEmpty(campagnes);
             Assert.Equal(2, campagnes.Count);
 
-            for (int i = 0; i <= campagnes.Count; i++)
-            {
-                fakeDAO.DeleteCampagne(i + 1);
-            }
+            fakeDAO.ClearLists();
+
         }
 
         /// <summary>
@@ -273,15 +271,8 @@ namespace UnitTestVinland
             Assert.NotEmpty(personnages);
             Assert.Equal(2, personnages.Count);
 
-            for (int i = 0; i <= personnages.Count; i++)
-            {
-                fakeDAO.DeletePersonnage(i + 1);
-            }
+            fakeDAO.ClearLists();
 
-            for (int i = 0; i <= joueurs.Count; i++)
-            {
-                fakeDAO.DeleteJoueur(i + 1);
-            }
         }
 
         /// <summary>
@@ -290,7 +281,7 @@ namespace UnitTestVinland
         [Fact]
         public void Test_GetCartes()
         {
-            fakeDAO.CreateCampagne("Campagne 1");
+            fakeDAO.CreateCampagne("Campagne GetCartes");
             fakeDAO.CreateCarte("Carte 1", 1, 100, 200);
             fakeDAO.CreateCarte("Carte 2", 1, 100, 200);
 
@@ -301,19 +292,48 @@ namespace UnitTestVinland
             Assert.NotEmpty(cartes);
             Assert.Equal(2, cartes.Count);
 
-            for (int i = 0; i <= cartes.Count; i++)
-            {
-                fakeDAO.DeleteCarte(i + 1);
-            }
+            fakeDAO.ClearLists();
 
-            for (int i = 0; i <= campagnes.Count; i++)
-            {
-                fakeDAO.DeleteCampagne(i + 1);
-            }
+        }
+
+        /// <summary>
+        /// Vérifie que la méthode `UpdateCampagne()` met à jour correctement une campagne.
+        /// </summary>
+        [Fact]
+        public void Test_UpdateCampagne()
+        {
+            string nomCampagne = "Campagne Update";
+            Campagne campagne = new Campagne(1, nomCampagne);
+            fakeDAO.CreateCampagne(nomCampagne);
+
+            fakeDAO.UpdateCampagne(1, new Campagne(1,"Campagne Update2"));
+
+            List<Campagne> campagnes = fakeDAO.GetCampagnes();
+            Assert.Equal("Campagne Update2", campagnes[0].Nom);
+
+            fakeDAO.ClearLists();
+
         }
 
 
+        /// <summary>
+        /// Vérifie que la méthode `UpdateCampagneName()` met à jour correctement le nom d'une campagne.
+        /// </summary>
+        [Fact]
+        public void Test_UpdateCampagneName()
+        {
+            string nomCampagne = "Campagne UpdateName";
+            Campagne campagne = new Campagne(1, nomCampagne);
+            fakeDAO.CreateCampagne(nomCampagne);
 
+            fakeDAO.UpdateCampagneName(1, "Campagne UpdateName2");
+
+            List<Campagne> campagnes = fakeDAO.GetCampagnes();
+            Assert.Equal("Campagne UpdateName2", campagnes[0].Nom);
+
+            fakeDAO.ClearLists();
+
+        }
 
     }
 }

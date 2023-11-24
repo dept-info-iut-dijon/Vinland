@@ -57,7 +57,7 @@ namespace VinlandSol.BDD
         /// Répertorie les fichiers à Setup avec l'entête contenant les noms des Propriétés stockées d'une instance
         /// </summary>
         /// <author>Aaron</author>
-        private void SetupFichiers()
+        public void SetupFichiers()
         {
             SetupFichier("Joueurs.txt", GetHeader<Joueur>());
             SetupFichier("Mjs.txt", GetHeader<MJ>());
