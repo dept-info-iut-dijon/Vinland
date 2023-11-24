@@ -6,13 +6,16 @@ namespace UnitTestVinland
 {
     public class UnitTestDAO
     {
+        #region Construct Instance
         private FakeDAO fakeDAO = FakeDAO.Instance;
 
         public UnitTestDAO() 
         {
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
+        #endregion
 
+        #region Create_Test 
         /// <summary>
         /// Vérifie que la méthode `CreateJoueur` crée un joueur avec les informations spécifiées.
         /// </summary>
@@ -28,7 +31,7 @@ namespace UnitTestVinland
             Assert.Equal(nom, joueur.Nom);
             Assert.Equal(mdp, joueur.Mdp);
 
-            fakeDAO.ClearLists(); 
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
@@ -108,6 +111,10 @@ namespace UnitTestVinland
 
             fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
+
+        #endregion
+
+        #region Delete_Test
 
         /// <summary>
         /// Vérifie que la méthode `DeleteJoueur` supprime le joueur avec l'identifiant spécifié.
@@ -196,6 +203,10 @@ namespace UnitTestVinland
             Assert.Empty(campagnes);
         }
 
+        #endregion
+
+        #region Get_Tests
+
         /// <summary>
         /// Vérifie que la méthode `GetJoueurs` renvoie une liste non vide.
         /// </summary>
@@ -211,7 +222,7 @@ namespace UnitTestVinland
             Assert.NotEmpty(joueurs);
             Assert.Equal(2, joueurs.Count);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
 
         }
 
@@ -230,7 +241,7 @@ namespace UnitTestVinland
             Assert.NotEmpty(mjs);
             Assert.Equal(2, mjs.Count);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
 
         }
 
@@ -249,7 +260,7 @@ namespace UnitTestVinland
             Assert.NotEmpty(campagnes);
             Assert.Equal(2, campagnes.Count);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
 
         }
 
@@ -270,7 +281,7 @@ namespace UnitTestVinland
             Assert.NotEmpty(personnages);
             Assert.Equal(2, personnages.Count);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
 
         }
 
@@ -291,10 +302,12 @@ namespace UnitTestVinland
             Assert.NotEmpty(cartes);
             Assert.Equal(2, cartes.Count);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
 
         }
+        #endregion
 
+        #region Updates_Test
         /// <summary>
         /// Vérifie que la méthode `UpdateCampagne()` met à jour correctement une campagne.
         /// </summary>
@@ -310,7 +323,7 @@ namespace UnitTestVinland
             List<Campagne> campagnes = fakeDAO.GetCampagnes();
             Assert.Equal("Campagne Update2", campagnes[0].Nom);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
 
         }
 
@@ -330,10 +343,13 @@ namespace UnitTestVinland
             List<Campagne> campagnes = fakeDAO.GetCampagnes();
             Assert.Equal("Campagne UpdateName2", campagnes[0].Nom);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
 
         }
 
+        /// <summary>
+        /// Vérifie que la méthode `UpdatePersonnage()` met à jour correctement le nom d'un personnage
+        /// </summary>
         [Fact]
         public void Test_UpdatePersonnage()
         {
@@ -351,7 +367,7 @@ namespace UnitTestVinland
             List<Personnage> personnages = fakeDAO.GetPersonnages();
             Assert.Equal(0, personnages.Count);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
@@ -373,7 +389,7 @@ namespace UnitTestVinland
             Assert.Equal(1, personnages.Count);
             Assert.Equal("Personnage 2", personnages[0].Nom);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
@@ -397,7 +413,7 @@ namespace UnitTestVinland
             Assert.Equal(1, cartes.Count);
             Assert.Equal("Carte 2", cartes[0].Nom);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
@@ -421,7 +437,7 @@ namespace UnitTestVinland
             Assert.Equal(1, cartes.Count);
             Assert.Equal("Carte 2", cartes[0].Nom);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
@@ -445,9 +461,14 @@ namespace UnitTestVinland
             Assert.Equal(1, cartes.Count);
             Assert.True(cartes[0].Visibilite);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
+        #endregion
 
+        #region Verify_UserAccount
+        /// <summary>
+        /// Teste la méthode "VerifyUserAccount"
+        /// </summary>
         [Fact]
         public void Test_VerifyUserAccount()
         {
@@ -458,11 +479,12 @@ namespace UnitTestVinland
             Assert.Equal(1, id);
             Assert.Equal("Joueur", role);
 
-            fakeDAO.ClearLists();
-
-
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
+        /// <summary>
+        /// Teste la même méthode si le compte n'est pas trouvé
+        /// </summary>
         [Fact]
         public void Test_VerifyUserAccount_CompteNonTrouve()
         {
@@ -472,9 +494,9 @@ namespace UnitTestVinland
             Assert.Equal(-1, id);
             Assert.Equal("Non trouvé", role);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
-
+        #endregion
     }
 }
