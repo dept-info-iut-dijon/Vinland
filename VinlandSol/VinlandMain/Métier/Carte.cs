@@ -13,7 +13,7 @@ namespace VinlandSol.Métier
     {
         #region Propriétés
 
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string Nom { get; set; }
         public DateTime DateCreation { get; set; } // Date de la création de la campagne
         public DateTime DateModification { get; set; } // Dernière date de modification
@@ -30,7 +30,7 @@ namespace VinlandSol.Métier
 
         public Carte(int id, string nom, int hauteur, int largeur, int idcampagne)
         {
-            Id = id;
+            ID = id;
             Nom = nom;
             DateCreation = DateTime.Now;
             DateModification = DateTime.Now;

@@ -140,7 +140,7 @@ namespace VinlandSol.IHM
         private void SupprimerCarte(object sender, RoutedEventArgs e)
         {
             Métier.Carte selection = (Métier.Carte)CartesListe.SelectedItem;
-            int idCarte = selection.Id;
+            int idCarte = selection.ID;
 
             fakeDAO.DeleteCarte(idCarte);
 

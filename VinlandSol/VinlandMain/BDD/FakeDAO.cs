@@ -76,6 +76,28 @@ namespace VinlandSol.BDD
         #region Création
 
         /// <summary>
+        /// Donne le prochain id disponible par rapport aux valeurs de la liste donnée (on essaye de prendre la valeur la plus petite disponible)
+        /// </summary>
+        /// <typeparam name="T">classe Type</typeparam>
+        /// <param name="list">la liste des T</param>
+        /// <param name="getIdFunc">fonction prenant une instance de T et retournant son id</param>
+        /// <returns></returns>
+        public int GetNextAvailableId<T>(List<T> list, Func<T, int> getIdFunc)
+        {
+            List<int> usedIds = list.Select(getIdFunc).ToList(); // On remplit la liste des id indisponibles
+
+            for (int i = 1; i <= int.MaxValue; i++)
+            {
+                if (!usedIds.Contains(i))
+                {
+                    return i;
+                }
+            }
+
+            return -1; // Aucun id n'est disponible
+        }
+
+        /// <summary>
         /// Ajoute un joueur à la liste des joueurs, permettant ainsi sa création
         /// </summary>
         /// <param name="nom">Nom d'un joueur</param>
@@ -83,7 +105,7 @@ namespace VinlandSol.BDD
         /// <author>Alexis(setup) + Aaron</author>
         public void CreateJoueur(string nom, string mdp)
         {
-            int id = joueurs.Count + 1;
+            int id = GetNextAvailableId(joueurs, joueur => joueur.ID);
             Joueur newUser = new Joueur(id, nom, mdp);
             joueurs.Add(newUser);
 
@@ -98,7 +120,7 @@ namespace VinlandSol.BDD
         /// <author>Alexis(setup) + Aaron</author>
         public void CreateMJ(string nom, string mdp)
         {
-            int id = mjs.Count + 1;
+            int id = GetNextAvailableId(mjs, mj => mj.ID);
             MJ newMJ = new MJ(id, nom, mdp);
             mjs.Add(newMJ);
 
@@ -114,7 +136,7 @@ namespace VinlandSol.BDD
         /// <author>Alexis(setup) + Aaron</author>
         public void CreatePersonnage(string nom, int idJoueur, int idCampagne)
         {
-            int id = personnages.Count + 1;
+            int id = GetNextAvailableId(personnages, personnage => personnage.ID);
             Personnage newCharacter = new Personnage(id, nom, idJoueur, idCampagne);
             personnages.Add(newCharacter);
 
@@ -130,7 +152,7 @@ namespace VinlandSol.BDD
         /// <author>Alexis(setup) + Aaron</author>
         public void CreateCarte(string nom, int hauteur, int largeur , int idCampagne)
         {
-            int id = cartes.Count + 1;
+            int id = GetNextAvailableId(cartes, carte => carte.ID);
             Carte newMap = new Carte(id,nom ,hauteur, largeur, idCampagne);
             cartes.Add(newMap);
 
@@ -144,7 +166,7 @@ namespace VinlandSol.BDD
         /// <author>Alexis(setup) + Aaron</author>
         public void CreateCampagne(string nom)
         {
-            int id = campagnes.Count + 1;
+            int id = GetNextAvailableId(campagnes, campagne => campagne.ID);
             Campagne newCampagne = new Campagne(id, nom);
             campagnes.Add(newCampagne);
 
@@ -169,6 +191,7 @@ namespace VinlandSol.BDD
                     if (joueurs[i].ID == id) joueurs.RemoveAt(i);
                 }
             }
+
             _gestionnaireDeFichiers.Override(joueurs, "Joueurs.txt");
         }
 
@@ -217,7 +240,7 @@ namespace VinlandSol.BDD
             {
                 for (int i = 0; i < cartes.Count; i++)
                 {
-                    if (cartes[i].Id == id) cartes.RemoveAt(i);
+                    if (cartes[i].ID == id) cartes.RemoveAt(i);
                 }
             }
             _gestionnaireDeFichiers.Override(cartes, "Cartes.txt");
@@ -410,7 +433,7 @@ namespace VinlandSol.BDD
             Carte map = null;
             for (int i = 0; i < cartes.Count; i++)
             {
-                if (cartes[i].Id == id) map = cartes[i];
+                if (cartes[i].ID == id) map = cartes[i];
             }
             return map;
         }
@@ -514,7 +537,7 @@ namespace VinlandSol.BDD
             {
                 for (int i = 0; i < cartes.Count; i++)
                 {
-                    if (cartes[i].Id == carte.Id) cartes[i] = carte;
+                    if (cartes[i].ID == carte.ID) cartes[i] = carte;
                 }
             }
             _gestionnaireDeFichiers.Override(cartes, "Cartes.txt");
@@ -532,7 +555,7 @@ namespace VinlandSol.BDD
             {
                 for (int i = 0; i < cartes.Count; i++)
                 {
-                    if (cartes[i].Id == id)
+                    if (cartes[i].ID == id)
                     {
                         cartes[i].Nom = newNom;
                         cartes[i].DateModification = DateTime.Now;
@@ -554,7 +577,7 @@ namespace VinlandSol.BDD
             {
                 for (int i = 0; i < cartes.Count; i++)
                 {
-                    if (cartes[i].Id == id)
+                    if (cartes[i].ID == id)
                     {
                         cartes[i].Visibilite = visible;
                         cartes[i].DateModification = DateTime.Now;
