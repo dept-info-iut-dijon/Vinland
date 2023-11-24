@@ -1,4 +1,5 @@
 
+using VinlandMain.IHM;
 using VinlandSol.BDD;
 using VinlandSol.Métier;
 
@@ -191,6 +192,126 @@ namespace UnitTestVinland
             List<Campagne> campagnes = fakeDAO.GetCampagnes();
             Assert.Empty(campagnes);
         }
+
+        /// <summary>
+        /// Vérifie que la méthode `GetJoueurs` renvoie une liste non vide.
+        /// </summary>
+        [Fact]
+        public void Test_GetJoueurs()
+        {
+            fakeDAO.CreateJoueur("Joueur 1", "motdepasse");
+            fakeDAO.CreateJoueur("Joueur 2", "motdepasse");
+
+            List<Joueur> joueurs = fakeDAO.GetJoueurs();
+
+            Assert.NotNull(joueurs);
+            Assert.NotEmpty(joueurs);
+            Assert.Equal(2, joueurs.Count);
+
+           for (int i = 0; i <= joueurs.Count; i++) 
+           {
+                fakeDAO.DeleteJoueur(i+1);
+           }
+        }
+
+        /// <summary>
+        /// Vérifie que la méthode `GetMJs` renvoie une liste non vide.
+        /// </summary>
+        [Fact]
+        public void Test_GetMJs()
+        {
+            fakeDAO.CreateMJ("MJ 1", "motdepasse");
+            fakeDAO.CreateMJ("MJ 2", "motdepasse");
+
+            List<MJ> mjs = fakeDAO.GetMJs();
+
+            Assert.NotNull(mjs);
+            Assert.NotEmpty(mjs);
+            Assert.Equal(2, mjs.Count);
+
+            for (int i = 0; i <= mjs.Count; i++)
+            {
+                fakeDAO.DeleteMJ(i + 1);
+            }
+        }
+
+        /// <summary>
+        /// Vérifie que la méthode `GetCampagnes` renvoie une liste non vide.
+        /// </summary>
+        [Fact]
+        public void Test_GetCampagnes()
+        {
+            fakeDAO.CreateCampagne("Campagne 1");
+            fakeDAO.CreateCampagne("Campagne 2");
+
+            List<Campagne> campagnes = fakeDAO.GetCampagnes();
+
+            Assert.NotNull(campagnes);
+            Assert.NotEmpty(campagnes);
+            Assert.Equal(2, campagnes.Count);
+
+            for (int i = 0; i <= campagnes.Count; i++)
+            {
+                fakeDAO.DeleteCampagne(i + 1);
+            }
+        }
+
+        /// <summary>
+        /// Vérifie que la méthode `GetPersonnages` renvoie une liste non vide.
+        /// </summary>
+        [Fact]
+        public void Test_GetPersonnages()
+        {
+            fakeDAO.CreateJoueur("Joueur 1", "motdepasse");
+            fakeDAO.CreatePersonnage("Personnage 1", 1, 1);
+            fakeDAO.CreatePersonnage("Personnage 2", 1, 1);
+
+            List<Joueur> joueurs = fakeDAO.GetJoueurs();
+            List<Personnage> personnages = fakeDAO.GetPersonnages();
+
+            Assert.NotNull(personnages);
+            Assert.NotEmpty(personnages);
+            Assert.Equal(2, personnages.Count);
+
+            for (int i = 0; i <= personnages.Count; i++)
+            {
+                fakeDAO.DeletePersonnage(i + 1);
+            }
+
+            for (int i = 0; i <= joueurs.Count; i++)
+            {
+                fakeDAO.DeleteJoueur(i + 1);
+            }
+        }
+
+        /// <summary>
+        /// Vérifie que la méthode `GetCartes` renvoie une liste non vide.
+        /// </summary>
+        [Fact]
+        public void Test_GetCartes()
+        {
+            fakeDAO.CreateCampagne("Campagne 1");
+            fakeDAO.CreateCarte("Carte 1", 1, 100, 200);
+            fakeDAO.CreateCarte("Carte 2", 1, 100, 200);
+
+            List<Carte> cartes = fakeDAO.GetCartes();
+            List<Campagne> campagnes = fakeDAO.GetCampagnes();
+
+            Assert.NotNull(cartes);
+            Assert.NotEmpty(cartes);
+            Assert.Equal(2, cartes.Count);
+
+            for (int i = 0; i <= cartes.Count; i++)
+            {
+                fakeDAO.DeleteCarte(i + 1);
+            }
+
+            for (int i = 0; i <= campagnes.Count; i++)
+            {
+                fakeDAO.DeleteCampagne(i + 1);
+            }
+        }
+
 
 
 
