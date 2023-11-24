@@ -53,10 +53,11 @@ namespace VinlandSol.IHM
             string password;
             if(!isPasswordVisible) { password = TBMdp.Password; } else {  password = TBVisibleMdp.Text; }
             string? roleSelectionne = ((ComboBoxItem)ChoixRole.SelectedItem)?.Content.ToString();
-            string? messageCheckFail = null;
             bool okCheck = true;
 
             #region Checks
+
+            string? messageCheckFail = null;
             // Un seul check à la fois, on ne veut pas aggresser l'utilisateur avec des popups en chaine
             if (fakeDAO.UsernameTaken(username) == false) { messageCheckFail = "Nom d'utilisateur déjà pris"; okCheck=false; }
             else if (string.IsNullOrWhiteSpace(username)) { messageCheckFail = "Veuillez remplir le champ Nom d'Utilisateur"; okCheck = false; }

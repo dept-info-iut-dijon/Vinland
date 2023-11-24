@@ -1,7 +1,6 @@
-
 using VinlandMain.IHM;
 using VinlandSol.BDD;
-using VinlandSol.Métier;
+using VinlandSol.MÃ©tier;
 
 namespace UnitTestVinland
 {
@@ -15,7 +14,7 @@ namespace UnitTestVinland
         }
 
         /// <summary>
-        /// Vérifie que la méthode `CreateJoueur` crée un joueur avec les informations spécifiées.
+        /// VÃ©rifie que la mÃ©thode `CreateJoueur` crÃ©e un joueur avec les informations spÃ©cifiÃ©es.
         /// </summary>
         [Fact]
         public void Test_CreateJoueur()
@@ -33,7 +32,7 @@ namespace UnitTestVinland
         }
 
         /// <summary>
-        /// Vérifie que la méthode `CreateMJ` crée un MJ avec les informations spécifiées.
+        /// VÃ©rifie que la mÃ©thode `CreateMJ` crÃ©e un MJ avec les informations spÃ©cifiÃ©es.
         /// </summary>
         [Fact]
         public void Test_CreateMJ()
@@ -47,11 +46,11 @@ namespace UnitTestVinland
             Assert.Equal(nom, mj.Nom);
             Assert.Equal(mdp, mj.Mdp);
 
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            fakeDAO.ClearLists(); // Remet le FakeDAO Ã  son Ã©tat d'origine d'avant-test 
         }
 
         /// <summary>
-        /// Vérifie que la méthode `CreatePersonnage` crée un personnage avec les informations spécifiées.
+        /// VÃ©rifie que la mÃ©thode `CreatePersonnage` crÃ©e un personnage avec les informations spÃ©cifiÃ©es.
         /// </summary>
         [Fact]
         public void Test_CreatePersonnage()
@@ -67,11 +66,11 @@ namespace UnitTestVinland
             Assert.Equal(idJoueur, personnage.IDJoueur);
             Assert.Equal(idCampagne, personnage.IDCampagne);
 
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            fakeDAO.ClearLists(); // Remet le FakeDAO Ã  son Ã©tat d'origine d'avant-test 
         }
 
         /// <summary>
-        /// Vérifie que la méthode `CreateCarte` crée une carte avec les informations spécifiées.
+        /// VÃ©rifie que la mÃ©thode `CreateCarte` crÃ©e une carte avec les informations spÃ©cifiÃ©es.
         /// </summary>
         [Fact]
         public void Test_CreateCarte()
@@ -90,11 +89,11 @@ namespace UnitTestVinland
             Assert.Equal(largeur, carte.Largeur);
             Assert.Equal(idCampagne, carte.IDCampagne);
 
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            fakeDAO.ClearLists(); // Remet le FakeDAO Ã  son Ã©tat d'origine d'avant-test 
         }
 
         /// <summary>
-        /// Vérifie que la méthode `CreateCampagne` crée une campagne avec le nom spécifié.
+        /// VÃ©rifie que la mÃ©thode `CreateCampagne` crÃ©e une campagne avec le nom spÃ©cifiÃ©.
         /// </summary>
         [Fact]
         public void Test_CreateCampagne()
@@ -107,11 +106,11 @@ namespace UnitTestVinland
             Campagne campagne = fakeDAO.GetCampagnes().Last();
             Assert.Equal(nom, campagne.Nom);
 
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            fakeDAO.ClearLists(); // Remet le FakeDAO Ã  son Ã©tat d'origine d'avant-test 
         }
 
         /// <summary>
-        /// Vérifie que la méthode `DeleteJoueur` supprime le joueur avec l'identifiant spécifié.
+        /// VÃ©rifie que la mÃ©thode `DeleteJoueur` supprime le joueur avec l'identifiant spÃ©cifiÃ©.
         /// </summary>
         [Fact]
         public void Test_DeleteJoueur()
@@ -119,7 +118,7 @@ namespace UnitTestVinland
             
             string nom = "Joueur 1";
             string mdp = "motdepasse";
-            fakeDAO.CreateJoueur(nom, mdp); // Initialisation du joueur à supprimer 
+            fakeDAO.CreateJoueur(nom, mdp); // Initialisation du joueur Ã  supprimer 
             
             fakeDAO.DeleteJoueur(1);
 
@@ -128,7 +127,7 @@ namespace UnitTestVinland
         }
 
         /// <summary>
-        /// Vérifie que la méthode `DeleteMJ` supprime le MJ avec l'identifiant spécifié.
+        /// VÃ©rifie que la mÃ©thode `DeleteMJ` supprime le MJ avec l'identifiant spÃ©cifiÃ©.
         /// </summary>
         [Fact]
         public void Test_DeleteMJ()
@@ -136,7 +135,7 @@ namespace UnitTestVinland
             
             string nom = "MJ 1";
             string mdp = "motdepasse";
-            fakeDAO.CreateMJ(nom, mdp); // Initialisation du mj à supprimer 
+            fakeDAO.CreateMJ(nom, mdp); // Initialisation du mj Ã  supprimer 
  
             fakeDAO.DeleteMJ(1);
 
@@ -145,7 +144,7 @@ namespace UnitTestVinland
         }
 
         /// <summary>
-        /// Vérifie que la méthode `DeletePersonnage` supprime le personnage avec l'identifiant spécifié.
+        /// VÃ©rifie que la mÃ©thode `DeletePersonnage` supprime le personnage avec l'identifiant spÃ©cifiÃ©.
         /// </summary>
         [Fact]
         public void Test_DeletePersonnage()
@@ -154,7 +153,7 @@ namespace UnitTestVinland
             string nom = "Personnage 1";
             int idJoueur = 1;
             int idCampagne = 1;
-            fakeDAO.CreatePersonnage(nom, idJoueur, idCampagne); // Initialisation du personnage à supprimer 
+            fakeDAO.CreatePersonnage(nom, idJoueur, idCampagne); // Initialisation du personnage Ã  supprimer 
 
             fakeDAO.DeletePersonnage(1);
 
@@ -163,7 +162,7 @@ namespace UnitTestVinland
         }
 
         /// <summary>
-        /// Vérifie que la méthode `DeleteCarte` supprime la carte avec l'identifiant spécifié.
+        /// VÃ©rifie que la mÃ©thode `DeleteCarte` supprime la carte avec l'identifiant spÃ©cifiÃ©.
         /// </summary>
         [Fact]
         public void Test_DeleteCarte()
@@ -173,7 +172,7 @@ namespace UnitTestVinland
             int hauteur = 100;
             int largeur = 200;
             int idCampagne = 1;
-            fakeDAO.CreateCarte(nom, hauteur, largeur, idCampagne); // Initialisation de la carte à supprimer 
+            fakeDAO.CreateCarte(nom, hauteur, largeur, idCampagne); // Initialisation de la carte Ã  supprimer 
 
             fakeDAO.DeleteCarte(1);
             
@@ -182,7 +181,7 @@ namespace UnitTestVinland
         }
 
         /// <summary>
-        /// Vérifie que la méthode `DeleteCampagne` supprime la campagne avec l'identifiant spécifié.
+        /// VÃ©rifie que la mÃ©thode `DeleteCampagne` supprime la campagne avec l'identifiant spÃ©cifiÃ©.
         /// </summary>
         [Fact]
         public void Test_DeleteCampagne()
@@ -198,7 +197,7 @@ namespace UnitTestVinland
         }
 
         /// <summary>
-        /// Vérifie que la méthode `GetJoueurs` renvoie une liste non vide.
+        /// VÃ©rifie que la mÃ©thode `GetJoueurs` renvoie une liste non vide.
         /// </summary>
         [Fact]
         public void Test_GetJoueurs()
@@ -217,7 +216,7 @@ namespace UnitTestVinland
         }
 
         /// <summary>
-        /// Vérifie que la méthode `GetMJs` renvoie une liste non vide.
+        /// VÃ©rifie que la mÃ©thode `GetMJs` renvoie une liste non vide.
         /// </summary>
         [Fact]
         public void Test_GetMJs()
@@ -236,7 +235,7 @@ namespace UnitTestVinland
         }
 
         /// <summary>
-        /// Vérifie que la méthode `GetCampagnes` renvoie une liste non vide.
+        /// VÃ©rifie que la mÃ©thode `GetCampagnes` renvoie une liste non vide.
         /// </summary>
         [Fact]
         public void Test_GetCampagnes()
@@ -255,7 +254,7 @@ namespace UnitTestVinland
         }
 
         /// <summary>
-        /// Vérifie que la méthode `GetPersonnages` renvoie une liste non vide.
+        /// VÃ©rifie que la mÃ©thode `GetPersonnages` renvoie une liste non vide.
         /// </summary>
         [Fact]
         public void Test_GetPersonnages()
@@ -276,7 +275,7 @@ namespace UnitTestVinland
         }
 
         /// <summary>
-        /// Vérifie que la méthode `GetCartes` renvoie une liste non vide.
+        /// VÃ©rifie que la mÃ©thode `GetCartes` renvoie une liste non vide.
         /// </summary>
         [Fact]
         public void Test_GetCartes()
@@ -297,7 +296,7 @@ namespace UnitTestVinland
         }
 
         /// <summary>
-        /// Vérifie que la méthode `UpdateCampagne()` met à jour correctement une campagne.
+        /// VÃ©rifie que la mÃ©thode `UpdateCampagne()` met Ã  jour correctement une campagne.
         /// </summary>
         [Fact]
         public void Test_UpdateCampagne()
@@ -317,7 +316,7 @@ namespace UnitTestVinland
 
 
         /// <summary>
-        /// Vérifie que la méthode `UpdateCampagneName()` met à jour correctement le nom d'une campagne.
+        /// VÃ©rifie que la mÃ©thode `UpdateCampagneName()` met Ã  jour correctement le nom d'une campagne.
         /// </summary>
         [Fact]
         public void Test_UpdateCampagneName()
@@ -334,6 +333,5 @@ namespace UnitTestVinland
             fakeDAO.ClearLists();
 
         }
-
     }
 }
