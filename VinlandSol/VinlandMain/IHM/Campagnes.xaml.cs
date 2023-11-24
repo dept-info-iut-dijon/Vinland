@@ -83,19 +83,19 @@ namespace VinlandMain.IHM
         private void Valider_Click(object sender, RoutedEventArgs e)
         {
             string contenu = NomNouvCamp.Text;
+            bool okCheck = true;
 
             #region Checks
 
-            bool checksPassed = true;
-            string messageFail = "";
+            string? messageCheckFail = null;
 
 
-            if (string.IsNullOrWhiteSpace(contenu)) { messageFail = "Le nom de la campagne ne peut pas être vide"; checksPassed = false; }
-            if (fakeDAO.GetCampagnes().Any(c => c.Nom == contenu)) { messageFail = "Le nom de la campagne existe déjà."; checksPassed = false; }
+            if (string.IsNullOrWhiteSpace(contenu)) { messageCheckFail = "Le nom de la campagne ne peut pas être vide"; okCheck = false; }
+            if (fakeDAO.GetCampagnes().Any(c => c.Nom == contenu)) { messageCheckFail = "Une campagne du même nom existe déjà"; okCheck = false; }
 
-            if (!checksPassed)
+            if (!okCheck)
             {
-                CustomMessageBox messageBox = new CustomMessageBox(messageFail);
+                CustomMessageBox messageBox = new CustomMessageBox(messageCheckFail);
                 messageBox.ShowDialog();
                 return; // Le MJ peut encore essayer de créer une campagne valide.
             }
