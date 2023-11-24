@@ -335,5 +335,147 @@ namespace UnitTestVinland
 
         }
 
+        [Fact]
+        public void Test_UpdatePersonnage()
+        {
+            string nomPersonnage = "Personnage 1";
+            int idJoueur = 1;
+            int idCampagne = 1;
+            Personnage personnage = new Personnage(1, nomPersonnage, idJoueur, idCampagne);
+            fakeDAO.CreatePersonnage(nomPersonnage, idJoueur, idCampagne);
+
+            personnage.Nom = "Personnage 2";
+            fakeDAO.UpdatePersonnage(1, personnage);
+
+            fakeDAO.DeletePersonnage(1);
+
+            List<Personnage> personnages = fakeDAO.GetPersonnages();
+            Assert.Equal(0, personnages.Count);
+
+            fakeDAO.ClearLists();
+        }
+
+        /// <summary>
+        /// Vérifie que la méthode `UpdatePersonnageName()` met à jour correctement le nom du personnage.
+        /// </summary>
+        [Fact]
+        public void Test_UpdatePersonnageName()
+        {
+            string nomPersonnage = "Personnage 1";
+            int idJoueur = 1;
+            int idCampagne = 1;
+            Personnage personnage = new Personnage(1, nomPersonnage, idJoueur, idCampagne);
+            fakeDAO.CreatePersonnage(nomPersonnage, idJoueur, idCampagne);
+ 
+            personnage.Nom = "Personnage 2";
+            fakeDAO.UpdatePersonnageName(1, personnage.Nom);
+
+            List<Personnage> personnages = fakeDAO.GetPersonnages();
+            Assert.Equal(1, personnages.Count);
+            Assert.Equal("Personnage 2", personnages[0].Nom);
+
+            fakeDAO.ClearLists();
+        }
+
+        /// <summary>
+        /// Vérifie que la méthode `UpdateCarte()` met à jour correctement la carte.
+        /// </summary>
+        [Fact]
+        public void Test_UpdateCarte()
+        {
+            
+            string nomCarte = "Carte 1";
+            int idCampagne = 1;
+            int hauteur = 1;
+            int largeur = 1;
+            Carte carte = new Carte(1, nomCarte, idCampagne, 1, 1);
+            fakeDAO.CreateCarte(nomCarte,hauteur, largeur, idCampagne);
+
+            carte.Nom = "Carte 2";
+            fakeDAO.UpdateCarte(1, carte);
+
+            List<Carte> cartes = fakeDAO.GetCartes();
+            Assert.Equal(1, cartes.Count);
+            Assert.Equal("Carte 2", cartes[0].Nom);
+
+            fakeDAO.ClearLists();
+        }
+
+        /// <summary>
+        /// Vérifie que la méthode `UpdateCarteName()` met à jour correctement le nom de la carte.
+        /// </summary>
+        [Fact]
+        public void Test_UpdateCarteName()
+        {
+            
+            string nomCarte = "Carte 1";
+            int idCampagne = 1;
+            int hauteur = 1;
+            int largeur = 1;
+
+            Carte carte = new Carte(1, nomCarte, hauteur, largeur, idCampagne);
+            fakeDAO.CreateCarte(nomCarte, hauteur, largeur, idCampagne);
+
+            fakeDAO.UpdateCarteName(1, "Carte 2");
+
+            List<Carte> cartes = fakeDAO.GetCartes();
+            Assert.Equal(1, cartes.Count);
+            Assert.Equal("Carte 2", cartes[0].Nom);
+
+            fakeDAO.ClearLists();
+        }
+
+        /// <summary>
+        /// Vérifie que la méthode `UpdateCarteVisibilite()` met à jour correctement la visibilité de la carte.
+        /// </summary>
+        [Fact]
+        public void Test_UpdateCarteVisibilite()
+        {
+            
+            string nomCarte = "Carte 1";
+            int idCampagne = 1;
+            int hauteur = 1;
+            int largeur = 1;
+
+            Carte carte = new Carte(1, nomCarte, hauteur, largeur, idCampagne);
+            fakeDAO.CreateCarte(nomCarte, hauteur, largeur, idCampagne);
+
+            fakeDAO.UpdateCarteVisibilite(1, true);
+
+            List<Carte> cartes = fakeDAO.GetCartes();
+            Assert.Equal(1, cartes.Count);
+            Assert.True(cartes[0].Visibilite);
+
+            fakeDAO.ClearLists();
+        }
+
+        [Fact]
+        public void Test_VerifyUserAccount()
+        {
+            fakeDAO.CreateJoueur("joueur1", "mdp1");
+
+            var (id, role) = fakeDAO.VerifyUserAccount("joueur1", "mdp1");
+
+            Assert.Equal(1, id);
+            Assert.Equal("Joueur", role);
+
+            fakeDAO.ClearLists();
+
+
+        }
+
+        [Fact]
+        public void Test_VerifyUserAccount_CompteNonTrouve()
+        {
+
+            var (id, role) = fakeDAO.VerifyUserAccount("joueurInexistant", "mdpInexistant");
+
+            Assert.Equal(-1, id);
+            Assert.Equal("Non trouvé", role);
+
+            fakeDAO.ClearLists();
+        }
+
+
     }
 }
