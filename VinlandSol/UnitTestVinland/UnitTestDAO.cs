@@ -1,13 +1,13 @@
+
+using VinlandSol.BDD;
+using VinlandSol.Métier;
+
 namespace UnitTestVinland
 {
     public class UnitTestDAO
     {
-        private FakeDAO fakedao;
+        private FakeDAO fakeDAO = FakeDAO.Instance;
 
-        public UnitTestDAO()
-        {
-            fakeDAO = new FakeDAO();
-        }
 
         /// <summary>
         /// Vérifie que la méthode `CreateJoueur` crée un joueur avec les informations spécifiées.
@@ -15,18 +15,16 @@ namespace UnitTestVinland
         [Fact]
         public void Test_CreateJoueur()
         {
-            // Arrange
             string nom = "Joueur 1";
             string mdp = "motdepasse";
 
-            // Act
             fakeDAO.CreateJoueur(nom, mdp);
 
-            // Assert
-            List<Joueur> joueurs = fakeDAO.GetJoueurs();
-            Assert.Equal(1, joueurs.Count);
-            Assert.Equal(nom, joueurs[0].Nom);
-            Assert.Equal(mdp, joueurs[0].MotDePasse);
+            Joueur joueur = fakeDAO.GetJoueurs().Last();
+            Assert.Equal(nom, joueur.Nom);
+            Assert.Equal(mdp, joueur.Mdp);
+
+            fakeDAO.DeleteJoueur(joueur.ID); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
@@ -35,18 +33,16 @@ namespace UnitTestVinland
         [Fact]
         public void Test_CreateMJ()
         {
-            // Arrange
             string nom = "MJ 1";
             string mdp = "motdepasse";
 
-            // Act
             fakeDAO.CreateMJ(nom, mdp);
 
-            // Assert
-            List<MJ> mjs = fakeDAO.GetMJs();
-            Assert.Equal(1, mjs.Count);
-            Assert.Equal(nom, mjs[0].Nom);
-            Assert.Equal(mdp, mjs[0].MotDePasse);
+            MJ mj = fakeDAO.GetMJs().Last();
+            Assert.Equal(nom, mj.Nom);
+            Assert.Equal(mdp, mj.Mdp);
+
+            fakeDAO.DeleteMJ(mj.ID); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
@@ -55,20 +51,18 @@ namespace UnitTestVinland
         [Fact]
         public void Test_CreatePersonnage()
         {
-            // Arrange
             string nom = "Personnage 1";
             int idJoueur = 1;
             int idCampagne = 1;
 
-            // Act
             fakeDAO.CreatePersonnage(nom, idJoueur, idCampagne);
 
-            // Assert
-            List<Personnage> personnages = fakeDAO.GetPersonnages();
-            Assert.Equal(1, personnages.Count);
-            Assert.Equal(nom, personnages[0].Nom);
-            Assert.Equal(idJoueur, personnages[0].IdJoueur);
-            Assert.Equal(idCampagne, personnages[0].IdCampagne);
+            Personnage personnage = fakeDAO.GetPersonnages().Last();
+            Assert.Equal(nom, personnage.Nom);
+            Assert.Equal(idJoueur, personnage.IDJoueur);
+            Assert.Equal(idCampagne, personnage.IDCampagne);
+
+            fakeDAO.DeletePersonnage(personnage.ID); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
@@ -77,22 +71,21 @@ namespace UnitTestVinland
         [Fact]
         public void Test_CreateCarte()
         {
-            // Arrange
+            
             string nom = "Carte 1";
             int hauteur = 100;
             int largeur = 200;
             int idCampagne = 1;
-
-            // Act
+            
             fakeDAO.CreateCarte(nom, hauteur, largeur, idCampagne);
+            
+            Carte carte = fakeDAO.GetCartes().Last();
+            Assert.Equal(nom, carte.Nom);
+            Assert.Equal(hauteur, carte.Hauteur);
+            Assert.Equal(largeur, carte.Largeur);
+            Assert.Equal(idCampagne, carte.IDCampagne);
 
-            // Assert
-            List<Carte> cartes = fakeDAO.GetCartes();
-            Assert.Equal(1, cartes.Count);
-            Assert.Equal(nom, cartes[0].Nom);
-            Assert.Equal(hauteur, cartes[0].Hauteur);
-            Assert.Equal(largeur, cartes[0].Largeur);
-            Assert.Equal(idCampagne, cartes[0].IdCampagne);
+            fakeDAO.DeleteCarte(carte.Id); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
@@ -101,16 +94,15 @@ namespace UnitTestVinland
         [Fact]
         public void Test_CreateCampagne()
         {
-            // Arrange
+            
             string nom = "Campagne 1";
 
-            // Act
             fakeDAO.CreateCampagne(nom);
 
-            // Assert
-            List<Campagne> campagnes = fakeDAO.GetCampagnes();
-            Assert.Equal(1, campagnes.Count);
-            Assert.Equal(nom, campagnes[0].Nom);
+            Campagne campagne = fakeDAO.GetCampagnes().Last();
+            Assert.Equal(nom, campagne.Nom);
+
+            fakeDAO.DeleteCampagne(campagne.ID); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
@@ -119,15 +111,13 @@ namespace UnitTestVinland
         [Fact]
         public void Test_DeleteJoueur()
         {
-            // Arrange
+            
             string nom = "Joueur 1";
             string mdp = "motdepasse";
-            fakeDAO.CreateJoueur(nom, mdp);
-
-            // Act
+            fakeDAO.CreateJoueur(nom, mdp); // Initialisation du joueur à supprimer 
+            
             fakeDAO.DeleteJoueur(1);
 
-            // Assert
             List<Joueur> joueurs = fakeDAO.GetJoueurs();
             Assert.Empty(joueurs);
         }
@@ -138,15 +128,13 @@ namespace UnitTestVinland
         [Fact]
         public void Test_DeleteMJ()
         {
-            // Arrange
+            
             string nom = "MJ 1";
             string mdp = "motdepasse";
-            fakeDAO.CreateMJ(nom, mdp);
-
-            // Act
+            fakeDAO.CreateMJ(nom, mdp); // Initialisation du mj à supprimer 
+ 
             fakeDAO.DeleteMJ(1);
 
-            // Assert
             List<MJ> mjs = fakeDAO.GetMJs();
             Assert.Empty(mjs);
         }
@@ -157,16 +145,14 @@ namespace UnitTestVinland
         [Fact]
         public void Test_DeletePersonnage()
         {
-            // Arrange
+            
             string nom = "Personnage 1";
             int idJoueur = 1;
             int idCampagne = 1;
-            fakeDAO.CreatePersonnage(nom, idJoueur, idCampagne);
+            fakeDAO.CreatePersonnage(nom, idJoueur, idCampagne); // Initialisation du personnage à supprimer 
 
-            // Act
             fakeDAO.DeletePersonnage(1);
 
-            // Assert
             List<Personnage> personnages = fakeDAO.GetPersonnages();
             Assert.Empty(personnages);
         }
@@ -177,17 +163,15 @@ namespace UnitTestVinland
         [Fact]
         public void Test_DeleteCarte()
         {
-            // Arrange
+            
             string nom = "Carte 1";
             int hauteur = 100;
             int largeur = 200;
             int idCampagne = 1;
-            fakeDAO.CreateCarte(nom, hauteur, largeur, idCampagne);
+            fakeDAO.CreateCarte(nom, hauteur, largeur, idCampagne); // Initialisation de la carte à supprimer 
 
-            // Act
             fakeDAO.DeleteCarte(1);
-
-            // Assert
+            
             List<Carte> cartes = fakeDAO.GetCartes();
             Assert.Empty(cartes);
         }
@@ -198,14 +182,12 @@ namespace UnitTestVinland
         [Fact]
         public void Test_DeleteCampagne()
         {
-            // Arrange
+           
             string nom = "Campagne 1";
             fakeDAO.CreateCampagne(nom);
-
-            // Act
+            
             fakeDAO.DeleteCampagne(1);
-
-            // Assert
+            
             List<Campagne> campagnes = fakeDAO.GetCampagnes();
             Assert.Empty(campagnes);
         }
