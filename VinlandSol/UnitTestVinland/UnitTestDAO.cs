@@ -4,11 +4,19 @@ using VinlandSol.Métier;
 
 namespace UnitTestVinland
 {
+    /// <summary>
+    /// Classe de Test pour le Fake DAO
+    /// </summary>
+    /// <author>Alexis Paris</author>
     public class UnitTestDAO
     {
         #region Construct Instance
         private FakeDAO fakeDAO = FakeDAO.Instance;
 
+        /// <summary>
+        /// Initialisation du nettoyage de listes
+        /// </summary>
+        /// <author>Alexis Paris</author>
         public UnitTestDAO() 
         {
             fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
@@ -19,6 +27,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `CreateJoueur` crée un joueur avec les informations spécifiées.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_CreateJoueur()
         {
@@ -37,6 +46,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `CreateMJ` crée un MJ avec les informations spécifiées.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_CreateMJ()
         {
@@ -55,6 +65,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `CreatePersonnage` crée un personnage avec les informations spécifiées.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_CreatePersonnage()
         {
@@ -75,6 +86,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `CreateCarte` crée une carte avec les informations spécifiées.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_CreateCarte()
         {
@@ -98,6 +110,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `CreateCampagne` crée une campagne avec le nom spécifié.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_CreateCampagne()
         {
@@ -119,6 +132,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `DeleteJoueur` supprime le joueur avec l'identifiant spécifié.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_DeleteJoueur()
         {
@@ -136,6 +150,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `DeleteMJ` supprime le MJ avec l'identifiant spécifié.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_DeleteMJ()
         {
@@ -153,6 +168,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `DeletePersonnage` supprime le personnage avec l'identifiant spécifié.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_DeletePersonnage()
         {
@@ -171,6 +187,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `DeleteCarte` supprime la carte avec l'identifiant spécifié.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_DeleteCarte()
         {
@@ -190,6 +207,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `DeleteCampagne` supprime la campagne avec l'identifiant spécifié.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_DeleteCampagne()
         {
@@ -210,6 +228,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `GetJoueurs` renvoie une liste non vide.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_GetJoueurs()
         {
@@ -229,6 +248,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `GetMJs` renvoie une liste non vide.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_GetMJs()
         {
@@ -248,6 +268,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `GetCampagnes` renvoie une liste non vide.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_GetCampagnes()
         {
@@ -267,6 +288,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `GetPersonnages` renvoie une liste non vide.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_GetPersonnages()
         {
@@ -288,6 +310,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `GetCartes` renvoie une liste non vide.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_GetCartes()
         {
@@ -311,6 +334,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `UpdateCampagne()` met à jour correctement une campagne.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_UpdateCampagne()
         {
@@ -331,6 +355,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `UpdateCampagneName()` met à jour correctement le nom d'une campagne.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_UpdateCampagneName()
         {
@@ -350,6 +375,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `UpdatePersonnage()` met à jour correctement le nom d'un personnage
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_UpdatePersonnage()
         {
@@ -373,6 +399,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `UpdatePersonnageName()` met à jour correctement le nom du personnage.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_UpdatePersonnageName()
         {
@@ -395,6 +422,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `UpdateCarte()` met à jour correctement la carte.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_UpdateCarte()
         {
@@ -419,6 +447,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `UpdateCarteName()` met à jour correctement le nom de la carte.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_UpdateCarteName()
         {
@@ -443,6 +472,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `UpdateCarteVisibilite()` met à jour correctement la visibilité de la carte.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_UpdateCarteVisibilite()
         {
@@ -469,6 +499,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Teste la méthode "VerifyUserAccount"
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_VerifyUserAccount()
         {
@@ -485,6 +516,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Teste la même méthode si le compte n'est pas trouvé
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_VerifyUserAccount_CompteNonTrouve()
         {
