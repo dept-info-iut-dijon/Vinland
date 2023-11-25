@@ -19,7 +19,7 @@
 
         <!--Partie Gauche-->
         <ListBox Background="#f5d9a9" x:Name="CampagnesListe" Margin="80,250,820,246" d:ItemsSource="{d:SampleData ItemCount=5}" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
-        <Button Background="#fbf1cc" Content="Nouvelle Campagne" Margin="80,0,0,160" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="420" Height="70" Click="NouvelleCampagne_Click" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
+        <Button Background="#fbf1cc" x:Name="NouvCamp" Content="Nouvelle Campagne" Margin="80,0,0,160" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="420" Height="70" Click="NouvelleCampagne_Click" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -62,15 +62,7 @@
             </Button.Resources>
         </Button>
 
-        <Button Background="#fbf1cc" Content="Rejoindre la Camp" x:Name="RejoidCompS" Margin="0,0,545,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="70" Width="297" Click="OuvrirPersonnages_Click" Visibility="Collapsed" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
-            <Button.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="10"/>
-                </Style>
-            </Button.Resources>
-        </Button>
-
-        <TextBox x:Name="NomCampTextBox" Margin="0,0,294,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="30" Height="70" Visibility="Collapsed" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" Width="246"/>
+        <TextBox x:Name="NomCampTextBox" Margin="0,0,294,40" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="30" Height="70" Visibility="Collapsed" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" Width="450"/>
 
         <Button x:Name="Edit" FontSize="40" Margin="0,0,10,422" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="70" Background="{x:Null}" BorderThickness="0,0,0,0" Click="Edit_Click" Visibility="Collapsed">
             <Image Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />

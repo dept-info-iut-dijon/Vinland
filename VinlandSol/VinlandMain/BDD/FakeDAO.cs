@@ -164,13 +164,19 @@ namespace VinlandSol.BDD
         /// </summary>
         /// <param name="nom">Nom d'une campagne</param>
         /// <author>Alexis(setup) + Aaron</author>
-        public void CreateCampagne(string nom)
+        public void CreateCampagne(string nom, int idMJ)
         {
             int id = GetNextAvailableId(campagnes, campagne => campagne.ID);
-            Campagne newCampagne = new Campagne(id, nom);
+            Campagne newCampagne = new Campagne(id, nom, idMJ);
             campagnes.Add(newCampagne);
 
+            for(int i = 0; i < mjs.Count; i++) 
+            {
+                if (mjs[i].ID == idMJ) { mjs[i].IDCampagnes.Add(id); break; }
+            }
+
             _gestionnaireDeFichiers.Override(campagnes, "Campagnes.txt");
+            _gestionnaireDeFichiers.Override(mjs, "Mjs.txt");
         }
 
         #endregion
@@ -247,20 +253,41 @@ namespace VinlandSol.BDD
         }
 
         /// <summary>
-        /// Permet la suppression d'une campagne par son identifiant 
+        /// Permet la suppression d'une campagne par son identifiant , les références à cette campagne sont aussi supprimées
         /// </summary>
         /// <param name="id">Identifiant permettant de différencier une campagne</param>
         /// <author>Alexis(setup) + Aaron</author>
         public void DeleteCampagne(int id)
         {
-            if (campagnes.Count != 0)
+            Campagne campagneToRemove = campagnes.FirstOrDefault(c => c.ID == id); // On trouve la campagne à supprimer
+
+            if (campagneToRemove != null)
             {
-                for (int i = 0; i < campagnes.Count; i++)
+                MJ mjCreateur = mjs.FirstOrDefault(mj => mj.ID == campagneToRemove.IDMJ); // Le MJ créateur de la campagne est trouvé
+
+                if (mjCreateur != null)
                 {
-                    if (campagnes[i].ID == id) campagnes.RemoveAt(i);
+                    mjCreateur.IDCampagnes.Remove(id); // La référence à la campagne est supprimée de la liste du MJ
                 }
+
+                List<Personnage> personnagesToRemove = personnages.Where(p => p.IDCampagne == id).ToList(); // Les personnages de la campagne sont trouvés
+                foreach (var personnage in personnagesToRemove)
+                {
+                    foreach (var joueur in joueurs)
+                    {
+                        joueur.IDPersonnages.RemoveAll(persID => persID == personnage.ID); // La référence au personnage est supprimée de la liste du Joueur
+                    }
+                    personnages.Remove(personnage); // Le personnage est supprimé
+                }
+
+                campagnes.Remove(campagneToRemove); // La campagne est supprimée
+
+                // Mise à jour des fichiers
+                _gestionnaireDeFichiers.Override(campagnes, "Campagnes.txt");
+                _gestionnaireDeFichiers.Override(joueurs, "Joueurs.txt");
+                _gestionnaireDeFichiers.Override(personnages, "Personnages.txt");
+                _gestionnaireDeFichiers.Override(mjs, "Mjs.txt");
             }
-            _gestionnaireDeFichiers.Override(campagnes, "Campagnes.txt");
         }
 
         #endregion
@@ -298,6 +325,33 @@ namespace VinlandSol.BDD
         public List<Campagne> GetCampagnes()
         {
             _gestionnaireDeFichiers.Load<Campagne>("campagnes.txt");
+            return campagnes;
+        }
+
+        public List<Campagne> GetCurrentCampagnes(string roleUser, int idUser)
+        {
+            _gestionnaireDeFichiers.Load<Joueur>("joueurs.txt");
+            _gestionnaireDeFichiers.Load<Personnage>("personnages.txt");
+            _gestionnaireDeFichiers.Load<MJ>("mjs.txt");
+            _gestionnaireDeFichiers.Load<Campagne>("campagnes.txt");
+            List<Campagne> campagnes = new List<Campagne>();
+            if (roleUser == "MJ")
+            {
+                MJ currentMJ = GetMJ(idUser);
+                for (int i = 0; i < currentMJ.IDCampagnes.Count; i++)
+                {
+                    campagnes.Add(GetCampagne(currentMJ.IDCampagnes[i]));
+                }
+            }
+            else if (roleUser == "Joueur")
+            {
+                Joueur currentJoueur = GetJoueur(idUser);
+                for (int i = 0; i < currentJoueur.IDPersonnages.Count; i++)
+                {
+                    Personnage personnage = GetPersonnage(currentJoueur.IDPersonnages[i]);
+                    campagnes.Add(GetCampagne(personnage.IDCampagne));
+                }
+            }
             return campagnes;
         }
 
@@ -643,12 +697,30 @@ namespace VinlandSol.BDD
         /// <param name="username"></param>
         /// <param name="idCampagne"></param>
         /// <returns>Booléen indiquant si le nom est pris ou non</returns>
+        /// <author>Aaron</author>
         public bool PersonnageTaken(string username, int idCampagne) 
         {
             bool disponible = true;
             for (int i = 0; i < GetCampagne(idCampagne).IDPersonnages.Count; i++) 
             {
                 if (GetPersonnage(GetCampagne(idCampagne).IDPersonnages[i]).Nom == username) { disponible = false; break; }
+            }
+            return disponible;
+        }
+
+        /// <summary>
+        /// Permet de vérifier si le nom de la campagne est déjà utilisé pour une des autres campagnes du mj
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="idMJ"></param>
+        /// <returns>Booléen indiquant si le nom est pris ou non</returns>
+        /// <author>Aaron</author>
+        public bool CampagneTaken(string name, int idMJ)
+        {
+            bool disponible = true;
+            for (int i = 0; i < GetMJ(idMJ).IDCampagnes.Count; i++)
+            {
+                if (GetCampagne(GetMJ(idMJ).IDCampagnes[i]).Nom == name) { disponible = false; break; }
             }
             return disponible;
         }

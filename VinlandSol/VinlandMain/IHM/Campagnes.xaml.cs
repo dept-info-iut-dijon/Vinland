@@ -53,9 +53,9 @@ namespace VinlandMain.IHM
         /// <param name="index"></param>
         private void AfficherInfos(int index)
         {            
-            if (index >= 0 && index < fakeDAO.GetCampagnes().Count)
+            if (index >= 0 && index < fakeDAO.GetCurrentCampagnes(roleUser, idUser).Count)
             {
-                Campagne selectedCampagne = fakeDAO.GetCampagnes()[index];
+                Campagne selectedCampagne = fakeDAO.GetCurrentCampagnes(roleUser, idUser)[index];
                 NomCampTextBlock.Text = selectedCampagne.Nom;
                 DateCreationTextBlock.Text = selectedCampagne.DateCreation.ToString("dd/MM/yyyy HH:mm:ss");
                 DateModificationTextBlock.Text = selectedCampagne.DateModification.ToString("dd/MM/yyyy HH:mm:ss");
@@ -91,7 +91,7 @@ namespace VinlandMain.IHM
 
 
             if (string.IsNullOrWhiteSpace(contenu)) { messageCheckFail = "Le nom de la campagne ne peut pas être vide"; okCheck = false; }
-            if (fakeDAO.GetCampagnes().Any(c => c.Nom == contenu)) { messageCheckFail = "Une campagne du même nom existe déjà"; okCheck = false; }
+            if (fakeDAO.CampagneTaken(contenu,idUser) == false) { messageCheckFail = "Une campagne du même nom existe déjà"; okCheck = false; }
 
             if (!okCheck)
             {
@@ -103,7 +103,7 @@ namespace VinlandMain.IHM
             #endregion
 
             // Si tout va bien 
-            fakeDAO.CreateCampagne(contenu);
+            fakeDAO.CreateCampagne(contenu,idUser);
             MettreAJourListBox();
             NomNouvCamp.Visibility = Visibility.Collapsed;
             Valider.Visibility = Visibility.Collapsed;
@@ -118,17 +118,17 @@ namespace VinlandMain.IHM
         {
             int selectedIndex = CampagnesListe.SelectedIndex;
             RejoidComp.Visibility = Visibility.Collapsed;
-            RejoidCompS.Visibility = Visibility.Visible;
             Edit.Visibility = Visibility.Collapsed;
             EditS.Visibility = Visibility.Visible;
             Sauv.Visibility = Visibility.Visible;
+            NouvCamp.IsEnabled = false;
             SupprimerCamp.Visibility = Visibility.Visible;
             NomCampTextBox.Visibility = Visibility.Visible;
             NomCampTextBlock.Visibility = Visibility.Collapsed;
 
-            if (selectedIndex >= 0 && selectedIndex < fakeDAO.GetCampagnes().Count)
+            if (selectedIndex >= 0 && selectedIndex < fakeDAO.GetCurrentCampagnes(roleUser, idUser).Count)
             {
-                Campagne selectedCampagne = fakeDAO.GetCampagnes()[selectedIndex];
+                Campagne selectedCampagne = fakeDAO.GetCurrentCampagnes(roleUser, idUser)[selectedIndex];
                 NomCampTextBox.Text = selectedCampagne.Nom;
                 NomCampTextBox.Visibility = Visibility.Visible;
                 NomCampTextBlock.Visibility = Visibility.Collapsed;
@@ -153,27 +153,38 @@ namespace VinlandMain.IHM
         /// <param name="e"></param>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            Campagne campagneEdit = (Campagne)CampagnesListe.SelectedItem;
+            int idCampagneEdit = campagneEdit.ID;
+            string newCampaignName = NomCampTextBox.Text;
+            bool okCheck = true;
 
-            if (indiceCampagneEnEdition >= 0 && indiceCampagneEnEdition < fakeDAO.GetCampagnes().Count) 
+            #region Checks 
+
+            string? messageCheckFail = null;
+
+            // Un seul check à la fois, on ne veut pas aggresser l'utilisateur avec des popups en chaine
+            if (fakeDAO.CampagneTaken(newCampaignName,idUser) == false) { messageCheckFail = "Vous avez déjà une campagne portant ce nom"; okCheck = false; }
+            else if (string.IsNullOrWhiteSpace(newCampaignName)) { messageCheckFail = "Le nom de votre campagne ne peut pas être vide"; okCheck = false; }
+
+            if (!okCheck)
             {
-                string newCampaignName = NomCampTextBox.Text;
-
-                if (string.IsNullOrWhiteSpace(newCampaignName))
-                {
-                    CustomMessageBox messageBox = new CustomMessageBox("Le nom de la campagne ne peut pas être vide");
-                    messageBox.ShowDialog();
-                }
-
-                fakeDAO.UpdateCampagneName(indiceCampagneEnEdition+1, newCampaignName);
-
+                CustomMessageBox messageBox = new CustomMessageBox(messageCheckFail);
+                messageBox.ShowDialog();
             }
-            AfficherInfos(indiceCampagneEnEdition);
-            indiceCampagneEnEdition = -1;
-            MettreAJourListBox();
-            MasquerElements();
-            Edit.Visibility = Visibility.Collapsed;
-            RejoidComp.IsEnabled = false;
 
+            #endregion
+
+            if(okCheck)
+            {
+                fakeDAO.UpdateCampagneName(idCampagneEdit, newCampaignName);
+
+                AfficherInfos(indiceCampagneEnEdition);
+                indiceCampagneEnEdition = -1;
+                MettreAJourListBox();
+                MasquerElements();
+                Edit.Visibility = Visibility.Collapsed;
+                RejoidComp.IsEnabled = false;
+            }
         }
 
         /// <summary>
@@ -222,11 +233,11 @@ namespace VinlandMain.IHM
             NomCampTextBlock.Visibility = Visibility.Visible;
             Valider.Visibility = Visibility.Collapsed;
             RejoidComp.Visibility = Visibility.Visible;
-            RejoidCompS.Visibility = Visibility.Collapsed;
             Edit.Visibility = Visibility.Visible;
             EditS.Visibility = Visibility.Collapsed;
             Sauv.Visibility = Visibility.Collapsed;
             SupprimerCamp.Visibility = Visibility.Collapsed;
+            NouvCamp.IsEnabled = true;
         }
 
         /// <summary>
@@ -234,7 +245,7 @@ namespace VinlandMain.IHM
         /// </summary>
         private void MettreAJourListBox()
         {
-            List<Campagne> campagnes = fakeDAO.GetCampagnes(); // On récupère les campagnes depuis le fakeDAO
+            List<Campagne> campagnes = fakeDAO.GetCurrentCampagnes(roleUser, idUser); // On récupère les campagnes depuis le fakeDAO
 
             CampagnesListe.Items.Clear(); // On efface les éléments existants dans la ListBox
            
@@ -244,5 +255,7 @@ namespace VinlandMain.IHM
             }
             CampagnesListe.DisplayMemberPath = "Nom"; // On affiche le contenu de la propriété 'Nom' des campagnes
         }
+
+        
     }
 }
