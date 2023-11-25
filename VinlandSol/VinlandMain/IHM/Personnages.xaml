@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         x:Name="PersonnagesWindow"
         ResizeMode="NoResize"
+        Icon="/IHM/Media/Resources/logo.ico"
         Title="Personnages" Height="750" Width="1400">
     <Grid>
         <Grid.Background>

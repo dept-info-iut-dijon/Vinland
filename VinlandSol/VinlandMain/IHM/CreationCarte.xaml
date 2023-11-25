@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         x:Name="Creation_Carte"
         ResizeMode="NoResize"
+        Icon="/IHM/Media/Resources/logo.ico"
         Title="Création d'une carte" Height="800" Width="800">
 
     <Grid>

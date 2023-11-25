@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         x:Name="CampagnesWindow"
         ResizeMode="NoResize"
+        Icon="/IHM/Media/Resources/logo.ico"
         Title="Campagnes" Height="750" Width="1400" FontSize="35">
     <Grid>
         <Grid.Background>
