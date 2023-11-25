@@ -20,6 +20,7 @@
     <None Remove="IHM\Media\Resources\actualiser.png" />
     <None Remove="IHM\Media\Resources\background.png" />
     <None Remove="IHM\Media\Resources\crayon.png" />
+    <None Remove="IHM\Media\Resources\fleche_retour.png" />
     <None Remove="IHM\Media\Resources\hexagon.png" />
     <None Remove="IHM\Media\Resources\logo.ico" />
     <None Remove="IHM\Media\Resources\poubelle.png" />
@@ -65,6 +66,9 @@
     </Resource>
     <Resource Include="IHM\Media\Resources\crayon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="IHM\Media\Resources\fleche_retour.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="IHM\Media\Resources\hexagon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
