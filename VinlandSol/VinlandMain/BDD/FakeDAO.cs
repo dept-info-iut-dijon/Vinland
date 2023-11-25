@@ -316,40 +316,37 @@ namespace VinlandSol.BDD
             return mjs;
         }
 
-
         /// <summary>
-        /// Donne la liste des campagnes 
+        /// Retourne la liste des campagnes connues de l'utilisateur donné
         /// </summary>
-        /// <returns>une liste</returns>
-        /// <author>Alexis(setup) + Aaron</author>
-        public List<Campagne> GetCampagnes()
-        {
-            _gestionnaireDeFichiers.Load<Campagne>("campagnes.txt");
-            return campagnes;
-        }
-
+        /// <param name="roleUser">le rôle de l'utilisateur ("MJ" ou "Joueur")</param>
+        /// <param name="idUser">l'id de l'utilisateur</param>
+        /// <returns>La liste des campagnes</returns>
+        /// <Author>Aaron</Author>
         public List<Campagne> GetCurrentCampagnes(string roleUser, int idUser)
         {
+            // On récupère les données nécéssaires
             _gestionnaireDeFichiers.Load<Joueur>("joueurs.txt");
             _gestionnaireDeFichiers.Load<Personnage>("personnages.txt");
             _gestionnaireDeFichiers.Load<MJ>("mjs.txt");
             _gestionnaireDeFichiers.Load<Campagne>("campagnes.txt");
-            List<Campagne> campagnes = new List<Campagne>();
-            if (roleUser == "MJ")
+
+            List<Campagne> campagnes = new List<Campagne>(); // On initialise la liste a renvoyer
+            if (roleUser == "MJ") // Si l'utilisateur est un mj
             {
-                MJ currentMJ = GetMJ(idUser);
-                for (int i = 0; i < currentMJ.IDCampagnes.Count; i++)
+                MJ currentMJ = GetMJ(idUser); // On récupère le mj référencé
+                for (int i = 0; i < currentMJ.IDCampagnes.Count; i++) // Pour chaque campagne que le mj a dans ses références
                 {
-                    campagnes.Add(GetCampagne(currentMJ.IDCampagnes[i]));
+                    campagnes.Add(GetCampagne(currentMJ.IDCampagnes[i])); // On ajoute à la liste de renvoi la campagne correpondante à l'id de référence
                 }
             }
-            else if (roleUser == "Joueur")
+            else if (roleUser == "Joueur") // Si l'utilisateur est un joueur
             {
-                Joueur currentJoueur = GetJoueur(idUser);
-                for (int i = 0; i < currentJoueur.IDPersonnages.Count; i++)
+                Joueur currentJoueur = GetJoueur(idUser); // On récupère le joueur référencé
+                for (int i = 0; i < currentJoueur.IDPersonnages.Count; i++) // Pour chaque personnage que le mj a dans ses références
                 {
-                    Personnage personnage = GetPersonnage(currentJoueur.IDPersonnages[i]);
-                    campagnes.Add(GetCampagne(personnage.IDCampagne));
+                    Personnage personnage = GetPersonnage(currentJoueur.IDPersonnages[i]); // On récupère chaque personnage correspondant à l'id de référence
+                    campagnes.Add(GetCampagne(personnage.IDCampagne)); // On ajoute à la liste de renvoi la campagne correpondante à l'id de référence contenue dans le personnage
                 }
             }
             return campagnes;
