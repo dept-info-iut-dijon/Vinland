@@ -1,7 +1,7 @@
 # Vinland
 > Une Application de cartographie et d’exploration à des fins ludiques
 
-Ce README est disponible en : [English](README-EN.md) 
+Ce README est disponible en : [English](README-EN.md) , [Latin](README-LAT.md)
 
 ## Usage
 
