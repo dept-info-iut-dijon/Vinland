@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using VinlandSol.BDD;
@@ -29,22 +30,28 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void BtnAjouter_Click(object sender, RoutedEventArgs e)
         {
-            string idJoueur = IdJoueur.Text;
+            string nomJoueur = NomJoueur.Text;
             string personnageNom = PersonnageNom.Text;
             DateTime dateCreation = DateTime.Now;
-            string? messageCheckFail = null;
-            int comboCheckFail = 0;
-            int idJoueurValide = -1;
+            List<Joueur> joueurs = fakeDAO.GetJoueurs();
+            int idJoueur = -1;
+            bool okCheck = true;
 
             #region Checks
 
-            if (string.IsNullOrWhiteSpace(personnageNom)) { messageCheckFail = "Le nom du personnage ne peut pas être vide"; comboCheckFail++; }
-            if (string.IsNullOrWhiteSpace(idJoueur)) { messageCheckFail = "Le champ idJoueur ne peut pas être vide"; comboCheckFail++; }
-            if (int.TryParse(idJoueur,out idJoueurValide) == false || idJoueurValide < 0 || idJoueurValide > fakeDAO.GetJoueurs().Count) { messageCheckFail = "L'ID de joueur renseigné n'est pas valide"; comboCheckFail++; }
-            if (!fakeDAO.PersonnageTaken(personnageNom, idCampagne)) { messageCheckFail = "Ce nom de Personnage est déjà utilisé dans votre campagne"; comboCheckFail++; }
+            string? messageCheckFail = null;
 
-            if (comboCheckFail >= 2) messageCheckFail = "Les deux champs contiennent des valeurs non valides";
-            if (comboCheckFail >= 1)
+            foreach (Joueur joueur in joueurs)
+            {
+                if (joueur.Nom == nomJoueur) idJoueur = joueur.ID;
+            }
+            // Un seul check à la fois, on ne veut pas aggresser l'utilisateur avec des popups en chaine
+            if (string.IsNullOrWhiteSpace(personnageNom)) { messageCheckFail = "Le nom du personnage ne peut pas être vide"; okCheck = false; }
+            else if (string.IsNullOrWhiteSpace(nomJoueur)) { messageCheckFail = "Le champ idJoueur ne peut pas être vide"; okCheck = false; }
+            else if (idJoueur == -1) { messageCheckFail = "Le joueur renseigné est introuvable"; okCheck = false; }
+            else if (!fakeDAO.PersonnageTaken(personnageNom, idCampagne)) { messageCheckFail = "Ce nom de Personnage est déjà utilisé dans votre campagne"; okCheck = false; }
+        
+            if (!okCheck)
             {
                 CustomMessageBox messagebox = new CustomMessageBox(messageCheckFail);
                 messagebox.ShowDialog();
@@ -52,9 +59,9 @@ namespace VinlandSol.IHM
 
             #endregion
 
-            if (comboCheckFail == 0) // Si tout va bien
+            if (okCheck) // Si tout va bien
             {
-                fakeDAO.CreatePersonnage(personnageNom, int.Parse(idJoueur), idCampagne);
+                fakeDAO.CreatePersonnage(personnageNom, idJoueur, idCampagne);
                 CustomMessageBox messagebox = new CustomMessageBox("Personnage ajouté avec succès !");
                 messagebox.ShowDialog();
                 this.Close();
