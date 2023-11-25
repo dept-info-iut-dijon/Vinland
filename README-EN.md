@@ -1,7 +1,7 @@
 # Vinland
 > A Mapping and Exploration Application for Recreational Use
 
-This README is available in [French](README.md) 
+This README is available in : [Français](README.md) 
 
 ## Usage
 
