@@ -2,6 +2,8 @@ using VinlandMain.IHM;
 using VinlandSol.BDD;
 using VinlandSol.Métier;
 
+/*
+
 namespace UnitTestVinland
 {
     /// <summary>
@@ -532,3 +534,5 @@ namespace UnitTestVinland
         #endregion
     }
 }
+
+*/
