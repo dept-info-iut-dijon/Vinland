@@ -103,9 +103,9 @@ namespace VinlandSol.IHM
         private void InitializeTerrains()
         {
             // Initialisation des types de terrain avec leurs couleurs
-            Terrain vide = new Terrain("vide.png") { Name = "Vide", Color = Colors.White };
-            Terrain plaine = new Terrain("plaine.png") { Name = "Plaine", Color = Colors.LightGreen };
-            Terrain desert = new Terrain("desert.png") { Name = "Desert", Color = (Color)ColorConverter.ConvertFromString("#f5d9a9") };
+            Terrain vide = new Terrain { Name = "Vide", ImagePath = "vide.png",Color = Colors.White };
+            Terrain plaine = new Terrain { Name = "Plaine", ImagePath = "plaine.png", Color = Colors.LightGreen };
+            Terrain desert = new Terrain { Name = "Desert", ImagePath = "desert.png", Color = (Color)ColorConverter.ConvertFromString("#f5d9a9") };
 
             terrains.Add(vide);  // Ajout du terrain "Vide" à la liste de terrains
             terrains.Add(plaine);  // Ajout du terrain "Plaine" à la liste de terrains
@@ -145,7 +145,7 @@ namespace VinlandSol.IHM
                     {
                         x += hexWidth * 0.48;
                     }
-                    Hexagon hexagon = new Hexagon(x, y);
+                    Hexagon hexagon = new Hexagon(hexagons.Count+1, x, y);
 
                     hexagon.ImageSource = new BitmapImage(new Uri(Path.Combine("pack://application:,,,/VinlandSol;component/IHM/Media/Resources/", "hexagon.png")));
                     hexagon.ImagePath = "hexagon.png";
