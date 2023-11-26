@@ -149,8 +149,8 @@ namespace VinlandSol.IHM
 
                     hexagon.ImageSource = new BitmapImage(new Uri(Path.Combine("pack://application:,,,/VinlandSol;component/IHM/Media/Resources/", "hexagon.png")));
                     hexagon.ImagePath = "hexagon.png";
-                    hexagon.X = row + 1;
-                    hexagon.Y = col + 1;
+                    hexagon.X = row+1; // Commence par 1
+                    hexagon.Y = col+1; // Commence par 1
 
                     Image imageControl = new Image
                     {

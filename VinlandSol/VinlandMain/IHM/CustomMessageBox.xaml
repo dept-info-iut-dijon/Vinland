@@ -21,9 +21,23 @@
         </Grid.Background>
 
 
-        <Label x:Name="MessageAffiche" Margin="0,80,0,97" FontSize="20" HorizontalContentAlignment="Center" HorizontalAlignment="Center" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" Width="476" Content="ss" />
+        <Label x:Name="MessageAffiche" Margin="0,80,0,97" FontSize="20" HorizontalContentAlignment="Center" HorizontalAlignment="Center" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" Width="476" Content="" />
 
-        <Button Background="#fbf1cc" x:Name="Ok_Button" Click="Ok_Click" Content="OK" Margin="207,172,207,0" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" VerticalAlignment="Top" Height="30">
+        <Button Background="#fbf1cc" x:Name="Ok_Button" Content="OK" Margin="207,172,207,0" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" VerticalAlignment="Top" Height="30">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Background="#fbf1cc" x:Name="Non" Content="Non" Margin="298,172,116,0" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" VerticalAlignment="Top" Height="30">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Background="#fbf1cc" x:Name="Oui" Content="Oui" Margin="116,172,298,0" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" VerticalAlignment="Top" Height="30">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>
