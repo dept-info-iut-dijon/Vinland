@@ -285,7 +285,7 @@ namespace VinlandMain.IHM
                 indiceCampagneEnEdition = -1; // On n'édite plus de campagne
                 MettreAJourListBox(); // On met à jour la liste des campagnes
                 MasquerElements(); // On masque les élements d'édition
-                CampagnesListe.SelectedIndex = CampagnesListe.Items.Count - 1; // La campagne selectionnée est celle nouvellement éditée - On voit ses informations directement
+                
             }
         }
 

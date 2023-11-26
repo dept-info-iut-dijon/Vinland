@@ -54,10 +54,10 @@ namespace VinlandSol.IHM
         /// <param name="selectedIndex"></param>
         private void AfficherInformationsPersonnage(int selectedIndex)
         {
-            if (selectedIndex >= 0 && selectedIndex < fakeDAO.GetPersonnages().Count)
+            if (selectedIndex >= 0 && selectedIndex < fakeDAO.GetCurrentPersonnages(idCampagne).Count)
             {
-                Personnage personnage = fakeDAO.GetPersonnages()[selectedIndex];
-                NomUtilisateurTextBlock.Text = fakeDAO.GetJoueur(personnage.ID).Nom;
+                Personnage personnage = fakeDAO.GetCurrentPersonnages(idCampagne)[selectedIndex];
+                NomUtilisateurTextBlock.Text = fakeDAO.GetJoueur(personnage.IDJoueur).Nom;
                 NomPersonnageTextBlock.Text = personnage.Nom;
                 DateCreationTextBlock.Text = personnage.DateCreation.ToString("dd/MM/yyyy HH:mm:ss"); ;
             }
@@ -117,22 +117,36 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         public void ValiderButton_Click(object sender, RoutedEventArgs e)
         {
+            Personnage personnageEdit = (Personnage)PersonnagesListe.SelectedItem; // On récupère le personnage selectionné
+            int idPersonnageEdit = personnageEdit.ID; // On récupère l'ID du personnage
             string nouvNomPersonnage = NomPersonnageTextBox.Text;
+            bool okCheck = true;
 
-            if (string.IsNullOrWhiteSpace(nouvNomPersonnage))
+            #region Checks
+
+            string? messageCheckFail = null;
+            // Un seul check à la fois, on ne veut pas aggresser l'utilisateur avec des popups en chaine
+            if (fakeDAO.PersonnageTaken(nouvNomPersonnage,idCampagne) == false) { messageCheckFail = "Vous avez déjà un personnage portant ce nom"; okCheck = false; }
+            if (string.IsNullOrWhiteSpace(nouvNomPersonnage)) { messageCheckFail = "Le nom du personnage ne peut pas être vide"; okCheck = false; }
+
+            if (!okCheck) // Si un problème est rencontré, on en informe l'utilisateur
             {
-                CustomMessageBox customMessageBox = new CustomMessageBox("Le nom du personnage ne peut pas être vide.");
+                CustomMessageBox customMessageBox = new CustomMessageBox(messageCheckFail);
                 customMessageBox.ShowDialog();
-                return;
             }
 
-            fakeDAO.UpdatePersonnageName(PersonnagesListe.SelectedIndex+1,nouvNomPersonnage);
+            #endregion
 
-            NomPersonnageTextBox.Text = "";
-            AfficherInformationsPersonnage(PersonnagesListe.SelectedIndex);
-            MettreAJourListBox();
-            MasquerElements();
-            Edit.Visibility = Visibility.Collapsed;
+            if(okCheck) // Si tout va bien
+            {
+                fakeDAO.UpdatePersonnageName(idPersonnageEdit, nouvNomPersonnage);
+
+                NomPersonnageTextBox.Text = "";
+                AfficherInformationsPersonnage(PersonnagesListe.SelectedIndex);
+                MettreAJourListBox();
+                MasquerElements();
+            }
+
         }
 
         /// <summary>
@@ -152,7 +166,7 @@ namespace VinlandSol.IHM
         /// </summary>
         public void MettreAJourListBox()
         {
-            List<Personnage> personnages = fakeDAO.GetPersonnages(); // On récupère les personnages depuis le fakeDAO
+            List<Personnage> personnages = fakeDAO.GetCurrentPersonnages(idCampagne); // On récupère les personnages depuis le fakeDAO
 
             PersonnagesListe.Items.Clear(); // On efface les éléments existants dans la ListBox
 
