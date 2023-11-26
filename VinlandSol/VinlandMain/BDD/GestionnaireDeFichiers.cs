@@ -232,7 +232,7 @@ namespace VinlandSol.BDD
                 else if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(List<>)) // Si la propriété est une liste
                 {
                     Type elementType = propertyType.GetGenericArguments()[0];
-                    string[] listValues = values[i].Split(',');
+                    string[] listValues = values[i].Split('|');
 
                     if (listValues.Length == 1 && string.Equals(listValues[0], "vide", StringComparison.OrdinalIgnoreCase))
                     {
