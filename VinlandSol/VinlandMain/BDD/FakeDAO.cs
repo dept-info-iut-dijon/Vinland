@@ -14,13 +14,25 @@ namespace VinlandSol.BDD
     /// <author>Aaron</author>
     public class FakeDAO
     {
+        #region Listes
+
+        private List<Joueur> joueurs;
+        private List<MJ> mjs;
+        private List<Campagne> campagnes;
+        private List<Personnage> personnages;
+        private List<Carte> cartes;
+        private List<Hexagon> hexagones;
+        private List<Terrain> terrains;
+
+        #endregion
+
         #region Setup Singleton
 
         private GestionnaireDeFichiers _gestionnaireDeFichiers = GestionnaireDeFichiers.Instance;
         private static FakeDAO _instance; // Instance interne du singleton
 
         /// <summary>
-        /// Constructeur de la classe 
+        /// Constructeur de la classe - Récupères les données du .txt
         /// </summary>
         /// <author>Aaron</author>
         private FakeDAO()
@@ -30,7 +42,8 @@ namespace VinlandSol.BDD
             campagnes = _gestionnaireDeFichiers.Load<Campagne>("campagnes.txt");
             personnages = _gestionnaireDeFichiers.Load<Personnage>("personnages.txt");
             cartes = _gestionnaireDeFichiers.Load<Carte>("cartes.txt");
-
+            hexagones = _gestionnaireDeFichiers.Load<Hexagon>("hexagons.txt");
+            terrains = _gestionnaireDeFichiers.Load<Terrain>("terrain.txt");
         }
 
         /// <summary>
@@ -48,16 +61,6 @@ namespace VinlandSol.BDD
                 return _instance;
             }
         }
-
-        #endregion
-
-        #region Listes
-
-        private List<Joueur> joueurs;
-        private List<MJ> mjs;
-        private List<Campagne> campagnes;
-        private List<Personnage> personnages;
-        private List<Carte> cartes;
 
         #endregion
 

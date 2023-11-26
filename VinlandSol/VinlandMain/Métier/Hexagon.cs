@@ -2,16 +2,14 @@
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
-namespace VinlandSol.IHM
+namespace VinlandSol.Métier
 {
     public class Hexagon
     {
-        private double x;
-        private double y;
         private Terrain associatedTerrain;
         private BitmapImage imageSource;
 
-
+        public int ID { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
         public string ImagePath { get; set; }
@@ -23,8 +21,18 @@ namespace VinlandSol.IHM
         /// </summary>
         public BitmapImage ImageSource
         {
-            get { return new BitmapImage(new Uri("pack://application:,,,/VinlandSol;component/IHM/Media/Resources/" + ImagePath)); }
+            get { return imageSource; }
             set { imageSource = value; }
+        }
+        public void UpdateImage()
+        {
+            imageSource = new BitmapImage(new Uri("pack://application:,,,/VinlandSol;component/IHM/Media/Resources/" + ImagePath));
+        }
+
+        public void UpdateTerrain(Terrain newTerrain)
+        {
+            AssociatedTerrain = newTerrain;
+            ImagePath = newTerrain.ImagePath;
         }
 
         /// <summary>
@@ -32,10 +40,11 @@ namespace VinlandSol.IHM
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public Hexagon(double x, double y)
+        public Hexagon(int id, double x, double y)
         {
-            this.x = x;
-            this.y = y;
+            ID = id;
+            X = x;
+            Y = y;
         }
     }
 }
