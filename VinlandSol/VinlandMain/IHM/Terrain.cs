@@ -10,5 +10,9 @@ namespace VinlandSol.IHM
         public string Name { get; set; }
         public string ImagePath { get; set; }
         public Color Color { get; set; }
+        public Terrain(string imagePath)
+        {
+            ImagePath = imagePath;
+        }
     }
 }
