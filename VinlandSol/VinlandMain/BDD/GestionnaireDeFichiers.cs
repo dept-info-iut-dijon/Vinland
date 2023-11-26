@@ -64,6 +64,8 @@ namespace VinlandSol.BDD
             SetupFichier("Campagnes.txt", GetHeader<Campagne>());
             SetupFichier("Personnages.txt", GetHeader<Personnage>());
             SetupFichier("Cartes.txt", GetHeader<Carte>());
+            SetupFichier("Hexagons.txt", GetHeader<Hexagon>());
+            SetupFichier("Terrains.txt", GetHeader<Terrain>());
         }
 
         /// <summary>
