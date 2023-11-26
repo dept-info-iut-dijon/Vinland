@@ -218,6 +218,7 @@ namespace VinlandSol.BDD
                 }
                 else if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(List<>)) // Si la propriété est une liste
                 {
+
                     Type elementType = propertyType.GetGenericArguments()[0]; // On récupère le type de valeur de la liste 
                     string[] listValues = values[i].Split('|'); // On sépare les valeurs de la liste en plusieurs strings 
 

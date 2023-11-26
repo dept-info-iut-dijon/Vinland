@@ -23,8 +23,18 @@ namespace VinlandSol.IHM
         /// </summary>
         public BitmapImage ImageSource
         {
-            get { return new BitmapImage(new Uri("pack://application:,,,/VinlandSol;component/IHM/Media/Resources/" + ImagePath)); }
+            get { return imageSource; }
             set { imageSource = value; }
+        }
+        public void UpdateImage()
+        {
+            imageSource = new BitmapImage(new Uri("pack://application:,,,/VinlandSol;component/IHM/Media/Resources/" + ImagePath));
+        }
+
+        public void UpdateTerrain(Terrain newTerrain)
+        {
+            AssociatedTerrain = newTerrain;
+            ImagePath = newTerrain.ImagePath;
         }
 
         /// <summary>
