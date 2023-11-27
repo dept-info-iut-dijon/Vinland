@@ -26,7 +26,7 @@ namespace VinlandSol.IHM
         /// <summary>
         /// Constructeur de la page
         /// </summary>
-        public Cartes(int idUser, string roleUser, int idcampagne)
+        public Cartes(int idUser, string roleUser, int idCampagne)
         {
             InitializeComponent();
             this.idUser = idUser;
@@ -59,14 +59,14 @@ namespace VinlandSol.IHM
         /// <param name="selectedIndex"></param>
         private void AfficherInformationsCarte(int selectedIndex)
         {
-            if (selectedIndex >= 0 && selectedIndex < fakeDAO.GetCartes().Count)
+            if (selectedIndex >= 0 && selectedIndex < fakeDAO.GetCurrentCartes(idCampagne).Count)
             {
-                Métier.Carte carte = fakeDAO.GetCartes()[selectedIndex];
+                Métier.Carte carte = fakeDAO.GetCurrentCartes(idCampagne)[selectedIndex];
                 NomCarteTextBlock.Text = carte.Nom;
                 DateCreationTextBlock.Text = carte.DateCreation.ToString("dd/MM/yyyy HH:mm:ss");
                 DateModificationTextBlock.Text = carte.DateModification.ToString("dd/MM/yyyy HH:mm:ss");
 
-                if (fakeDAO.GetCartes()[selectedIndex].Visibilite) 
+                if (fakeDAO.GetCurrentCartes(idCampagne)[selectedIndex].Visibilite) 
                 {
                     VisibleCarte.Visibility = Visibility.Visible;
                     VisibleCarteHidden.Visibility = Visibility.Collapsed;
@@ -197,7 +197,7 @@ namespace VinlandSol.IHM
         /// </summary>
         public void MettreAJourListBox()
         {
-            List<Métier.Carte> cartes = fakeDAO.GetCartes(); // On récupère les cartes depuis le fakeDAO
+            List<Métier.Carte> cartes = fakeDAO.GetCurrentCartes(idCampagne); // On récupère les cartes depuis le fakeDAO
 
             CartesListe.Items.Clear(); // On efface les éléments existants dans la ListBox
 
@@ -219,6 +219,7 @@ namespace VinlandSol.IHM
         {
             if (creaCarteOpen == false)
             {
+                this.IsEnabled = false;
                 pagecreationcarte = new CreationCarte(this,idCampagne);
                 pagecreationcarte.Closed += CreationCarte_Closed;
                 pagecreationcarte.Left = this.Left;
@@ -236,6 +237,7 @@ namespace VinlandSol.IHM
         private void CreationCarte_Closed(object sender, EventArgs e)
         {
             creaCarteOpen = false;
+            this.IsEnabled = true;
             if (Application.Current.Windows.Count == 1)
             {
                 Application.Current.Shutdown();

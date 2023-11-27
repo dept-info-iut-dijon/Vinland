@@ -188,6 +188,7 @@ namespace VinlandSol.IHM
         {
             if (ajouterPersoOpen == false)
             {
+                this.IsEnabled = false;
                 pageajouterPerso = new AjouterPersonnage(this,idCampagne);
                 pageajouterPerso.Closed += AjouterPerso_Closed;
                 pageajouterPerso.Left = this.Left;
@@ -205,6 +206,7 @@ namespace VinlandSol.IHM
         private void AjouterPerso_Closed(object sender, EventArgs e)
         {
             ajouterPersoOpen = false;
+            this.IsEnabled = true;
             if (Application.Current.Windows.Count == 1)
             {
                 Application.Current.Shutdown();
