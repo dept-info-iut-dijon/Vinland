@@ -73,8 +73,8 @@ namespace VinlandSol.IHM
         private void InitializeTerrains()
         {
             Terrain vide = new Terrain { Name = "Vide", ImagePath = "vide.png", Color = Colors.White };
-            Terrain plaine = new Terrain { Name = "Plaine", ImagePath = "plaine.png", Color = Colors.Red };
-            Terrain desert = new Terrain { Name = "Desert", ImagePath = "desert.png", Color = Colors.Blue };
+            Terrain plaine = new Terrain { Name = "Plaine", ImagePath = "plaine.png", Color = Colors.LightGreen };
+            Terrain desert = new Terrain { Name = "Desert", ImagePath = "desert.png", Color = (Color)ColorConverter.ConvertFromString("#f5d9a9") };
 
             terrains.Add(vide);
             terrains.Add(plaine);
