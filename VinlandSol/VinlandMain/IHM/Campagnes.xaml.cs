@@ -23,7 +23,6 @@ namespace VinlandMain.IHM
         private FakeDAO fakeDAO = FakeDAO.Instance;
         private int idUser; // L'id de l'utilisateur identifié
         private string roleUser; // Le role de l'utilisateur identifié
-        private int indiceCampagneEnEdition = -1;
 
         #endregion
 
@@ -211,7 +210,7 @@ namespace VinlandMain.IHM
         /// <Author>Baptiste</Author>
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
-            int selectedIndex = CampagnesListe.SelectedIndex; // On récupère l'index de la campagne selectionnée
+            Campagne selectedCampagne = (Campagne)CampagnesListe.SelectedItem; // On récupère la campagne selectionnée
             // On affiche les options d'édition
             SupprimerCamp.Visibility = Visibility.Visible;
             NomCampTextBox.Visibility = Visibility.Visible;
@@ -222,19 +221,11 @@ namespace VinlandMain.IHM
             RejoidComp.Visibility = Visibility.Collapsed;
             Edit.Visibility = Visibility.Collapsed;
             NouvCamp.IsEnabled = false; // NouvCamp est uniquement désactivé pour l'aspect visuel
-            NomCampTextBlock.Visibility = Visibility.Collapsed;
 
             CacheCampagnesListe.Visibility = Visibility.Visible; // On empêche toute interaction avec la liste des campagnes
-
-            if (selectedIndex >= 0 && selectedIndex < fakeDAO.GetCurrentCampagnes(roleUser, idUser).Count)
-            {
-                Campagne selectedCampagne = fakeDAO.GetCurrentCampagnes(roleUser, idUser)[selectedIndex]; // On récupère la campagne selectionnée du fakeDAO
-                CacheCampagnesListe.Content = "Vous modifiez la campagne : \n" + selectedCampagne.Nom; // On indique à l'utilisateur le nom originel de sa campagne
-                NomCampTextBox.Text = selectedCampagne.Nom;
-                NomCampTextBox.Visibility = Visibility.Visible;
-                NomCampTextBlock.Visibility = Visibility.Collapsed;
-                indiceCampagneEnEdition = selectedIndex;
-            }
+            CacheCampagnesListe.Content = "Vous modifiez la campagne : \n" + selectedCampagne.Nom; // On indique à l'utilisateur le nom originel de sa campagne
+            NomCampTextBox.Text = selectedCampagne.Nom;
+            NomCampTextBox.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -256,6 +247,7 @@ namespace VinlandMain.IHM
         /// <Author>Baptiste</Author>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            int indexCampagneEdit = CampagnesListe.SelectedIndex;
             Campagne campagneEdit = (Campagne)CampagnesListe.SelectedItem; // On récupère la campagne selectionnée
             int idCampagneEdit = campagneEdit.ID; // On récupère l'ID de la campagne
             string newCampaignName = NomCampTextBox.Text; // On récupère le nouveau nom de la campagne
@@ -281,8 +273,7 @@ namespace VinlandMain.IHM
             {
                 fakeDAO.UpdateCampagneName(idCampagneEdit, newCampaignName); // On met à jour la campagne
 
-                AfficherInfos(indiceCampagneEnEdition); // On met à jour les informations affichées
-                indiceCampagneEnEdition = -1; // On n'édite plus de campagne
+                AfficherInfos(indexCampagneEdit); // On met à jour les informations affichées
                 MettreAJourListBox(); // On met à jour la liste des campagnes
                 MasquerElements(); // On masque les élements d'édition
                 
@@ -329,7 +320,6 @@ namespace VinlandMain.IHM
         private void MasquerElements()
         {
             NomCampTextBox.Visibility = Visibility.Collapsed;
-            NomCampTextBlock.Visibility = Visibility.Visible;
             Valider.Visibility = Visibility.Collapsed;
             RejoidComp.Visibility = Visibility.Visible;
             Edit.Visibility = Visibility.Visible;

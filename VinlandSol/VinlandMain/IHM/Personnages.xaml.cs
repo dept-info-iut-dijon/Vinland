@@ -19,7 +19,6 @@ namespace VinlandSol.IHM
         private int idUser;
         private string roleUser;
         private int idCampagne;
-        private int indicePersonnageEnEdition = -1;
         private AjouterPersonnage? pageajouterPerso;
         private bool ajouterPersoOpen = false;
 
@@ -34,7 +33,6 @@ namespace VinlandSol.IHM
             this.roleUser = roleUser;
             MettreAJourListBox();
             Closed += ShutdownEnForce;
-
         }
 
         /// <summary>
@@ -93,11 +91,23 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
+            Personnage selectedPersonnage = (Personnage)PersonnagesListe.SelectedItem; // On récupère le personnage selectionnée
+            // On affiche les options d'édition
             NomPersonnageTextBox.Visibility = Visibility.Visible;
             ValiderButton.Visibility = Visibility.Visible;
             BoutonSuppression.Visibility = Visibility.Visible;
             EditS.Visibility = Visibility.Visible;
+            // On cache les options de non édition
             Edit.Visibility = Visibility.Collapsed;
+            SelectCarte.Visibility = Visibility.Collapsed;
+            // Uniquement désactivés pour l'aspect visuel
+            AjoutPerso.IsEnabled = false;
+            Retour.IsEnabled = false;
+
+            CachePersonnagesListe.Visibility = Visibility.Visible; // On empêche toute interaction avec la liste des personnages
+            CachePersonnagesListe.Content = "Vous modifiez le nom du personnage : \n" + selectedPersonnage.Nom; // On indique à l'utilisateur le nom originel de son personnage
+            NomPersonnageTextBox.Text = selectedPersonnage.Nom;
+            NomPersonnageTextBox.Visibility = Visibility.Visible;
 
         }
         /// <summary>
@@ -159,6 +169,12 @@ namespace VinlandSol.IHM
             BoutonSuppression.Visibility = Visibility.Collapsed;
             Edit.Visibility = Visibility.Visible;
             EditS.Visibility = Visibility.Collapsed;
+            AjoutPerso.Visibility = Visibility.Visible;
+            SelectCarte.Visibility = Visibility.Visible;
+            CachePersonnagesListe.Visibility = Visibility.Collapsed;
+            CachePersonnagesListe.Content = "";
+            AjoutPerso.IsEnabled = true;
+            Retour.IsEnabled = true;
         }
 
         /// <summary>

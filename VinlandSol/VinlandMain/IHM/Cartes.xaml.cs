@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 using VinlandSol.BDD;
 using VinlandSol.Métier;
 using VinlandMain.IHM;
+using System.Windows.Media;
 
 namespace VinlandSol.IHM
 {
@@ -45,11 +46,8 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void CartesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (CartesListe.SelectedItem != null)
-            { 
-                Edit.Visibility = Visibility.Visible;
-                RejoidCarte.IsEnabled = true;
-            }
+            Edit.Visibility = Visibility.Visible;
+            RejoidCarte.IsEnabled = true;
             AfficherInformationsCarte(CartesListe.SelectedIndex);
         }
 
@@ -66,7 +64,7 @@ namespace VinlandSol.IHM
                 DateCreationTextBlock.Text = carte.DateCreation.ToString("dd/MM/yyyy HH:mm:ss");
                 DateModificationTextBlock.Text = carte.DateModification.ToString("dd/MM/yyyy HH:mm:ss");
 
-                if (fakeDAO.GetCurrentCartes(idCampagne)[selectedIndex].Visibilite) 
+                if (fakeDAO.GetCurrentCartes(idCampagne)[selectedIndex].Visibilite)
                 {
                     VisibleCarte.Visibility = Visibility.Visible;
                     VisibleCarteHidden.Visibility = Visibility.Collapsed;
@@ -76,7 +74,6 @@ namespace VinlandSol.IHM
                     VisibleCarte.Visibility = Visibility.Collapsed;
                     VisibleCarteHidden.Visibility = Visibility.Visible;
                 }
-
                
             }
         }
@@ -88,12 +85,23 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
+            Métier.Carte selectedCarte = (Métier.Carte)CartesListe.SelectedItem; // On récupère la carte selectionnée
+            // On affiche les options d'édition
             NomCarteTextBox.Visibility = Visibility.Visible;
             Sauv.Visibility = Visibility.Visible;
             Suppr.Visibility = Visibility.Visible;
             EditS.Visibility = Visibility.Visible;
+            // On cache les options de non édition
             Edit.Visibility = Visibility.Collapsed;
+            RejoidCarte.Visibility = Visibility.Collapsed;
+            // Uniquement désactivés pour l'aspect visuel
+            AjoutCarte.IsEnabled = false;
+            Retour.IsEnabled = false;
 
+            CacheCartesListe.Visibility = Visibility.Visible;
+            CacheCartesListe.Content = "Vous modifiez le nom de la carte : \n" + selectedCarte.Nom;
+            NomCarteTextBox.Text = selectedCarte.Nom;
+            NomCarteTextBox.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -188,8 +196,13 @@ namespace VinlandSol.IHM
             Suppr.Visibility = Visibility.Collapsed;
             Edit.Visibility = Visibility.Visible;
             EditS.Visibility = Visibility.Collapsed;
-            VisibleCarte.Visibility = Visibility.Collapsed;
-            VisibleCarteHidden.Visibility = Visibility.Collapsed;
+            AjoutCarte.Visibility = Visibility.Visible;
+            RejoidCarte.Visibility = Visibility.Visible;
+            CacheCartesListe.Visibility = Visibility.Collapsed;
+            CacheCartesListe.Content = "";
+            AjoutCarte.IsEnabled = true;
+            Retour.IsEnabled = true;
+
         }
 
         /// <summary>
