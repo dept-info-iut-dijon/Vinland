@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Intrinsics.X86;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -23,7 +20,6 @@ namespace VinlandMain.IHM
         private FakeDAO fakeDAO = FakeDAO.Instance;
         private int idUser; // L'id de l'utilisateur identifié
         private string roleUser; // Le role de l'utilisateur identifié
-        private int indiceCampagneEnEdition = -1;
 
         #endregion
 
@@ -36,7 +32,7 @@ namespace VinlandMain.IHM
         public Campagnes(int idUser, string roleUser)
         {
             InitializeComponent();
-            this.idUser = idUser; 
+            this.idUser = idUser;
             this.roleUser = roleUser;
             MettreAJourListBox(); // La listBox des campagnes est remplie par les campagnes de l'utilisateur
         }
@@ -57,7 +53,7 @@ namespace VinlandMain.IHM
             {
                 Edit.Visibility = Visibility.Visible; // On peut éditer la campagne selectionnée
                 RejoidComp.IsEnabled = true; // On peut rejoindre la campagne selectionnée
-            }  
+            }
             AfficherInfos(CampagnesListe.SelectedIndex); // On affiche sur la partie droite de l'écran les informations de la campagne selectionnée
         }
 
@@ -88,7 +84,7 @@ namespace VinlandMain.IHM
         /// <param name="index">index de la Campagne sélectionnée</param>
         /// <Author>Baptiste</Author>
         private void AfficherInfos(int index)
-        {            
+        {
             if (index >= 0 && index < fakeDAO.GetCurrentCampagnes(roleUser, idUser).Count)
             {
                 Campagne selectedCampagne = fakeDAO.GetCurrentCampagnes(roleUser, idUser)[index]; // On récupère la campagne
@@ -172,7 +168,7 @@ namespace VinlandMain.IHM
             string? messageCheckFail = null;
             // Un seul check à la fois, on ne veut pas aggresser l'utilisateur avec des popups en chaine
             if (string.IsNullOrWhiteSpace(contenu)) { messageCheckFail = "Le nom de la campagne ne peut pas être vide"; okCheck = false; }
-            if (fakeDAO.CampagneTaken(contenu,idUser) == false) { messageCheckFail = "Une campagne du même nom existe déjà"; okCheck = false; }
+            if (fakeDAO.CampagneTaken(contenu, idUser) == false) { messageCheckFail = "Une campagne du même nom existe déjà"; okCheck = false; }
 
             if (!okCheck) // Si un problème est rencontré, on en informe l'utilisateur
             {
@@ -195,8 +191,8 @@ namespace VinlandMain.IHM
                 CacheCampagnesListe.Visibility = Visibility.Collapsed;
                 CacheCampagnesListe.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f5d9a9"));
 
-                CampagnesListe.SelectedIndex = CampagnesListe.Items.Count-1; // La campagne selectionnée est la nouvelle - On voit ses informations directement
-            }         
+                CampagnesListe.SelectedIndex = CampagnesListe.Items.Count - 1; // La campagne selectionnée est la nouvelle - On voit ses informations directement
+            }
         }
 
         #endregion
@@ -211,7 +207,7 @@ namespace VinlandMain.IHM
         /// <Author>Baptiste</Author>
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
-            int selectedIndex = CampagnesListe.SelectedIndex; // On récupère l'index de la campagne selectionnée
+            Campagne selectedCampagne = (Campagne)CampagnesListe.SelectedItem; // On récupère la campagne selectionnée
             // On affiche les options d'édition
             SupprimerCamp.Visibility = Visibility.Visible;
             NomCampTextBox.Visibility = Visibility.Visible;
@@ -222,19 +218,11 @@ namespace VinlandMain.IHM
             RejoidComp.Visibility = Visibility.Collapsed;
             Edit.Visibility = Visibility.Collapsed;
             NouvCamp.IsEnabled = false; // NouvCamp est uniquement désactivé pour l'aspect visuel
-            NomCampTextBlock.Visibility = Visibility.Collapsed;
 
             CacheCampagnesListe.Visibility = Visibility.Visible; // On empêche toute interaction avec la liste des campagnes
-
-            if (selectedIndex >= 0 && selectedIndex < fakeDAO.GetCurrentCampagnes(roleUser, idUser).Count)
-            {
-                Campagne selectedCampagne = fakeDAO.GetCurrentCampagnes(roleUser, idUser)[selectedIndex]; // On récupère la campagne selectionnée du fakeDAO
-                CacheCampagnesListe.Content = "Vous modifiez la campagne : \n" + selectedCampagne.Nom; // On indique à l'utilisateur le nom originel de sa campagne
-                NomCampTextBox.Text = selectedCampagne.Nom;
-                NomCampTextBox.Visibility = Visibility.Visible;
-                NomCampTextBlock.Visibility = Visibility.Collapsed;
-                indiceCampagneEnEdition = selectedIndex;
-            }
+            CacheCampagnesListe.Content = "Vous modifiez la campagne : \n" + selectedCampagne.Nom; // On indique à l'utilisateur le nom originel de sa campagne
+            NomCampTextBox.Text = selectedCampagne.Nom;
+            NomCampTextBox.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -256,6 +244,7 @@ namespace VinlandMain.IHM
         /// <Author>Baptiste</Author>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            int indexCampagneEdit = CampagnesListe.SelectedIndex;
             Campagne campagneEdit = (Campagne)CampagnesListe.SelectedItem; // On récupère la campagne selectionnée
             int idCampagneEdit = campagneEdit.ID; // On récupère l'ID de la campagne
             string newCampaignName = NomCampTextBox.Text; // On récupère le nouveau nom de la campagne
@@ -266,7 +255,7 @@ namespace VinlandMain.IHM
             string? messageCheckFail = null;
 
             // Un seul check à la fois, on ne veut pas aggresser l'utilisateur avec des popups en chaine
-            if (fakeDAO.CampagneTaken(newCampaignName,idUser) == false) { messageCheckFail = "Vous avez déjà une campagne portant ce nom"; okCheck = false; }
+            if (fakeDAO.CampagneTaken(newCampaignName, idUser) == false) { messageCheckFail = "Vous avez déjà une campagne portant ce nom"; okCheck = false; }
             else if (string.IsNullOrWhiteSpace(newCampaignName)) { messageCheckFail = "Le nom de votre campagne ne peut pas être vide"; okCheck = false; }
 
             if (!okCheck) // Les checks ne sont pas passés
@@ -277,15 +266,14 @@ namespace VinlandMain.IHM
 
             #endregion
 
-            if(okCheck) // Si tout va bien
+            if (okCheck) // Si tout va bien
             {
                 fakeDAO.UpdateCampagneName(idCampagneEdit, newCampaignName); // On met à jour la campagne
 
-                AfficherInfos(indiceCampagneEnEdition); // On met à jour les informations affichées
-                indiceCampagneEnEdition = -1; // On n'édite plus de campagne
+                AfficherInfos(indexCampagneEdit); // On met à jour les informations affichées
                 MettreAJourListBox(); // On met à jour la liste des campagnes
                 MasquerElements(); // On masque les élements d'édition
-                CampagnesListe.SelectedIndex = CampagnesListe.Items.Count - 1; // La campagne selectionnée est celle nouvellement éditée - On voit ses informations directement
+
             }
         }
 
@@ -311,7 +299,7 @@ namespace VinlandMain.IHM
                 MettreAJourListBox(); // On met à jour la liste des campagnes
                 MasquerElements(); // On masque les éléments d'édition
                 // Aucune campagne n'est selectionnée, il n'y a rien à éditer ou rejoindre
-                Edit.Visibility = Visibility.Collapsed; 
+                Edit.Visibility = Visibility.Collapsed;
                 RejoidComp.IsEnabled = false;
             };
 
@@ -329,7 +317,6 @@ namespace VinlandMain.IHM
         private void MasquerElements()
         {
             NomCampTextBox.Visibility = Visibility.Collapsed;
-            NomCampTextBlock.Visibility = Visibility.Visible;
             Valider.Visibility = Visibility.Collapsed;
             RejoidComp.Visibility = Visibility.Visible;
             Edit.Visibility = Visibility.Visible;
@@ -357,7 +344,7 @@ namespace VinlandMain.IHM
             int idCampagne = campagne.ID; // On récupère son ID
 
             // La page Personnages est créée
-            Personnages pagecreation = new Personnages(idUser,roleUser, idCampagne);
+            Personnages pagecreation = new Personnages(idUser, roleUser, idCampagne);
             pagecreation.Show();
             pagecreation.Left = this.Left;
             pagecreation.Top = this.Top;

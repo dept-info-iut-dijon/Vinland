@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.DirectoryServices.ActiveDirectory;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Shapes;
 using VinlandSol.Métier;
 
 namespace VinlandSol.BDD
@@ -29,7 +24,7 @@ namespace VinlandSol.BDD
         /// </summary>
         /// <author>Aaron</author>
         private GestionnaireDeFichiers()
-        { 
+        {
             SetupFichiers();
         }
 
@@ -80,7 +75,7 @@ namespace VinlandSol.BDD
             {
                 File.WriteAllText(filePath, header); // Si le fichier n'existe pas ou que l'entete n'est pas présente - Créé ou Ecrase le fichier avec un fichier correct
                 using (StreamWriter sw = File.AppendText(filePath)) sw.WriteLine(); // On passe une ligne pour ne pas écrire la première instance sur l'entête
-            }        
+            }
         }
 
         #endregion
@@ -130,7 +125,7 @@ namespace VinlandSol.BDD
                         string listValues = string.Join("|", list.Cast<object>().Select(x => x.ToString())); // Transforme les éléments de la liste en string, séparés par le caractère "|"
                         values.Add(listValues); // On ajoute la liste transformée en string à la liste des string a rassembler
                     }
-                    else 
+                    else
                     {
                         values.Add("vide"); // Ajoute "vide" si la liste est vide
                     }
@@ -175,7 +170,7 @@ namespace VinlandSol.BDD
 
                 foreach (string line in File.ReadLines(filePath)) // On ajoute les instances à partir des lignes du fichier (le nombre d'instances récupérées sera toujours égal au nombre de lignes -1)
                 {
-                    if(!premièreLigneSkip) // Si l'entête n'a pas encore été ignorée
+                    if (!premièreLigneSkip) // Si l'entête n'a pas encore été ignorée
                     {
                         T instance = GetInstanceFromLine<T>(line); // On récupère une instance depuis une ligne du fichier
                         if (instance != null)
