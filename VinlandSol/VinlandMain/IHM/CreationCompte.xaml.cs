@@ -1,16 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using VinlandMain.IHM;
 using VinlandSol.BDD;
-using VinlandSol.IHM;
-using VinlandSol.Métier;
 
 namespace VinlandSol.IHM
 {
@@ -53,7 +45,7 @@ namespace VinlandSol.IHM
         {
             string username = TBNomUtilisateur.Text; // On récupère le nom du compte
             string password;
-            if(!isPasswordVisible) { password = TBMdp.Password; } else {  password = TBVisibleMdp.Text; } // On récupère le texte que l'utilisateur a rentré dans le champ Mot de passe 
+            if (!isPasswordVisible) { password = TBMdp.Password; } else { password = TBVisibleMdp.Text; } // On récupère le texte que l'utilisateur a rentré dans le champ Mot de passe 
             string? roleSelectionne = ((ComboBoxItem)ChoixRole.SelectedItem)?.Content.ToString(); // On récupère le rôle selectionné
             bool okCheck = true;
 
@@ -61,7 +53,7 @@ namespace VinlandSol.IHM
 
             string? messageCheckFail = null;
             // Un seul check à la fois, on ne veut pas aggresser l'utilisateur avec des popups en chaine
-            if (fakeDAO.UsernameTaken(username) == false) { messageCheckFail = "Nom d'utilisateur déjà pris"; okCheck=false; }
+            if (fakeDAO.UsernameTaken(username) == false) { messageCheckFail = "Nom d'utilisateur déjà pris"; okCheck = false; }
             else if (string.IsNullOrWhiteSpace(username)) { messageCheckFail = "Veuillez remplir le champ Nom d'Utilisateur"; okCheck = false; }
             else if (string.IsNullOrWhiteSpace(password)) { messageCheckFail = "Veuillez remplir le champ Mot de Passe"; okCheck = false; }
             else if (roleSelectionne == null) { messageCheckFail = "Veuillez sélectionner un rôle pour votre compte"; okCheck = false; }
@@ -70,11 +62,11 @@ namespace VinlandSol.IHM
             {
                 CustomMessageBox messagebox = new CustomMessageBox(messageCheckFail);
                 messagebox.ShowDialog();
-            } 
+            }
 
             #endregion
 
-            if(okCheck) // Si tout va bien
+            if (okCheck) // Si tout va bien
             {
                 // On créé un IUser selon le rôle selectionné
                 if (roleSelectionne == "Maitre du jeu") { fakeDAO.CreateMJ(username, password); }

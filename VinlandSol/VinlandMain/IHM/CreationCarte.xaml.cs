@@ -1,8 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Windows;
 using VinlandSol.BDD;
-using VinlandSol.Métier;
 
 namespace VinlandSol.IHM
 {
@@ -32,16 +30,25 @@ namespace VinlandSol.IHM
             string nomCarte = NameTextBox.Text;
             string nLigne = NLigne.Text;
             string nColonne = NColonne.Text;
-            DateTime dateCreation = DateTime.Now;
-            DateTime dateModification = DateTime.Now;
-            string? messageCheckFail = null;
-            int comboCheckFail = 0;
+            List<Métier.Carte> cartes = fakeDAO.GetCurrentCartes(idCampagne);
+            bool okCheck = true;
 
             #region Checks 
 
-            if (string.IsNullOrWhiteSpace(nomCarte)) { messageCheckFail = "Le nom de la carte ne peut pas être vide"; comboCheckFail++; }
+            string? messageCheckFail = null;
 
-            if (comboCheckFail >= 1)
+            foreach (Métier.Carte carte in cartes)
+            {
+                if (carte.Nom == nomCarte)
+                {
+                    messageCheckFail = "Une carte du même nom existe déjà dans cette campagne";
+                    okCheck = false;
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(nomCarte)) { messageCheckFail = "Le nom de la carte ne peut pas être vide"; okCheck = false; }
+
+            if (!okCheck)
             {
                 CustomMessageBox messagebox = new CustomMessageBox(messageCheckFail);
                 messagebox.ShowDialog();
@@ -49,7 +56,7 @@ namespace VinlandSol.IHM
 
             #endregion
 
-            if (comboCheckFail == 0) // Si tout va bien
+            if (okCheck) // Si tout va bien
             {
                 fakeDAO.CreateCarte(nomCarte, int.Parse(nLigne), int.Parse(nColonne), idCampagne);
                 CustomMessageBox messagebox = new CustomMessageBox("Carte ajoutée avec succès !");

@@ -49,7 +49,7 @@ namespace VinlandSol.IHM
         /// <param name="idCampagne"> id de la campagne actuelle </param>
         /// <author> Aaron </author>
         public Carte(int idUser, string roleUser, int idCarte, int idCampagne)
-        {     
+        {
             InitializeComponent();
             carte = fakeDAO.GetCarte(idCarte); // Récuperation de la carte référencée
             GenerateHexagonalMap(carte.Largeur, carte.Hauteur); // Génération de la map   
@@ -103,7 +103,7 @@ namespace VinlandSol.IHM
         private void InitializeTerrains()
         {
             // Initialisation des types de terrain avec leurs couleurs
-            Terrain vide = new Terrain { Name = "Vide", ImagePath = "vide.png",Color = Colors.White };
+            Terrain vide = new Terrain { Name = "Vide", ImagePath = "vide.png", Color = Colors.White };
             Terrain plaine = new Terrain { Name = "Plaine", ImagePath = "plaine.png", Color = Colors.LightGreen };
             Terrain desert = new Terrain { Name = "Desert", ImagePath = "desert.png", Color = (Color)ColorConverter.ConvertFromString("#f5d9a9") };
 
@@ -145,12 +145,12 @@ namespace VinlandSol.IHM
                     {
                         x += hexWidth * 0.48;
                     }
-                    Hexagon hexagon = new Hexagon(hexagons.Count+1, x, y);
+                    Hexagon hexagon = new Hexagon(hexagons.Count + 1, x, y);
 
                     hexagon.ImageSource = new BitmapImage(new Uri(Path.Combine("pack://application:,,,/VinlandSol;component/IHM/Media/Resources/", "hexagon.png")));
                     hexagon.ImagePath = "hexagon.png";
-                    hexagon.X = row+1; // Commence par 1
-                    hexagon.Y = col+1; // Commence par 1
+                    hexagon.X = row + 1; // Commence par 1
+                    hexagon.Y = col + 1; // Commence par 1
 
                     Image imageControl = new Image
                     {

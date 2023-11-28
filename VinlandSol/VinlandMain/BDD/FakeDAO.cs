@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using VinlandSol.IHM;
 using VinlandSol.Métier;
 using Carte = VinlandSol.Métier.Carte;
 
@@ -149,7 +147,7 @@ namespace VinlandSol.BDD
                 if (campagnes[i].ID == idCampagne) { campagnes[i].IDPersonnages.Add(id); break; }
             }
 
-            for (int i = 0; i < joueurs.Count; i++ )
+            for (int i = 0; i < joueurs.Count; i++)
             {
                 if (joueurs[i].ID == idJoueur) { joueurs[i].IDPersonnages.Add(id); break; }
             }
@@ -166,10 +164,10 @@ namespace VinlandSol.BDD
         /// <param name="largeur">Largeur d'une carte</param>
         /// <param name="idCampagne">id de la campagne don fait partie la carte</param>
         /// <author>Alexis(setup) + Aaron</author>
-        public void CreateCarte(string nom, int hauteur, int largeur , int idCampagne)
+        public void CreateCarte(string nom, int hauteur, int largeur, int idCampagne)
         {
             int id = GetNextAvailableId(cartes, carte => carte.ID);
-            Carte newMap = new Carte(id,nom ,hauteur, largeur, idCampagne);
+            Carte newMap = new Carte(id, nom, hauteur, largeur, idCampagne);
             cartes.Add(newMap);
 
 
@@ -193,7 +191,7 @@ namespace VinlandSol.BDD
             Campagne newCampagne = new Campagne(id, nom, idMJ);
             campagnes.Add(newCampagne);
 
-            for(int i = 0; i < mjs.Count; i++) 
+            for (int i = 0; i < mjs.Count; i++)
             {
                 if (mjs[i].ID == idMJ) { mjs[i].IDCampagnes.Add(id); break; }
             }
@@ -270,9 +268,9 @@ namespace VinlandSol.BDD
         /// <author>Alexis(setup) + Aaron</author>
         public void DeleteCarte(int id)
         {
-            Carte carteToRemove = cartes.FirstOrDefault(c => c.ID == id);   
+            Carte carteToRemove = cartes.FirstOrDefault(c => c.ID == id);
             if (carteToRemove != null)
-            { 
+            {
                 GetCampagne(carteToRemove.IDCampagne).IDCartes.Remove(id); // On enlève la référence à la carte de la iste des références de la campagne
 
                 cartes.Remove(carteToRemove);
@@ -394,7 +392,7 @@ namespace VinlandSol.BDD
 
             List<Personnage> personnages = new List<Personnage>();
             Campagne currentCampagne = GetCampagne(idCampagne);
-            for(int i = 0; i < currentCampagne.IDPersonnages.Count; i++ )
+            for (int i = 0; i < currentCampagne.IDPersonnages.Count; i++)
             {
                 Personnage personnage = GetPersonnage(currentCampagne.IDPersonnages[i]);
                 personnages.Add(personnage);
@@ -744,10 +742,10 @@ namespace VinlandSol.BDD
         /// <param name="idCampagne"></param>
         /// <returns>Booléen indiquant si le nom est pris ou non</returns>
         /// <author>Aaron</author>
-        public bool PersonnageTaken(string username, int idCampagne) 
+        public bool PersonnageTaken(string username, int idCampagne)
         {
             bool disponible = true;
-            for (int i = 0; i < GetCampagne(idCampagne).IDPersonnages.Count; i++) 
+            for (int i = 0; i < GetCampagne(idCampagne).IDPersonnages.Count; i++)
             {
                 if (GetPersonnage(GetCampagne(idCampagne).IDPersonnages[i]).Nom == username) { disponible = false; break; }
             }

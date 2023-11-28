@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using VinlandSol.BDD;
@@ -16,7 +14,7 @@ namespace VinlandSol.IHM
         private FakeDAO fakeDAO = FakeDAO.Instance;
         private Personnages perso;
         private int idCampagne;
-        public AjouterPersonnage(Personnages perso,int idCampagne)
+        public AjouterPersonnage(Personnages perso, int idCampagne)
         {
             InitializeComponent();
             btnAjouter.Click += FermerPopupActu_Click;
@@ -33,7 +31,6 @@ namespace VinlandSol.IHM
         {
             string nomJoueur = NomJoueur.Text;
             string personnageNom = PersonnageNom.Text;
-            DateTime dateCreation = DateTime.Now;
             List<Joueur> joueurs = fakeDAO.GetJoueurs();
             int idJoueur = -1;
             bool okCheck = true;
@@ -44,10 +41,10 @@ namespace VinlandSol.IHM
 
             foreach (Joueur joueur in joueurs)
             {
-                if (joueur.Nom == nomJoueur) 
-                { 
-                    idJoueur = joueur.ID; 
-                    if(joueur.IDPersonnages.Any(id => id == idCampagne))
+                if (joueur.Nom == nomJoueur)
+                {
+                    idJoueur = joueur.ID;
+                    if (joueur.IDPersonnages.Any(id => id == idCampagne))
                     {
                         messageCheckFail = "Ce joueur a déjà un personnage dans cette campagne";
                         okCheck = false;
@@ -60,7 +57,7 @@ namespace VinlandSol.IHM
             else if (idJoueur == -1) { messageCheckFail = "Le joueur renseigné est introuvable"; okCheck = false; }
             else if (!fakeDAO.PersonnageTaken(personnageNom, idCampagne)) { messageCheckFail = "Ce nom de Personnage est déjà utilisé dans votre campagne"; okCheck = false; }
 
-                if (!okCheck)
+            if (!okCheck)
             {
                 CustomMessageBox messagebox = new CustomMessageBox(messageCheckFail);
                 messagebox.ShowDialog();

@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 using VinlandSol.BDD;
-using VinlandSol.Métier;
-using VinlandMain.IHM;
-using System.Windows.Media;
 
 namespace VinlandSol.IHM
 {
@@ -38,7 +32,7 @@ namespace VinlandSol.IHM
 
         }
 
-       
+
         /// <summary>
         /// Actualise les informations de la carte selectionnée
         /// </summary>
@@ -74,7 +68,7 @@ namespace VinlandSol.IHM
                     VisibleCarte.Visibility = Visibility.Collapsed;
                     VisibleCarteHidden.Visibility = Visibility.Visible;
                 }
-               
+
             }
         }
 
@@ -233,7 +227,7 @@ namespace VinlandSol.IHM
             if (creaCarteOpen == false)
             {
                 this.IsEnabled = false;
-                pagecreationcarte = new CreationCarte(this,idCampagne);
+                pagecreationcarte = new CreationCarte(this, idCampagne);
                 pagecreationcarte.Closed += CreationCarte_Closed;
                 pagecreationcarte.Left = this.Left;
                 pagecreationcarte.Top = this.Top;
@@ -293,7 +287,7 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void OuvrirCarte_Click(object sender, RoutedEventArgs e)
         {
-            int idCarte = CartesListe.SelectedIndex+1;
+            int idCarte = CartesListe.SelectedIndex + 1;
             Carte carteselect = new Carte(idUser, roleUser, idCarte, idCampagne);
             carteselect.Left = this.Left;
             carteselect.Top = this.Top;

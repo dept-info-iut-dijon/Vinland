@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using VinlandMain.IHM;
@@ -81,7 +79,7 @@ namespace VinlandSol.IHM
             MettreAJourListBox();
             MasquerElements();
             Edit.Visibility = Visibility.Collapsed;
-            
+
         }
 
         /// <summary>
@@ -136,7 +134,7 @@ namespace VinlandSol.IHM
 
             string? messageCheckFail = null;
             // Un seul check à la fois, on ne veut pas aggresser l'utilisateur avec des popups en chaine
-            if (fakeDAO.PersonnageTaken(nouvNomPersonnage,idCampagne) == false) { messageCheckFail = "Vous avez déjà un personnage portant ce nom"; okCheck = false; }
+            if (fakeDAO.PersonnageTaken(nouvNomPersonnage, idCampagne) == false) { messageCheckFail = "Vous avez déjà un personnage portant ce nom"; okCheck = false; }
             if (string.IsNullOrWhiteSpace(nouvNomPersonnage)) { messageCheckFail = "Le nom du personnage ne peut pas être vide"; okCheck = false; }
 
             if (!okCheck) // Si un problème est rencontré, on en informe l'utilisateur
@@ -147,7 +145,7 @@ namespace VinlandSol.IHM
 
             #endregion
 
-            if(okCheck) // Si tout va bien
+            if (okCheck) // Si tout va bien
             {
                 fakeDAO.UpdatePersonnageName(idPersonnageEdit, nouvNomPersonnage);
 
@@ -205,7 +203,7 @@ namespace VinlandSol.IHM
             if (ajouterPersoOpen == false)
             {
                 this.IsEnabled = false;
-                pageajouterPerso = new AjouterPersonnage(this,idCampagne);
+                pageajouterPerso = new AjouterPersonnage(this, idCampagne);
                 pageajouterPerso.Closed += AjouterPerso_Closed;
                 pageajouterPerso.Left = this.Left;
                 pageajouterPerso.Top = this.Top;
@@ -240,7 +238,7 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void OuvrirCampagnes_Click(object sender, RoutedEventArgs e)
         {
-            Campagnes pagecreation = new Campagnes(idUser,roleUser);
+            Campagnes pagecreation = new Campagnes(idUser, roleUser);
             pagecreation.Left = this.Left;
             pagecreation.Top = this.Top;
             pagecreation.Show();
