@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using VinlandSol.Métier;
 using Carte = VinlandSol.Métier.Carte;
@@ -84,12 +83,12 @@ namespace VinlandSol.BDD
         /// <typeparam name="T">classe Type</typeparam>
         /// <param name="list">la liste des T</param>
         /// <param name="getIdFunc">fonction prenant une instance de T et retournant son id</param>
-        /// <returns></returns>
-        public int GetNextAvailableId<T>(List<T> list, Func<T, int> getIdFunc)
+        /// <returns>L'id le plus petit disponible ou -1 </returns>
+        private int GetNextAvailableId<T>(List<T> list, Func<T, int> getIdFunc)
         {
             List<int> usedIds = list.Select(getIdFunc).ToList(); // On remplit la liste des id indisponibles
 
-            for (int i = 1; i <= int.MaxValue; i++)
+            for (int i = 1; i <= int.MaxValue; i++) // Tant que (ou presque) i n'est pas un id disponible, on l'incrémente
             {
                 if (!usedIds.Contains(i))
                 {
@@ -143,6 +142,18 @@ namespace VinlandSol.BDD
             Personnage newCharacter = new Personnage(id, nom, idJoueur, idCampagne);
             personnages.Add(newCharacter);
 
+            for (int i = 0; i < campagnes.Count; i++)
+            {
+                if (campagnes[i].ID == idCampagne) { campagnes[i].IDPersonnages.Add(id); break; }
+            }
+
+            for (int i = 0; i < joueurs.Count; i++)
+            {
+                if (joueurs[i].ID == idJoueur) { joueurs[i].IDPersonnages.Add(id); break; }
+            }
+
+            _gestionnaireDeFichiers.Override(campagnes, "Campagnes.txt");
+            _gestionnaireDeFichiers.Override(joueurs, "Joueurs.txt");
             _gestionnaireDeFichiers.Override(personnages, "Personnages.txt");
         }
 
@@ -153,12 +164,19 @@ namespace VinlandSol.BDD
         /// <param name="largeur">Largeur d'une carte</param>
         /// <param name="idCampagne">id de la campagne don fait partie la carte</param>
         /// <author>Alexis(setup) + Aaron</author>
-        public void CreateCarte(string nom, int hauteur, int largeur , int idCampagne)
+        public void CreateCarte(string nom, int hauteur, int largeur, int idCampagne)
         {
             int id = GetNextAvailableId(cartes, carte => carte.ID);
-            Carte newMap = new Carte(id,nom ,hauteur, largeur, idCampagne);
+            Carte newMap = new Carte(id, nom, hauteur, largeur, idCampagne);
             cartes.Add(newMap);
 
+
+            for (int i = 0; i < campagnes.Count; i++)
+            {
+                if (campagnes[i].ID == idCampagne) { campagnes[i].IDCartes.Add(id); break; }
+            }
+
+            _gestionnaireDeFichiers.Override(campagnes, "Campagnes.txt");
             _gestionnaireDeFichiers.Override(cartes, "Cartes.txt");
         }
 
@@ -173,7 +191,7 @@ namespace VinlandSol.BDD
             Campagne newCampagne = new Campagne(id, nom, idMJ);
             campagnes.Add(newCampagne);
 
-            for(int i = 0; i < mjs.Count; i++) 
+            for (int i = 0; i < mjs.Count; i++)
             {
                 if (mjs[i].ID == idMJ) { mjs[i].IDCampagnes.Add(id); break; }
             }
@@ -228,14 +246,19 @@ namespace VinlandSol.BDD
         /// <author>Alexis(setup) + Aaron</author>
         public void DeletePersonnage(int id)
         {
-            if (personnages.Count != 0)
+            Personnage personnageToRemove = personnages.FirstOrDefault(p => p.ID == id); // On cherche le personnage
+
+            if (personnageToRemove != null) // Si on a trouvé
             {
-                for (int i = 0; i < personnages.Count; i++)
-                {
-                    if (personnages[i].ID == id) personnages.RemoveAt(i);
-                }
+                GetJoueur(personnageToRemove.IDJoueur).IDPersonnages.Remove(id); // On enlève la référence au personnage de la liste les références du joueur
+                GetCampagne(personnageToRemove.IDCampagne).IDPersonnages.Remove(id); // On enlève la référence au personnage de la iste des références de la campagne
+
+                personnages.Remove(personnageToRemove); // Le personnage est supprimé
             }
+            // On met à jour les fichiers
             _gestionnaireDeFichiers.Override(personnages, "Personnages.txt");
+            _gestionnaireDeFichiers.Override(joueurs, "Joueurs.txt");
+            _gestionnaireDeFichiers.Override(campagnes, "Campagnes.txt");
         }
 
         /// <summary>
@@ -245,13 +268,15 @@ namespace VinlandSol.BDD
         /// <author>Alexis(setup) + Aaron</author>
         public void DeleteCarte(int id)
         {
-            if (cartes.Count != 0)
+            Carte carteToRemove = cartes.FirstOrDefault(c => c.ID == id);
+            if (carteToRemove != null)
             {
-                for (int i = 0; i < cartes.Count; i++)
-                {
-                    if (cartes[i].ID == id) cartes.RemoveAt(i);
-                }
+                GetCampagne(carteToRemove.IDCampagne).IDCartes.Remove(id); // On enlève la référence à la carte de la iste des références de la campagne
+
+                cartes.Remove(carteToRemove);
             }
+
+            _gestionnaireDeFichiers.Override(campagnes, "Campagnes.txt");
             _gestionnaireDeFichiers.Override(cartes, "Cartes.txt");
         }
 
@@ -274,9 +299,9 @@ namespace VinlandSol.BDD
                 }
 
                 List<Personnage> personnagesToRemove = personnages.Where(p => p.IDCampagne == id).ToList(); // Les personnages de la campagne sont trouvés
-                foreach (var personnage in personnagesToRemove)
+                foreach (Personnage personnage in personnagesToRemove)
                 {
-                    foreach (var joueur in joueurs)
+                    foreach (Joueur joueur in joueurs)
                     {
                         joueur.IDPersonnages.RemoveAll(persID => persID == personnage.ID); // La référence au personnage est supprimée de la liste du Joueur
                     }
@@ -356,24 +381,43 @@ namespace VinlandSol.BDD
         }
 
         /// <summary>
-        /// Retourne la liste des personnages
+        /// Retourne la liste des personnages de la campagne spécifiée
         /// </summary>
-        /// <returns>Une liste</returns>
+        /// <returns>la liste des personnages de la campagne</returns>
         /// <author>Alexis(setup) + Aaron</author>
-        public List<Personnage> GetPersonnages()
+        public List<Personnage> GetCurrentPersonnages(int idCampagne)
         {
             _gestionnaireDeFichiers.Load<Personnage>("personnages.txt");
+            _gestionnaireDeFichiers.Load<Campagne>("campagnes.txt");
+
+            List<Personnage> personnages = new List<Personnage>();
+            Campagne currentCampagne = GetCampagne(idCampagne);
+            for (int i = 0; i < currentCampagne.IDPersonnages.Count; i++)
+            {
+                Personnage personnage = GetPersonnage(currentCampagne.IDPersonnages[i]);
+                personnages.Add(personnage);
+            }
+
             return personnages;
         }
 
         /// <summary>
-        /// Donne la liste des cartes
+        /// Donne la liste des cartes de la campagne spécifiée
         /// </summary>
-        /// <returns>une liste</returns>
+        /// <returns>la liste des cartes de la campagne</returns>
         /// <author>Alexis(setup) + Aaron</author>
-        public List<Carte> GetCartes()
+        public List<Carte> GetCurrentCartes(int idCampagne)
         {
             _gestionnaireDeFichiers.Load<Carte>("cartes.txt");
+            _gestionnaireDeFichiers.Load<Campagne>("campagnes.txt");
+
+            List<Carte> cartes = new List<Carte>();
+            Campagne currentCampagne = GetCampagne(idCampagne);
+            for (int i = 0; i < currentCampagne.IDCartes.Count; i++)
+            {
+                Carte carte = GetCarte(currentCampagne.IDCartes[i]);
+                cartes.Add(carte);
+            }
             return cartes;
         }
 
@@ -698,10 +742,10 @@ namespace VinlandSol.BDD
         /// <param name="idCampagne"></param>
         /// <returns>Booléen indiquant si le nom est pris ou non</returns>
         /// <author>Aaron</author>
-        public bool PersonnageTaken(string username, int idCampagne) 
+        public bool PersonnageTaken(string username, int idCampagne)
         {
             bool disponible = true;
-            for (int i = 0; i < GetCampagne(idCampagne).IDPersonnages.Count; i++) 
+            for (int i = 0; i < GetCampagne(idCampagne).IDPersonnages.Count; i++)
             {
                 if (GetPersonnage(GetCampagne(idCampagne).IDPersonnages[i]).Nom == username) { disponible = false; break; }
             }

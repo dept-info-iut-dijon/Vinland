@@ -12,7 +12,7 @@ namespace VinlandSol.Métier
         public int ID { get; set; }
         public string Nom { get; set; }
         public string Mdp { get; set; }
-        public List<int>IDPersonnages { get; set; } // La liste des id des Personnages de ce Joueur
+        public List<int> IDPersonnages { get; set; } // La liste des id des Personnages de ce Joueur
 
         #endregion
 
