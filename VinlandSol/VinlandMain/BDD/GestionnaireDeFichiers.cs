@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.DirectoryServices.ActiveDirectory;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Shapes;
 using VinlandSol.Métier;
 
 namespace VinlandSol.BDD
@@ -29,12 +24,12 @@ namespace VinlandSol.BDD
         /// </summary>
         /// <author>Aaron</author>
         private GestionnaireDeFichiers()
-        { 
+        {
             SetupFichiers();
         }
 
         /// <summary>
-        /// Instance Unique accessible depuis l'extérieur
+        /// Instance Unique du gestionnaire de fichiers
         /// </summary>
         /// <author>Aaron</author>
         public static GestionnaireDeFichiers Instance
@@ -64,6 +59,8 @@ namespace VinlandSol.BDD
             SetupFichier("Campagnes.txt", GetHeader<Campagne>());
             SetupFichier("Personnages.txt", GetHeader<Personnage>());
             SetupFichier("Cartes.txt", GetHeader<Carte>());
+            SetupFichier("Hexagons.txt", GetHeader<Hexagon>());
+            SetupFichier("Terrains.txt", GetHeader<Terrain>());
         }
 
         /// <summary>
@@ -78,7 +75,7 @@ namespace VinlandSol.BDD
             {
                 File.WriteAllText(filePath, header); // Si le fichier n'existe pas ou que l'entete n'est pas présente - Créé ou Ecrase le fichier avec un fichier correct
                 using (StreamWriter sw = File.AppendText(filePath)) sw.WriteLine(); // On passe une ligne pour ne pas écrire la première instance sur l'entête
-            }        
+            }
         }
 
         #endregion
@@ -98,22 +95,9 @@ namespace VinlandSol.BDD
             using (StreamWriter sw = File.AppendText(filePath)) sw.WriteLine(); // On passe une ligne pour ne pas écrire la première instance sur l'entête
             foreach (var item in liste) // On réécrit toutes les instances dans le fichier
             {
-                string line = GetFormattedLine(item);
-                WriteToFile(filePath, line);
+                string line = GetFormattedLine(item); // On transforme l'item en string
+                WriteToFile(filePath, line); // On écrit la ligne dans le fichier
             }
-        }
-
-        /// <summary>
-        /// Méthode Générique - Renvoie le header type de la classe donnée
-        /// </summary>
-        /// <typeparam name="T">Classe Type (par exemple Joueur)</typeparam>
-        /// <returns>une chaine de caractères correspondant aux propriétés de T (séparées par des virgules)</returns>
-        /// <author>Aaron</author>
-        private string GetHeader<T>()
-        {
-            PropertyInfo[] properties = typeof(T).GetProperties();
-            string header = string.Join(",", properties.Select(p => p.Name));
-            return header;
         }
 
         /// <summary>
@@ -129,17 +113,17 @@ namespace VinlandSol.BDD
 
             List<string> values = new List<string>(); // Liste temporaire contenant les données 
 
-            foreach (var property in properties) 
+            foreach (var property in properties) // Pour chaque propriété de l'instance
             {
-                object propertyValue = property.GetValue(item);
+                object propertyValue = property.GetValue(item); // On récupère la valeur de la propriété
 
                 if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(List<>)) // Si la propriété est une liste
                 {
-                    var list = (IEnumerable)propertyValue;
-                    if (list != null && list.Cast<object>().Any())
+                    var list = (IEnumerable)propertyValue; // On effectue un cast pour que la liste soit considérée comme un IEnumerable et non uniquement un object
+                    if (list != null && list.Cast<object>().Any()) // Si la liste n'est pas vide
                     {
                         string listValues = string.Join("|", list.Cast<object>().Select(x => x.ToString())); // Transforme les éléments de la liste en string, séparés par le caractère "|"
-                        values.Add(listValues);
+                        values.Add(listValues); // On ajoute la liste transformée en string à la liste des string a rassembler
                     }
                     else
                     {
@@ -148,10 +132,10 @@ namespace VinlandSol.BDD
                 }
                 else
                 {
-                    values.Add(propertyValue?.ToString());
+                    values.Add(propertyValue?.ToString()); // On transforme la valeur en string et on l'ajoute à la liste des string a rassembler
                 }
             }
-            return string.Join(",", values);
+            return string.Join(",", values); // On assemble les strings correspondants aux valeurs de l'instance en un seul et unique string, on sépare chaque string par une virgule
         }
 
         /// <summary>
@@ -184,14 +168,14 @@ namespace VinlandSol.BDD
             {
                 bool premièreLigneSkip = true; // L'entête doit être ignorée
 
-                foreach (string line in File.ReadLines(filePath)) // On ajoute les instances à partir des lignes du fichier (nbInstances = nbLignesFichier -1)
+                foreach (string line in File.ReadLines(filePath)) // On ajoute les instances à partir des lignes du fichier (le nombre d'instances récupérées sera toujours égal au nombre de lignes -1)
                 {
-                    if(!premièreLigneSkip)
+                    if (!premièreLigneSkip) // Si l'entête n'a pas encore été ignorée
                     {
-                        T instance = GetInstanceFromLine<T>(line);
+                        T instance = GetInstanceFromLine<T>(line); // On récupère une instance depuis une ligne du fichier
                         if (instance != null)
                         {
-                            instances.Add(instance);
+                            instances.Add(instance); // On ajoute l'instance à la liste des instances
                         }
                     }
                     else
@@ -224,46 +208,57 @@ namespace VinlandSol.BDD
                 if (propertyType == typeof(DateTime)) // Si la propriété est un DateTime
                 {
                     DateTime parsedDate;
-                    if (DateTime.TryParse(values[i], out parsedDate))
+                    if (DateTime.TryParse(values[i], out parsedDate)) // On effectue un TryParse pour transformer le string en DateTime
                     {
-                        properties[i].SetValue(instance, parsedDate);
+                        properties[i].SetValue(instance, parsedDate); // On ajoute le résultat à la Propriété correspondante
                     }
                 }
                 else if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(List<>)) // Si la propriété est une liste
                 {
-                    Type elementType = propertyType.GetGenericArguments()[0];
-                    string[] listValues = values[i].Split(',');
 
-                    if (listValues.Length == 1 && string.Equals(listValues[0], "vide", StringComparison.OrdinalIgnoreCase))
+                    Type elementType = propertyType.GetGenericArguments()[0]; // On récupère le type de valeur de la liste 
+                    string[] listValues = values[i].Split('|'); // On sépare les valeurs de la liste en plusieurs strings 
+
+                    if (listValues.Length == 1 && string.Equals(listValues[0], "vide", StringComparison.OrdinalIgnoreCase)) // Si la liste est déclarée comme vide dans le string
                     {
-                        properties[i].SetValue(instance, Activator.CreateInstance(typeof(List<>).MakeGenericType(elementType)));
+                        properties[i].SetValue(instance, Activator.CreateInstance(typeof(List<>).MakeGenericType(elementType))); // On ajoute une liste vide à la propriété correspondante
                     }
-                    else
+                    else // La liste n'est pas vide
                     {
-                        IList list = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(elementType));
-                        foreach (var listValue in listValues)
+                        IList list = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(elementType)); // On initialise la liste dans laquelle on va mettre les valeurs
+                        foreach (var listValue in listValues) // Pour chaque string de la liste
                         {
-                            if (!string.IsNullOrWhiteSpace(listValue))
-                            {
-                                object convertedValue = Convert.ChangeType(listValue, elementType);
-                                list.Add(convertedValue);
-                            }
-                            else
-                            {
-                                list.Add(default);
-                            }
+                            object convertedValue = Convert.ChangeType(listValue, elementType); // On transforme le string en type correspondant au type d'éléments contenus dans la liste
+                            list.Add(convertedValue); // On ajoute la valeur à la liste
                         }
 
-                        properties[i].SetValue(instance, list);
+                        properties[i].SetValue(instance, list); // On ajoute le résultat à la Propriété correspondante
                     }
                 }
                 else // Si la propriété est convertissable depuis Convert
                 {
-                    object convertedValue = Convert.ChangeType(values[i], propertyType);
-                    properties[i].SetValue(instance, convertedValue);
+                    object convertedValue = Convert.ChangeType(values[i], propertyType); // On convertit la valeur 
+                    properties[i].SetValue(instance, convertedValue); // On ajoute le résultat à la Propriété correspondante
                 }
             }
             return instance;
+        }
+
+        #endregion
+
+        #region Utilitaires
+
+        /// <summary>
+        /// Méthode Générique - Renvoie le header type de la classe donnée
+        /// </summary>
+        /// <typeparam name="T">Classe Type (par exemple Joueur)</typeparam>
+        /// <returns>une chaine de caractères correspondant aux propriétés de T (séparées par des virgules)</returns>
+        /// <author>Aaron</author>
+        private string GetHeader<T>()
+        {
+            PropertyInfo[] properties = typeof(T).GetProperties(); // On récupère les propriétés de T
+            string header = string.Join(",", properties.Select(p => p.Name)); // On ajoute les noms des propriétés dans un string unique en les séparant par des virgules
+            return header;
         }
 
         #endregion

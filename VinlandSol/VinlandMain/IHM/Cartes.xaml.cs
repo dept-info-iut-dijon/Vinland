@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 using VinlandSol.BDD;
-using VinlandSol.Métier;
-using VinlandMain.IHM;
 
 namespace VinlandSol.IHM
 {
@@ -26,7 +21,7 @@ namespace VinlandSol.IHM
         /// <summary>
         /// Constructeur de la page
         /// </summary>
-        public Cartes(int idUser, string roleUser, int idcampagne)
+        public Cartes(int idUser, string roleUser, int idCampagne)
         {
             InitializeComponent();
             this.idUser = idUser;
@@ -37,7 +32,7 @@ namespace VinlandSol.IHM
 
         }
 
-       
+
         /// <summary>
         /// Actualise les informations de la carte selectionnée
         /// </summary>
@@ -45,11 +40,8 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void CartesListe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (CartesListe.SelectedItem != null)
-            { 
-                Edit.Visibility = Visibility.Visible;
-                RejoidCarte.IsEnabled = true;
-            }
+            Edit.Visibility = Visibility.Visible;
+            RejoidCarte.IsEnabled = true;
             AfficherInformationsCarte(CartesListe.SelectedIndex);
         }
 
@@ -59,14 +51,14 @@ namespace VinlandSol.IHM
         /// <param name="selectedIndex"></param>
         private void AfficherInformationsCarte(int selectedIndex)
         {
-            if (selectedIndex >= 0 && selectedIndex < fakeDAO.GetCartes().Count)
+            if (selectedIndex >= 0 && selectedIndex < fakeDAO.GetCurrentCartes(idCampagne).Count)
             {
-                Métier.Carte carte = fakeDAO.GetCartes()[selectedIndex];
+                Métier.Carte carte = fakeDAO.GetCurrentCartes(idCampagne)[selectedIndex];
                 NomCarteTextBlock.Text = carte.Nom;
                 DateCreationTextBlock.Text = carte.DateCreation.ToString("dd/MM/yyyy HH:mm:ss");
                 DateModificationTextBlock.Text = carte.DateModification.ToString("dd/MM/yyyy HH:mm:ss");
 
-                if (fakeDAO.GetCartes()[selectedIndex].Visibilite) 
+                if (fakeDAO.GetCurrentCartes(idCampagne)[selectedIndex].Visibilite)
                 {
                     VisibleCarte.Visibility = Visibility.Visible;
                     VisibleCarteHidden.Visibility = Visibility.Collapsed;
@@ -77,7 +69,6 @@ namespace VinlandSol.IHM
                     VisibleCarteHidden.Visibility = Visibility.Visible;
                 }
 
-               
             }
         }
 
@@ -88,12 +79,23 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
+            Métier.Carte selectedCarte = (Métier.Carte)CartesListe.SelectedItem; // On récupère la carte selectionnée
+            // On affiche les options d'édition
             NomCarteTextBox.Visibility = Visibility.Visible;
             Sauv.Visibility = Visibility.Visible;
             Suppr.Visibility = Visibility.Visible;
             EditS.Visibility = Visibility.Visible;
+            // On cache les options de non édition
             Edit.Visibility = Visibility.Collapsed;
+            RejoidCarte.Visibility = Visibility.Collapsed;
+            // Uniquement désactivés pour l'aspect visuel
+            AjoutCarte.IsEnabled = false;
+            Retour.IsEnabled = false;
 
+            CacheCartesListe.Visibility = Visibility.Visible;
+            CacheCartesListe.Content = "Vous modifiez le nom de la carte : \n" + selectedCarte.Nom;
+            NomCarteTextBox.Text = selectedCarte.Nom;
+            NomCarteTextBox.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -139,9 +141,10 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void SupprimerCarte(object sender, RoutedEventArgs e)
         {
-            int selectedIndex = CartesListe.SelectedIndex;
+            Métier.Carte selection = (Métier.Carte)CartesListe.SelectedItem;
+            int idCarte = selection.ID;
 
-            fakeDAO.DeleteCarte(selectedIndex + 1);
+            fakeDAO.DeleteCarte(idCarte);
 
             NomCarteTextBlock.Text = "";
             DateCreationTextBlock.Text = "";
@@ -187,8 +190,13 @@ namespace VinlandSol.IHM
             Suppr.Visibility = Visibility.Collapsed;
             Edit.Visibility = Visibility.Visible;
             EditS.Visibility = Visibility.Collapsed;
-            VisibleCarte.Visibility = Visibility.Collapsed;
-            VisibleCarteHidden.Visibility = Visibility.Collapsed;
+            AjoutCarte.Visibility = Visibility.Visible;
+            RejoidCarte.Visibility = Visibility.Visible;
+            CacheCartesListe.Visibility = Visibility.Collapsed;
+            CacheCartesListe.Content = "";
+            AjoutCarte.IsEnabled = true;
+            Retour.IsEnabled = true;
+
         }
 
         /// <summary>
@@ -196,7 +204,7 @@ namespace VinlandSol.IHM
         /// </summary>
         public void MettreAJourListBox()
         {
-            List<Métier.Carte> cartes = fakeDAO.GetCartes(); // On récupère les cartes depuis le fakeDAO
+            List<Métier.Carte> cartes = fakeDAO.GetCurrentCartes(idCampagne); // On récupère les cartes depuis le fakeDAO
 
             CartesListe.Items.Clear(); // On efface les éléments existants dans la ListBox
 
@@ -218,7 +226,8 @@ namespace VinlandSol.IHM
         {
             if (creaCarteOpen == false)
             {
-                pagecreationcarte = new CreationCarte(this,idCampagne);
+                this.IsEnabled = false;
+                pagecreationcarte = new CreationCarte(this, idCampagne);
                 pagecreationcarte.Closed += CreationCarte_Closed;
                 pagecreationcarte.Left = this.Left;
                 pagecreationcarte.Top = this.Top;
@@ -235,6 +244,7 @@ namespace VinlandSol.IHM
         private void CreationCarte_Closed(object sender, EventArgs e)
         {
             creaCarteOpen = false;
+            this.IsEnabled = true;
             if (Application.Current.Windows.Count == 1)
             {
                 Application.Current.Shutdown();
@@ -277,7 +287,7 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void OuvrirCarte_Click(object sender, RoutedEventArgs e)
         {
-            int idCarte = CartesListe.SelectedIndex+1;
+            int idCarte = CartesListe.SelectedIndex + 1;
             Carte carteselect = new Carte(idUser, roleUser, idCarte, idCampagne);
             carteselect.Left = this.Left;
             carteselect.Top = this.Top;

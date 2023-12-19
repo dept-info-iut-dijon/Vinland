@@ -1,6 +1,8 @@
 # Vinland
 > Une Application de cartographie et d’exploration à des fins ludiques
 
+Ce README est disponible en : [English](README-EN.md) , [Español](README-ES.md) , [Latin](README-LAT.md)
+
 ## Usage
 
 Vous voulez faire du jeu de rôle avec des cartes mais vous n'avez aucun outil qui vous permette de le faire?  

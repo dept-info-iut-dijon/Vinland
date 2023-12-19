@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         x:Name="PersonnagesWindow"
         ResizeMode="NoResize"
+        Icon="/IHM/Media/Resources/logo.ico"
         Title="Personnages" Height="750" Width="1400">
     <Grid>
         <Grid.Background>
@@ -18,14 +19,15 @@
 
         <!--Partie Gauche-->
         <ListBox x:Name="PersonnagesListe" Margin="100,250,800,160" SelectionChanged="PersonnagesListe_SelectionChanged" FontSize="30" d:ItemsSource="{Binding PersonnagesCollection}" Background="#f5d9a9" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
-        <Button Content="Ajouter un personnage" Click="OuvrirAjouterPersonnage_Click" Margin="0,0,800,50" FontSize="30" Height="70" Width="500" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#fbf1cc" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
+        <Label x:Name="CachePersonnagesListe" Content="" FontSize="30" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Background="#f5d9a9" Margin="100,250,0,0" VerticalContentAlignment="Center" VerticalAlignment="Top" Height="324" Width="500" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" Visibility="Collapsed"/>
+        <Button Content="Ajouter un personnage" x:Name="AjoutPerso" Click="OuvrirAjouterPersonnage_Click" Margin="0,0,800,50" FontSize="30" Height="70" Width="500" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#fbf1cc" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button Content="Retour" Click="OuvrirCampagnes_Click" Margin="10,10,0,0" FontSize="25" Height="56" Width="121" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#fbf1cc" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
+        <Button Content="Retour" x:Name="Retour" Click="OuvrirCampagnes_Click" Margin="10,10,0,0" FontSize="25" Height="56" Width="121" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#fbf1cc" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>
@@ -44,16 +46,16 @@
         <TextBlock x:Name="NomPersonnageTextBlock" Margin="1065,406,120,0" VerticalAlignment="Top" FontSize="27.5" Height="70" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
         <TextBlock x:Name="DateCreationTextBlock" Margin="982,505,120,0" VerticalAlignment="Top" FontSize="27.5" Height="47" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
 
-        <Button x:Name="Edit" FontSize="40" Margin="0,0,10,322" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" Click="Edit_Click" Visibility="Collapsed">
+        <Button x:Name="Edit" FontSize="40" Margin="0,0,10,280" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" Click="Edit_Click" Visibility="Collapsed">
             <Image x:Name="crayon" Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
         </Button>
-        <Button x:Name="EditS" FontSize="40" Margin="0,0,10,322" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" Click="EditS_Click" Visibility="Collapsed">
-            <Image x:Name="crayon2" Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
+        <Button x:Name="EditS" FontSize="40" Margin="0,0,10,280" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="{x:Null}" BorderThickness="0,0,0,0" Click="EditS_Click" Visibility="Collapsed">
+            <Image x:Name="crayon2" Source="/IHM/Media/Resources/fleche_retour.png" Height="70" Width="70" />
         </Button>
         <Button x:Name="BoutonSuppression" Click="SupprimerPersonnage" Visibility="Collapsed" Margin="0,0,40,50" FontSize="40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="Red" >
             <Image Source="Media/Icones/Poubelle.png" Height="70" Width="70" />
         </Button>
-        <TextBox x:Name="NomPersonnageTextBox" Visibility="Collapsed" Margin="0,0,280,50" FontSize="30" Height="66" Width="232" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
+        <TextBox x:Name="NomPersonnageTextBox" Visibility="Collapsed" Margin="0,0,280,50" FontSize="30" Height="66" Width="467" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh"/>
 
         <Button x:Name="ValiderButton" Content="Sauvegarder" Click="ValiderButton_Click" Visibility="Collapsed" Margin="0,0,120,50" FontSize="25" Height="66" Width="155" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#fbf1cc" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
             <Button.Resources>
@@ -62,7 +64,7 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <Button Content="Selection de carte" Click="OuvrirCartes_Click" Margin="0,0,517,50" FontSize="30" Height="70" Width="252" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#fbf1cc" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
+        <Button Content="Selection de carte" x:Name="SelectCarte" Click="OuvrirCartes_Click" Margin="0,0,317,50" FontSize="30" Height="70" Width="430" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#fbf1cc" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>

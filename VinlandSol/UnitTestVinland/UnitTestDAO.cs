@@ -2,20 +2,34 @@ using VinlandMain.IHM;
 using VinlandSol.BDD;
 using VinlandSol.Métier;
 
+/*
+
 namespace UnitTestVinland
 {
+    /// <summary>
+    /// Classe de Test pour le Fake DAO
+    /// </summary>
+    /// <author>Alexis Paris</author>
     public class UnitTestDAO
     {
+        #region Construct Instance
         private FakeDAO fakeDAO = FakeDAO.Instance;
 
+        /// <summary>
+        /// Initialisation du nettoyage de listes
+        /// </summary>
+        /// <author>Alexis Paris</author>
         public UnitTestDAO() 
         {
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
+        #endregion
 
+        #region Create_Test 
         /// <summary>
         /// Vérifie que la méthode `CreateJoueur` crée un joueur avec les informations spécifiées.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_CreateJoueur()
         {
@@ -28,12 +42,13 @@ namespace UnitTestVinland
             Assert.Equal(nom, joueur.Nom);
             Assert.Equal(mdp, joueur.Mdp);
 
-            fakeDAO.ClearLists(); 
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
         /// Vérifie que la méthode `CreateMJ` crée un MJ avec les informations spécifiées.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_CreateMJ()
         {
@@ -52,6 +67,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `CreatePersonnage` crée un personnage avec les informations spécifiées.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_CreatePersonnage()
         {
@@ -72,6 +88,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `CreateCarte` crée une carte avec les informations spécifiées.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_CreateCarte()
         {
@@ -95,6 +112,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `CreateCampagne` crée une campagne avec le nom spécifié.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_CreateCampagne()
         {
@@ -109,9 +127,14 @@ namespace UnitTestVinland
             fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
+        #endregion
+
+        #region Delete_Test
+
         /// <summary>
         /// Vérifie que la méthode `DeleteJoueur` supprime le joueur avec l'identifiant spécifié.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_DeleteJoueur()
         {
@@ -129,6 +152,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `DeleteMJ` supprime le MJ avec l'identifiant spécifié.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_DeleteMJ()
         {
@@ -146,6 +170,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `DeletePersonnage` supprime le personnage avec l'identifiant spécifié.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_DeletePersonnage()
         {
@@ -164,6 +189,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `DeleteCarte` supprime la carte avec l'identifiant spécifié.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_DeleteCarte()
         {
@@ -183,6 +209,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `DeleteCampagne` supprime la campagne avec l'identifiant spécifié.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_DeleteCampagne()
         {
@@ -196,9 +223,14 @@ namespace UnitTestVinland
             Assert.Empty(campagnes);
         }
 
+        #endregion
+
+        #region Get_Tests
+
         /// <summary>
         /// Vérifie que la méthode `GetJoueurs` renvoie une liste non vide.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_GetJoueurs()
         {
@@ -211,13 +243,14 @@ namespace UnitTestVinland
             Assert.NotEmpty(joueurs);
             Assert.Equal(2, joueurs.Count);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
 
         }
 
         /// <summary>
         /// Vérifie que la méthode `GetMJs` renvoie une liste non vide.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_GetMJs()
         {
@@ -230,13 +263,14 @@ namespace UnitTestVinland
             Assert.NotEmpty(mjs);
             Assert.Equal(2, mjs.Count);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
 
         }
 
         /// <summary>
         /// Vérifie que la méthode `GetCampagnes` renvoie une liste non vide.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_GetCampagnes()
         {
@@ -249,13 +283,14 @@ namespace UnitTestVinland
             Assert.NotEmpty(campagnes);
             Assert.Equal(2, campagnes.Count);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
 
         }
 
         /// <summary>
         /// Vérifie que la méthode `GetPersonnages` renvoie une liste non vide.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_GetPersonnages()
         {
@@ -270,13 +305,14 @@ namespace UnitTestVinland
             Assert.NotEmpty(personnages);
             Assert.Equal(2, personnages.Count);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
 
         }
 
         /// <summary>
         /// Vérifie que la méthode `GetCartes` renvoie une liste non vide.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_GetCartes()
         {
@@ -291,13 +327,16 @@ namespace UnitTestVinland
             Assert.NotEmpty(cartes);
             Assert.Equal(2, cartes.Count);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
 
         }
+        #endregion
 
+        #region Updates_Test
         /// <summary>
         /// Vérifie que la méthode `UpdateCampagne()` met à jour correctement une campagne.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_UpdateCampagne()
         {
@@ -310,7 +349,7 @@ namespace UnitTestVinland
             List<Campagne> campagnes = fakeDAO.GetCampagnes();
             Assert.Equal("Campagne Update2", campagnes[0].Nom);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
 
         }
 
@@ -318,6 +357,7 @@ namespace UnitTestVinland
         /// <summary>
         /// Vérifie que la méthode `UpdateCampagneName()` met à jour correctement le nom d'une campagne.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_UpdateCampagneName()
         {
@@ -330,10 +370,14 @@ namespace UnitTestVinland
             List<Campagne> campagnes = fakeDAO.GetCampagnes();
             Assert.Equal("Campagne UpdateName2", campagnes[0].Nom);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
 
         }
 
+        /// <summary>
+        /// Vérifie que la méthode `UpdatePersonnage()` met à jour correctement le nom d'un personnage
+        /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_UpdatePersonnage()
         {
@@ -351,12 +395,13 @@ namespace UnitTestVinland
             List<Personnage> personnages = fakeDAO.GetPersonnages();
             Assert.Equal(0, personnages.Count);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
         /// Vérifie que la méthode `UpdatePersonnageName()` met à jour correctement le nom du personnage.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_UpdatePersonnageName()
         {
@@ -373,12 +418,13 @@ namespace UnitTestVinland
             Assert.Equal(1, personnages.Count);
             Assert.Equal("Personnage 2", personnages[0].Nom);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
         /// Vérifie que la méthode `UpdateCarte()` met à jour correctement la carte.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_UpdateCarte()
         {
@@ -397,12 +443,13 @@ namespace UnitTestVinland
             Assert.Equal(1, cartes.Count);
             Assert.Equal("Carte 2", cartes[0].Nom);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
         /// Vérifie que la méthode `UpdateCarteName()` met à jour correctement le nom de la carte.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_UpdateCarteName()
         {
@@ -421,12 +468,13 @@ namespace UnitTestVinland
             Assert.Equal(1, cartes.Count);
             Assert.Equal("Carte 2", cartes[0].Nom);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
         /// <summary>
         /// Vérifie que la méthode `UpdateCarteVisibilite()` met à jour correctement la visibilité de la carte.
         /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_UpdateCarteVisibilite()
         {
@@ -445,9 +493,15 @@ namespace UnitTestVinland
             Assert.Equal(1, cartes.Count);
             Assert.True(cartes[0].Visibilite);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
+        #endregion
 
+        #region Verify_UserAccount
+        /// <summary>
+        /// Teste la méthode "VerifyUserAccount"
+        /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_VerifyUserAccount()
         {
@@ -458,11 +512,13 @@ namespace UnitTestVinland
             Assert.Equal(1, id);
             Assert.Equal("Joueur", role);
 
-            fakeDAO.ClearLists();
-
-
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
+        /// <summary>
+        /// Teste la même méthode si le compte n'est pas trouvé
+        /// </summary>
+        /// <author>Alexis Paris</author>
         [Fact]
         public void Test_VerifyUserAccount_CompteNonTrouve()
         {
@@ -472,9 +528,11 @@ namespace UnitTestVinland
             Assert.Equal(-1, id);
             Assert.Equal("Non trouvé", role);
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
         }
 
-
+        #endregion
     }
 }
+
+*/

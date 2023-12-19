@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using VinlandMain.IHM;
@@ -19,7 +17,6 @@ namespace VinlandSol.IHM
         private int idUser;
         private string roleUser;
         private int idCampagne;
-        private int indicePersonnageEnEdition = -1;
         private AjouterPersonnage? pageajouterPerso;
         private bool ajouterPersoOpen = false;
 
@@ -34,7 +31,6 @@ namespace VinlandSol.IHM
             this.roleUser = roleUser;
             MettreAJourListBox();
             Closed += ShutdownEnForce;
-
         }
 
         /// <summary>
@@ -54,10 +50,10 @@ namespace VinlandSol.IHM
         /// <param name="selectedIndex"></param>
         private void AfficherInformationsPersonnage(int selectedIndex)
         {
-            if (selectedIndex >= 0 && selectedIndex < fakeDAO.GetPersonnages().Count)
+            if (selectedIndex >= 0 && selectedIndex < fakeDAO.GetCurrentPersonnages(idCampagne).Count)
             {
-                Personnage personnage = fakeDAO.GetPersonnages()[selectedIndex];
-                NomUtilisateurTextBlock.Text = fakeDAO.GetJoueur(personnage.ID).Nom;
+                Personnage personnage = fakeDAO.GetCurrentPersonnages(idCampagne)[selectedIndex];
+                NomUtilisateurTextBlock.Text = fakeDAO.GetJoueur(personnage.IDJoueur).Nom;
                 NomPersonnageTextBlock.Text = personnage.Nom;
                 DateCreationTextBlock.Text = personnage.DateCreation.ToString("dd/MM/yyyy HH:mm:ss"); ;
             }
@@ -72,9 +68,10 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void SupprimerPersonnage(object sender, RoutedEventArgs e)
         {
-            int selectedIndex = PersonnagesListe.SelectedIndex;
+            Personnage selectedIndex = (Personnage)PersonnagesListe.SelectedItem;
+            int idPersonnage = selectedIndex.ID;
 
-            fakeDAO.DeletePersonnage(selectedIndex + 1);
+            fakeDAO.DeletePersonnage(idPersonnage);
 
             NomUtilisateurTextBlock.Text = "";
             NomPersonnageTextBlock.Text = "";
@@ -82,7 +79,7 @@ namespace VinlandSol.IHM
             MettreAJourListBox();
             MasquerElements();
             Edit.Visibility = Visibility.Collapsed;
-            
+
         }
 
         /// <summary>
@@ -92,11 +89,23 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
+            Personnage selectedPersonnage = (Personnage)PersonnagesListe.SelectedItem; // On récupère le personnage selectionnée
+            // On affiche les options d'édition
             NomPersonnageTextBox.Visibility = Visibility.Visible;
             ValiderButton.Visibility = Visibility.Visible;
             BoutonSuppression.Visibility = Visibility.Visible;
             EditS.Visibility = Visibility.Visible;
+            // On cache les options de non édition
             Edit.Visibility = Visibility.Collapsed;
+            SelectCarte.Visibility = Visibility.Collapsed;
+            // Uniquement désactivés pour l'aspect visuel
+            AjoutPerso.IsEnabled = false;
+            Retour.IsEnabled = false;
+
+            CachePersonnagesListe.Visibility = Visibility.Visible; // On empêche toute interaction avec la liste des personnages
+            CachePersonnagesListe.Content = "Vous modifiez le nom du personnage : \n" + selectedPersonnage.Nom; // On indique à l'utilisateur le nom originel de son personnage
+            NomPersonnageTextBox.Text = selectedPersonnage.Nom;
+            NomPersonnageTextBox.Visibility = Visibility.Visible;
 
         }
         /// <summary>
@@ -116,22 +125,36 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         public void ValiderButton_Click(object sender, RoutedEventArgs e)
         {
+            Personnage personnageEdit = (Personnage)PersonnagesListe.SelectedItem; // On récupère le personnage selectionné
+            int idPersonnageEdit = personnageEdit.ID; // On récupère l'ID du personnage
             string nouvNomPersonnage = NomPersonnageTextBox.Text;
+            bool okCheck = true;
 
-            if (string.IsNullOrWhiteSpace(nouvNomPersonnage))
+            #region Checks
+
+            string? messageCheckFail = null;
+            // Un seul check à la fois, on ne veut pas aggresser l'utilisateur avec des popups en chaine
+            if (fakeDAO.PersonnageTaken(nouvNomPersonnage, idCampagne) == false) { messageCheckFail = "Vous avez déjà un personnage portant ce nom"; okCheck = false; }
+            if (string.IsNullOrWhiteSpace(nouvNomPersonnage)) { messageCheckFail = "Le nom du personnage ne peut pas être vide"; okCheck = false; }
+
+            if (!okCheck) // Si un problème est rencontré, on en informe l'utilisateur
             {
-                CustomMessageBox customMessageBox = new CustomMessageBox("Le nom du personnage ne peut pas être vide.");
+                CustomMessageBox customMessageBox = new CustomMessageBox(messageCheckFail);
                 customMessageBox.ShowDialog();
-                return;
             }
 
-            fakeDAO.UpdatePersonnageName(PersonnagesListe.SelectedIndex+1,nouvNomPersonnage);
+            #endregion
 
-            NomPersonnageTextBox.Text = "";
-            AfficherInformationsPersonnage(PersonnagesListe.SelectedIndex);
-            MettreAJourListBox();
-            MasquerElements();
-            Edit.Visibility = Visibility.Collapsed;
+            if (okCheck) // Si tout va bien
+            {
+                fakeDAO.UpdatePersonnageName(idPersonnageEdit, nouvNomPersonnage);
+
+                NomPersonnageTextBox.Text = "";
+                AfficherInformationsPersonnage(PersonnagesListe.SelectedIndex);
+                MettreAJourListBox();
+                MasquerElements();
+            }
+
         }
 
         /// <summary>
@@ -144,6 +167,12 @@ namespace VinlandSol.IHM
             BoutonSuppression.Visibility = Visibility.Collapsed;
             Edit.Visibility = Visibility.Visible;
             EditS.Visibility = Visibility.Collapsed;
+            AjoutPerso.Visibility = Visibility.Visible;
+            SelectCarte.Visibility = Visibility.Visible;
+            CachePersonnagesListe.Visibility = Visibility.Collapsed;
+            CachePersonnagesListe.Content = "";
+            AjoutPerso.IsEnabled = true;
+            Retour.IsEnabled = true;
         }
 
         /// <summary>
@@ -151,7 +180,7 @@ namespace VinlandSol.IHM
         /// </summary>
         public void MettreAJourListBox()
         {
-            List<Personnage> personnages = fakeDAO.GetPersonnages(); // On récupère les personnages depuis le fakeDAO
+            List<Personnage> personnages = fakeDAO.GetCurrentPersonnages(idCampagne); // On récupère les personnages depuis le fakeDAO
 
             PersonnagesListe.Items.Clear(); // On efface les éléments existants dans la ListBox
 
@@ -173,7 +202,8 @@ namespace VinlandSol.IHM
         {
             if (ajouterPersoOpen == false)
             {
-                pageajouterPerso = new AjouterPersonnage(this,idCampagne);
+                this.IsEnabled = false;
+                pageajouterPerso = new AjouterPersonnage(this, idCampagne);
                 pageajouterPerso.Closed += AjouterPerso_Closed;
                 pageajouterPerso.Left = this.Left;
                 pageajouterPerso.Top = this.Top;
@@ -190,6 +220,7 @@ namespace VinlandSol.IHM
         private void AjouterPerso_Closed(object sender, EventArgs e)
         {
             ajouterPersoOpen = false;
+            this.IsEnabled = true;
             if (Application.Current.Windows.Count == 1)
             {
                 Application.Current.Shutdown();
@@ -207,7 +238,7 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void OuvrirCampagnes_Click(object sender, RoutedEventArgs e)
         {
-            Campagnes pagecreation = new Campagnes(idUser,roleUser);
+            Campagnes pagecreation = new Campagnes(idUser, roleUser);
             pagecreation.Left = this.Left;
             pagecreation.Top = this.Top;
             pagecreation.Show();
