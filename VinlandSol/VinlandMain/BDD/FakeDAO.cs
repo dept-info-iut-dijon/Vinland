@@ -64,6 +64,9 @@ namespace VinlandSol.BDD
 
         #region Méthodes
 
+        /// <summary>
+        /// Dédié au tests - Remet les fichiers à leur état d'origine
+        /// </summary>
         public void ClearLists()
         {
             joueurs.Clear();
@@ -72,7 +75,7 @@ namespace VinlandSol.BDD
             personnages.Clear();
             cartes.Clear();
 
-            _gestionnaireDeFichiers.SetupFichiers();
+            _gestionnaireDeFichiers.ResetFichiers();
         }
 
         #region Création

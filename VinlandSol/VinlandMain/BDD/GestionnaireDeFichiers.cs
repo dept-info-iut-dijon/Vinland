@@ -14,6 +14,7 @@ namespace VinlandSol.BDD
     /// <author>Aaron</author>
     public class GestionnaireDeFichiers
     {
+        private const string dataFolder = "datafiles"; // Dossier contenant les fichiers de sauvegarde
 
         #region Setup Singleton
 
@@ -25,6 +26,11 @@ namespace VinlandSol.BDD
         /// <author>Aaron</author>
         private GestionnaireDeFichiers()
         {
+            string dataFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dataFolder); // On récupère le chemin vers les fichiers de sauvegarde
+            if (!Directory.Exists(dataFolderPath)) // Si le dossier n'existe pas 
+            {
+                Directory.CreateDirectory(dataFolderPath); // On créé un dossier afin d'y mettre les fichiers
+            }
             SetupFichiers();
         }
 
@@ -52,7 +58,7 @@ namespace VinlandSol.BDD
         /// Répertorie les fichiers à Setup avec l'entête contenant les noms des Propriétés stockées d'une instance
         /// </summary>
         /// <author>Aaron</author>
-        public void SetupFichiers()
+        private void SetupFichiers()
         {
             SetupFichier("Joueurs.txt", GetHeader<Joueur>());
             SetupFichier("Mjs.txt", GetHeader<MJ>());
@@ -66,16 +72,34 @@ namespace VinlandSol.BDD
         /// <summary>
         ///  Créé le fichier de sauvegarde si il n'existe pas ( ou l'écrase si incorrect )
         /// </summary>
-        /// <param name="filePath"></param>
-        /// <param name="header"></param>
+        /// <param name="fileName">Nom du fichier à Override (extension comprise)</param>
+        /// <param name="header">Header du fichier</param>
         /// <author>Aaron</author>
-        private void SetupFichier(string filePath, string header)
+        private void SetupFichier(string fileName, string header)
         {
-            if (!File.Exists(filePath) || !File.ReadAllText(filePath).StartsWith(header))
+            string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dataFolder, fileName); // On récupère le chemin vers le fichier
+            if (!File.Exists(fullPath) || !File.ReadAllText(fullPath).StartsWith(header))
             {
-                File.WriteAllText(filePath, header); // Si le fichier n'existe pas ou que l'entete n'est pas présente - Créé ou Ecrase le fichier avec un fichier correct
-                using (StreamWriter sw = File.AppendText(filePath)) sw.WriteLine(); // On passe une ligne pour ne pas écrire la première instance sur l'entête
+                File.WriteAllText(fullPath, header); // Si le fichier n'existe pas ou que l'entete n'est pas présente - Créé ou Ecrase le fichier avec un fichier correct
+                using (StreamWriter sw = File.AppendText(fullPath)) sw.WriteLine(); // On passe une ligne pour ne pas écrire la première instance sur l'entête
             }
+        }
+
+        /// <summary>
+        /// Supprime les données présentes dans les fichiers de sauvegarde
+        /// </summary>
+        /// <author>Aaron</author>
+        public void ResetFichiers()
+        {
+            string dataFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dataFolder); // On récupère le chemin vers les fichiers de sauvegarde
+
+            DirectoryInfo directory = new DirectoryInfo(dataFolderPath); 
+            foreach (FileInfo file in directory.GetFiles()) // On supprime chaque fichier du dossier
+            {
+                file.Delete(); 
+            }
+
+            SetupFichiers(); // On recréé les fichiers
         }
 
         #endregion
@@ -87,16 +111,17 @@ namespace VinlandSol.BDD
         /// </summary>
         /// <typeparam name="T">Classe Type (par exemple Joueur)</typeparam>
         /// <param name="liste">liste contenant les instances T</param>
-        /// <param name="filePath">chemin vers le fichier correspondant a T</param>
+        /// <param name="fileName">Nom du fichier à Override (extension comprise)</param>
         /// <author>Aaron</author>
-        public void Override<T>(List<T> liste, string filePath)
+        public void Override<T>(List<T> liste, string fileName)
         {
-            File.WriteAllText(filePath, GetHeader<T>()); // Setup de l'override, le fichier est recréé avec le header
-            using (StreamWriter sw = File.AppendText(filePath)) sw.WriteLine(); // On passe une ligne pour ne pas écrire la première instance sur l'entête
+            string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dataFolder, fileName); // On récupère le chemin vers les fichiers de sauvegarde
+            File.WriteAllText(fullPath, GetHeader<T>()); // Setup de l'override, le fichier est recréé avec le header
+            using (StreamWriter sw = File.AppendText(fullPath)) sw.WriteLine(); // On passe une ligne pour ne pas écrire la première instance sur l'entête
             foreach (var item in liste) // On réécrit toutes les instances dans le fichier
             {
                 string line = GetFormattedLine(item); // On transforme l'item en string
-                WriteToFile(filePath, line); // On écrit la ligne dans le fichier
+                using (StreamWriter sw = File.AppendText(fileName)) sw.WriteLine(line); // On ajoute la ligne
             }
         }
 
@@ -138,17 +163,6 @@ namespace VinlandSol.BDD
             return string.Join(",", values); // On assemble les strings correspondants aux valeurs de l'instance en un seul et unique string, on sépare chaque string par une virgule
         }
 
-        /// <summary>
-        /// Ecris une ligne dans le fichier donné
-        /// </summary>
-        /// <param name="filePath">le path du fichier</param>
-        /// <param name="line">la ligne a écrire</param>
-        /// <author>Aaron</author>
-        private void WriteToFile(string filePath, string line)
-        {
-            using (StreamWriter sw = File.AppendText(filePath)) sw.WriteLine(line);
-        }
-
         #endregion
 
         #region Load
@@ -157,18 +171,20 @@ namespace VinlandSol.BDD
         /// Méthode Générique - Charge les données du fichier dans une liste d'instances T
         /// </summary>
         /// <typeparam name="T">Classe Type (par exemple Joueur)</typeparam>
-        /// <param name="filePath">Chemin vers le fichier correspondant à T</param>
+        /// <param name="fileName">Nom du fichier (extension comprise) correspondant à T</param>
         /// <returns>Liste d'instances T</returns>
         /// <author>Aaron</author>
-        public List<T> Load<T>(string filePath)
+        public List<T> Load<T>(string fileName)
         {
+            string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dataFolder, fileName); // On récupère le chemin vers les fichiers de sauvegarde
+
             List<T> instances = new List<T>();
 
-            if (File.Exists(filePath)) // Si le fichier existe
+            if (File.Exists(fullPath)) // Si le fichier existe
             {
                 bool premièreLigneSkip = true; // L'entête doit être ignorée
 
-                foreach (string line in File.ReadLines(filePath)) // On ajoute les instances à partir des lignes du fichier (le nombre d'instances récupérées sera toujours égal au nombre de lignes -1)
+                foreach (string line in File.ReadLines(fullPath)) // On ajoute les instances à partir des lignes du fichier (le nombre d'instances récupérées sera toujours égal au nombre de lignes -1)
                 {
                     if (!premièreLigneSkip) // Si l'entête n'a pas encore été ignorée
                     {
