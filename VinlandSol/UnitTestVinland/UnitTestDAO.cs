@@ -1,8 +1,9 @@
 using VinlandMain.IHM;
 using VinlandSol.BDD;
+using VinlandSol.IHM;
 using VinlandSol.Métier;
+using Carte = VinlandSol.Métier.Carte;
 
-/*
 
 namespace UnitTestVinland
 {
@@ -15,14 +16,6 @@ namespace UnitTestVinland
         #region Construct Instance
         private FakeDAO fakeDAO = FakeDAO.Instance;
 
-        /// <summary>
-        /// Initialisation du nettoyage de listes
-        /// </summary>
-        /// <author>Alexis Paris</author>
-        public UnitTestDAO() 
-        {
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
-        }
         #endregion
 
         #region Create_Test 
@@ -33,16 +26,32 @@ namespace UnitTestVinland
         [Fact]
         public void Test_CreateJoueur()
         {
-            string nom = "Joueur 1";
-            string mdp = "motdepasse";
 
-            fakeDAO.CreateJoueur(nom, mdp);
+            #region Init
+            string nom = "monNom";
+            string motDePasse = "monMotDePasse";
+            string nom2 = "monNom2";
+            string motDePasse2 = "monMotDePasse2";
+            #endregion
 
-            Joueur joueur = fakeDAO.GetJoueurs().Last();
-            Assert.Equal(nom, joueur.Nom);
-            Assert.Equal(mdp, joueur.Mdp);
+            #region Act
+            fakeDAO.ClearLists(); // On s'assure que les fichiers sont bien vides 
+
+            fakeDAO.CreateJoueur(nom, motDePasse);
+            Joueur joueur = fakeDAO.GetJoueur(1);
+            fakeDAO.CreateJoueur(nom2, motDePasse2);
+            Joueur joueur2 = fakeDAO.GetJoueur(2);
 
             fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            #endregion
+
+            #region Assert
+            Assert.Equal(nom, joueur.Nom);
+            Assert.Equal(motDePasse, joueur.Mdp);
+            Assert.Equal(nom2, joueur2.Nom);
+            Assert.Equal(motDePasse2, joueur2.Mdp);
+            #endregion
+
         }
 
         /// <summary>
@@ -52,61 +61,30 @@ namespace UnitTestVinland
         [Fact]
         public void Test_CreateMJ()
         {
-            string nom = "MJ 1";
-            string mdp = "motdepasse";
+            #region Init
+            string nomMJ = "monNom";
+            string MdpMJ = "monMotDePasse";
+            string nomMJ2 = "monNom2";
+            string MdpMJ2 = "monMotDePasse2";
+            #endregion
 
-            fakeDAO.CreateMJ(nom, mdp);
+            #region Act
+            fakeDAO.ClearLists(); // On s'assure que les fichiers sont bien vides 
 
-            MJ mj = fakeDAO.GetMJs().Last();
-            Assert.Equal(nom, mj.Nom);
-            Assert.Equal(mdp, mj.Mdp);
-
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
-        }
-
-        /// <summary>
-        /// Vérifie que la méthode `CreatePersonnage` crée un personnage avec les informations spécifiées.
-        /// </summary>
-        /// <author>Alexis Paris</author>
-        [Fact]
-        public void Test_CreatePersonnage()
-        {
-            string nom = "Personnage 1";
-            int idJoueur = 1;
-            int idCampagne = 1;
-
-            fakeDAO.CreatePersonnage(nom, idJoueur, idCampagne);
-
-            Personnage personnage = fakeDAO.GetPersonnages().Last();
-            Assert.Equal(nom, personnage.Nom);
-            Assert.Equal(idJoueur, personnage.IDJoueur);
-            Assert.Equal(idCampagne, personnage.IDCampagne);
+            fakeDAO.CreateMJ(nomMJ, MdpMJ);
+            MJ mj = fakeDAO.GetMJ(1);
+            fakeDAO.CreateMJ(nomMJ2, MdpMJ2);
+            MJ mj2 = fakeDAO.GetMJ(2);
 
             fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
-        }
+            #endregion
 
-        /// <summary>
-        /// Vérifie que la méthode `CreateCarte` crée une carte avec les informations spécifiées.
-        /// </summary>
-        /// <author>Alexis Paris</author>
-        [Fact]
-        public void Test_CreateCarte()
-        {
-            
-            string nom = "Carte 1";
-            int hauteur = 100;
-            int largeur = 200;
-            int idCampagne = 1;
-            
-            fakeDAO.CreateCarte(nom, hauteur, largeur, idCampagne);
-            
-            Carte carte = fakeDAO.GetCartes().Last();
-            Assert.Equal(nom, carte.Nom);
-            Assert.Equal(hauteur, carte.Hauteur);
-            Assert.Equal(largeur, carte.Largeur);
-            Assert.Equal(idCampagne, carte.IDCampagne);
-
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            #region Assert
+            Assert.Equal(nomMJ, mj.Nom);
+            Assert.Equal(MdpMJ, mj.Mdp);
+            Assert.Equal(nomMJ2 , mj2.Nom);
+            Assert.Equal(MdpMJ2, mj2.Mdp);
+            #endregion
         }
 
         /// <summary>
@@ -116,16 +94,131 @@ namespace UnitTestVinland
         [Fact]
         public void Test_CreateCampagne()
         {
-            
-            string nom = "Campagne Create";
+            #region Init
+            string nomMJ = "MJ";
+            string MdpMJ = "Mdp";
+            string nomCampagne = "nomCampagne";
+            string nomCampagne2 = "nomCampagne2";
+            #endregion
 
-            fakeDAO.CreateCampagne(nom);
+            #region Act
+            fakeDAO.ClearLists(); // On s'assure que les fichiers sont bien vides 
 
-            Campagne campagne = fakeDAO.GetCampagnes().Last();
-            Assert.Equal(nom, campagne.Nom);
+            fakeDAO.CreateMJ(nomMJ, MdpMJ);
+            MJ mj = fakeDAO.GetMJ(1);
+
+            fakeDAO.CreateCampagne(nomCampagne, mj.ID);
+            Campagne campagne = fakeDAO.GetCampagne(1);
+
+            fakeDAO.CreateCampagne(nomCampagne2, mj.ID);
+            Campagne campagne2 = fakeDAO.GetCampagne(2);
 
             fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            #endregion
+
+            #region Assert
+            Assert.Equal(nomCampagne, campagne.Nom);
+            Assert.Equal(nomCampagne2, campagne2.Nom);
+            Assert.Contains<int>(campagne.ID, mj.IDCampagnes);
+            Assert.Contains<int>(campagne2.ID, mj.IDCampagnes);
+            #endregion
         }
+
+
+        /// <summary>
+        /// Vérifie que la méthode `CreatePersonnage` crée un personnage avec les informations spécifiées.
+        /// </summary>
+        /// <author>Alexis Paris</author>
+        [Fact]
+        public void Test_CreatePersonnage()
+        {
+            #region Init
+            string nomMJ = "nomMJ";
+            string mdpMJ = "mdpMJ";
+            string nomJoueur = "nomJoueur";
+            string mdpJoueur = "mdpJoueur";
+            string nomCampagne = "nomCampagne";
+            string nomPersonnage = "nomPersonnage";
+            string nomPersonnage2 = "nomPersonnage2";
+            #endregion
+
+            #region Act
+            fakeDAO.ClearLists();
+
+            fakeDAO.CreateMJ(nomMJ, mdpMJ);
+            MJ mj = fakeDAO.GetMJ(1);
+
+            fakeDAO.CreateJoueur(nomJoueur, mdpJoueur);
+            Joueur joueur = fakeDAO.GetJoueur(1);
+
+            fakeDAO.CreateCampagne(nomCampagne, mj.ID);
+            Campagne campagne = fakeDAO.GetCampagne(1);
+
+            fakeDAO.CreatePersonnage(nomPersonnage, joueur.ID, campagne.ID);
+            Personnage personnage = fakeDAO.GetPersonnage(1);
+
+            fakeDAO.CreatePersonnage(nomPersonnage2, joueur.ID, campagne.ID);
+            Personnage personnage2 = fakeDAO.GetPersonnage(2);
+
+            fakeDAO.ClearLists();
+            #endregion
+
+            #region Assert
+            Assert.Equal(nomPersonnage, personnage.Nom);
+            Assert.Equal(nomPersonnage2, personnage2.Nom);
+            Assert.Contains<int>(personnage.ID, joueur.IDPersonnages);
+            Assert.Contains<int>(personnage2.ID, joueur.IDPersonnages);
+            Assert.Contains<int>(personnage.ID, campagne.IDPersonnages);
+            Assert.Contains<int>(personnage2.ID, campagne.IDPersonnages);
+            #endregion
+
+        }
+
+        /// <summary>
+        /// Vérifie que la méthode `CreateCarte` crée une carte avec les informations spécifiées.
+        /// </summary>
+        /// <author>Alexis Paris</author>
+        [Fact]
+        public void Test_CreateCarte()
+        {
+            #region Init
+            string nomMJ = "nomMJ";
+            string mdpMJ = "mdpMJ";
+            string nomCampagne = "nomCampagne";
+            string nomCarte = "nomCarte";
+            string nomCarte2 = "nomCarte2";
+            int largeur = 3;
+            int hauteur = 5;
+            #endregion
+
+            #region Act
+            fakeDAO.ClearLists();
+
+            fakeDAO.CreateMJ(nomMJ, mdpMJ);
+            MJ mj = fakeDAO.GetMJ(1);
+
+            fakeDAO.CreateCampagne(nomCampagne, mj.ID);
+            Campagne campagne = fakeDAO.GetCampagne(1);
+
+            fakeDAO.CreateCarte(nomCarte, hauteur, largeur, campagne.ID);
+            Carte carte = fakeDAO.GetCarte(1);
+
+            fakeDAO.CreateCarte(nomCarte2, hauteur, largeur, campagne.ID);
+            Carte carte2 = fakeDAO.GetCarte(2);
+
+            fakeDAO.ClearLists();
+
+            #endregion
+
+            #region Assert
+            Assert.Equal(nomCarte, carte.Nom);
+            Assert.Equal(nomCarte2, carte2.Nom);
+            Assert.Contains<int>(carte.ID, campagne.IDCartes);
+            Assert.Contains<int>(carte2.ID, campagne.IDCartes);
+            
+            #endregion
+        }
+
 
         #endregion
 
@@ -138,15 +231,18 @@ namespace UnitTestVinland
         [Fact]
         public void Test_DeleteJoueur()
         {
-            
-            string nom = "Joueur 1";
-            string mdp = "motdepasse";
-            fakeDAO.CreateJoueur(nom, mdp); // Initialisation du joueur à supprimer 
-            
-            fakeDAO.DeleteJoueur(1);
 
-            List<Joueur> joueurs = fakeDAO.GetJoueurs();
-            Assert.Empty(joueurs);
+            #region Init
+
+            #endregion
+
+            #region Act
+
+            #endregion
+
+            #region Assert
+
+            #endregion
         }
 
         /// <summary>
@@ -156,15 +252,17 @@ namespace UnitTestVinland
         [Fact]
         public void Test_DeleteMJ()
         {
-            
-            string nom = "MJ 1";
-            string mdp = "motdepasse";
-            fakeDAO.CreateMJ(nom, mdp); // Initialisation du mj à supprimer 
- 
-            fakeDAO.DeleteMJ(1);
+            #region Init
 
-            List<MJ> mjs = fakeDAO.GetMJs();
-            Assert.Empty(mjs);
+            #endregion
+
+            #region Act
+
+            #endregion
+
+            #region Assert
+
+            #endregion
         }
 
         /// <summary>
@@ -174,16 +272,17 @@ namespace UnitTestVinland
         [Fact]
         public void Test_DeletePersonnage()
         {
-            
-            string nom = "Personnage 1";
-            int idJoueur = 1;
-            int idCampagne = 1;
-            fakeDAO.CreatePersonnage(nom, idJoueur, idCampagne); // Initialisation du personnage à supprimer 
+            #region Init
 
-            fakeDAO.DeletePersonnage(1);
+            #endregion
 
-            List<Personnage> personnages = fakeDAO.GetPersonnages();
-            Assert.Empty(personnages);
+            #region Act
+
+            #endregion
+
+            #region Assert
+
+            #endregion
         }
 
         /// <summary>
@@ -193,17 +292,17 @@ namespace UnitTestVinland
         [Fact]
         public void Test_DeleteCarte()
         {
-            
-            string nom = "Carte 1";
-            int hauteur = 100;
-            int largeur = 200;
-            int idCampagne = 1;
-            fakeDAO.CreateCarte(nom, hauteur, largeur, idCampagne); // Initialisation de la carte à supprimer 
+            #region Init
 
-            fakeDAO.DeleteCarte(1);
-            
-            List<Carte> cartes = fakeDAO.GetCartes();
-            Assert.Empty(cartes);
+            #endregion
+
+            #region Act
+
+            #endregion
+
+            #region Assert
+
+            #endregion
         }
 
         /// <summary>
@@ -213,14 +312,17 @@ namespace UnitTestVinland
         [Fact]
         public void Test_DeleteCampagne()
         {
-           
-            string nom = "Campagne Delete";
-            fakeDAO.CreateCampagne(nom);
-            
-            fakeDAO.DeleteCampagne(1);
-            
-            List<Campagne> campagnes = fakeDAO.GetCampagnes();
-            Assert.Empty(campagnes);
+            #region Init
+
+            #endregion
+
+            #region Act
+
+            #endregion
+
+            #region Assert
+
+            #endregion
         }
 
         #endregion
@@ -234,17 +336,17 @@ namespace UnitTestVinland
         [Fact]
         public void Test_GetJoueurs()
         {
-            fakeDAO.CreateJoueur("Joueur 1", "motdepasse");
-            fakeDAO.CreateJoueur("Joueur 2", "motdepasse");
+            #region Init
 
-            List<Joueur> joueurs = fakeDAO.GetJoueurs();
+            #endregion
 
-            Assert.NotNull(joueurs);
-            Assert.NotEmpty(joueurs);
-            Assert.Equal(2, joueurs.Count);
+            #region Act
 
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            #endregion
 
+            #region Assert
+
+            #endregion
         }
 
         /// <summary>
@@ -254,17 +356,17 @@ namespace UnitTestVinland
         [Fact]
         public void Test_GetMJs()
         {
-            fakeDAO.CreateMJ("MJ 1", "motdepasse");
-            fakeDAO.CreateMJ("MJ 2", "motdepasse");
+            #region Init
 
-            List<MJ> mjs = fakeDAO.GetMJs();
+            #endregion
 
-            Assert.NotNull(mjs);
-            Assert.NotEmpty(mjs);
-            Assert.Equal(2, mjs.Count);
+            #region Act
 
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            #endregion
 
+            #region Assert
+
+            #endregion
         }
 
         /// <summary>
@@ -274,17 +376,17 @@ namespace UnitTestVinland
         [Fact]
         public void Test_GetCampagnes()
         {
-            fakeDAO.CreateCampagne("Campagne GetCampagnes1");
-            fakeDAO.CreateCampagne("Campagne GetCampagnes2");
+            #region Init
 
-            List<Campagne> campagnes = fakeDAO.GetCampagnes();
+            #endregion
 
-            Assert.NotNull(campagnes);
-            Assert.NotEmpty(campagnes);
-            Assert.Equal(2, campagnes.Count);
+            #region Act
 
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            #endregion
 
+            #region Assert
+
+            #endregion
         }
 
         /// <summary>
@@ -294,19 +396,17 @@ namespace UnitTestVinland
         [Fact]
         public void Test_GetPersonnages()
         {
-            fakeDAO.CreateJoueur("Joueur 1", "motdepasse");
-            fakeDAO.CreatePersonnage("Personnage 1", 1, 1);
-            fakeDAO.CreatePersonnage("Personnage 2", 1, 1);
+            #region Init
 
-            List<Joueur> joueurs = fakeDAO.GetJoueurs();
-            List<Personnage> personnages = fakeDAO.GetPersonnages();
+            #endregion
 
-            Assert.NotNull(personnages);
-            Assert.NotEmpty(personnages);
-            Assert.Equal(2, personnages.Count);
+            #region Act
 
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            #endregion
 
+            #region Assert
+
+            #endregion
         }
 
         /// <summary>
@@ -316,19 +416,17 @@ namespace UnitTestVinland
         [Fact]
         public void Test_GetCartes()
         {
-            fakeDAO.CreateCampagne("Campagne GetCartes");
-            fakeDAO.CreateCarte("Carte 1", 1, 100, 200);
-            fakeDAO.CreateCarte("Carte 2", 1, 100, 200);
+            #region Init
 
-            List<Carte> cartes = fakeDAO.GetCartes();
-            List<Campagne> campagnes = fakeDAO.GetCampagnes();
+            #endregion
 
-            Assert.NotNull(cartes);
-            Assert.NotEmpty(cartes);
-            Assert.Equal(2, cartes.Count);
+            #region Act
 
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            #endregion
 
+            #region Assert
+
+            #endregion
         }
         #endregion
 
@@ -340,17 +438,17 @@ namespace UnitTestVinland
         [Fact]
         public void Test_UpdateCampagne()
         {
-            string nomCampagne = "Campagne Update";
-            Campagne campagne = new Campagne(1, nomCampagne);
-            fakeDAO.CreateCampagne(nomCampagne);
+            #region Init
 
-            fakeDAO.UpdateCampagne(1, new Campagne(1,"Campagne Update2"));
+            #endregion
 
-            List<Campagne> campagnes = fakeDAO.GetCampagnes();
-            Assert.Equal("Campagne Update2", campagnes[0].Nom);
+            #region Act
 
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            #endregion
 
+            #region Assert
+
+            #endregion
         }
 
 
@@ -361,17 +459,17 @@ namespace UnitTestVinland
         [Fact]
         public void Test_UpdateCampagneName()
         {
-            string nomCampagne = "Campagne UpdateName";
-            Campagne campagne = new Campagne(1, nomCampagne);
-            fakeDAO.CreateCampagne(nomCampagne);
+            #region Init
 
-            fakeDAO.UpdateCampagneName(1, "Campagne UpdateName2");
+            #endregion
 
-            List<Campagne> campagnes = fakeDAO.GetCampagnes();
-            Assert.Equal("Campagne UpdateName2", campagnes[0].Nom);
+            #region Act
 
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            #endregion
 
+            #region Assert
+
+            #endregion
         }
 
         /// <summary>
@@ -381,21 +479,17 @@ namespace UnitTestVinland
         [Fact]
         public void Test_UpdatePersonnage()
         {
-            string nomPersonnage = "Personnage 1";
-            int idJoueur = 1;
-            int idCampagne = 1;
-            Personnage personnage = new Personnage(1, nomPersonnage, idJoueur, idCampagne);
-            fakeDAO.CreatePersonnage(nomPersonnage, idJoueur, idCampagne);
+            #region Init
 
-            personnage.Nom = "Personnage 2";
-            fakeDAO.UpdatePersonnage(1, personnage);
+            #endregion
 
-            fakeDAO.DeletePersonnage(1);
+            #region Act
 
-            List<Personnage> personnages = fakeDAO.GetPersonnages();
-            Assert.Equal(0, personnages.Count);
+            #endregion
 
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            #region Assert
+
+            #endregion
         }
 
         /// <summary>
@@ -405,20 +499,17 @@ namespace UnitTestVinland
         [Fact]
         public void Test_UpdatePersonnageName()
         {
-            string nomPersonnage = "Personnage 1";
-            int idJoueur = 1;
-            int idCampagne = 1;
-            Personnage personnage = new Personnage(1, nomPersonnage, idJoueur, idCampagne);
-            fakeDAO.CreatePersonnage(nomPersonnage, idJoueur, idCampagne);
- 
-            personnage.Nom = "Personnage 2";
-            fakeDAO.UpdatePersonnageName(1, personnage.Nom);
+            #region Init
 
-            List<Personnage> personnages = fakeDAO.GetPersonnages();
-            Assert.Equal(1, personnages.Count);
-            Assert.Equal("Personnage 2", personnages[0].Nom);
+            #endregion
 
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            #region Act
+
+            #endregion
+
+            #region Assert
+
+            #endregion
         }
 
         /// <summary>
@@ -428,22 +519,17 @@ namespace UnitTestVinland
         [Fact]
         public void Test_UpdateCarte()
         {
-            
-            string nomCarte = "Carte 1";
-            int idCampagne = 1;
-            int hauteur = 1;
-            int largeur = 1;
-            Carte carte = new Carte(1, nomCarte, idCampagne, 1, 1);
-            fakeDAO.CreateCarte(nomCarte,hauteur, largeur, idCampagne);
+            #region Init
 
-            carte.Nom = "Carte 2";
-            fakeDAO.UpdateCarte(1, carte);
+            #endregion
 
-            List<Carte> cartes = fakeDAO.GetCartes();
-            Assert.Equal(1, cartes.Count);
-            Assert.Equal("Carte 2", cartes[0].Nom);
+            #region Act
 
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            #endregion
+
+            #region Assert
+
+            #endregion
         }
 
         /// <summary>
@@ -453,22 +539,17 @@ namespace UnitTestVinland
         [Fact]
         public void Test_UpdateCarteName()
         {
-            
-            string nomCarte = "Carte 1";
-            int idCampagne = 1;
-            int hauteur = 1;
-            int largeur = 1;
+            #region Init
 
-            Carte carte = new Carte(1, nomCarte, hauteur, largeur, idCampagne);
-            fakeDAO.CreateCarte(nomCarte, hauteur, largeur, idCampagne);
+            #endregion
 
-            fakeDAO.UpdateCarteName(1, "Carte 2");
+            #region Act
 
-            List<Carte> cartes = fakeDAO.GetCartes();
-            Assert.Equal(1, cartes.Count);
-            Assert.Equal("Carte 2", cartes[0].Nom);
+            #endregion
 
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            #region Assert
+
+            #endregion
         }
 
         /// <summary>
@@ -478,22 +559,17 @@ namespace UnitTestVinland
         [Fact]
         public void Test_UpdateCarteVisibilite()
         {
-            
-            string nomCarte = "Carte 1";
-            int idCampagne = 1;
-            int hauteur = 1;
-            int largeur = 1;
+            #region Init
 
-            Carte carte = new Carte(1, nomCarte, hauteur, largeur, idCampagne);
-            fakeDAO.CreateCarte(nomCarte, hauteur, largeur, idCampagne);
+            #endregion
 
-            fakeDAO.UpdateCarteVisibilite(1, true);
+            #region Act
 
-            List<Carte> cartes = fakeDAO.GetCartes();
-            Assert.Equal(1, cartes.Count);
-            Assert.True(cartes[0].Visibilite);
+            #endregion
 
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            #region Assert
+
+            #endregion
         }
         #endregion
 
@@ -505,14 +581,17 @@ namespace UnitTestVinland
         [Fact]
         public void Test_VerifyUserAccount()
         {
-            fakeDAO.CreateJoueur("joueur1", "mdp1");
+            #region Init
 
-            var (id, role) = fakeDAO.VerifyUserAccount("joueur1", "mdp1");
+            #endregion
 
-            Assert.Equal(1, id);
-            Assert.Equal("Joueur", role);
+            #region Act
 
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            #endregion
+
+            #region Assert
+
+            #endregion
         }
 
         /// <summary>
@@ -522,17 +601,20 @@ namespace UnitTestVinland
         [Fact]
         public void Test_VerifyUserAccount_CompteNonTrouve()
         {
+            #region Init
 
-            var (id, role) = fakeDAO.VerifyUserAccount("joueurInexistant", "mdpInexistant");
+            #endregion
 
-            Assert.Equal(-1, id);
-            Assert.Equal("Non trouvé", role);
+            #region Act
 
-            fakeDAO.ClearLists(); // Remet le FakeDAO à son état d'origine d'avant-test 
+            #endregion
+
+            #region Assert
+
+            #endregion
         }
 
         #endregion
     }
 }
 
-*/
