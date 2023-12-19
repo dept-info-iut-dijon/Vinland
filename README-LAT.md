@@ -1,7 +1,7 @@
 # Vinland
 > Applicatio Geographica et Explorationis ad Oblectationem
 
-Hoc README in lingua: [Français](README.md) , [English](README-EN.md) disponitur
+Hoc README in lingua: [Français](README.md) , [English](README-EN.md) , [Español](README-ES.md) disponitur
 
 ## Usus
 
