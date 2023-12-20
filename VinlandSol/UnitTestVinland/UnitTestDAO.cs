@@ -465,17 +465,36 @@ namespace UnitTestVinland
         [Fact]
         public void Test_GetJoueurs()
         {
-            #region Init
 
-            #endregion
+             #region Init
+             string nom = "monNom";
+             string motDePasse = "monMotDePasse";
 
-            #region Act
+             fakeDAO.ClearLists();
 
-            #endregion
+             fakeDAO.CreateJoueur(nom, motDePasse);
+             #endregion
 
-            #region Assert
+             #region Act
+             int idJoueur = fakeDAO.GetJoueur(1).ID;
 
-            #endregion
+             Joueur joueurTrouve = fakeDAO.GetJoueur(idJoueur);
+             Joueur joueurInexistant = fakeDAO.GetJoueur(100);
+
+             fakeDAO.ClearLists();
+
+             #endregion
+
+             #region Assert
+             Assert.NotNull(joueurTrouve); // Assert que le joueur a été trouvé
+
+             // Assert que les informations du joueur sont correctes
+             Assert.Equal(nom, joueurTrouve.Nom);
+             Assert.Equal(motDePasse, joueurTrouve.Mdp);
+   
+             Assert.Null(joueurInexistant); //Assert que le joueur inexistant n'a pas été trouvé
+             
+             #endregion
         }
 
         /// <summary>
@@ -486,15 +505,31 @@ namespace UnitTestVinland
         public void Test_GetMJs()
         {
             #region Init
+            string nom = "monNom";
+            string motDePasse = "monMotDePasse";
 
+            fakeDAO.ClearLists();
+
+            fakeDAO.CreateMJ(nom, motDePasse);
             #endregion
 
             #region Act
+            int idMJ = fakeDAO.GetMJ(1).ID;
 
+            MJ mjTrouve = fakeDAO.GetMJ(idMJ);
+            MJ mjInexistant = fakeDAO.GetMJ(100);
+
+            fakeDAO.ClearLists();
             #endregion
 
             #region Assert
+            Assert.NotNull(mjTrouve); // Assert que le MJ a été trouvé
 
+            // Assert que les informations du MJ sont correctes
+            Assert.Equal(nom, mjTrouve.Nom);
+            Assert.Equal(motDePasse, mjTrouve.Mdp);
+
+            Assert.Null(mjInexistant); //Assert que le MJ inexistant n'a pas été trouvé
             #endregion
         }
 
@@ -506,15 +541,35 @@ namespace UnitTestVinland
         public void Test_GetCampagnes()
         {
             #region Init
+            string nomMJ = "MJ";
+            string MdpMJ = "Mdp";
+            string nomCampagne = "nomCampagne";
 
+            fakeDAO.ClearLists(); // On s'assure que les fichiers sont bien vides 
+
+            fakeDAO.CreateMJ(nomMJ, MdpMJ);
+            MJ mj = fakeDAO.GetMJ(1);
+
+            fakeDAO.CreateCampagne(nomCampagne, mj.ID);
             #endregion
 
             #region Act
+            int idCampagne = fakeDAO.GetCampagne(1).ID;
 
+            Campagne campTrouve = fakeDAO.GetCampagne(idCampagne); // Campagne prévue existante
+            Campagne campInexistante = fakeDAO.GetCampagne(100); // Campagne prévue inexistante
+
+            fakeDAO.ClearLists();
             #endregion
 
             #region Assert
+            Assert.NotNull(campTrouve); // Assert que la campagne a été trouvé
 
+            // Assert que les informations de la campagne sont correctes
+            Assert.Equal(nomCampagne, campTrouve.Nom);
+            Assert.Equal(1, campTrouve.IDMJ);
+
+            Assert.Null(campInexistante); //Assert que la campagne n'a pas été trouvé à l'id 100
             #endregion
         }
 
@@ -526,14 +581,45 @@ namespace UnitTestVinland
         public void Test_GetPersonnages()
         {
             #region Init
+            string nomMJ = "nomMJ";
+            string mdpMJ = "mdpMJ";
+            string nomJoueur = "nomJoueur";
+            string mdpJoueur = "mdpJoueur";
+            string nomCampagne = "nomCampagne";
+            string nomPersonnage = "nomPersonnage";
+            
+            fakeDAO.ClearLists();
 
+            fakeDAO.CreateMJ(nomMJ, mdpMJ);
+            MJ mj = fakeDAO.GetMJ(1);
+
+            fakeDAO.CreateJoueur(nomJoueur, mdpJoueur);
+            Joueur joueur = fakeDAO.GetJoueur(1);
+
+            fakeDAO.CreateCampagne(nomCampagne, mj.ID);
+            Campagne campagne = fakeDAO.GetCampagne(1);
+
+            fakeDAO.CreatePersonnage(nomPersonnage, joueur.ID, campagne.ID);
             #endregion
 
             #region Act
+            int idPersonnage = fakeDAO.GetPersonnage(1).ID;
 
+            Personnage persoTrouve = fakeDAO.GetPersonnage(idPersonnage); // Personnage prévu existant
+            Personnage persoInexistante = fakeDAO.GetPersonnage(100); // Personnage prévu inexistant
+
+            fakeDAO.ClearLists();
             #endregion
 
             #region Assert
+            Assert.NotNull(persoTrouve); // Assert que le personnage a été trouvé
+
+            // Assert que les informations du personnage sont correctes
+            Assert.Equal(nomPersonnage, persoTrouve.Nom);
+            Assert.Equal(1, persoTrouve.IDJoueur);
+            Assert.Equal(1, persoTrouve.IDCampagne);
+
+            Assert.Null(persoInexistante); //Assert que le personnage n'a pas été trouvé à l'id 100
 
             #endregion
         }
@@ -546,15 +632,44 @@ namespace UnitTestVinland
         public void Test_GetCartes()
         {
             #region Init
+            string nomMJ = "nomMJ";
+            string mdpMJ = "mdpMJ";
+            string nomCampagne = "nomCampagne";
+            string nomCarte = "nomCarte";
+            int largeur = 3;
+            int hauteur = 5;
 
+            fakeDAO.ClearLists();
+
+            fakeDAO.CreateMJ(nomMJ, mdpMJ);
+            MJ mj = fakeDAO.GetMJ(1);
+
+            fakeDAO.CreateCampagne(nomCampagne, mj.ID);
+            Campagne campagne = fakeDAO.GetCampagne(1);
+
+            fakeDAO.CreateCarte(nomCarte, hauteur, largeur, campagne.ID);
             #endregion
 
             #region Act
+            int idCarte = fakeDAO.GetCarte(1).ID;
 
+            Carte carteTrouve = fakeDAO.GetCarte(idCarte); // Personnage prévu existant
+            Carte carteInexistante = fakeDAO.GetCarte(100); // Personnage prévu inexistant
+
+            fakeDAO.ClearLists();
             #endregion
 
             #region Assert
+            Assert.NotNull(carteTrouve); // Assert que la carte a été trouvé
 
+            // Assert que les informations de la carte sont correctes
+            Assert.Equal(nomCarte, carteTrouve.Nom);
+            Assert.Equal(1, carteTrouve.ID);
+            Assert.Equal(1, carteTrouve.IDCampagne);
+            Assert.Equal(5, carteTrouve.Hauteur);
+            Assert.Equal(3, carteTrouve.Largeur);
+
+            Assert.Null(carteInexistante); //Assert que la carte n'a pas été trouvé à l'id 100
             #endregion
         }
         #endregion
