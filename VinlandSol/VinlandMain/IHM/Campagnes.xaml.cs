@@ -244,10 +244,8 @@ namespace VinlandMain.IHM
         /// <Author>Baptiste</Author>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            int indexCampagneEdit = CampagnesListe.SelectedIndex;
             Campagne campagneEdit = (Campagne)CampagnesListe.SelectedItem; // On récupère la campagne selectionnée
-            int idCampagneEdit = campagneEdit.ID; // On récupère l'ID de la campagne
-            string newCampaignName = NomCampTextBox.Text; // On récupère le nouveau nom de la campagne
+            string nouveauNomCampagne = NomCampTextBox.Text; // On récupère le nouveau nom de la campagne
             bool okCheck = true;
 
             #region Checks 
@@ -255,8 +253,8 @@ namespace VinlandMain.IHM
             string? messageCheckFail = null;
 
             // Un seul check à la fois, on ne veut pas aggresser l'utilisateur avec des popups en chaine
-            if (fakeDAO.CampagneTaken(newCampaignName, idUser) == false) { messageCheckFail = "Vous avez déjà une campagne portant ce nom"; okCheck = false; }
-            else if (string.IsNullOrWhiteSpace(newCampaignName)) { messageCheckFail = "Le nom de votre campagne ne peut pas être vide"; okCheck = false; }
+            if (fakeDAO.CampagneTaken(nouveauNomCampagne, idUser) == false) { messageCheckFail = "Vous avez déjà une campagne portant ce nom"; okCheck = false; }
+            else if (string.IsNullOrWhiteSpace(nouveauNomCampagne)) { messageCheckFail = "Le nom de votre campagne ne peut pas être vide"; okCheck = false; }
 
             if (!okCheck) // Les checks ne sont pas passés
             {
@@ -268,12 +266,12 @@ namespace VinlandMain.IHM
 
             if (okCheck) // Si tout va bien
             {
-                fakeDAO.UpdateCampagneName(idCampagneEdit, newCampaignName); // On met à jour la campagne
-
-                AfficherInfos(indexCampagneEdit); // On met à jour les informations affichées
+                campagneEdit.Nom = nouveauNomCampagne;
+                fakeDAO.UpdateCampagne(campagneEdit.ID, campagneEdit); // On met à jour la campagne
+                
+                AfficherInfos(CampagnesListe.SelectedIndex); // On met à jour les informations affichées
                 MettreAJourListBox(); // On met à jour la liste des campagnes
                 MasquerElements(); // On masque les élements d'édition
-
             }
         }
 

@@ -62,7 +62,7 @@
         </Button>
 
         <Button x:Name="EditS" Margin="0,0,10,422" Click="EditS_Click" Background="{x:Null}" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="0,0,0,0"  Visibility="Collapsed">
-            <Image Source="/IHM/Media/Icones/crayon.png" Height="70" Width="70" />
+            <Image Source="/IHM/Media/Icones/fleche_retour.png" Height="70" Width="70" />
         </Button>
 
         <Button Content="Rejoindre la Carte" x:Name="RejoidCarte" Margin="0,0,317,40" FontSize="30" Click="OuvrirCarte_Click" Height="70" Width="430" Background="#fbf1cc" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontFamily="/VinlandSol;component/IHM/fonts/Oneleigh.otf#Oneleigh" IsEnabled="False">
