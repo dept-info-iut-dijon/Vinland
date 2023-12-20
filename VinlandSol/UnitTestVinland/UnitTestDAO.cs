@@ -231,17 +231,35 @@ namespace UnitTestVinland
         [Fact]
         public void Test_DeleteJoueur()
         {
-
             #region Init
+            string nom = "monNom";
+            string motDePasse = "monMotDePasse";
+            string nom2 = "monNom2";
+            string motDePasse2 = "monMotDePasse2";
 
+            fakeDAO.ClearLists();
+
+            fakeDAO.CreateJoueur(nom, motDePasse);
+            fakeDAO.CreateJoueur(nom2, motDePasse2);
             #endregion
 
             #region Act
+            int idJoueur1 = fakeDAO.GetJoueur(1).ID;
+            int idJoueur2 = fakeDAO.GetJoueur(2).ID;
 
+            fakeDAO.DeleteJoueur(idJoueur1);
+
+            Joueur isNull = fakeDAO.GetJoueur(idJoueur1); // Joueur nul
+            Joueur isNotNull = fakeDAO.GetJoueur(idJoueur2); // Joueur non nul
+
+            fakeDAO.ClearLists();
             #endregion
 
             #region Assert
 
+            Assert.Null(isNull); // Assert que le joueur 1 a été supprimé
+            
+            Assert.NotNull(isNotNull);// Assert que le joueur 2 est toujours présent
             #endregion
         }
 
@@ -253,55 +271,33 @@ namespace UnitTestVinland
         public void Test_DeleteMJ()
         {
             #region Init
+            string nom = "monNom";
+            string motDePasse = "monMotDePasse";
+            string nom2 = "monNom2";
+            string motDePasse2 = "monMotDePasse2";
 
+            fakeDAO.ClearLists();
+
+            fakeDAO.CreateMJ(nom, motDePasse);
+            fakeDAO.CreateMJ(nom2, motDePasse2);
             #endregion
 
             #region Act
+            int idMJ1 = fakeDAO.GetMJ(1).ID;
+            int idMJ2 = fakeDAO.GetMJ(2).ID;
 
+            fakeDAO.DeleteMJ(idMJ1);
+
+            MJ isNull = fakeDAO.GetMJ(idMJ1); // Maître du jeu nul
+            MJ isNotNull = fakeDAO.GetMJ(idMJ2); // Maître du jeu non nul
+
+            fakeDAO.ClearLists();
             #endregion
 
             #region Assert
+            Assert.Null(isNull); // Assert que le MJ 1 a été supprimé
 
-            #endregion
-        }
-
-        /// <summary>
-        /// Vérifie que la méthode `DeletePersonnage` supprime le personnage avec l'identifiant spécifié.
-        /// </summary>
-        /// <author>Alexis Paris</author>
-        [Fact]
-        public void Test_DeletePersonnage()
-        {
-            #region Init
-
-            #endregion
-
-            #region Act
-
-            #endregion
-
-            #region Assert
-
-            #endregion
-        }
-
-        /// <summary>
-        /// Vérifie que la méthode `DeleteCarte` supprime la carte avec l'identifiant spécifié.
-        /// </summary>
-        /// <author>Alexis Paris</author>
-        [Fact]
-        public void Test_DeleteCarte()
-        {
-            #region Init
-
-            #endregion
-
-            #region Act
-
-            #endregion
-
-            #region Assert
-
+            Assert.NotNull(isNotNull);// Assert que le MJ 2 est toujours présent
             #endregion
         }
 
@@ -313,17 +309,150 @@ namespace UnitTestVinland
         public void Test_DeleteCampagne()
         {
             #region Init
+            string nomMJ = "MJ";
+            string MdpMJ = "Mdp";
+            string nomCampagne = "nomCampagne";
+            string nomCampagne2 = "nomCampagne2";
+
+            fakeDAO.ClearLists(); // On s'assure que les fichiers sont bien vides 
+
+            fakeDAO.CreateMJ(nomMJ, MdpMJ);
+            MJ mj = fakeDAO.GetMJ(1);
+
+            fakeDAO.CreateCampagne(nomCampagne, mj.ID);
+            Campagne campagne = fakeDAO.GetCampagne(1);
+
+            fakeDAO.CreateCampagne(nomCampagne2, mj.ID);
+            Campagne campagne2 = fakeDAO.GetCampagne(2);
+            #endregion
+
+            #region Act
+            int idCampagne = fakeDAO.GetCampagne(1).ID;
+            int idCampagne2 = fakeDAO.GetCampagne(2).ID;
+
+            fakeDAO.DeleteCampagne(idCampagne);
+
+            Campagne isNull = fakeDAO.GetCampagne(idCampagne); // Campagne nulle
+            Campagne isNotNull = fakeDAO.GetCampagne(idCampagne2); // Campagne non nulle
+
+            fakeDAO.ClearLists();
+            #endregion
+
+            #region Assert
+            Assert.Null(isNull); // Assert que la 1ère campagne a été supprimée
+
+            Assert.NotNull(isNotNull);// Assert que la seconde campagne est toujours présente
+            #endregion
+
+        }
+
+        /// <summary>
+        /// Vérifie que la méthode `DeletePersonnage` supprime le personnage avec l'identifiant spécifié.
+        /// </summary>
+        /// <author>Alexis Paris</author>
+        [Fact]
+        public void Test_DeletePersonnage()
+        {
+            #region Init
+            string nomMJ = "nomMJ";
+            string mdpMJ = "mdpMJ";
+            string nomJoueur = "nomJoueur";
+            string mdpJoueur = "mdpJoueur";
+            string nomCampagne = "nomCampagne";
+            string nomPersonnage = "nomPersonnage";
+            string nomPersonnage2 = "nomPersonnage2";
+
+            fakeDAO.ClearLists();
+
+            fakeDAO.CreateMJ(nomMJ, mdpMJ);
+            MJ mj = fakeDAO.GetMJ(1);
+
+            fakeDAO.CreateJoueur(nomJoueur, mdpJoueur);
+            Joueur joueur = fakeDAO.GetJoueur(1);
+
+            fakeDAO.CreateCampagne(nomCampagne, mj.ID);
+            Campagne campagne = fakeDAO.GetCampagne(1);
+
+            fakeDAO.CreatePersonnage(nomPersonnage, joueur.ID, campagne.ID);
+            Personnage personnage = fakeDAO.GetPersonnage(1);
+
+            fakeDAO.CreatePersonnage(nomPersonnage2, joueur.ID, campagne.ID);
+            Personnage personnage2 = fakeDAO.GetPersonnage(2);
 
             #endregion
 
             #region Act
+            int idPersonnage = fakeDAO.GetPersonnage(1).ID;
+            int idPersonnage2 = fakeDAO.GetPersonnage(2).ID;
 
+            fakeDAO.DeletePersonnage(idPersonnage);
+
+            Personnage isNull = fakeDAO.GetPersonnage(idPersonnage); // Campagne nulle
+            Personnage isNotNull = fakeDAO.GetPersonnage(idPersonnage2); // Campagne non nulle
+
+            fakeDAO.ClearLists();
             #endregion
 
             #region Assert
+            Assert.Null(isNull); // Assert que le 1er personnage a été supprimé
+            Assert.NotNull(isNotNull);// Assert que le 2ème personnage est toujours présent
+            #endregion
+
+        }
+
+        /// <summary>
+        /// Vérifie que la méthode `DeleteCarte` supprime la carte avec l'identifiant spécifié.
+        /// </summary>
+        /// <author>Alexis Paris</author>
+        [Fact]
+        public void Test_DeleteCarte()
+        {
+            #region Init
+            string nomMJ = "nomMJ";
+            string mdpMJ = "mdpMJ";
+            string nomCampagne = "nomCampagne";
+            string nomCarte = "nomCarte";
+            string nomCarte2 = "nomCarte2";
+            int largeur = 3;
+            int hauteur = 5;
+
+            fakeDAO.ClearLists();
+
+            fakeDAO.CreateMJ(nomMJ, mdpMJ);
+            MJ mj = fakeDAO.GetMJ(1);
+
+            fakeDAO.CreateCampagne(nomCampagne, mj.ID);
+            Campagne campagne = fakeDAO.GetCampagne(1);
+
+            fakeDAO.CreateCarte(nomCarte, hauteur, largeur, campagne.ID);
+            Carte carte = fakeDAO.GetCarte(1);
+
+            fakeDAO.CreateCarte(nomCarte2, hauteur, largeur, campagne.ID);
+            Carte carte2 = fakeDAO.GetCarte(2);
+            #endregion
+
+            #region Act
+            int idCarte = fakeDAO.GetCarte(1).ID;
+            int idCarte2 = fakeDAO.GetCarte(2).ID;
+
+            fakeDAO.DeleteCarte(idCarte);
+
+            Carte isNull = fakeDAO.GetCarte(idCarte); // Campagne nulle
+            Carte isNotNull = fakeDAO.GetCarte(idCarte2); // Campagne non nulle
+
+            fakeDAO.ClearLists();
+            #endregion
+
+            #region Assert
+            Assert.Null(isNull); // Assert que la 1ère carte a été supprimé
+
+            Assert.NotNull(isNotNull);// Assert que la seconde carte est toujours présente
 
             #endregion
+
         }
+
+       
 
         #endregion
 
