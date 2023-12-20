@@ -93,9 +93,12 @@ namespace VinlandSol.IHM
             Retour.IsEnabled = false;
 
             CacheCartesListe.Visibility = Visibility.Visible;
-            CacheCartesListe.Content = "Vous modifiez le nom de la carte : \n" + selectedCarte.Nom;
+            CacheCartesListe.Content = "Vous modifiez la carte : \n" + selectedCarte.Nom;
             NomCarteTextBox.Text = selectedCarte.Nom;
             NomCarteTextBox.Visibility = Visibility.Visible;
+
+            VisibleCarte.IsEnabled = true;
+            VisibleCarteHidden.IsEnabled = true;
         }
 
         /// <summary>
@@ -216,7 +219,8 @@ namespace VinlandSol.IHM
             CacheCartesListe.Content = "";
             AjoutCarte.IsEnabled = true;
             Retour.IsEnabled = true;
-
+            VisibleCarte.IsEnabled = false;
+            VisibleCarteHidden.IsEnabled = false;
         }
 
         /// <summary>

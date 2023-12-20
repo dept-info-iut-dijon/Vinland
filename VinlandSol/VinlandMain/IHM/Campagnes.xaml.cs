@@ -142,9 +142,11 @@ namespace VinlandMain.IHM
 
             // On peut de nouveau rejoindre une campagne ou en éditer une.
             RejoidComp.IsEnabled = true;
-            if (CampagnesListe.SelectedIndex != -1) // Cas rare : Il n'y a pas du tout de campagne mais on annule tout de même la création
+            Edit.Visibility = Visibility.Visible;
+            if (CampagnesListe.SelectedIndex == -1) // Aucune campagne n'est sélectionnée
             {
-                Edit.Visibility = Visibility.Visible;
+                Edit.Visibility = Visibility.Collapsed;
+                RejoidComp.IsEnabled = false;
             }
 
             // On peut de nouveau intéragir avec la liste des campagnes
