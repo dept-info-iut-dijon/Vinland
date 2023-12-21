@@ -147,7 +147,8 @@ namespace VinlandSol.IHM
 
             if (okCheck) // Si tout va bien
             {
-                fakeDAO.UpdatePersonnageName(idPersonnageEdit, nouvNomPersonnage);
+                personnageEdit.Nom = nouvNomPersonnage;
+                fakeDAO.UpdatePersonnage(idPersonnageEdit, personnageEdit);
 
                 NomPersonnageTextBox.Text = "";
                 AfficherInformationsPersonnage(PersonnagesListe.SelectedIndex);

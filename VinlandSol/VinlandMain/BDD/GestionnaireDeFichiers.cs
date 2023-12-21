@@ -121,7 +121,7 @@ namespace VinlandSol.BDD
             foreach (var item in liste) // On réécrit toutes les instances dans le fichier
             {
                 string line = GetFormattedLine(item); // On transforme l'item en string
-                using (StreamWriter sw = File.AppendText(fileName)) sw.WriteLine(line); // On ajoute la ligne
+                using (StreamWriter sw = File.AppendText(fullPath)) sw.WriteLine(line); // On ajoute la ligne
             }
         }
 

@@ -27,26 +27,17 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void CreationCarte_Click(object sender, RoutedEventArgs e)
         {
-            string nomCarte = NameTextBox.Text;
+            string carteNom = NameTextBox.Text;
             string nLigne = NLigne.Text;
             string nColonne = NColonne.Text;
-            List<Métier.Carte> cartes = fakeDAO.GetCurrentCartes(idCampagne);
             bool okCheck = true;
 
             #region Checks 
 
             string? messageCheckFail = null;
 
-            foreach (Métier.Carte carte in cartes)
-            {
-                if (carte.Nom == nomCarte)
-                {
-                    messageCheckFail = "Une carte du même nom existe déjà dans cette campagne";
-                    okCheck = false;
-                }
-            }
-
-            if (string.IsNullOrWhiteSpace(nomCarte)) { messageCheckFail = "Le nom de la carte ne peut pas être vide"; okCheck = false; }
+            if (string.IsNullOrWhiteSpace(carteNom)) { messageCheckFail = "Le nom de la carte ne peut pas être vide"; okCheck = false; }
+            else if (!fakeDAO.CarteTaken(carteNom, idCampagne)) { messageCheckFail = "Ce nom de Carte est déjà utilisé dans votre campagne"; okCheck = false; }
 
             if (!okCheck)
             {
@@ -58,7 +49,7 @@ namespace VinlandSol.IHM
 
             if (okCheck) // Si tout va bien
             {
-                fakeDAO.CreateCarte(nomCarte, int.Parse(nLigne), int.Parse(nColonne), idCampagne);
+                fakeDAO.CreateCarte(carteNom, int.Parse(nLigne), int.Parse(nColonne), idCampagne);
                 CustomMessageBox messagebox = new CustomMessageBox("Carte ajoutée avec succès !");
                 messagebox.ShowDialog();
                 this.Close();

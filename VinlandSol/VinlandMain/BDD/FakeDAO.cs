@@ -557,29 +557,7 @@ namespace VinlandSol.BDD
                 {
                     if (campagnes[i].ID == id)
                     {
-                        campagnes[i].Nom = campagne.Nom;
-                        campagnes[i].DateModification = DateTime.Now;
-                    }
-                }
-            }
-            _gestionnaireDeFichiers.Override(campagnes, "Campagnes.txt");
-        }
-
-        /// <summary>
-        /// Met à jour une campagne en lui attribuant un nouveau nom
-        /// </summary>
-        /// <param name="id">Identifiant d'une campagne</param>
-        /// <param name="newNom">Nouveau nom</param>
-        /// <author>Alexis(setup) + Aaron</author>
-        public void UpdateCampagneName(int id, string newNom)
-        {
-            if (campagnes.Count != 0)
-            {
-                for (int i = 0; i < campagnes.Count; i++)
-                {
-                    if (campagnes[i].ID == id)
-                    {
-                        campagnes[i].Nom = newNom;
+                        campagnes[i] = campagne;
                         campagnes[i].DateModification = DateTime.Now;
                     }
                 }
@@ -599,28 +577,7 @@ namespace VinlandSol.BDD
             {
                 for (int i = 0; i < personnages.Count; i++)
                 {
-                    if (personnages[i].ID == personnage.ID) personnages[i] = personnage;
-                }
-            }
-            _gestionnaireDeFichiers.Override(personnages, "Personnages.txt");
-        }
-
-        /// <summary>
-        /// Mets à jour un personnage et ses informations
-        /// </summary>
-        /// <param name="id">identifiant d'un personnage</param>
-        /// <param name="newNom">le nom du personnage</param>
-        /// <author>Alexis(setup) + Aaron</author>
-        public void UpdatePersonnageName(int id, string newNom)
-        {
-            if (personnages.Count != 0)
-            {
-                for (int i = 0; i < personnages.Count; i++)
-                {
-                    if (personnages[i].ID == id)
-                    {
-                        personnages[i].Nom = newNom;
-                    }
+                    if (personnages[i].ID == id) personnages[i] = personnage;
                 }
             }
             _gestionnaireDeFichiers.Override(personnages, "Personnages.txt");
@@ -638,51 +595,11 @@ namespace VinlandSol.BDD
             {
                 for (int i = 0; i < cartes.Count; i++)
                 {
-                    if (cartes[i].ID == carte.ID) cartes[i] = carte;
-                }
-            }
-            _gestionnaireDeFichiers.Override(cartes, "Cartes.txt");
-        }
-
-        /// <summary>
-        /// Mets à jour une carte et ses informations
-        /// </summary>
-        /// <param name="id">identifiant de la carte</param>
-        /// <param name="newNom">le nom de la carte</param>
-        /// <author>Aaron</author>
-        public void UpdateCarteName(int id, string newNom)
-        {
-            if (cartes.Count != 0)
-            {
-                for (int i = 0; i < cartes.Count; i++)
-                {
                     if (cartes[i].ID == id)
                     {
-                        cartes[i].Nom = newNom;
+                        cartes[i] = carte;
                         cartes[i].DateModification = DateTime.Now;
-                    }
-                }
-            }
-            _gestionnaireDeFichiers.Override(cartes, "Cartes.txt");
-        }
-
-        /// <summary>
-        /// Mets à jour une carte et ses informations
-        /// </summary>
-        /// <param name="id">identifiant de la carte</param>
-        /// <param name="visible">la visibilité de la carte</param>
-        /// <author>Aaron</author>
-        public void UpdateCarteVisibilite(int id, bool visible)
-        {
-            if (cartes.Count != 0)
-            {
-                for (int i = 0; i < cartes.Count; i++)
-                {
-                    if (cartes[i].ID == id)
-                    {
-                        cartes[i].Visibilite = visible;
-                        cartes[i].DateModification = DateTime.Now;
-                    }
+                    } 
                 }
             }
             _gestionnaireDeFichiers.Override(cartes, "Cartes.txt");
@@ -768,6 +685,16 @@ namespace VinlandSol.BDD
             for (int i = 0; i < GetMJ(idMJ).IDCampagnes.Count; i++)
             {
                 if (GetCampagne(GetMJ(idMJ).IDCampagnes[i]).Nom == name) { disponible = false; break; }
+            }
+            return disponible;
+        }
+
+        public bool CarteTaken(string name, int idCampagne)
+        {
+            bool disponible = true;
+            for (int i = 0; i < GetCampagne(idCampagne).IDCartes.Count; i++)
+            {
+                if (GetCarte(GetCampagne(idCampagne).IDCartes[i]).Nom == name) { disponible = false; break; }
             }
             return disponible;
         }

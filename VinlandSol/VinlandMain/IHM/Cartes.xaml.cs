@@ -93,9 +93,12 @@ namespace VinlandSol.IHM
             Retour.IsEnabled = false;
 
             CacheCartesListe.Visibility = Visibility.Visible;
-            CacheCartesListe.Content = "Vous modifiez le nom de la carte : \n" + selectedCarte.Nom;
+            CacheCartesListe.Content = "Vous modifiez la carte : \n" + selectedCarte.Nom;
             NomCarteTextBox.Text = selectedCarte.Nom;
             NomCarteTextBox.Visibility = Visibility.Visible;
+
+            VisibleCarte.IsEnabled = true;
+            VisibleCarteHidden.IsEnabled = true;
         }
 
         /// <summary>
@@ -116,22 +119,38 @@ namespace VinlandSol.IHM
         /// <param name="e"></param>
         private void Sauv_Click(object sender, RoutedEventArgs e)
         {
+            Métier.Carte carteEdit = (Métier.Carte)CartesListe.SelectedItem;
             string nouveauNomCarte = NomCarteTextBox.Text;
+            bool okCheck = true;
 
-            if (string.IsNullOrEmpty(nouveauNomCarte))
+            #region Checks
+
+            string? messageCheckFail = null;
+
+            // Un seul check à la fois, on ne veut pas aggresser l'utilisateur avec des popups en chaine
+            if (fakeDAO.CarteTaken(nouveauNomCarte, idUser) == false) { messageCheckFail = "Vous avez déjà une carte portant ce nom"; okCheck = false; }
+            else if (string.IsNullOrWhiteSpace(nouveauNomCarte)) { messageCheckFail = "Le nom de votre carte ne peut pas être vide"; okCheck = false; }
+
+            if (!okCheck)
             {
-                CustomMessageBox customMessageBox = new CustomMessageBox("Le nom de la carte ne peut pas être vide.");
+                CustomMessageBox customMessageBox = new CustomMessageBox(messageCheckFail);
                 customMessageBox.ShowDialog();
-                return;
             }
-            fakeDAO.UpdateCarteName(CartesListe.SelectedIndex + 1, nouveauNomCarte);
 
-            NomCarteTextBox.Text = "";
-            AfficherInformationsCarte(CartesListe.SelectedIndex);
-            MettreAJourListBox();
-            MasquerElements();
-            Edit.Visibility = Visibility.Collapsed;
-            RejoidCarte.IsEnabled = false;
+            #endregion
+
+            if (okCheck)
+            {
+                carteEdit.Nom = nouveauNomCarte;
+                fakeDAO.UpdateCarte(carteEdit.ID, carteEdit);
+
+                NomCarteTextBox.Text = "";
+                AfficherInformationsCarte(CartesListe.SelectedIndex);
+                MettreAJourListBox();
+                MasquerElements();
+                Edit.Visibility = Visibility.Collapsed;
+                RejoidCarte.IsEnabled = false;
+            }
         }
 
         /// <summary>
@@ -163,7 +182,9 @@ namespace VinlandSol.IHM
         /// <author>Aaron</author>
         private void OeilChange(object sender, RoutedEventArgs e)
         {
-            fakeDAO.UpdateCarteVisibilite(CartesListe.SelectedIndex + 1, false);
+            Métier.Carte carteEdit = (Métier.Carte)CartesListe.SelectedItem;
+            carteEdit.Visibilite = false;
+            fakeDAO.UpdateCarte(carteEdit.ID, carteEdit);
             AfficherInformationsCarte(CartesListe.SelectedIndex);
         }
 
@@ -175,7 +196,9 @@ namespace VinlandSol.IHM
         /// <author>Aaron</author>
         private void OeilChangeHidden(object sender, RoutedEventArgs e)
         {
-            fakeDAO.UpdateCarteVisibilite(CartesListe.SelectedIndex + 1, true);
+            Métier.Carte carteEdit = (Métier.Carte)CartesListe.SelectedItem;
+            carteEdit.Visibilite = true;
+            fakeDAO.UpdateCarte(carteEdit.ID, carteEdit);
             AfficherInformationsCarte(CartesListe.SelectedIndex);
         }
 
@@ -196,7 +219,8 @@ namespace VinlandSol.IHM
             CacheCartesListe.Content = "";
             AjoutCarte.IsEnabled = true;
             Retour.IsEnabled = true;
-
+            VisibleCarte.IsEnabled = false;
+            VisibleCarteHidden.IsEnabled = false;
         }
 
         /// <summary>
