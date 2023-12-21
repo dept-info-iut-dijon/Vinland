@@ -639,7 +639,7 @@ namespace UnitTestVinland
             int largeur = 3;
             int hauteur = 5;
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // On s'assure que les fichiers soient bien vides
 
             fakeDAO.CreateMJ(nomMJ, mdpMJ);
             MJ mj = fakeDAO.GetMJ(1);
@@ -656,7 +656,7 @@ namespace UnitTestVinland
             Carte carteTrouve = fakeDAO.GetCarte(idCarte); // Personnage prévu existant
             Carte carteInexistante = fakeDAO.GetCarte(100); // Personnage prévu inexistant
 
-            fakeDAO.ClearLists();
+            fakeDAO.ClearLists(); // On remet le FakeDAO à son état d'avant-test
             #endregion
 
             #region Assert
@@ -683,38 +683,39 @@ namespace UnitTestVinland
         public void Test_UpdateCampagne()
         {
             #region Init
+            string nomMJ = "MJ";
+            string MdpMJ = "Mdp";
+            string nomCampagne = "nomCampagne";
 
+            fakeDAO.ClearLists(); // On s'assure que les fichiers sont bien vides 
+
+            fakeDAO.CreateMJ(nomMJ, MdpMJ);
+            MJ mj = fakeDAO.GetMJ(1);
+
+            fakeDAO.CreateCampagne(nomCampagne, mj.ID);
             #endregion
 
             #region Act
+            int idCampagne = fakeDAO.GetCampagne(1).ID;
 
+            Campagne campagneMiseAjour = new Campagne();
+            campagneMiseAjour.Nom = "Nouveau nom";
+            campagneMiseAjour.ID = 1;
+
+            fakeDAO.UpdateCampagne(idCampagne, campagneMiseAjour);
+            Campagne campagneTrouvee = fakeDAO.GetCampagne(idCampagne);
+
+            fakeDAO.ClearLists();
             #endregion
 
             #region Assert
-
+            // Assert que la campagne a été mise à jour
+            Assert.Equal(campagneMiseAjour.Nom, campagneTrouvee.Nom);
+            Assert.Equal(campagneMiseAjour.ID, campagneTrouvee.ID);
+            Assert.Equal(campagneMiseAjour.DateModification, campagneTrouvee.DateModification);
             #endregion
         }
 
-
-        /// <summary>
-        /// Vérifie que la méthode `UpdateCampagneName()` met à jour correctement le nom d'une campagne.
-        /// </summary>
-        /// <author>Alexis Paris</author>
-        [Fact]
-        public void Test_UpdateCampagneName()
-        {
-            #region Init
-
-            #endregion
-
-            #region Act
-
-            #endregion
-
-            #region Assert
-
-            #endregion
-        }
 
         /// <summary>
         /// Vérifie que la méthode `UpdatePersonnage()` met à jour correctement le nom d'un personnage
@@ -724,35 +725,43 @@ namespace UnitTestVinland
         public void Test_UpdatePersonnage()
         {
             #region Init
+            string nomMJ = "nomMJ";
+            string mdpMJ = "mdpMJ";
+            string nomJoueur = "nomJoueur";
+            string mdpJoueur = "mdpJoueur";
+            string nomCampagne = "nomCampagne";
+            string nomPersonnage = "nomPersonnage";
 
+            fakeDAO.ClearLists();
+
+            fakeDAO.CreateMJ(nomMJ, mdpMJ);
+            MJ mj = fakeDAO.GetMJ(1);
+
+            fakeDAO.CreateJoueur(nomJoueur, mdpJoueur);
+            Joueur joueur = fakeDAO.GetJoueur(1);
+
+            fakeDAO.CreateCampagne(nomCampagne, mj.ID);
+            Campagne campagne = fakeDAO.GetCampagne(1);
+
+            fakeDAO.CreatePersonnage(nomPersonnage, joueur.ID, campagne.ID);
             #endregion
 
             #region Act
+            int idPersonnage = fakeDAO.GetPersonnage(1).ID;
 
+            Personnage PersonnageMisAJour = new Personnage();
+            PersonnageMisAJour.Nom = "nouveau nom";
+            PersonnageMisAJour.ID = 1;
+
+            fakeDAO.UpdatePersonnage(idPersonnage, PersonnageMisAJour);
+            Personnage persoTrouve = fakeDAO.GetPersonnage(idPersonnage);
+
+            fakeDAO.ClearLists();
             #endregion
 
             #region Assert
-
-            #endregion
-        }
-
-        /// <summary>
-        /// Vérifie que la méthode `UpdatePersonnageName()` met à jour correctement le nom du personnage.
-        /// </summary>
-        /// <author>Alexis Paris</author>
-        [Fact]
-        public void Test_UpdatePersonnageName()
-        {
-            #region Init
-
-            #endregion
-
-            #region Act
-
-            #endregion
-
-            #region Assert
-
+            Assert.Equal(PersonnageMisAJour.Nom, persoTrouve.Nom);
+            Assert.Equal(PersonnageMisAJour.ID, persoTrouve.ID);
             #endregion
         }
 
@@ -764,101 +773,49 @@ namespace UnitTestVinland
         public void Test_UpdateCarte()
         {
             #region Init
+            string nomMJ = "nomMJ";
+            string mdpMJ = "mdpMJ";
+            string nomCampagne = "nomCampagne";
+            string nomCarte = "nomCarte";
 
+            int hauteur = 7;
+            int largeur = 3;
+
+            fakeDAO.ClearLists(); //On s'assure que les fichiers sont bien vides
+
+            fakeDAO.CreateMJ(nomMJ, mdpMJ);
+            MJ mj = fakeDAO.GetMJ(1);
+
+            fakeDAO.CreateCampagne(nomCampagne, mj.ID);
+            Campagne campagne = fakeDAO.GetCampagne(1);
+
+            fakeDAO.CreateCarte(nomCarte, hauteur, largeur, campagne.ID);
+            Carte carte = fakeDAO.GetCarte(1);
             #endregion
 
             #region Act
+            int idCarte = fakeDAO.GetCarte(1).ID;
 
+            Carte carteMiseAJour = new Carte();
+            carteMiseAJour.Nom = "nouveau nom";
+            carteMiseAJour.ID = 1;
+            carteMiseAJour.Visibilite = false;
+
+            fakeDAO.UpdateCarte(idCarte, carteMiseAJour);
+            Carte carteTrouvee = fakeDAO.GetCarte(idCarte);
+
+            fakeDAO.ClearLists();
             #endregion
 
             #region Assert
-
-            #endregion
-        }
-
-        /// <summary>
-        /// Vérifie que la méthode `UpdateCarteName()` met à jour correctement le nom de la carte.
-        /// </summary>
-        /// <author>Alexis Paris</author>
-        [Fact]
-        public void Test_UpdateCarteName()
-        {
-            #region Init
-
-            #endregion
-
-            #region Act
-
-            #endregion
-
-            #region Assert
-
-            #endregion
-        }
-
-        /// <summary>
-        /// Vérifie que la méthode `UpdateCarteVisibilite()` met à jour correctement la visibilité de la carte.
-        /// </summary>
-        /// <author>Alexis Paris</author>
-        [Fact]
-        public void Test_UpdateCarteVisibilite()
-        {
-            #region Init
-
-            #endregion
-
-            #region Act
-
-            #endregion
-
-            #region Assert
-
-            #endregion
-        }
-        #endregion
-
-        #region Verify_UserAccount
-        /// <summary>
-        /// Teste la méthode "VerifyUserAccount"
-        /// </summary>
-        /// <author>Alexis Paris</author>
-        [Fact]
-        public void Test_VerifyUserAccount()
-        {
-            #region Init
-
-            #endregion
-
-            #region Act
-
-            #endregion
-
-            #region Assert
-
-            #endregion
-        }
-
-        /// <summary>
-        /// Teste la même méthode si le compte n'est pas trouvé
-        /// </summary>
-        /// <author>Alexis Paris</author>
-        [Fact]
-        public void Test_VerifyUserAccount_CompteNonTrouve()
-        {
-            #region Init
-
-            #endregion
-
-            #region Act
-
-            #endregion
-
-            #region Assert
-
+            Assert.Equal(carteMiseAJour.Nom, carteTrouvee.Nom);
+            Assert.Equal(carteMiseAJour.ID, carteTrouvee.ID);
+            Assert.Equal(carteMiseAJour.Visibilite, carteTrouvee.Visibilite);
             #endregion
         }
 
         #endregion
+
     }
 }
 
