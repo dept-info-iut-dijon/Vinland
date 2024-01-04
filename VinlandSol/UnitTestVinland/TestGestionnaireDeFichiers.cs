@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using VinlandSol.BDD;
 using VinlandSol.Métier;
 
@@ -67,8 +68,8 @@ namespace UnitTestVinland
         public void Override_NoList()
         {
             #region Init
-            var fileName = "Testing.txt"; // Le nom du fichier
-            var header = gestionnaireDeFichiers.GetHeader<ClasseDeTest>(); // On récupère le header de notre classe de test
+            var fileName = "TestingONL.txt"; // Le nom du fichier
+            var header = gestionnaireDeFichiers.GetHeader<ClasseDeTestNL>(); // On récupère le header de notre classe de test
             var fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "datafiles", fileName); // On récupère le chemin vers le fichier
             gestionnaireDeFichiers.SetupFichier(fileName, header); // On appelle le Setup
             List<ClasseDeTestNL> overridenList = new List<ClasseDeTestNL>(); // On crée la liste que l'on va sauvegarder
@@ -93,7 +94,7 @@ namespace UnitTestVinland
         public void Override_List()
         {
             #region Init
-            var fileName = "Testing.txt"; // Le nom du fichier
+            var fileName = "TestingOL.txt"; // Le nom du fichier
             var header = gestionnaireDeFichiers.GetHeader<ClasseDeTest>(); // On récupère le header de notre classe de test
             var fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "datafiles", fileName); // On récupère le chemin vers le fichier
             gestionnaireDeFichiers.SetupFichier(fileName, header); // On appelle le Setup
@@ -115,7 +116,64 @@ namespace UnitTestVinland
         }
 
         #endregion
+
+        #region Load_Test
+
+        [Fact]
+        public void Load_NoList()
+        {
+
+            #region Init
+            var fileName = "TestingLNL.txt"; // Le nom du fichier
+            var header = gestionnaireDeFichiers.GetHeader<ClasseDeTestNL>(); // On récupère le header de notre classe de test
+            var fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "datafiles", fileName); // On récupère le chemin vers le fichier
+            gestionnaireDeFichiers.SetupFichier(fileName, header); // On appelle le Setup
+            List<ClasseDeTestNL> overridenList = new List<ClasseDeTestNL>(); // On crée la liste que l'on va sauvegarder
+            overridenList.Add(new ClasseDeTestNL("alice")); // On ajoute une instance alice
+            overridenList.Add(new ClasseDeTestNL("bob")); // On ajoute une instance bob
+            overridenList.Add(new ClasseDeTestNL("EvE")); // On ajoute une instance eve
+            gestionnaireDeFichiers.Override<ClasseDeTestNL>(overridenList, fileName); // La liste de données est sauvegardée
+            List<ClasseDeTestNL> loadedList = new List<ClasseDeTestNL>(); // On crée une liste dans laquelle on va mettre les données récupérées par Load
+            #endregion
+
+            #region Act
+            loadedList = gestionnaireDeFichiers.Load<ClasseDeTestNL>(fileName); // On récupère les données
+            #endregion
+
+            #region Assert
+            Assert.Equal(overridenList, loadedList); // On regarde si la liste sauvegardée est la même que la liste du Load
+            #endregion
+        }
+
+        [Fact]
+        public void Load_List()
+        {
+            #region Init
+            var fileName = "TestingLL.txt"; // Le nom du fichier
+            var header = gestionnaireDeFichiers.GetHeader<ClasseDeTest>(); // On récupère le header de notre classe de test
+            var fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "datafiles", fileName); // On récupère le chemin vers le fichier
+            gestionnaireDeFichiers.SetupFichier(fileName, header); // On appelle le Setup
+            List<ClasseDeTest> overridenList = new List<ClasseDeTest>(); // On crée la liste que l'on va sauvegarder
+            ClasseDeTest alice = new ClasseDeTest("alice"); // On créé une instance alice
+            alice.ListeI.AddRange(new List<int> { 2, 3, 1 }); // On ajoute une liste avec des int
+            alice.ListeS.AddRange(new List<string> { "bob", "talc", "mexicain" }); // On ajoute une liste avec des string
+            overridenList.Add(alice); // On ajoute alice à la liste
+            gestionnaireDeFichiers.Override<ClasseDeTest>(overridenList, fileName); // La liste de données est sauvegardée
+            List<ClasseDeTest> loadedList = new List<ClasseDeTest>(); // On crée une liste dans laquelle on va mettre les données récupérées par Load
+            #endregion
+
+            #region Act
+            loadedList = gestionnaireDeFichiers.Load<ClasseDeTest>(fileName); // On récupère les données
+            #endregion
+
+            #region Assert
+            Assert.Equal(overridenList, loadedList); // On regarde si la liste sauvegardée est la même que la liste du Load
+            #endregion
+        }
+
+        #endregion
     }
+
 
     public class ClasseDeTest
     {
@@ -130,12 +188,49 @@ namespace UnitTestVinland
 
         #region Constructeur
 
+        public ClasseDeTest() 
+        {
+            Date = DateTime.UnixEpoch;
+            ListeI = new List<int>();
+            ListeS = new List<string>();
+        }
+
+
         public ClasseDeTest(string nom)
         {
             Nom = nom;
             Date = DateTime.UnixEpoch;
             ListeI = new List<int>();
             ListeS = new List<string>();
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is ClasseDeTest test)
+            {
+                return Nom == test.Nom &&
+                       Date == test.Date &&
+                       AreListsEqual(ListeI, test.ListeI) &&
+                       AreListsEqual(ListeS, test.ListeS);
+            }
+
+            return false;
+        }
+
+        private bool AreListsEqual<T>(List<T> list1, List<T> list2)
+        {
+            if (ReferenceEquals(list1, list2))
+                return true;
+
+            if (list1 is null || list2 is null)
+                return false;
+
+            return list1.SequenceEqual(list2);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Nom, Date, ListeI, ListeS);
         }
 
         #endregion
@@ -152,10 +247,27 @@ namespace UnitTestVinland
 
         #region Constructeur
 
+        public ClasseDeTestNL()
+        {
+            Date = DateTime.UnixEpoch;
+        }
+
         public ClasseDeTestNL(string nom)
         {
             Nom = nom;
             Date = DateTime.UnixEpoch; 
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is ClasseDeTestNL nL &&
+                   Nom == nL.Nom &&
+                   Date == nL.Date;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Nom, Date);
         }
 
         #endregion
