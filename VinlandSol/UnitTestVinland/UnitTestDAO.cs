@@ -1,6 +1,4 @@
-using VinlandMain.IHM;
 using VinlandSol.BDD;
-using VinlandSol.IHM;
 using VinlandSol.Métier;
 using Carte = VinlandSol.Métier.Carte;
 
@@ -82,7 +80,7 @@ namespace UnitTestVinland
             #region Assert
             Assert.Equal(nomMJ, mj.Nom);
             Assert.Equal(MdpMJ, mj.Mdp);
-            Assert.Equal(nomMJ2 , mj2.Nom);
+            Assert.Equal(nomMJ2, mj2.Nom);
             Assert.Equal(MdpMJ2, mj2.Mdp);
             #endregion
         }
@@ -215,7 +213,7 @@ namespace UnitTestVinland
             Assert.Equal(nomCarte2, carte2.Nom);
             Assert.Contains<int>(carte.ID, campagne.IDCartes);
             Assert.Contains<int>(carte2.ID, campagne.IDCartes);
-            
+
             #endregion
         }
 
@@ -258,7 +256,7 @@ namespace UnitTestVinland
             #region Assert
 
             Assert.Null(isNull); // Assert que le joueur 1 a été supprimé
-            
+
             Assert.NotNull(isNotNull);// Assert que le joueur 2 est toujours présent
             #endregion
         }
@@ -452,7 +450,7 @@ namespace UnitTestVinland
 
         }
 
-       
+
 
         #endregion
 
@@ -466,35 +464,35 @@ namespace UnitTestVinland
         public void Test_GetJoueurs()
         {
 
-             #region Init
-             string nom = "monNom";
-             string motDePasse = "monMotDePasse";
+            #region Init
+            string nom = "monNom";
+            string motDePasse = "monMotDePasse";
 
-             fakeDAO.ClearLists();
+            fakeDAO.ClearLists();
 
-             fakeDAO.CreateJoueur(nom, motDePasse);
-             #endregion
+            fakeDAO.CreateJoueur(nom, motDePasse);
+            #endregion
 
-             #region Act
-             int idJoueur = fakeDAO.GetJoueur(1).ID;
+            #region Act
+            int idJoueur = fakeDAO.GetJoueur(1).ID;
 
-             Joueur joueurTrouve = fakeDAO.GetJoueur(idJoueur);
-             Joueur joueurInexistant = fakeDAO.GetJoueur(100);
+            Joueur joueurTrouve = fakeDAO.GetJoueur(idJoueur);
+            Joueur joueurInexistant = fakeDAO.GetJoueur(100);
 
-             fakeDAO.ClearLists();
+            fakeDAO.ClearLists();
 
-             #endregion
+            #endregion
 
-             #region Assert
-             Assert.NotNull(joueurTrouve); // Assert que le joueur a été trouvé
+            #region Assert
+            Assert.NotNull(joueurTrouve); // Assert que le joueur a été trouvé
 
-             // Assert que les informations du joueur sont correctes
-             Assert.Equal(nom, joueurTrouve.Nom);
-             Assert.Equal(motDePasse, joueurTrouve.Mdp);
-   
-             Assert.Null(joueurInexistant); //Assert que le joueur inexistant n'a pas été trouvé
-             
-             #endregion
+            // Assert que les informations du joueur sont correctes
+            Assert.Equal(nom, joueurTrouve.Nom);
+            Assert.Equal(motDePasse, joueurTrouve.Mdp);
+
+            Assert.Null(joueurInexistant); //Assert que le joueur inexistant n'a pas été trouvé
+
+            #endregion
         }
 
         /// <summary>
@@ -587,7 +585,7 @@ namespace UnitTestVinland
             string mdpJoueur = "mdpJoueur";
             string nomCampagne = "nomCampagne";
             string nomPersonnage = "nomPersonnage";
-            
+
             fakeDAO.ClearLists();
 
             fakeDAO.CreateMJ(nomMJ, mdpMJ);

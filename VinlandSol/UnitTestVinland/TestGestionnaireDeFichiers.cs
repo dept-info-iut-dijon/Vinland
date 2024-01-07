@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
-using VinlandSol.BDD;
-using VinlandSol.Métier;
+﻿using VinlandSol.BDD;
 
 namespace UnitTestVinland
 {
@@ -179,16 +172,16 @@ namespace UnitTestVinland
     {
         #region Propriétés
 
-        public string Nom { get; set; } 
-        public DateTime Date { get; set; } 
-        public List<int> ListeI { get; set; } 
-        public List<string> ListeS { get; set; } 
+        public string Nom { get; set; }
+        public DateTime Date { get; set; }
+        public List<int> ListeI { get; set; }
+        public List<string> ListeS { get; set; }
 
         #endregion
 
         #region Constructeur
 
-        public ClasseDeTest() 
+        public ClasseDeTest()
         {
             Date = DateTime.UnixEpoch;
             ListeI = new List<int>();
@@ -240,7 +233,7 @@ namespace UnitTestVinland
     {
         #region Propriétés
 
-        public string Nom { get; set; } 
+        public string Nom { get; set; }
         public DateTime Date { get; set; }
 
         #endregion
@@ -255,7 +248,7 @@ namespace UnitTestVinland
         public ClasseDeTestNL(string nom)
         {
             Nom = nom;
-            Date = DateTime.UnixEpoch; 
+            Date = DateTime.UnixEpoch;
         }
 
         public override bool Equals(object? obj)
