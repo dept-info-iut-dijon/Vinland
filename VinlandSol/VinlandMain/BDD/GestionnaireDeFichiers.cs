@@ -75,7 +75,7 @@ namespace VinlandSol.BDD
         /// <param name="fileName">Nom du fichier à Override (extension comprise)</param>
         /// <param name="header">Header du fichier</param>
         /// <author>Aaron</author>
-        private void SetupFichier(string fileName, string header)
+        internal void SetupFichier(string fileName, string header)
         {
             string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dataFolder, fileName); // On récupère le chemin vers le fichier
             if (!File.Exists(fullPath) || !File.ReadAllText(fullPath).StartsWith(header))
@@ -93,7 +93,7 @@ namespace VinlandSol.BDD
         {
             string dataFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, dataFolder); // On récupère le chemin vers les fichiers de sauvegarde
 
-            DirectoryInfo directory = new DirectoryInfo(dataFolderPath); 
+            DirectoryInfo directory = new DirectoryInfo(dataFolderPath); // On récupère le dossier
             foreach (FileInfo file in directory.GetFiles()) // On supprime chaque fichier du dossier
             {
                 file.Delete(); 
@@ -270,7 +270,7 @@ namespace VinlandSol.BDD
         /// <typeparam name="T">Classe Type (par exemple Joueur)</typeparam>
         /// <returns>une chaine de caractères correspondant aux propriétés de T (séparées par des virgules)</returns>
         /// <author>Aaron</author>
-        private string GetHeader<T>()
+        internal string GetHeader<T>()
         {
             PropertyInfo[] properties = typeof(T).GetProperties(); // On récupère les propriétés de T
             string header = string.Join(",", properties.Select(p => p.Name)); // On ajoute les noms des propriétés dans un string unique en les séparant par des virgules
