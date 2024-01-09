@@ -53,12 +53,15 @@ namespace VinlandSol.IHM
         {
             InitializeComponent();
             carte = fakeDAO.GetCarte(idCarte); // Récuperation de la carte référencée
+            this.idUser = idUser;
+            this.roleUser = roleUser;
+            this.idCampagne = idCampagne;
             GenerateHexagonalMap(carte.Largeur, carte.Hauteur); // Génération de la map   
             InitializeTerrains(); // Initialise les terrains de la carte
             HexagonCanvas.RenderTransform = zoomTransform; // Zoom map
             NomCarteLabel.Content = carte.Nom; // Affiche le nom de la carte dans l'interface utilisateur
             DimCarteLabel.Content = carte.Largeur + "x" + carte.Hauteur; // Affiche les dimensions de la carte dans l'interface utilisateur
-
+            
             // Ajoute des gestionnaires d'événements pour le déplacement de la carte avec le clic droit de la souris
             HexagonCanvas.MouseRightButtonDown += Canvas_MouseRightButtonDown; // Déplacement de la map avec le clic droit
             HexagonCanvas.MouseRightButtonUp += Canvas_MouseRightButtonUp;
